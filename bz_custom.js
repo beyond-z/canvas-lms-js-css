@@ -12,4 +12,11 @@
 $.noConflict();
 jQuery( document ).ready(function( $ ) {
  console.log("jQ working");
+ $("#intro-logo").hover(function(){
+  //mouse enter handler:
+  console.log("mouse is over logo");
+ },function(){
+  //mouse leave handler:
+  console.log("mouse is no longer over logo");
+ });
 }); jQuery
