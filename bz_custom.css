@@ -1,1 +1,41 @@
-#wiki_page_show > div.show-content.user_content.clearfix.enhanced > h2 { color:red !important; }
+#header-logo {
+  background-image:url("https://stagingportal.beyondz.org/courses/9/files/1195/download");
+}
+#content {
+	/* need to import webfont */
+	font-family:"Open Sans", sans-serif;
+}
+.show-content h2 {
+	font-size: 3em;
+	color: #666;
+	line-height: normal;
+	font-weight: normal;
+	font-weight: 100;
+}
+.show-content h3 {
+	font-size: 2em;
+	color: #f26522;
+	line-height: normal;
+	border-top:1px dotted #ccc;
+	padding-top: 10px;
+}
+.show-content h4 {
+	font-size: 1.5em;
+}
+.show-content blockquote {
+	font-style: italic;
+	font-size: 1.25em;
+	line-height: normal;
+	padding-right: 30%;
+	margin: 30px;
+}
+.essay_question .mceToolbar,
+#quiz-time-elapsed,
+#topbar #identity .inbox,
+#menu #grades_menu_item {
+	display: none;	
+}
+#module_sequence_footer .pull-right {
+	background: #f26522;
+	color: white;
+}
