@@ -6,13 +6,10 @@
  */
  
  //testing js:
- var logo = document.getElementByID("intro-logo");
- logo.onClick=function(e){
-   alert("hello");
- }
+ console.log("js working");
  
  //testing jquery
 $.noConflict();
 jQuery( document ).ready(function( $ ) {
-  alert("jQ in da haus!")
+ console.log("jQ working");
 }); jQuery
