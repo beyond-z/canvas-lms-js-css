@@ -9,8 +9,8 @@
 	font-size: 3em;
 	color: #666;
 	line-height: normal;
-	font-weight: heavy;
-	font-weight: 700;
+	font-weight: light;/* fallback */
+	font-weight: 100;
 }
 .show-content h3 {
 	font-size: 2em;
