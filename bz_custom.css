@@ -1,12 +1,17 @@
+#header {
+	background-color: #234;
+	background-image: none;
+}
 #header-logo {
-  /*background-image:url("https://stagingportal.beyondz.org/courses/9/files/1195/download");*/
+  background-image:url("https://www.dropbox.com/s/8bji8bezrt5pxm9/bz-logo-canvas-header-rev-110.png?dl=1");
 }
 #content {
 	/* need to import webfont */
 	font-family:"Open Sans", sans-serif;
 }
-.show-content h2 {
-	font-size: 3em;
+.show-content h2,
+.page-title {
+	font-size: 3.5em;
 	color: #666;
 	line-height: normal;
 	font-weight: light;/* fallback */
@@ -16,7 +21,6 @@
 	font-size: 2em;
 	color: #f26522;
 	line-height: normal;
-	border-top:1px dotted #ccc;
 	padding-top: 10px;
 }
 .show-content h4 {
@@ -35,7 +39,23 @@
 #menu #grades_menu_item {
 	display: none;	
 }
-#module_sequence_footer .pull-right {
+.module-sequence-footer 
+.module-sequence-footer-content {
+	background: white;
+	border: none;	
+}
+.module-sequence-footer .pull-right {
 	background: #f26522;
 	color: white;
+}
+.module-sequence-footer-padding {
+  padding-top: 10px;
+}
+.show-content p,
+.show-content li,
+.show-content td,
+.show-content dt,
+.show-content dd {
+	font-size: 1.1em;
+	line-height: 1.5em;
 }
