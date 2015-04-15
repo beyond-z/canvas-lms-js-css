@@ -9,53 +9,57 @@
 	/* need to import webfont */
 	font-family:"Open Sans", sans-serif;
 }
-.show-content h2,
-.page-title {
+.context-course_11 .show-content h2,
+.context-course_11 .page-title {
 	font-size: 3.5em;
 	color: #666;
 	line-height: normal;
 	font-weight: light;/* fallback */
 	font-weight: 100;
 }
-.show-content h3 {
+.context-course_11 .show-content h3 {
 	font-size: 2em;
 	color: #f26522;
 	line-height: normal;
 	padding-top: 10px;
+	margin-bottom: 0.25em;
 }
-.show-content h4 {
+.context-course_11 .show-content h4 {
 	font-size: 1.5em;
 }
-.show-content blockquote {
+.context-course_11 .show-content blockquote {
 	font-style: italic;
 	font-size: 1.25em;
 	line-height: normal;
 	padding-right: 30%;
 	margin: 30px;
 }
-.essay_question .mceToolbar,
+.context-course_11 .essay_question .mceToolbar,
 #quiz-time-elapsed,
 #topbar #identity .inbox,
 #menu #grades_menu_item {
 	display: none;	
 }
-.module-sequence-footer 
-.module-sequence-footer-content {
+.context-course_11 .module-sequence-footer 
+.context-course_11 .module-sequence-footer-content {
 	background: white;
 	border: none;	
 }
-.module-sequence-footer .pull-right {
+.context-course_11 .module-sequence-footer .pull-right {
 	background: #f26522;
 	color: white;
 }
-.module-sequence-footer-padding {
+.context-course_11 .module-sequence-footer-padding {
   padding-top: 10px;
 }
-.show-content p,
-.show-content li,
-.show-content td,
-.show-content dt,
-.show-content dd {
+.context-course_11 .show-content p,
+.context-course_11 .show-content li,
+.context-course_11 .show-content td,
+.context-course_11 .show-content dt,
+.context-course_11 .show-content dd {
 	font-size: 1.1em;
 	line-height: 1.5em;
+}
+.context-course_11 h4 {
+	margin-top: 1.25em;	
 }
