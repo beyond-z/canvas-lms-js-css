@@ -19,6 +19,7 @@
 	font-weight: 100;
 }
 .context-course_11 .show-content h3 {
+	border-bottom: 1px #f26522 solid;
 	font-size: 2em;
 	color: #f26522;
 	line-height: normal;
