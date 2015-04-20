@@ -1,10 +1,10 @@
-/* Thank Jeebus it's Friday */
+/* Beyond Z custom CSS for Canvas */
 #header {
 	background-color: #234;
 	background-image: none;
 }
 #header-logo {
-  background-image:url("https://www.dropbox.com/s/8bji8bezrt5pxm9/bz-logo-canvas-header-rev-110.png?dl=1");
+  background-image:url("https://s3.amazonaws.com/canvas-stag-assets/bz-logo-canvas-header-rev-110.png");
 }
 #content {
 	/* need to import webfont */
