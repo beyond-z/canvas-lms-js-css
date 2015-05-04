@@ -7,7 +7,7 @@
   background-image:url("https://s3.amazonaws.com/canvas-stag-assets/bz-logo-canvas-header-rev-110.png");
 }
 #content {
-	/* need to import webfont */
+	/* need to import webfont if we haven't already! */
 	font-family:"Open Sans", sans-serif;
 }
 .context-course_11 .show-content h2,
@@ -27,6 +27,7 @@
 }
 .context-course_11 .show-content h4 {
 	font-size: 1.5em;
+	line-height: normal;
 }
 .context-course_11 .show-content blockquote {
 	font-style: italic;
@@ -36,9 +37,12 @@
 	margin: 30px;
 }
 .context-course_11 .essay_question .mceToolbar,
-#quiz-time-elapsed,
-#topbar #identity .inbox,
-#menu #grades_menu_item {
+.context-course_11 #quiz-time-elapsed,
+.context-course_11 #topbar #identity .inbox,
+.context-course_11 #menu #grades_menu_item,
+.quiz-attributes-student,
+.context-course_11 div#quiz_show .alert,
+.context-course_11 .student-quiz-content .submission-attempt-history {
 	display: none;	
 }
 .context-course_11 .module-sequence-footer 
@@ -63,4 +67,24 @@
 }
 .context-course_11 h4 {
 	margin-top: 1.25em;	
+}
+/* temporary hack to hide to do list from students at NYC/DC */
+.context-course_9 #course_show_secondary .course_options,
+.context-course_9 #course_show_secondary .to-do-list {
+	display: none;
+}
+/* 
+   can't just hide breadcrumbs; 
+   need to keep this a certain height 
+   to keep the sidebar from hiding under header 
+*/
+.context-course_11 #breadcrumbs {
+	height: 28px;
+	border-bottom: none 0;
+}
+.context-course_11 #breadcrumbs ul {
+	display: none;
+}
+.context-course_11 .form-actions {
+	border: none;
 }

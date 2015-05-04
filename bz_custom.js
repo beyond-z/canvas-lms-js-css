@@ -11,12 +11,16 @@
  //testing jquery
 $.noConflict();
 jQuery( document ).ready(function( $ ) {
- console.log("jQ working");
- $("#intro-logo").hover(function(){
-  //mouse enter handler:
-  console.log("mouse is over logo");
- },function(){
-  //mouse leave handler:
-  console.log("mouse is no longer over logo");
- });
+	console.log("jQ working");
+	/*
+	$('.context-course_11 #question_389_question_text ol li').prepend('<span class="dynamic"></span>');
+	$('.context-course_11 #question_388_question_text input').each(function(i){
+		$(this).change(function(){
+			var t = $(this).val()+': '; console.log(t);
+			$('#question_389_question_text ol li').eq(i).children('.dynamic').text(t);
+			//
+		});
+	});
+	*/
+
 }); jQuery
