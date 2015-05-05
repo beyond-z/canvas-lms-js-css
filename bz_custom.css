@@ -4,7 +4,7 @@
 	background-image: none;
 }
 #header-logo {
-  background-image:url("https://s3.amazonaws.com/canvas-prod-assets/bz-logo-canvas-header-rev-110.png");
+  background-image:url("https://s3.amazonaws.com/canvas-stag-assets/bz-logo-canvas-header-rev-110.png");
 }
 #content {
 	/* need to import webfont if we haven't already! */
