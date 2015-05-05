@@ -1,140 +1,90 @@
-/* 
-///
-///// Canvas Custom CSS
-///////////////////////// 
-/// The CSS below can be use in branding your Canvas application.
-/// You can opt-in to editing these styles by removing the conmment code. 
-/// Please use HTTPS for any URL located in the CSS file to avoid viewing 
-/// browser security warnings. 
-/// Explanations for what each piece does can be found below.
-*/
-
-/* 
-///
-///// Header Bar
-///////////////////////// 
-/// You can use this to replace the color of the header bar
-/// the links to Courses, Grades, & Calendar
-*/
-
-
-/*#header {   
-  background-color: #5b6c79;
+/* Beyond Z custom CSS for Canvas */
+#header {
+	background-color: #234;
+	background-image: none;
 }
-.menu-item .menu-item-title, .menu-item .menu-item-no-drop {
-  color: #ffffff;
-}*/
-
-/* 
-///
-///// Logo
-///////////////////////// 
-/// Replace the image url in "background-image" below with the image path you would like to use for your logo
-/// and use "background-size" to correctly fit your logo within the box area 
-*/
-
-/*#header-logo, #header.no-user #header-logo {
-  background-image: url("header_logo.png?v1");
-  background-repeat: no-repeat;   
-  background-size: auto 90px;  
-  background-position: 50%;
-  background-color: #ffffff;  
-
-  width: 175px; 
-  height: 70px;  
-  top: 0;
-  left: 0;  
-}*/
-
-
-/* 
-///
-///// Help Corner Navigation  
-///////////////////////// 
-/// Seen in Top Right Corner (ie, Settings Logout Help )
-/// Replace the background color below with the color you would like to use
-*/
-
-/*#identity {
-  background-color: #31383E;
+#header-logo {
+  background-image:url("https://s3.amazonaws.com/canvas-prod-assets/bz-logo-canvas-header-rev-110.png");
 }
-#identity a {
-  color: #ffffff;
-}*/
-
-
+#content {
+	/* need to import webfont if we haven't already! */
+	font-family:"Open Sans", sans-serif;
+}
+.context-course_11 .show-content h2,
+.context-course_11 .page-title {
+	font-size: 3.5em;
+	color: #666;
+	line-height: normal;
+	font-weight: light;/* fallback */
+	font-weight: 100;
+}
+.context-course_11 .show-content h3 {
+	font-size: 2em;
+	color: #f26522;
+	line-height: normal;
+	padding-top: 10px;
+	margin-bottom: 0.25em;
+}
+.context-course_11 .show-content h4 {
+	font-size: 1.5em;
+	line-height: normal;
+}
+.context-course_11 .show-content blockquote {
+	font-style: italic;
+	font-size: 1.25em;
+	line-height: normal;
+	padding-right: 30%;
+	margin: 30px;
+}
+.context-course_11 .essay_question .mceToolbar,
+.context-course_11 #quiz-time-elapsed,
+.context-course_11 #topbar #identity .inbox,
+.context-course_11 #menu #grades_menu_item,
+.quiz-attributes-student,
+.context-course_11 div#quiz_show .alert,
+.context-course_11 .student-quiz-content .submission-attempt-history {
+	display: none;	
+}
+.context-course_11 .module-sequence-footer 
+.context-course_11 .module-sequence-footer-content {
+	background: white;
+	border: none;	
+}
+.context-course_11 .module-sequence-footer .pull-right {
+	background: #f26522;
+	color: white;
+}
+.context-course_11 .module-sequence-footer-padding {
+  padding-top: 10px;
+}
+.context-course_11 .show-content p,
+.context-course_11 .show-content li,
+.context-course_11 .show-content td,
+.context-course_11 .show-content dt,
+.context-course_11 .show-content dd {
+	font-size: 1.1em;
+	line-height: 1.5em;
+}
+.context-course_11 h4 {
+	margin-top: 1.25em;	
+}
+/* temporary hack to hide to do list from students at NYC/DC */
+.context-course_9 #course_show_secondary .course_options,
+.context-course_9 #course_show_secondary .to-do-list {
+	display: none;
+}
 /* 
-/// 
-///// Login Box
-/////////////////////////
-/// These style let you tweak the login box shown when logging into Canvas
+   can't just hide breadcrumbs; 
+   need to keep this a certain height 
+   to keep the sidebar from hiding under header 
 */
-
-/* 
-///// This changes the background color
-*/
-
-
-/*#modal-box.login-box { 
-  background: #e6e6e6 !important ;
-}*/
-
-
-/* 
-///// This will remove the extra Canvas logo 
-*/
-
-
-/*body.modal #modal-box.login-box h1 { 
-  background: none;
-  height: 235px;
-}*/
-
-
-/* 
-///// Resize the login box to fit my image and change the color of 'stay signed in'
-*/
-
-
-/*body.modal #modal-box.login-box { 
-  height: 435px;
-  width: 610px;
-  color: #5b6c79;
-}*/
-
-/*#modal-box-inner {
-  background: url(https://s3.amazonaws.com/account/myimage.png?v1) no-repeat;
-  height: 400px;
-  width: 680px;  
-  margin-left: -15px;
-  margin-top: -15px;  
-  color: #000066 !important; 
-}*/
-
-
-/* 
-///// Change the color of 'don't know your password' 
-*/
-
-
-/*body.modal #modal-box.login-box a { 
-  color: #5b6c79 !important; 
-}*/
- 
-
-/* 
-///// Change the color of the login buttons 
-*/
-
-
-/*body.modal #modal-box .button, body.modal #login-box .button {
-  background-color: #0099e0 !important;
-  border-color: #0076ad !important;
-}*/
-
-  
-
-/*#login_form .btn-primary, #login_form .btn-primary:hover {
-  background-color: #0099e0;
-  border-color: #0076ad;
-}*/
+.context-course_11 #breadcrumbs {
+	height: 28px;
+	border-bottom: none 0;
+}
+.context-course_11 #breadcrumbs ul {
+	display: none;
+}
+.context-course_11 .form-actions {
+	border: none;
+}
