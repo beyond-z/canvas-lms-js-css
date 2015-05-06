@@ -10,28 +10,35 @@
 	/* need to import webfont if we haven't already! */
 	font-family:"Open Sans", sans-serif;
 }
-.context-course_11 .show-content h2,
+.context-course_11 #content h2,
 .context-course_11 .page-title {
-	font-size: 3.5em;
+	font-size: 32px;
 	color: #666;
 	line-height: normal;
 	font-weight: light;/* fallback */
 	font-weight: 100;
 }
+.context-course_11 .page-title,
+.context-course_11 h2.page-title,
+.context-course_11 .quiz-header h2:first-child {
+	font-size: 28px !important;
+	padding-bottom: 8px;
+	border-bottom: 1px solid #ddd;
+}
 .context-course_11 .show-content h3 {
-	font-size: 2em;
+	font-size: 24px;
 	color: #f26522;
 	line-height: normal;
 	padding-top: 10px;
 	margin-bottom: 0.25em;
 }
 .context-course_11 .show-content h4 {
-	font-size: 1.5em;
+	font-size: 18px;
 	line-height: normal;
 }
 .context-course_11 .show-content blockquote {
 	font-style: italic;
-	font-size: 1.25em;
+	font-size: 16px;
 	line-height: normal;
 	padding-right: 30%;
 	margin: 30px;
@@ -40,10 +47,12 @@
 .context-course_11 #quiz-time-elapsed,
 .context-course_11 #topbar #identity .inbox,
 .context-course_11 #menu #grades_menu_item,
-.quiz-attributes-student,
+.context-course_11 #quiz-attributes-student,
+.context-course_11 #quiz_student_details,
+.context-course_11 #wiki_page_show .header-bar-left,
 .context-course_11 div#quiz_show .alert,
 .context-course_11 .student-quiz-content .submission-attempt-history {
-	display: none;	
+	display: none !important;	
 }
 .context-course_11 .module-sequence-footer 
 .context-course_11 .module-sequence-footer-content {
@@ -80,7 +89,7 @@
 */
 .context-course_11 #breadcrumbs {
 	height: 28px;
-	border-bottom: none 0;
+	border-bottom: none 0 !important;
 }
 .context-course_11 #breadcrumbs ul {
 	display: none;
@@ -88,3 +97,41 @@
 .context-course_11 .form-actions {
 	border: none;
 }
+/* Fixing the header bar after hiding breadcrumbs and "view all pages" button: */
+.context-course_11 #wiki_page_show .header-bar {
+	min-height: 0;
+	padding: 0;
+	border: 0 none;
+}
+.context-course_11 #content .header-bar-outer-container,
+.context-course_11 #content .header-bar-container,
+.context-course_11 #content .header-bar {
+	height: auto;
+	min-height: inherit;
+	box-shadow: none;
+}
+.context-course_11 #content .header-bar-right {
+	position: absolute;
+	right: 15px;
+	top: 15px;
+}
+ul.pros > li:before, 
+ul.cons > li:before {
+    content: "\2714";
+	color: green;
+	margin-left: -1em;
+}
+ul.cons > li:before {
+    content: "\2718";
+	color: red;
+}
+ul.cons>li, ul.pros>li {
+	margin-bottom: 0.5em;	
+}
+ul.pros, 
+ul.cons {
+   list-style: none;
+   list-style-position:outside;
+	margin-left: 1em;
+}
+
