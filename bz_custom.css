@@ -1,4 +1,8 @@
 /* Beyond Z custom CSS for Canvas */
+/* ============================== */
+
+/* Custom header with our logo instead of Canvas: */
+/* ---------------------------------------------- */
 #header {
 	background-color: #234;
 	background-image: none;
@@ -6,6 +10,9 @@
 #header-logo {
   background-image:url("https://s3.amazonaws.com/canvas-stag-assets/bz-logo-canvas-header-rev-110.png");
 }
+
+/* General Typography (=fonts): */
+/* ---------------------------- */
 #content {
 	/* need to import webfont if we haven't already! */
 	font-family:"Open Sans", sans-serif;
@@ -43,29 +50,6 @@
 	padding-right: 30%;
 	margin: 30px;
 }
-.context-course_11 .essay_question .mceToolbar,
-.context-course_11 #quiz-time-elapsed,
-.context-course_11 #topbar #identity .inbox,
-.context-course_11 #menu #grades_menu_item,
-.context-course_11 #quiz-attributes-student,
-.context-course_11 #quiz_student_details,
-.context-course_11 #wiki_page_show .header-bar-left,
-.context-course_11 div#quiz_show .alert,
-.context-course_11 .student-quiz-content .submission-attempt-history {
-	display: none !important;	
-}
-.context-course_11 .module-sequence-footer 
-.context-course_11 .module-sequence-footer-content {
-	background: white;
-	border: none;	
-}
-.context-course_11 .module-sequence-footer .pull-right {
-	background: #f26522;
-	color: white;
-}
-.context-course_11 .module-sequence-footer-padding {
-  padding-top: 10px;
-}
 .context-course_11 .show-content p,
 .context-course_11 .show-content li,
 .context-course_11 .show-content td,
@@ -77,10 +61,22 @@
 .context-course_11 h4 {
 	margin-top: 1.25em;	
 }
-/* temporary hack to hide to do list from students at NYC/DC */
-.context-course_9 #course_show_secondary .course_options,
-.context-course_9 #course_show_secondary .to-do-list {
-	display: none;
+.context-course_11 ul {
+	list-style-position: inside;
+}
+
+/* Hiding stuff the users don't need to see: */
+/* ----------------------------------------- */
+.context-course_11 .essay_question .mceToolbar,
+.context-course_11 #quiz-time-elapsed,
+.context-course_11 #topbar #identity .inbox,
+.context-course_11 #menu #grades_menu_item,
+.context-course_11 #quiz-attributes-student,
+.context-course_11 #quiz_student_details,
+.context-course_11 #wiki_page_show .header-bar-left,
+.context-course_11 div#quiz_show .alert,
+.context-course_11 .student-quiz-content .submission-attempt-history {
+	display: none !important;	
 }
 /* 
    can't just hide breadcrumbs; 
@@ -115,6 +111,38 @@
 	right: 15px;
 	top: 15px;
 }
+
+/* styles for alternative navigation */
+/* --------------------------------- */
+.bz-hide {
+	dispaly: none;
+}
+
+
+/* Customizing the Next/Previous footer */
+/* ------------------------------------ */
+.context-course_11 .module-sequence-footer 
+.context-course_11 .module-sequence-footer-content {
+	background: white;
+	border: none;	
+}
+.context-course_11 .module-sequence-footer .pull-right {
+	background: #f26522;
+	color: white;
+}
+.context-course_11 .module-sequence-footer-padding {
+  padding-top: 10px;
+}
+
+/* temporary hack to hide to do list from students at NYC/DC */
+/* --------------------------------------------------------- */
+.context-course_9 #course_show_secondary .course_options,
+.context-course_9 #course_show_secondary .to-do-list {
+	display: none;
+}
+
+/* Pros and Cons lists */
+/* ------------------- */
 ul.pros > li:before, 
 ul.cons > li:before {
     content: "\2714";
@@ -133,5 +161,53 @@ ul.cons {
    list-style: none;
    list-style-position:outside;
 	margin-left: 1em;
+}
+
+/* Module navigation "title slides" */
+/* -------------------------------- */
+
+.context-course_11 .module-nav-titles {
+	margin: 0;
+	list-style: none;
+	margin-bottom: 30px;
+}
+.context-course_11 .module-nav-titles li,
+.context-course_11 .module-nav-titles li h4 {
+	margin: 0;
+	text-align: center;
+}
+.context-course_11 .show-content .module-nav-titles li h4 {
+	font-size: 24px;
+}
+.context-course_11 .module-nav-titles li {
+	margin: 1em auto 30px;
+	width: 33%;
+	padding: 1em;
+	position: relative;
+	background: #eee;
+}
+.context-course_11 .module-nav-titles li:after {
+	top: 100%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+	border-color: rgba(0, 0, 0, 0);
+	border-top-color: #eee;
+	border-width: 30px;
+	margin-left: -30px;	
+}
+.context-course_11 .module-nav-titles li:last-child:after {
+	border: 0 none;	
+}
+.context-course_11 .module-nav-titles .current,
+.context-course_11 .module-nav-titles .current h4{
+	background: #f39330;
+	color: #fff !important;
+}
+.context-course_11 .module-nav-titles .current:after {
+	border-top-color: #f39330;
 }
 
