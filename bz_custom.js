@@ -24,11 +24,11 @@ jQuery( document ).ready(function( $ ) {
 	});
 	/**/
 	/* Improve Priorities Quiz for prod  
-	$('.context-course_11 #question_482_question_text ol li').prepend('<span class="dynamic"></span>');
-	$('.context-course_11 #question_481_question_text input').each(function(i){
+	$('.context-course_11 #question_482_question_text ol li, .context-course_12 #question_555_question_text ol li').prepend('<span class="dynamic"></span>');
+	$('.context-course_11 #question_481_question_text input, .context-course_12 #question_554_question_text input').each(function(i){
 		$(this).change(function(){
 			var t = $(this).val()+': '; console.log(t);
-			$('.context-course_11 #question_482_question_text ol li').eq(i).children('.dynamic').text(t);
+			$('.context-course_11 #question_482_question_text ol li, .context-course_11 #question_555_question_text ol li').eq(i).children('.dynamic').text(t);
 			//
 		});
 	});
