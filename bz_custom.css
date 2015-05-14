@@ -18,7 +18,9 @@
 	font-family:"Open Sans", sans-serif;
 }
 .context-course_11 #content h2,
-.context-course_11 .page-title {
+.context-course_11 .page-title,
+.context-course_12 #content h2,
+.context-course_12 .page-title {
 	font-size: 32px;
 	color: #666;
 	line-height: normal;
@@ -27,23 +29,30 @@
 }
 .context-course_11 .page-title,
 .context-course_11 h2.page-title,
-.context-course_11 .quiz-header h2:first-child {
+.context-course_11 .quiz-header h2:first-child,
+.context-course_12 .page-title,
+.context-course_12 h2.page-title,
+.context-course_12 .quiz-header h2:first-child {
 	font-size: 28px !important;
 	padding-bottom: 8px;
 	border-bottom: 1px solid #ddd;
 }
-.context-course_11 .show-content h3 {
+.context-course_11 .show-content h3,
+.context-course_12 .show-content h3 {
 	font-size: 24px;
 	color: #f26522;
 	line-height: normal;
 	padding-top: 10px;
 	margin-bottom: 0.25em;
 }
-.context-course_11 .show-content h4 {
+.context-course_11 .show-content h4,
+.context-course_12 .show-content h4 {
 	font-size: 18px;
 	line-height: normal;
+	margin-top: 1.25em;	
 }
-.context-course_11 .show-content blockquote {
+.context-course_11 .show-content blockquote,
+.context-course_12 .show-content blockquote {
 	font-style: italic;
 	font-size: 16px;
 	line-height: normal;
@@ -54,14 +63,18 @@
 .context-course_11 .show-content li,
 .context-course_11 .show-content td,
 .context-course_11 .show-content dt,
-.context-course_11 .show-content dd {
+.context-course_11 .show-content dd,
+.context-course_12 .show-content p,
+.context-course_12 .show-content li,
+.context-course_12 .show-content td,
+.context-course_12 .show-content dt,
+.context-course_12 .show-content dd {
+ {
 	font-size: 1.1em;
 	line-height: 1.5em;
 }
-.context-course_11 h4 {
-	margin-top: 1.25em;	
-}
-.context-course_11 ul {
+.context-course_11 ul,
+.context-course_12 ul {
 	list-style-position: inside;
 }
 
@@ -75,7 +88,16 @@
 .context-course_11 #quiz_student_details,
 .context-course_11 #wiki_page_show .header-bar-left,
 .context-course_11 div#quiz_show .alert,
-.context-course_11 .student-quiz-content .submission-attempt-history {
+.context-course_11 .student-quiz-content .submission-attempt-history,
+.context-course_12 .essay_question .mceToolbar,
+.context-course_12 #quiz-time-elapsed,
+.context-course_12 #topbar #identity .inbox,
+.context-course_12 #menu #grades_menu_item,
+.context-course_12 #quiz-attributes-student,
+.context-course_12 #quiz_student_details,
+.context-course_12 #wiki_page_show .header-bar-left,
+.context-course_12 div#quiz_show .alert,
+.context-course_12 .student-quiz-content .submission-attempt-history {
 	display: none !important;	
 }
 /* 
@@ -83,30 +105,38 @@
    need to keep this a certain height 
    to keep the sidebar from hiding under header 
 */
-.context-course_11 #breadcrumbs {
+.context-course_11 #breadcrumbs,
+.context-course_12 #breadcrumbs {
 	height: 28px;
 	border-bottom: none 0 !important;
 }
-.context-course_11 #breadcrumbs ul {
+.context-course_11 #breadcrumbs ul,
+.context-course_12 #breadcrumbs ul {
 	display: none;
 }
-.context-course_11 .form-actions {
+.context-course_11 .form-actions,
+.context-course_12 .form-actions {
 	border: none;
 }
 /* Fixing the header bar after hiding breadcrumbs and "view all pages" button: */
-.context-course_11 #wiki_page_show .header-bar {
+.context-course_11 #wiki_page_show .header-bar,
+.context-course_12 #wiki_page_show .header-bar {
 	min-height: 0;
 	padding: 0;
 	border: 0 none;
 }
 .context-course_11 #content .header-bar-outer-container,
 .context-course_11 #content .header-bar-container,
-.context-course_11 #content .header-bar {
+.context-course_11 #content .header-bar,
+.context-course_12 #content .header-bar-outer-container,
+.context-course_12 #content .header-bar-container,
+.context-course_12 #content .header-bar {
 	height: auto;
 	min-height: inherit;
 	box-shadow: none;
 }
-.context-course_11 #content .header-bar-right {
+.context-course_11 #content .header-bar-right,
+.context-course_12 #content .header-bar-right {
 	position: absolute;
 	right: 15px;
 	top: 15px;
@@ -122,15 +152,19 @@
 /* Customizing the Next/Previous footer */
 /* ------------------------------------ */
 .context-course_11 .module-sequence-footer 
-.context-course_11 .module-sequence-footer-content {
+.context-course_11 .module-sequence-footer-content,
+.context-course_12 .module-sequence-footer 
+.context-course_12 .module-sequence-footer-content {
 	background: white;
 	border: none;	
 }
-.context-course_11 .module-sequence-footer .pull-right {
+.context-course_11 .module-sequence-footer .pull-right,
+.context-course_12 .module-sequence-footer .pull-right {
 	background: #f26522;
 	color: white;
 }
-.context-course_11 .module-sequence-footer-padding {
+.context-course_11 .module-sequence-footer-padding,
+.context-course_12 .module-sequence-footer-padding {
   padding-top: 10px;
 }
 
@@ -166,27 +200,27 @@ ul.cons {
 /* Module navigation "title slides" */
 /* -------------------------------- */
 
-.context-course_11 .module-nav-titles {
+.module-nav-titles {
 	margin: 0;
 	list-style: none;
 	margin-bottom: 30px;
 }
-.context-course_11 .module-nav-titles li,
-.context-course_11 .module-nav-titles li h4 {
+.module-nav-titles li,
+.module-nav-titles li h4 {
 	margin: 0;
 	text-align: center;
 }
-.context-course_11 .show-content .module-nav-titles li h4 {
+.show-content .module-nav-titles li h4 {
 	font-size: 24px;
 }
-.context-course_11 .module-nav-titles li {
+.module-nav-titles li {
 	margin: 1em auto 30px;
 	width: 33%;
 	padding: 1em;
 	position: relative;
 	background: #eee;
 }
-.context-course_11 .module-nav-titles li:after {
+.module-nav-titles li:after {
 	top: 100%;
 	border: solid transparent;
 	content: " ";
@@ -199,15 +233,15 @@ ul.cons {
 	border-width: 30px;
 	margin-left: -30px;	
 }
-.context-course_11 .module-nav-titles li:last-child:after {
+.module-nav-titles li:last-child:after {
 	border: 0 none;	
 }
-.context-course_11 .module-nav-titles .current,
-.context-course_11 .module-nav-titles .current h4{
+.module-nav-titles .current,
+.module-nav-titles .current h4{
 	background: #f39330;
 	color: #fff !important;
 }
-.context-course_11 .module-nav-titles .current:after {
+.module-nav-titles .current:after {
 	border-top-color: #f39330;
 }
 
