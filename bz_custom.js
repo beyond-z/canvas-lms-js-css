@@ -9,7 +9,7 @@
  console.log("js working");
  
  //testing jquery
-$.noConflict();
+jQuery.noConflict();
 jQuery( document ).ready(function( $ ) {
 	console.log("jQ working");
 	
