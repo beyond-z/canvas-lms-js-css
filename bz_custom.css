@@ -88,7 +88,6 @@
 /* ----------------------------------------- */
 .student-logged-in.context-course_11 #content .header-bar-outer-container,
 .student-logged-in.context-course_12 #content .header-bar-outer-container,
-.student-logged-in.context-course_11 .essay_question .mceToolbar,
 .student-logged-in.context-course_11 #quiz-time-elapsed,
 .student-logged-in.context-course_11 #topbar #identity .inbox,
 .student-logged-in.context-course_11 #menu #grades_menu_item,
@@ -96,7 +95,6 @@
 .student-logged-in.context-course_11 #quiz_student_details,
 .student-logged-in.context-course_11 div#quiz_show .alert,
 .student-logged-in.context-course_11 .student-quiz-content .submission-attempt-history,
-.student-logged-in.context-course_12 .essay_question .mceToolbar,
 .student-logged-in.context-course_12 #quiz-time-elapsed,
 .student-logged-in.context-course_12 #topbar #identity .inbox,
 .student-logged-in.context-course_12 #menu #grades_menu_item,
@@ -163,6 +161,7 @@
 	color: #f26522;
 }
 .spoiler {
+	display: block;
 	position: relative;
 	cursor: pointer;	
 	color: #eee;
@@ -179,6 +178,30 @@
 	font-size: 1.2em;
 	line-height: 1.4em;	
 }
+/* fancy dandy stuff */
+/* ----------------- */
+
+/* show a play button over an image that links to a video 
+   (requires editor to wrap the link/image in span.video-link) */
+.video-link:after {
+	display: block;	
+	text-align: center;
+	width: 60px;
+	height: 40px;
+	margin: -20px 0 0 -30px;
+	font-size: 2em;
+	padding-top: 10px;
+	position: absolute;
+	content: "\25B6";
+	color: #fff;
+	background: rgba(0,0,0,0.5);
+	top: 50%;
+	left: 50%;
+}
+.video-link {
+	position: relative;	
+}
+
 
 /* Customizing the Next/Previous footer */
 /* ------------------------------------ */

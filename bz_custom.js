@@ -27,7 +27,7 @@ jQuery( document ).ready(function() {
 		});
 	});
 	/**/
-
+	
 
 	/* Interactive diagram about design thinking 
 	jQuery('div#design-thinking-chart').replaceWith('<canvas id="design-thinking-chart" />');
