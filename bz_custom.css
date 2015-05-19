@@ -21,7 +21,7 @@
 .context-course_11 .page-title,
 .context-course_12 #content h2,
 .context-course_12 .page-title {
-	font-size: 32px;
+	font-size: 28px;
 	color: #666;
 	line-height: normal;
 	font-weight: light;/* fallback */
@@ -33,9 +33,13 @@
 .context-course_12 .page-title,
 .context-course_12 h2.page-title,
 .context-course_12 .quiz-header h2:first-child {
-	font-size: 28px !important;
+	font-size: 32px !important;
 	padding-bottom: 8px;
 	border-bottom: 1px solid #ddd;
+}
+.context-course_11 .context_module h2 .name,
+.context-course_12 .context_module h2 .name {
+	font-size: 24px;
 }
 .context-course_11 .show-content h3,
 .context-course_12 .show-content h3 {
@@ -69,7 +73,6 @@
 .context-course_12 .show-content td,
 .context-course_12 .show-content dt,
 .context-course_12 .show-content dd {
- {
 	font-size: 1.1em;
 	line-height: 1.5em;
 }
@@ -77,27 +80,30 @@
 .context-course_12 ul {
 	list-style-position: inside;
 }
-
+#content table tr,
+#content table td {
+	vertical-align: top;
+}
 /* Hiding stuff the users don't need to see: */
 /* ----------------------------------------- */
-.context-course_11 .essay_question .mceToolbar,
-.context-course_11 #quiz-time-elapsed,
-.context-course_11 #topbar #identity .inbox,
-.context-course_11 #menu #grades_menu_item,
-.context-course_11 #quiz-attributes-student,
-.context-course_11 #quiz_student_details,
-.context-course_11 #wiki_page_show .header-bar-left,
-.context-course_11 div#quiz_show .alert,
-.context-course_11 .student-quiz-content .submission-attempt-history,
-.context-course_12 .essay_question .mceToolbar,
-.context-course_12 #quiz-time-elapsed,
-.context-course_12 #topbar #identity .inbox,
-.context-course_12 #menu #grades_menu_item,
-.context-course_12 #quiz-attributes-student,
-.context-course_12 #quiz_student_details,
-.context-course_12 #wiki_page_show .header-bar-left,
-.context-course_12 div#quiz_show .alert,
-.context-course_12 .student-quiz-content .submission-attempt-history {
+.student-logged-in.context-course_11 #content .header-bar-outer-container,
+.student-logged-in.context-course_12 #content .header-bar-outer-container,
+.student-logged-in.context-course_11 .essay_question .mceToolbar,
+.student-logged-in.context-course_11 #quiz-time-elapsed,
+.student-logged-in.context-course_11 #topbar #identity .inbox,
+.student-logged-in.context-course_11 #menu #grades_menu_item,
+.student-logged-in.context-course_11 #quiz-attributes-student,
+.student-logged-in.context-course_11 #quiz_student_details,
+.student-logged-in.context-course_11 div#quiz_show .alert,
+.student-logged-in.context-course_11 .student-quiz-content .submission-attempt-history,
+.student-logged-in.context-course_12 .essay_question .mceToolbar,
+.student-logged-in.context-course_12 #quiz-time-elapsed,
+.student-logged-in.context-course_12 #topbar #identity .inbox,
+.student-logged-in.context-course_12 #menu #grades_menu_item,
+.student-logged-in.context-course_12 #quiz-attributes-student,
+.student-logged-in.context-course_12 #quiz_student_details,
+.student-logged-in.context-course_12 div#quiz_show .alert,
+.student-logged-in.context-course_12 .student-quiz-content .submission-attempt-history {
 	display: none !important;	
 }
 /* 
@@ -105,20 +111,20 @@
    need to keep this a certain height 
    to keep the sidebar from hiding under header 
 */
-.context-course_11 #breadcrumbs,
-.context-course_12 #breadcrumbs {
+.student-logged-in.context-course_11 #breadcrumbs,
+.student-logged-in.context-course_12 #breadcrumbs {
 	height: 28px;
 	border-bottom: none 0 !important;
 }
-.context-course_11 #breadcrumbs ul,
-.context-course_12 #breadcrumbs ul {
+.student-logged-in.context-course_11 #breadcrumbs ul,
+.student-logged-in.context-course_12 #breadcrumbs ul {
 	display: none;
 }
 .context-course_11 .form-actions,
 .context-course_12 .form-actions {
 	border: none;
 }
-/* Fixing the header bar after hiding breadcrumbs and "view all pages" button: */
+/* Fixing the header bar after hiding breadcrumbs and "view all pages" button: 
 .context-course_11 #wiki_page_show .header-bar,
 .context-course_12 #wiki_page_show .header-bar {
 	min-height: 0;
@@ -141,13 +147,38 @@
 	right: 15px;
 	top: 15px;
 }
-
+/**/
 /* styles for alternative navigation */
 /* --------------------------------- */
 .bz-hide {
 	dispaly: none;
 }
 
+/* styles that editors can easily apply using a dropdown: */
+/* ------------------------------------------------------ */
+.spoiler:before {
+	content: "Hover to unhide";
+	display: inline;
+	position: absolute;
+	color: #f26522;
+}
+.spoiler {
+	position: relative;
+	cursor: pointer;	
+	color: #eee;
+	background: #eee;
+}
+.spoiler:hover {
+	background: #fff;
+	color: inherit;
+}
+.spoiler:hover:before {
+	display: none;	
+}
+.intro {
+	font-size: 1.2em;
+	line-height: 1.4em;	
+}
 
 /* Customizing the Next/Previous footer */
 /* ------------------------------------ */
@@ -244,4 +275,3 @@ ul.cons {
 .module-nav-titles .current:after {
 	border-top-color: #f39330;
 }
-
