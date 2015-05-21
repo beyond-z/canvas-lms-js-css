@@ -201,7 +201,21 @@
 .video-link {
 	position: relative;	
 }
-
+/* wyld stylez for tables! */
+.zebra tr:nth-child(even) {
+	background: #eee;	
+}
+.zebra td ,
+.zebra th {
+	border: 1px solid #eee;
+	padding: 0.3em 0.5em !important;
+}
+.zebra tr:nth-child(even) td {
+	border-right: 1px solid #fff;
+}
+.zebra tr:nth-child(even) td:last-child {
+	border-right: 1px solid #eee;	
+}
 
 /* Customizing the Next/Previous footer */
 /* ------------------------------------ */
