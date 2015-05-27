@@ -17,66 +17,52 @@
 	/* need to import webfont if we haven't already! */
 	font-family:"Open Sans", sans-serif;
 }
-.context-course_11 #content h2,
-.context-course_11 .page-title,
-.context-course_15 #content h2,
-.context-course_15 .page-title {
+#content h2,
+.page-title {
 	font-size: 28px;
 	color: #666;
 	line-height: normal;
 	font-weight: light;/* fallback */
 	font-weight: 100;
 }
-.context-course_11 .page-title,
-.context-course_11 h2.page-title,
-.context-course_11 .quiz-header h2:first-child,
-.context-course_15 .page-title,
-.context-course_15 h2.page-title,
-.context-course_15 .quiz-header h2:first-child {
+.page-title,
+h2.page-title,
+.quiz-header h2:first-child {
 	font-size: 32px !important;
 	padding-bottom: 8px;
 	border-bottom: 1px solid #ddd;
 }
-.context-course_11 .context_module h2 .name,
-.context-course_15 .context_module h2 .name {
+.context_module h2 .name {
 	font-size: 24px;
 }
-.context-course_11 .show-content h3,
-.context-course_15 .show-content h3 {
+.show-content h3 {
 	font-size: 24px;
 	color: #f26522;
 	line-height: normal;
 	padding-top: 10px;
 	margin-bottom: 0.25em;
 }
-.context-course_11 .show-content h4,
-.context-course_15 .show-content h4 {
+.show-content h4 {
 	font-size: 18px;
 	line-height: normal;
 	margin-top: 1.25em;	
 }
-.context-course_11 .show-content blockquote,
-.context-course_15 .show-content blockquote {
+.show-content blockquote{
 	font-style: italic;
 	font-size: 16px;
 	line-height: normal;
 	padding-right: 30%;
 	margin: 30px;
 }
-.context-course_11 .show-content p,
-.context-course_11 .show-content li,
-.context-course_11 .show-content td,
-.context-course_11 .show-content dt,
-.context-course_11 .show-content dd,
-.context-course_15 .show-content p,
-.context-course_15 .show-content li,
-.context-course_15 .show-content td,
-.context-course_15 .show-content dt,
-.context-course_15 .show-content dd {
+.show-content p,
+.show-content li,
+.show-content td,
+.show-content dt,
+.show-content dd {
 	font-size: 1.1em;
 	line-height: 1.5em;
 }
-.context-course_11 ul,
+ul,
 .context-course_15 ul {
 	list-style-position: inside;
 }
@@ -84,24 +70,16 @@
 #content table td {
 	vertical-align: top;
 }
-/* Hiding stuff the users don't need to see: */
-/* ----------------------------------------- */
-.student-logged-in.context-course_11 #content .header-bar-outer-container,
+/* Hiding stuff the students don't need to see: */
+/* -------------------------------------------- */
+.student-logged-in#content .header-bar-outer-container,
 .student-logged-in.context-course_15 #content .header-bar-outer-container,
-.student-logged-in.context-course_11 #quiz-time-elapsed,
-.student-logged-in.context-course_11 #topbar #identity .inbox,
-.student-logged-in.context-course_11 #menu #grades_menu_item,
-.student-logged-in.context-course_11 #quiz-attributes-student,
-.student-logged-in.context-course_11 #quiz_student_details,
-.student-logged-in.context-course_11 div#quiz_show .alert,
-.student-logged-in.context-course_11 .student-quiz-content .submission-attempt-history,
-.student-logged-in.context-course_15 #quiz-time-elapsed,
-.student-logged-in.context-course_15 #topbar #identity .inbox,
-.student-logged-in.context-course_15 #menu #grades_menu_item,
-.student-logged-in.context-course_15 #quiz-attributes-student,
-.student-logged-in.context-course_15 #quiz_student_details,
-.student-logged-in.context-course_15 div#quiz_show .alert,
-.student-logged-in.context-course_15 .student-quiz-content .submission-attempt-history {
+.student-logged-in#quiz-time-elapsed,
+.student-logged-in#topbar #identity .inbox,
+.student-logged-in#menu #grades_menu_item,
+.student-logged-in#quiz-attributes-student,
+.student-logged-in#quiz_student_details,
+.student-logged-indiv#quiz_show .alert {
 	display: none !important;	
 }
 /* 
@@ -109,29 +87,26 @@
    need to keep this a certain height 
    to keep the sidebar from hiding under header 
 */
-.student-logged-in.context-course_11 #breadcrumbs,
-.student-logged-in.context-course_15 #breadcrumbs {
+.student-logged-in#breadcrumbs {
 	height: 28px;
 	border-bottom: none 0 !important;
 }
-.student-logged-in.context-course_11 #breadcrumbs ul,
-.student-logged-in.context-course_15 #breadcrumbs ul {
+.student-logged-in#breadcrumbs ul {
 	display: none;
 }
-.context-course_11 .form-actions,
-.context-course_15 .form-actions {
+.form-actions{
 	border: none;
 }
 /* Fixing the header bar after hiding breadcrumbs and "view all pages" button: 
-.context-course_11 #wiki_page_show .header-bar,
+#wiki_page_show .header-bar,
 .context-course_15 #wiki_page_show .header-bar {
 	min-height: 0;
 	padding: 0;
 	border: 0 none;
 }
-.context-course_11 #content .header-bar-outer-container,
-.context-course_11 #content .header-bar-container,
-.context-course_11 #content .header-bar,
+#content .header-bar-outer-container,
+#content .header-bar-container,
+#content .header-bar,
 .context-course_15 #content .header-bar-outer-container,
 .context-course_15 #content .header-bar-container,
 .context-course_15 #content .header-bar {
@@ -139,7 +114,7 @@
 	min-height: inherit;
 	box-shadow: none;
 }
-.context-course_11 #content .header-bar-right,
+#content .header-bar-right,
 .context-course_15 #content .header-bar-right {
 	position: absolute;
 	right: 15px;
@@ -219,19 +194,16 @@
 
 /* Customizing the Next/Previous footer */
 /* ------------------------------------ */
-.context-course_11 .module-sequence-footer 
-.context-course_11 .module-sequence-footer-content,
-.context-course_15 .module-sequence-footer 
-.context-course_15 .module-sequence-footer-content {
+.module-sequence-footer 
+.module-sequence-footer-content {
 	background: white;
 	border: none;	
 }
-.context-course_11 .module-sequence-footer .pull-right,
-.context-course_15 .module-sequence-footer .pull-right {
+.module-sequence-footer .pull-right {
 	background: #f26522;
 	color: white;
 }
-.context-course_11 .module-sequence-footer-padding,
+.module-sequence-footer-padding,
 .context-course_15 .module-sequence-footer-padding {
   padding-top: 10px;
 }
