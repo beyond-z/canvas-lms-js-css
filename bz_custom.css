@@ -219,6 +219,16 @@ ul,
 .context-course_9 #course_show_secondary .to-do-list {
 	display: none;
 }
+/* Accessibility */
+/* ------------- */
+.says,
+.screen-reader-text {
+	clip: rect(1px, 1px, 1px, 1px);
+	height: 1px;
+	overflow: hidden;
+	position: absolute !important;
+	width: 1px;
+}
 
 /* Pros and Cons lists */
 /* ------------------- */
@@ -228,7 +238,8 @@ ul.bz-pros > li:before,
 ul.bz-cons > li:before {
     content: "\2714";
 	color: green;
-	margin-left: -1em;
+	margin-left: -1.5em;
+	margin-right: 0.5em;
 }
 ul.cons > li:before, 
 ul.bz-cons > li:before {
@@ -323,17 +334,50 @@ ul.bz-cons {
 .bz-has-tooltip {
 	cursor:pointer;	
 }
+/* case study box */
+.case-study-box {
+	background: #f6f6f6; 
+	padding: 50px 20px 20px;
+	position: relative;
+	margin-left: 20px;
+	border: #ccc 2px dotted;
+}
+.case-study-box h4 {
+	margin-top: 0;
+}
+.case-study-box:before {
+	text-transform: uppercase;
+	font-weight: bold;
+	color: #fff;
+	background: #aaa;
+	content:"Case Study";
+	position: absolute;
+	top: -2px;
+	height: 20px;
+	left: -2px;
+	padding: 5px 20px;
+}
 /* Backlog: */
-.bz-quote-source {}
+.bz-quote-source {
+	display: block;
+	text-align: center;
+	font-style: normal;	
+}
+.bz-quote-source:before{
+	content: "\2014";
+	margin-right: 0.25em;
+}
 .bz-horizontal-progress {}
 .bz-component-table{/*e.g. https://portal.beyondz.org/courses/11/pages/what-effective-problem-solving-looks-like?module_item_id=532 */}
-.bz-case-study-box {}
-.bz-hide-from-all-users {}
-.bz-hide-from-students {}
+
+.bz-hide-from-all-users {
+	display: none;
+}
+.student-logged-in .bz-hide-from-students {
+	display: none;
+}
 .bz-pullout {}
 .bz-to-do-item {}
 .bz-watch-out {}
 .bz-helpful-tip {}
-.screen-reader-text {}
 .bz-diagram {}
-/* fix spacing on pros and cons */
