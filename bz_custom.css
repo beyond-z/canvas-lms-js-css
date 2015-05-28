@@ -284,3 +284,39 @@ ul.cons {
 .module-nav-titles .current:after {
 	border-top-color: #f39330;
 }
+/* diagrams etc */
+.slices,
+.slices tr,
+.slices td, 
+.slices th {
+	padding: 0;	
+}
+
+/* Tooltip: */
+.tooltip {
+	display:none;position:absolute;
+	border:1px solid #333;
+	background-color:#161616;
+	border-radius:5px;
+	padding:10px;
+	color:#fff;
+	font-size:12px;
+	margin: 2em;
+}
+.uses-tooltips {
+	position: relative;
+	margin-right: auto;	
+}
+/* Backlog: */
+.quote-source {}
+.horizontal-progress {}
+.component-table{/*e.g. https://portal.beyondz.org/courses/11/pages/what-effective-problem-solving-looks-like?module_item_id=532 */}
+.case-study-box {}
+.hide-from-all-users {}
+.hide-from-students {}
+.pullout {}
+.to-do-item {}
+.watch-out {}
+.helpful-tip {}
+
+/* fix spacing on pros and cons */
