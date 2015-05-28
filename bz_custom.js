@@ -28,21 +28,21 @@ jQuery( document ).ready(function() {
 	});
 	/**/
 	/* Tooltips */
-	$('.uses-tooltips img').hover(function(){
+	jQuery('.bz-has-tooltip').hover(function(){
         // Hover over item to show tooltip:
-        var title = $(this).attr('alt');
+        var title = jQuery(this).attr('alt') || jQuery(this).attr('title');
 		if (title) {
-			$(this).data('tipText', title).removeAttr('alt');
-			$('<p class="tooltip"></p>')
+			jQuery(this).data('tipText', title);//.removeAttr('alt');
+			jQuery('<p class="bz-tooltip"></p>')
 			.text(title)
-			.appendTo($(this).parent())
+			.appendTo(jQuery(this).parent())
 			.fadeIn('slow');
 		}
 	}, function() {
         // remove the tooltip on mouseout:
-		if($(this).data('tipText')) {
-	        $(this).attr('alt', $(this).data('tipText'));
-    	    $('.tooltip').remove();
+		if(jQuery(this).data('tipText')) {
+	        //jQuery(this).attr('alt', jQuery(this).data('tipText'));
+    	    jQuery('.bz-tooltip').remove();
 		}
 	});
 
