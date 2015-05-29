@@ -158,7 +158,8 @@ ul,
 
 /* show a play button over an image that links to a video 
    (requires editor to wrap the link/image in span.video-link) */
-.video-link:after {
+.video-link:after,
+.bz-video-link:after  {
 	display: block;	
 	text-align: center;
 	width: 60px;
@@ -173,22 +174,26 @@ ul,
 	top: 50%;
 	left: 50%;
 }
-.video-link {
+.video-link,
+.bz-video-link {
 	position: relative;	
 }
 /* wyld stylez for tables! */
-.zebra tr:nth-child(even) {
+.zebra tr:nth-child(even),
+.bz-zebra tr:nth-child(even) {
 	background: #eee;	
 }
-.zebra td ,
-.zebra th {
+.zebra td,
+.zebra th,
+.bz-zebra td,
+.bz-zebra th {
 	border: 1px solid #eee;
 	padding: 0.3em 0.5em !important;
 }
-.zebra tr:nth-child(even) td {
+.bz-zebra tr:nth-child(even) td {
 	border-right: 1px solid #fff;
 }
-.zebra tr:nth-child(even) td:last-child {
+.bz-zebra tr:nth-child(even) td:last-child {
 	border-right: 1px solid #eee;	
 }
 
@@ -214,27 +219,46 @@ ul,
 .context-course_9 #course_show_secondary .to-do-list {
 	display: none;
 }
+/* Accessibility */
+/* ------------- */
+.says,
+.screen-reader-text {
+	clip: rect(1px, 1px, 1px, 1px);
+	height: 1px;
+	overflow: hidden;
+	position: absolute !important;
+	width: 1px;
+}
 
 /* Pros and Cons lists */
 /* ------------------- */
 ul.pros > li:before, 
-ul.cons > li:before {
+ul.cons > li:before,
+ul.bz-pros > li:before, 
+ul.bz-cons > li:before {
     content: "\2714";
 	color: green;
-	margin-left: -1em;
+	margin-left: -1.5em;
+	margin-right: 0.5em;
 }
-ul.cons > li:before {
+ul.cons > li:before, 
+ul.bz-cons > li:before {
     content: "\2718";
 	color: red;
 }
-ul.cons>li, ul.pros>li {
+ul.cons>li, 
+ul.pros>li,
+ul.bz-cons>li, 
+ul.bz-pros>li {
 	margin-bottom: 0.5em;	
 }
 ul.pros, 
-ul.cons {
-   list-style: none;
-   list-style-position:outside;
-	margin-left: 1em;
+ul.cons,
+ul.bz-pros, 
+ul.bz-cons {
+	list-style: none;
+	list-style-position:outside;
+	margin-left: 1.5em;
 }
 
 /* Module navigation "title slides" */
@@ -284,3 +308,76 @@ ul.cons {
 .module-nav-titles .current:after {
 	border-top-color: #f39330;
 }
+/* diagrams etc */
+.bz-slices,
+.bz-slices tr,
+.bz-slices td, 
+.bz-slices th {
+	padding: 0;	
+}
+
+/* Tooltip: */
+.bz-tooltip {
+	display:none;position:absolute;
+	border:1px solid #333;
+	background-color:#161616;
+	border-radius:5px;
+	padding:10px;
+	color:#fff;
+	font-size:12px;
+	margin: 2em;
+}
+.bz-uses-tooltips {
+	position: relative;
+	margin-right: auto;	
+}
+.bz-has-tooltip {
+	cursor:pointer;	
+}
+/* case study box */
+.case-study-box {
+	background: #f6f6f6; 
+	padding: 50px 20px 20px;
+	position: relative;
+	margin-left: 20px;
+	border: #ccc 2px dotted;
+}
+.case-study-box h4 {
+	margin-top: 0;
+}
+.case-study-box:before {
+	text-transform: uppercase;
+	font-weight: bold;
+	color: #fff;
+	background: #aaa;
+	content:"Case Study";
+	position: absolute;
+	top: -2px;
+	height: 20px;
+	left: -2px;
+	padding: 5px 20px;
+}
+/* Backlog: */
+.bz-quote-source {
+	display: block;
+	text-align: center;
+	font-style: normal;	
+}
+.bz-quote-source:before{
+	content: "\2014";
+	margin-right: 0.25em;
+}
+.bz-horizontal-progress {}
+.bz-component-table{/*e.g. https://portal.beyondz.org/courses/11/pages/what-effective-problem-solving-looks-like?module_item_id=532 */}
+
+.bz-hide-from-all-users {
+	display: none;
+}
+.student-logged-in .bz-hide-from-students {
+	display: none;
+}
+.bz-pullout {}
+.bz-to-do-item {}
+.bz-watch-out {}
+.bz-helpful-tip {}
+.bz-diagram {}

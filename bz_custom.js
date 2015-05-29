@@ -27,7 +27,24 @@ jQuery( document ).ready(function() {
 		});
 	});
 	/**/
-	
+	/* Tooltips */
+	jQuery('.bz-has-tooltip').hover(function(){
+        // Hover over item to show tooltip:
+        var title = jQuery(this).attr('alt') || jQuery(this).attr('title');
+		if (title) {
+			jQuery(this).data('tipText', title);//.removeAttr('alt');
+			jQuery('<p class="bz-tooltip"></p>')
+			.text(title)
+			.appendTo(jQuery(this).parent())
+			.fadeIn('slow');
+		}
+	}, function() {
+        // remove the tooltip on mouseout:
+		if(jQuery(this).data('tipText')) {
+	        //jQuery(this).attr('alt', jQuery(this).data('tipText'));
+    	    jQuery('.bz-tooltip').remove();
+		}
+	});
 
 	/* Interactive diagram about design thinking 
 	jQuery('div#design-thinking-chart').replaceWith('<canvas id="design-thinking-chart" />');
