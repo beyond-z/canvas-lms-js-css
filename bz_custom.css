@@ -47,6 +47,10 @@ h2.page-title,
 	line-height: normal;
 	margin-top: 1.25em;	
 }
+.show-content h5 {
+	font-weight: bold;
+	text-transform: uppercase;
+}
 .show-content blockquote{
 	font-style: italic;
 	font-size: 16px;
@@ -63,12 +67,12 @@ h2.page-title,
 	line-height: 1.5em;
 }
 ul,
-.context-course_15 ul {
-	list-style-position: inside;
-}
 #content table tr,
 #content table td {
 	vertical-align: top;
+}
+#content #wiki_page_show ul {
+		list-style-position: outside;
 }
 /* Hiding stuff the students don't need to see: */
 /* -------------------------------------------- */
@@ -129,27 +133,32 @@ ul,
 
 /* styles that editors can easily apply using a dropdown: */
 /* ------------------------------------------------------ */
-.spoiler:before {
+.spoiler:before,
+.bz-spolier:before {
 	content: "Hover to unhide";
 	display: inline;
 	position: absolute;
 	color: #f26522;
 }
-.spoiler {
+.spoiler,
+.bz-spolier {
 	display: block;
 	position: relative;
 	cursor: pointer;	
 	color: #eee;
 	background: #eee;
 }
-.spoiler:hover {
+.spoiler:hover,
+.bz-spolier:hover {
 	background: #fff;
 	color: inherit;
 }
-.spoiler:hover:before {
+.spoiler:hover:before,
+.bz-spoiler:hover:before {
 	display: none;	
 }
-.intro {
+.intro,
+.bz-intro {
 	font-size: 1.2em;
 	line-height: 1.4em;	
 }
@@ -334,18 +343,43 @@ ul.bz-cons {
 .bz-has-tooltip {
 	cursor:pointer;	
 }
-/* case study box */
-.case-study-box {
+/* case study and example boxes */
+.bz-case-study-box,
+.bz-example {
 	background: #f6f6f6; 
 	padding: 50px 20px 20px;
 	position: relative;
 	margin-left: 20px;
 	border: #ccc 2px dotted;
 }
-.case-study-box h4 {
+.bz-example {
+	background: #f6f6f6; 
+	padding: 50px 20px 20px;
+	position: relative;
+	margin-left: 20px;
+	border: #ccc 2px dotted;
+}
+.bz-example {
+	border: 1px solid #ccc;	
+	margin: 1em 15% 1em;
+	
+}
+.bz-example:before {
+	text-transform: uppercase;
+	font-weight: bold;
+	color: #fff;
+	background: #aaa;
+	content:"Example";
+	position: absolute;
+	top: -1px;
+	height: 20px;
+	left: -1px;
+	padding: 5px 20px;
+}
+.bz-case-study-box h4 {
 	margin-top: 0;
 }
-.case-study-box:before {
+.bz-case-study-box:before {
 	text-transform: uppercase;
 	font-weight: bold;
 	color: #fff;
@@ -376,8 +410,18 @@ ul.bz-cons {
 .student-logged-in .bz-hide-from-students {
 	display: none;
 }
-.bz-pullout {}
+.pullout,
+.bz-pullout {
+	display: block;
+	margin: 1em 15% 1em;
+	padding: 2em;
+	font-style: italic;
+	font-size: 18px;
+	border: 1px solid #ccc;
+}
+
 .bz-to-do-item {}
 .bz-watch-out {}
 .bz-helpful-tip {}
 .bz-diagram {}
+.bz-to-do {}
