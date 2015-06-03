@@ -28,7 +28,7 @@
 .page-title,
 h2.page-title,
 .quiz-header h2:first-child {
-	font-size: 32px !important;
+	font-size: 36px !important;
 	padding-bottom: 8px;
 	border-bottom: 1px solid #ddd;
 }
@@ -36,20 +36,21 @@ h2.page-title,
 	font-size: 24px;
 }
 .show-content h3 {
-	font-size: 24px;
+	font-size: 28px;
 	color: #f26522;
 	line-height: normal;
 	padding-top: 10px;
 	margin-bottom: 0.25em;
 }
 .show-content h4 {
-	font-size: 18px;
+	font-size: 24px;
 	line-height: normal;
 	margin-top: 1.25em;	
 }
 .show-content h5 {
+	font-size: 18px;
 	font-weight: bold;
-	text-transform: uppercase;
+	font-weight: 600;	
 }
 .show-content blockquote{
 	font-style: italic;
@@ -344,54 +345,46 @@ ul.bz-cons {
 	cursor:pointer;	
 }
 /* case study and example boxes */
+.case-study-box,
 .bz-case-study-box,
 .bz-example {
 	background: #f6f6f6; 
 	padding: 50px 20px 20px;
 	position: relative;
-	margin-left: 20px;
-	border: #ccc 2px dotted;
+	margin: 1em 0 1em;
+	background: #fbfbfb; 
 }
-.bz-example {
-	background: #f6f6f6; 
-	padding: 50px 20px 20px;
-	position: relative;
-	margin-left: 20px;
-	border: #ccc 2px dotted;
-}
-.bz-example {
-	border: 1px solid #ccc;	
-	margin: 1em 15% 1em;
-	
-}
-.bz-example:before {
-	text-transform: uppercase;
-	font-weight: bold;
-	color: #fff;
-	background: #aaa;
-	content:"Example";
-	position: absolute;
-	top: -1px;
-	height: 20px;
-	left: -1px;
-	padding: 5px 20px;
-}
-.bz-case-study-box h4 {
-	margin-top: 0;
-}
+.bz-example:before,
+.case-study-box:before,
 .bz-case-study-box:before {
 	text-transform: uppercase;
 	font-weight: bold;
-	color: #fff;
-	background: #aaa;
-	content:"Case Study";
+	color: #666;
+	background: #eee;
+	content:"Example:";
 	position: absolute;
-	top: -2px;
+	top: 0px;
+	left: 0px;
 	height: 20px;
-	left: -2px;
 	padding: 5px 20px;
 }
-/* Backlog: */
+.bz-example,
+.case-study-box h4,
+.bz-case-study-box h4 {
+	margin-top: 0;
+	
+}
+.case-study-box,
+.bz-case-study-box {
+	border: #ccc 1px solid;
+}
+.case-study-box:before,
+.bz-case-study-box:before {
+	color: #fff;
+	background: #f26522;
+	content:"Case Study:";
+}
+/* quote source */
 .bz-quote-source {
 	display: block;
 	text-align: center;
@@ -401,25 +394,27 @@ ul.bz-cons {
 	content: "\2014";
 	margin-right: 0.25em;
 }
-.bz-horizontal-progress {}
-.bz-component-table{/*e.g. https://portal.beyondz.org/courses/11/pages/what-effective-problem-solving-looks-like?module_item_id=532 */}
-
+/* selective hiding */
 .bz-hide-from-all-users {
 	display: none;
 }
 .student-logged-in .bz-hide-from-students {
 	display: none;
 }
+/* pullout */
 .pullout,
 .bz-pullout {
 	display: block;
 	margin: 1em 15% 1em;
 	padding: 2em;
 	font-style: italic;
-	font-size: 18px;
+	font-size: 16px;
 	border: 1px solid #ccc;
 }
-
+/* Backlog: */
+/* -------- */
+.bz-horizontal-progress {}
+.bz-component-table{/*e.g. https://portal.beyondz.org/courses/11/pages/what-effective-problem-solving-looks-like?module_item_id=532 */}
 .bz-to-do-item {}
 .bz-watch-out {}
 .bz-helpful-tip {}
