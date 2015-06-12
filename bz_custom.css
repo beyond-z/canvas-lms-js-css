@@ -77,14 +77,14 @@ ul,
 }
 /* Hiding stuff the students don't need to see: */
 /* -------------------------------------------- */
-.student-logged-in#content .header-bar-outer-container,
-.student-logged-in.context-course_15 #content .header-bar-outer-container,
-.student-logged-in#quiz-time-elapsed,
-.student-logged-in#topbar #identity .inbox,
-.student-logged-in#menu #grades_menu_item,
-.student-logged-in#quiz-attributes-student,
-.student-logged-in#quiz_student_details,
-.student-logged-indiv#quiz_show .alert {
+.student-logged-in #content .header-bar-outer-container,
+.student-logged-in .context-course_15 #content .header-bar-outer-container,
+.student-logged-in #quiz-time-elapsed,
+.student-logged-in #topbar #identity .inbox,
+.student-logged-in #menu #grades_menu_item,
+.student-logged-in #quiz-attributes-student,
+.student-logged-in #quiz_student_details,
+.student-logged-in div #quiz_show .alert {
 	display: none !important;	
 }
 /* 
@@ -92,11 +92,11 @@ ul,
    need to keep this a certain height 
    to keep the sidebar from hiding under header 
 */
-.student-logged-in#breadcrumbs {
+.student-logged-in #breadcrumbs {
 	height: 28px;
 	border-bottom: none 0 !important;
 }
-.student-logged-in#breadcrumbs ul {
+.student-logged-in #breadcrumbs ul {
 	display: none;
 }
 .form-actions{
