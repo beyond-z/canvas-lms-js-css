@@ -361,7 +361,7 @@ ul.bz-cons {
 	font-weight: bold;
 	color: #666;
 	background: #eee;
-	content:"Example:";
+	content:"Example";
 	position: absolute;
 	top: 0px;
 	left: 0px;
@@ -381,8 +381,8 @@ ul.bz-cons {
 .case-study-box:before,
 .bz-case-study-box:before {
 	color: #fff;
-	background: #f26522;
-	content:"Case Study:";
+	background: #999;
+	content:"Case Study";
 }
 /* quote source */
 .bz-quote-source {
