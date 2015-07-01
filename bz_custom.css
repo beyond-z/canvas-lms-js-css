@@ -70,7 +70,7 @@ h2.page-title,
 .show-content td,
 .show-content dt,
 .show-content dd {
-	font-size: 1.1em;
+	font-size: 14px;
 	line-height: 1.5em;
 }
 ul,
@@ -141,24 +141,96 @@ ul,
 /* styles that editors can easily apply using a dropdown: */
 /* ------------------------------------------------------ */
 .spoiler:before,
-.bz-spolier:before {
+.bz-spoiler:before {
 	content: "Hover to unhide";
 	display: inline;
 	position: absolute;
 	color: #f26522;
+	padding-left: 0.33em;
+	font-weight: bold;
+	text-transform: uppercase;
+	font-size: 0.9em;
 }
 .spoiler,
-.bz-spolier {
-	display: block;
+.bz-spoiler {
 	position: relative;
 	cursor: pointer;	
 	color: #eee;
 	background: #eee;
+	background: rgba(0,0,0,0.03);
+	    -webkit-animation: fadeout 0.5s; /* Safari, Chrome and Opera > 12.1 */
+       -moz-animation: fadeout 0.5s; /* Firefox < 16 */
+        -ms-animation: fadeout 0.5s; /* Internet Explorer */
+         -o-animation: fadeout 0.5s; /* Opera < 12.1 */
+            animation: fadeout 0.5s;
+}
+
+@keyframes fadeout {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Firefox < 16 */
+@-moz-keyframes fadeout {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Safari, Chrome and Opera > 12.1 */
+@-webkit-keyframes fadeout {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Internet Explorer */
+@-ms-keyframes fadeout {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Opera < 12.1 */
+@-o-keyframes fadeout {
+    from { opacity: 0; }
+    to   { opacity: 1; }
 }
 .spoiler:hover,
-.bz-spolier:hover {
+.bz-spoiler:hover {
 	background: #fff;
 	color: inherit;
+    -webkit-animation: fadein 0.5s; /* Safari, Chrome and Opera > 12.1 */
+       -moz-animation: fadein 0.5s; /* Firefox < 16 */
+        -ms-animation: fadein 0.5s; /* Internet Explorer */
+         -o-animation: fadein 0.5s; /* Opera < 12.1 */
+            animation: fadein 0.5s;
+}
+
+@keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Firefox < 16 */
+@-moz-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Safari, Chrome and Opera > 12.1 */
+@-webkit-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Internet Explorer */
+@-ms-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Opera < 12.1 */
+@-o-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
 }
 .spoiler:hover:before,
 .bz-spoiler:hover:before {
@@ -197,20 +269,16 @@ ul,
 /* wyld stylez for tables! */
 .zebra tr:nth-child(even),
 .bz-zebra tr:nth-child(even) {
-	background: #eee;	
+	background: #fbfbfb;	
 }
 .zebra td,
 .zebra th,
 .bz-zebra td,
-.bz-zebra th {
+.bz-zebra th,
+table.bz-plain td,
+table.bz-plain th {
 	border: 1px solid #eee;
 	padding: 0.3em 0.5em !important;
-}
-.bz-zebra tr:nth-child(even) td {
-	border-right: 1px solid #fff;
-}
-.bz-zebra tr:nth-child(even) td:last-child {
-	border-right: 1px solid #eee;	
 }
 
 /* Customizing the Next/Previous footer */
@@ -246,8 +314,9 @@ ul,
 	width: 1px;
 }
 
-/* Pros and Cons lists */
+/* To Do, Pros, and Cons lists */
 /* ------------------- */
+ul.bz-to-do-item > li:before,
 ul.pros > li:before, 
 ul.cons > li:before,
 ul.bz-pros > li:before, 
@@ -262,16 +331,22 @@ ul.bz-cons > li:before {
     content: "\2718";
 	color: red;
 }
+ul.bz-to-do-item > li:before {
+	content: "\2610";
+	color: #999;	
+}
 ul.cons>li, 
 ul.pros>li,
 ul.bz-cons>li, 
-ul.bz-pros>li {
+ul.bz-pros>li,
+ul.bz-to-do-item>li {
 	margin-bottom: 0.5em;	
 }
 ul.pros, 
 ul.cons,
 ul.bz-pros, 
-ul.bz-cons {
+ul.bz-cons,
+ul.bz-to-do-item {
 	list-style: none;
 	list-style-position:outside;
 	margin-left: 1.5em;
@@ -350,19 +425,29 @@ ul.bz-cons {
 .bz-has-tooltip {
 	cursor:pointer;	
 }
-/* case study and example boxes */
+/* Boxes */
 .case-study-box,
 .bz-case-study-box,
-.bz-example {
-	background: #f6f6f6; 
+.bz-example,
+.bz-diagram-box,
+.bz-helpful-tip-box,
+.bz-resource-box,
+.bz-practice-box {
 	padding: 50px 20px 20px;
 	position: relative;
 	margin: 1em 0 1em;
 	background: #fbfbfb; 
 }
+.bz-diagram-box {
+	padding: 20px;
+	text-align: center;
+}
 .bz-example:before,
 .case-study-box:before,
-.bz-case-study-box:before {
+.bz-case-study-box:before,
+.bz-helpful-tip-box:before,
+.bz-resource-box:before,
+.bz-practice-box:before {
 	text-transform: uppercase;
 	font-weight: bold;
 	color: #666;
@@ -374,14 +459,17 @@ ul.bz-cons {
 	height: 20px;
 	padding: 5px 20px;
 }
-.bz-example,
+.bz-example h4,
 .case-study-box h4,
-.bz-case-study-box h4 {
+.bz-case-study-box h4,
+.bz-helpful-tip-box h4,
+.bz-resource-box h4,
+.bz-practice-box h4 {
 	margin-top: 0;
-	
 }
 .case-study-box,
-.bz-case-study-box {
+.bz-case-study-box,
+.bz-diagram-box {
 	border: #ccc 1px solid;
 }
 .case-study-box:before,
@@ -389,6 +477,15 @@ ul.bz-cons {
 	color: #fff;
 	background: #999;
 	content:"Case Study";
+}
+.bz-helpful-tip-box:before {
+	content:"Helpful Tip";
+}
+.bz-resource-box:before {
+	content:"Resources";
+}
+.bz-practice-box:before {
+	content:"Quick Practice";
 }
 /* quote source */
 .bz-quote-source {
@@ -421,8 +518,4 @@ ul.bz-cons {
 /* -------- */
 .bz-horizontal-progress {}
 .bz-component-table{/*e.g. https://portal.beyondz.org/courses/11/pages/what-effective-problem-solving-looks-like?module_item_id=532 */}
-.bz-to-do-item {}
-.bz-watch-out {}
-.bz-helpful-tip {}
-.bz-diagram {}
-.bz-to-do {}
+
