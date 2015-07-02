@@ -142,7 +142,7 @@ ul,
 /* ------------------------------------------------------ */
 .spoiler:before,
 .bz-spoiler:before {
-	content: "Hover to unhide";
+	content: "Hover to reveal";
 	display: inline;
 	position: absolute;
 	color: #f26522;
@@ -478,8 +478,13 @@ ul.bz-to-do-item {
 	background: #999;
 	content:"Case Study";
 }
+.bz-watch-out-box:before {
+	content:"Watch Out!";
+	background-color: #f5e9d9;
+}
 .bz-helpful-tip-box:before {
 	content:"Helpful Tip";
+	background-color: #e9f5dc;
 }
 .bz-resource-box:before {
 	content:"Resources";
