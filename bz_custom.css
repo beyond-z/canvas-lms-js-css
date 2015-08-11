@@ -519,12 +519,56 @@ ul.bz-to-do-item {
 	font-size: 16px;
 	border: 1px solid #ccc;
 }
-/* Backlog: */
-/* -------- */
-.bz-horizontal-progress {}
-.bz-component-table{/*e.g. https://portal.beyondz.org/courses/11/pages/what-effective-problem-solving-looks-like?module_item_id=532 */}
-
+/* Auto Table of Contents */
+/* ---------------------- */
+#bz-auto-toc {
+    width: 66.667%;
+    margin: 0 auto;
+}
+#bz-auto-toc .ig-row {
+    box-shadow:none;
+}
+#bz-auto-toc ul.context_module_items {
+    border: 1px dotted #e6e6e6;
+padding: 12px;
+}
+#bz-auto-toc * {
+   border: none 0;
+   background: inherit;
+   color: inherit;
+font-family: Oswald, sans-serif;
+font-weight: 700;
+font-size: 18px;
+}
+.bz-toc-current {
+    color: #eb3b46 !important;
+}
+#bz-auto-toc .ig-row {
+    border-left: 12px solid #e6e6e6 !important;
+    border-radius: 0 !important;
+}
+#bz-auto-toc .bz-toc-current-wrapper .ig-row {
+    border-left: 12px solid #eb3b46 !important;
+}
+#bz-auto-toc a {
+   text-decoration: none !important;
+   cursor: text !important;
+}
+#bz-auto-toc .indent_1,
+#bz-auto-toc .indent_2,
+#bz-auto-toc .indent_3,
+#bz-auto-toc .ig-header,
+#bz-auto-toc .ig-admin,
+#bz-auto-toc .draggable-handle,
+#bz-auto-toc i,
+#bz-auto-toc .context_module_sub_header {
+    display:none;
+}
+#bz-auto-toc li {
+    margin: 0;
+}
 /* Progress bar on Canvas */
+/* ---------------------- */
 #bz-module-sequence-progress-container {
   position: absolute;
   top: 0px;
@@ -550,5 +594,9 @@ ul.bz-to-do-item {
 .bz-progress-item-count {
   padding-right: 5px;	
 }
+/* Backlog: */
+/* -------- */
+.bz-horizontal-progress {}
+.bz-component-table{/*e.g. https://portal.beyondz.org/courses/11/pages/what-effective-problem-solving-looks-like?module_item_id=532 */}
   
 
