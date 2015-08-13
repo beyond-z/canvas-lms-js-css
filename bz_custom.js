@@ -8,7 +8,7 @@ css-files-to-my-account
  * */
  
  //testing js:
- console.log("js working");
+console.log("js working");
  
  /*
  //testing jquery
@@ -54,6 +54,13 @@ jQuery( document ).ready(function() {
 	/* Interactive diagram about design thinking 
 	jQuery('div#design-thinking-chart').replaceWith('<canvas id="design-thinking-chart" />');
 	/**/
+	
+	/* In modules view, add a class to items with "after learning lab" in their titles, so we can style them differently: */
+	jQuery('#context_modules .context_module_item').each(function(){
+		if( jQuery(this).text().toLowerCase().indexOf("after learning lab") > -1) {
+			jQuery(this).addClass('bz-after-ll');
+		}
+	});
 	
 	// run this in case js loads first:
 	jQuery('#bz-auto-toc').each(function(){bzAutoTOC()});

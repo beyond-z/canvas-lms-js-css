@@ -34,15 +34,15 @@
 #identity .emphasize-name {
 	color: 	#eddcbe;
 }
-/* Customize module list to remove ellipsis */
-.ig-title {
-	flex: 0 0 65%;
-}
+
 
 /* General Typography (=fonts) and layout: */
 /* --------------------------------------- */
+/* Customize modules list to remove ellipsis */
+.ig-title {
+	flex: 0 0 65%;
+}
 #wiki_page_show {
-	/* need to import webfont if we haven't already! */
 	font-family: Georgia, serif;
 }
 a {
@@ -170,6 +170,11 @@ ul,
 .question_holder .display_question .file-upload-question-holder .file-upload-box {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
+}
+/* Create visual separation in modules view after learning lab: */
+.bz-after-ll {
+    padding-top: 10px !important;
+    background-color: #eb3b46;
 }
 /* Hiding stuff the students don't need to see: */
 /* -------------------------------------------- */
@@ -490,7 +495,23 @@ bz-lt-gold {
 	position: absolute !important;
 	width: 1px;
 }
-
+/* Text over large "bkg" images */
+.bz-ov-bkg {position: relative}
+.bz-over-previous {
+  position: absolute;
+  top: 20%;
+  left: 15%;
+  color: #fff;
+  width: 70%;
+}
+.bz-over-previous h3 {
+  color: #fff;
+  text-transform: uppercase;
+  font-size: 36px;
+}
+.bz-over-previous p {
+  font-size: 24px;
+}
 /* To Do, Pros, and Cons lists */
 /* ------------------- */
 ul.bz-to-do-item > li:before,
