@@ -56,11 +56,7 @@ jQuery( document ).ready(function() {
 	/**/
 	
 	/* In modules view, add a class to items with "after learning lab" in their titles, so we can style them differently: */
-	jQuery('#context_modules .context_module_item').each(function(){
-		if( jQuery(this).text().toLowerCase().indexOf("after learning lab") > -1) {
-			jQuery(this).addClass('bz-after-ll');
-		}
-	});
+	bzAfterLL();
 	
 	// run this in case js loads first:
 	jQuery('#bz-auto-toc').each(function(){bzAutoTOC()});
@@ -71,7 +67,8 @@ function bzAutoTOC(){
 	console.log('running auto TOC');
 	jQuery('#bz-auto-toc').load('/courses/'+window.location.pathname.split('/')[2]+'/modules #context_modules', function(responseTxt, statusTxt, xhr){
 	        if(statusTxt == "success" || statusTxt == "notmodified") {
-			jQuery('a[title="'+jQuery('h1.page-title').text()+'"]').addClass('bz-toc-current').parents('li.context_module_item.wiki_page').addClass('bz-toc-current-wrapper').parents('div.context_module').siblings().remove();
+				jQuery('a[title="'+jQuery('h1.page-title').text()+'"]').addClass('bz-toc-current').parents('li.context_module_item.wiki_page').addClass('bz-toc-current-wrapper').parents('div.context_module').siblings().remove();
+				bzAfterLL();
 	          	//jQuery('#bz-auto-toc a').click(function(e){e.preventDefault();return;});
 	        }
 	        if(statusTxt == "error") {
@@ -79,3 +76,10 @@ function bzAutoTOC(){
 		}
 	});
 }	
+function bzAfterLL(){
+	jQuery('#context_modules .context_module_item').each(function(){
+		if( jQuery(this).text().toLowerCase().indexOf("after learning lab") > -1) {
+			jQuery(this).addClass('bz-after-ll');
+		}
+	});
+}
