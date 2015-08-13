@@ -176,6 +176,9 @@ ul,
     padding-top: 10px !important;
     background-color: #eb3b46;
 }
+.bz-after-ll.context_module_item.context_module_item_hover, .bz-after-ll.context_module_item:hover {
+	background-color: #C8141F !important;
+}
 /* Hiding stuff the students don't need to see: */
 /* -------------------------------------------- */
 .student-logged-in #content .header-bar-outer-container,
