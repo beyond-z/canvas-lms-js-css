@@ -49,6 +49,7 @@ h3,
 h4,
 h5,
 h6,
+.h1,
 .menu-item,
 nav li,
 #identity li,
@@ -58,7 +59,8 @@ nav li,
 	text-transform: uppercase;
 	line-height: normal;
 	font-weight: bold;/* fallback */
-	font-weight: 700;	
+	font-weight: 700;
+	font-size: 1.25em;	
 }
 .quiz-header h1, 
 .quiz-header h2 {
@@ -232,11 +234,11 @@ ul,
 	display: inline;
 	position: absolute;
 	font-family: "TradeGothicNo.20-CondBold", "Oswald", "Open Sans", sans-serif;
+	font-size: 1em;
 	color: #eb3b46;
 	padding-left: 0.33em;
 	font-weight: bold;
 	text-transform: uppercase;
-	font-size: 0.9em;
 }
 .spoiler,
 .bz-spoiler {
@@ -740,6 +742,10 @@ td .bz-practice-box {
 #context_modules .ig-title,
 #context_modules .ig-header-title {
 	font-family: "TradeGothicNo.20-CondBold", "Oswald", "Open Sans", sans-serif;
+	font-size: 1.2em;
+}
+.context_module_item .item_name .title {
+	font-size: 16px !important;	
 }
 #context_modules .ig-header-title {
 	text-transform: uppercase;
@@ -747,7 +753,9 @@ td .bz-practice-box {
 #context_modules .ig-header-title .name {
 	font-size: 1.4em;
 }
-
+.indent_0 {
+	text-transform:uppercase;	
+}
 /* Auto Table of Contents */
 /* ---------------------- */
 #bz-auto-toc {
@@ -765,9 +773,10 @@ td .bz-practice-box {
 	border: none 0;
 	background: inherit;
 	color: inherit;
-/*	font-family: Oswald, sans-serif;
-	font-weight: 700;
-	font-size: 18px; */
+}
+#bz-auto-toc .bz-after-ll.context_module_item.context_module_item_hover, 
+#bz-auto-toc .bz-after-ll.context_module_item:hover {
+	background: transparent !important;	
 }
 .bz-toc-current {
     color: #eb3b46 !important;
@@ -781,7 +790,7 @@ td .bz-practice-box {
 }
 #bz-auto-toc a {
    text-decoration: none !important;
-   cursor: text !important;
+   /*cursor: text !important;*/
 }
 #bz-auto-toc .indent_1,
 #bz-auto-toc .indent_2,
@@ -811,12 +820,12 @@ td .bz-practice-box {
 }
 #bz-module-sequence-progress-bar {
   background: #5bbbba;
-  color: #ffffff;
+  color: #262426;
   font-family: "TradeGothicNo.20-CondBold", "Oswald", "Open Sans", sans-serif;
   font-weight: 700;
   height: 100%;
   text-align: right;
-  font-size: 12px;
+  font-size: 13px;
   line-height: 14px;
   vertical-align: top;
   white-space: nowrap;
