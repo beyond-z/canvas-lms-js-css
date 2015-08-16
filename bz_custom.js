@@ -8,7 +8,7 @@ css-files-to-my-account
  * */
  
  //testing js:
- console.log("js working");
+console.log("js working");
  
  /*
  //testing jquery
@@ -22,7 +22,7 @@ jQuery( document ).ready(function() {
         // Hover over item to show tooltip:
         var title = jQuery(this).attr('title');
 		if (title) {
-			console.log(title);
+			//console.log(title);
 			jQuery(this).data('tipText', title);//.removeAttr('alt');
 			jQuery('<p class="bz-tooltip"></p>')
 			.text(title)
@@ -42,7 +42,7 @@ jQuery( document ).ready(function() {
 	jQuery('.context-course_11 #question_482_question_text ol li, .context-course_15 #question_619_question_text ol li').prepend('<span class="dynamic"></span>');
 	jQuery('.context-course_11 #question_481_question_text input, .context-course_15 #question_618_question_text input').each(function(i){
 		jQuery(this).change(function(){
-			console.log('changing big rock');
+			//console.log('changing big rock');
 			var t = jQuery(this).val()+': '; console.log(t);
 			jQuery('.context-course_11 #question_482_question_text ol li, .context-course_15 #question_619_question_text ol li').eq(i).children('.dynamic').text(t);
 		});
@@ -54,9 +54,32 @@ jQuery( document ).ready(function() {
 	/* Interactive diagram about design thinking 
 	jQuery('div#design-thinking-chart').replaceWith('<canvas id="design-thinking-chart" />');
 	/**/
+	
+	/* In modules view, add a class to items with "after learning lab" in their titles, so we can style them differently: */
+	bzAfterLL();
+	
+	// run this in case js loads first:
+	jQuery('#bz-auto-toc').each(function(){bzAutoTOC()});
 
-
-
-}); jQuery
-
-/**/
+});
+/* Automatic Table of Contents for module section partitions: */
+function bzAutoTOC(){
+	console.log('running auto TOC');
+	jQuery('#bz-auto-toc').load('/courses/'+window.location.pathname.split('/')[2]+'/modules #context_modules', function(responseTxt, statusTxt, xhr){
+	        if(statusTxt == "success" || statusTxt == "notmodified") {
+				jQuery('a[title="'+jQuery('h1.page-title').text()+'"]').addClass('bz-toc-current').parents('li.context_module_item.wiki_page').addClass('bz-toc-current-wrapper').parents('div.context_module').siblings().remove();
+				bzAfterLL();
+	          	//jQuery('#bz-auto-toc a').click(function(e){e.preventDefault();return;});
+	        }
+	        if(statusTxt == "error") {
+	        	console.log("Error: " + xhr.status + ": " + xhr.statusText);
+		}
+	});
+}	
+function bzAfterLL(){
+	jQuery('#context_modules .context_module_item').each(function(){
+		if( jQuery(this).text().toLowerCase().indexOf("after learning lab") > -1) {
+			jQuery(this).addClass('bz-after-ll');
+		}
+	});
+}
