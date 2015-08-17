@@ -14,6 +14,22 @@ console.log("js working");
  //testing jquery
 jQuery.noConflict();
 */
+
+/* Load Oswald font (remove once we have tradegothic served on prod 
+  WebFontConfig = {
+    google: { families: [ 'Oswald:700:latin' ] }
+  };
+  (function() {
+    var wf = document.createElement('script');
+    wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+      '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+    wf.type = 'text/javascript';
+    wf.async = 'true';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(wf, s);
+  })();
+*/
+
 jQuery( document ).ready(function() {
 	console.log("jQ working v9");
 	/* Tooltips 
