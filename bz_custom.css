@@ -181,7 +181,8 @@ ul,
 .student-logged-in #quiz-attributes-student,
 .student-logged-in #quiz_student_details,
 .student-logged-in div #quiz_show .alert,
-.student-logged-in .question .mce-toolbar-grp {
+.student-logged-in .question .mce-toolbar-grp,
+.student-logged-in .question .mce-path {
 	display: none !important;	
 }
 /* 
@@ -562,54 +563,6 @@ ul.bz-to-do-item {
 	margin-left: 1.5em;
 }
 
-/* Module navigation "title slides" */
-/* -------------------------------- */
-/*
-.module-nav-titles {
-	margin: 0;
-	list-style: none;
-	margin-bottom: 30px;
-}
-.module-nav-titles li,
-.module-nav-titles li h4 {
-	margin: 0;
-	text-align: center;
-}
-.show-content .module-nav-titles li h4 {
-	font-size: 24px;
-}
-.module-nav-titles li {
-	margin: 1em auto 30px;
-	width: 33%;
-	padding: 1em;
-	position: relative;
-	background: #eee;
-}
-.module-nav-titles li:after {
-	top: 100%;
-	border: solid transparent;
-	content: " ";
-	height: 0;
-	width: 0;
-	position: absolute;
-	pointer-events: none;
-	border-color: rgba(0, 0, 0, 0);
-	border-top-color: #eee;
-	border-width: 30px;
-	margin-left: -30px;	
-}
-.module-nav-titles li:last-child:after {
-	border: 0 none;	
-}
-.module-nav-titles .current,
-.module-nav-titles .current h4{
-	background: #f39330;
-	color: #fff !important;
-}
-.module-nav-titles .current:after {
-	border-top-color: #f39330;
-}
-*/
 /* diagrams etc */
 .bz-slices,
 .bz-slices tr,
