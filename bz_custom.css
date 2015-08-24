@@ -366,6 +366,11 @@ ul,
 	border: 1px solid #eee;
 	padding: 0.3em 0.5em !important;	
 }
+#wiki_page_show table.bz-matrix td,
+#wiki_page_show table.bz-matrix th {
+	border: 1px solid #ccc;
+   padding: 1em;
+}
 table.bz-naked,
 table.bz-naked th,
 table.bz-naked td,
@@ -396,7 +401,7 @@ table.bz-red-heading thead th {
 }
 .zebra tr:nth-child(even),
 .bz-zebra tr:nth-child(even) {
-	background: #fbfbfb;
+	background: #e6e6e6;
 }
 /* Colors for general use, e.g. on a div, or table cell/row */
 .bz-black {
