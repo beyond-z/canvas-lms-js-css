@@ -617,11 +617,12 @@ ul.bz-to-do-item {
 }
 .bz-diagram-box,
 .bz-pull-out-box {
+	margin: 1em 15%;
 	padding: 20px;
 	text-align: center;
 }
-.bz-pull-out-box {
-	margin: 1em 15%;
+.bz-pull-out-box,
+.show-content .bz-pull-out-box p {
 	font-size: 1.5em;
 	line-height: normal;
 }
