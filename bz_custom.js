@@ -6,54 +6,9 @@
 css-files-to-my-account
  *
  * */
- 
- //testing js:
-console.log("js working");
- 
- /*
- //testing jquery
-jQuery.noConflict();
-*/
-
-/* Load Oswald font (remove once we have tradegothic served on prod 
-  WebFontConfig = {
-    google: { families: [ 'Oswald:700:latin' ] }
-  };
-  (function() {
-    var wf = document.createElement('script');
-    wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
-      '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
-    wf.type = 'text/javascript';
-    wf.async = 'true';
-    var s = document.getElementsByTagName('script')[0];
-    s.parentNode.insertBefore(wf, s);
-  })();
-*/
 
 jQuery( document ).ready(function() {
-	console.log("jQ working v9");
-	/* Tooltips 
-	jQuery('.bz-has-tooltip').hover(function(e){
-		console.log(e);
-        // Hover over item to show tooltip:
-        var title = jQuery(this).attr('title');
-		if (title) {
-			//console.log(title);
-			jQuery(this).data('tipText', title);//.removeAttr('alt');
-			jQuery('<p class="bz-tooltip"></p>')
-			.text(title)
-			.appendTo(jQuery(this).parents('td'))
-			//.appendTo(jQuery('#show-tips'))
-			.fadeIn('slow');
-		}
-	}, function(e) {
-		console.log(e);
-        // remove the tooltip on mouseout:
-		if(jQuery(this).data('tipText')) {
-	        //jQuery(this).attr('alt', jQuery(this).data('tipText'));
-    	    jQuery('.bz-tooltip').remove();
-		}
-	});
+	//console.log("jQ working");
 	/* Improve Priorities Quiz */  
 	jQuery('.context-course_11 #question_482_question_text ol li, .context-course_15 #question_619_question_text ol li').prepend('<span class="dynamic"></span>');
 	jQuery('.context-course_11 #question_481_question_text input, .context-course_15 #question_618_question_text input').each(function(i){
@@ -64,18 +19,15 @@ jQuery( document ).ready(function() {
 		});
 	});
 	/**/
-	
-	
-
-	/* Interactive diagram about design thinking 
-	jQuery('div#design-thinking-chart').replaceWith('<canvas id="design-thinking-chart" />');
-	/**/
-	
+	/* Improve SMART Goals quiz: */
+	jQuery('#bz-smart-quiz input').css('width', '95%');
+	/**/	
 	/* In modules view, add a class to items with "after learning lab" in their titles, so we can style them differently: */
 	bzAfterLL();
 	
 	// run this in case js loads first:
 	jQuery('#bz-auto-toc').each(function(){bzAutoTOC()});
+
 
 });
 /* Automatic Table of Contents for module section partitions: */
