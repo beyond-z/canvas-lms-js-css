@@ -626,6 +626,9 @@ ul.bz-to-do-item {
 	font-size: 1.5em;
 	line-height: normal;
 }
+.show-content .bz-pull-out-box h5 {
+	font-size: inherit;
+}
 .case-study-box:before,
 .bz-example:before,
 .bz-case-study-box:before,
@@ -828,31 +831,6 @@ td .bz-practice-box {
 .bz-progress-item-count {
   padding-right: 5px;	
 }
-
-/* Pick up where you left off */
-/* -------------------------- */
-#pick-up-where-you-left-off {
-	list-style: none; /* Assuming it has to be an li element. Otherwise delete this.*/
-}
-#pick-up-where-you-left-off .stream_header{
-	background: #EBF7F7;
-}
-#pick-up-where-you-left-off .stream_header:hover{
-	background: #D7EFEF;
-}
-#course_home_content #pick-up-where-you-left-off .stream_header .links {
-	display: block;
-}
-#pick-up-where-you-left-off .image-block-content {
-    font-family: "TradeGothicNo.20-CondBold", "Oswald", "Open Sans", sans-serif;
-    text-transform: uppercase;
-    line-height: normal;
-    font-weight: bold;
-    font-weight: 700;
-    font-size: 1.25em;
-	
-}
-
 /* Backlog: */
 /* -------- */
 .bz-component-table{/*e.g. https://portal.beyondz.org/courses/11/pages/what-effective-problem-solving-looks-like?module_item_id=532 */}
