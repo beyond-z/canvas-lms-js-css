@@ -861,3 +861,49 @@ td .bz-practice-box {
 .bz-component-table{/*e.g. https://portal.beyondz.org/courses/11/pages/what-effective-problem-solving-looks-like?module_item_id=532 */}
   
 
+#bz-help-button {
+	position: fixed;
+	z-index: 99;
+	right: 0em;
+	bottom: 33%;
+	font-size: 12pt;
+	font-family: "TradeGothicNo.20-CondBold", "Oswald", "Open Sans", sans-serif;
+	text-transform: uppercase;
+	line-height: normal;
+	font-weight: bold;/* fallback */
+	font-weight: 700;
+	margin: 0px;
+	padding: 0px;
+}
+
+#bz-help-button a {
+	display: block;
+	
+	transform: rotate(270deg);
+	transform-origin: 100% 100%;
+	-ms-transform: rotate(270deg);
+	-ms-transform-origin: 100% 100%;
+	-webkit-transform: rotate(270deg);
+	-webkit-transform-origin: 100% 100%;
+	-moz-transform: rotate(270deg);
+	-moz-transform-origin: 100% 100%;
+	
+	margin: 0px;
+	
+	padding: 0.5em 0.8em;
+	background-color: #EB3B46;
+	/*border-radius: 6px 6px 0px 0px;*/
+	border: none;
+	border-bottom: none;
+	text-decoration: none;
+	color: white;
+}
+#bz-help-button a:active, 
+#bz-help-button a:visited,
+#bz-help-button a:link  {
+	color: FFF;
+}
+#bz-help-button a:hover {
+	text-decoration: none;
+	background: #C8141F;	
+}
