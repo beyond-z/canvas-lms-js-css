@@ -46,8 +46,8 @@ function bzAutoTOC(){
 }	
 function bzAfterLL(){
 	jQuery('#context_modules .context_module_item').each(function(){
-		if( jQuery(this).text().toLowerCase().indexOf("after learning lab") > -1) {
-			jQuery(this).addClass('bz-after-ll');
+		if( jQuery(this).text().toLowerCase().indexOf("after learning lab") > -1 || jQuery(this).text().toLowerCase().indexOf("Break:") > -1) {
+			jQuery(this).addClass('bz-mid-module-break');
 		}
 	});
 }
