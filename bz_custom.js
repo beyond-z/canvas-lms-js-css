@@ -30,20 +30,46 @@ jQuery( document ).ready(function() {
 
 
 });
-/* Automatic Table of Contents for module section partitions: */
-function bzAutoTOC(){
-	console.log('running auto TOC');
-	jQuery('#bz-auto-toc').load('/courses/'+window.location.pathname.split('/')[2]+'/modules #context_modules', function(responseTxt, statusTxt, xhr){
-	        if(statusTxt == "success" || statusTxt == "notmodified") {
-				jQuery('a[title="'+jQuery('h1.page-title').text()+'"]').addClass('bz-toc-current').parents('li.context_module_item.wiki_page').addClass('bz-toc-current-wrapper').parents('div.context_module').siblings().remove();
-				bzAfterLL();
-	          	//jQuery('#bz-auto-toc a').click(function(e){e.preventDefault();return;});
-	        }
-	        if(statusTxt == "error") {
-	        	console.log("Error: " + xhr.status + ": " + xhr.statusText);
-		}
-	});
-}	
+
+function bzAutoTOC() { 
+	var toc = document.getElementById("bz-auto-toc"); 
+	if(toc == null) return; 
+	var data = ENV["module_listing_data"]; 
+	if(data == null) return; 
+	var mid = location.search; 
+	if(mid && mid.length) { 
+		mid = mid.substring(1); 
+		var parts = mid.split("&"); 
+		for(var i = 0; i < parts.length; i++) { 
+			var idx = parts[i].indexOf("="); 
+			if(idx == -1) 
+				idx = parts[i].length; 
+			var name = parts[i].substring(0, idx); 
+			if(name == "module_item_id") { 
+				mid = parts[i].substring(idx + 1)|0; 
+				break; 
+			} 
+		} 
+	} 
+	toc.innerHTML = ""; 
+	var ol = document.createElement("ol"); 
+	for(var i = 0; i < data.length; i++) { 
+		var item = data[i].content_tag; 
+		if(item.indent > 0) 
+			continue; 
+		var li = document.createElement("li"); 
+		if(mid == item.id) 
+			li.className = "bz-toc-current"; 
+		var a = document.createElement("a"); 
+		a.textContent = item.title; 
+		a.href = item.url ? item.url : ("/courses/" + item.context_id + "/items/" + item.id); 
+		li.appendChild(a); 
+		ol.appendChild(li); 
+	} 
+	toc.appendChild(ol); 
+} 
+
+
 function bzAfterLL(){
 	jQuery('#context_modules .context_module_item').each(function(){
 		if( jQuery(this).text().toLowerCase().indexOf("after learning lab") > -1 || jQuery(this).text().toLowerCase().indexOf("take a break") > -1) {
