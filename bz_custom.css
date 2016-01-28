@@ -734,6 +734,12 @@ td .bz-practice-box {
 #context_modules {
 	font-family: sans-serif;	
 }
+
+#bz-auto-toc ol {
+	list-style-type: none;
+}
+
+#bz-auto-toc li,
 #context_modules .ig-title,
 #context_modules .ig-header-title {
 	font-family: "TradeGothicNo.20-CondBold", "Oswald", "Open Sans", sans-serif;
@@ -760,10 +766,6 @@ td .bz-practice-box {
 #bz-auto-toc .ig-row {
     box-shadow:none;
 }
-#bz-auto-toc ul.context_module_items {
-    border: 1px dotted #e6e6e6;
-	padding: 12px;
-}
 #bz-auto-toc * {
 	border: none 0;
 	background: inherit;
@@ -776,10 +778,19 @@ td .bz-practice-box {
 .bz-toc-current {
     color: #eb3b46 !important;
 }
-#bz-auto-toc .ig-row {
+
+#bz-auto-toc {
+	padding: 24px 0px;
+	margin: 24px auto;
+    border: 1px dotted #e6e6e6;
+}
+
+#bz-auto-toc li {
     border-left: 12px solid #e6e6e6 !important;
     border-radius: 0 !important;
+    padding: 12px 24px;
 }
+#bz-auto-toc li.bz-toc-current,
 #bz-auto-toc .bz-toc-current-wrapper .ig-row {
     border-left: 12px solid #eb3b46 !important;
 }
