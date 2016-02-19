@@ -918,3 +918,17 @@ td .bz-practice-box {
 	text-decoration: none;
 	background: #C8141F;	
 }
+
+#bz-tz-warning {
+	position: fixed;
+	top: 0px;
+	left: 30%;
+	width: 40%;
+	background-color: #ffff88;
+	padding: 4px;
+	box-sizing: border-box;
+	z-index: 20;
+	border: solid 1px #ccc;
+	border-radius: 0px 0px 4px 4px;
+	text-align: center;
+}
