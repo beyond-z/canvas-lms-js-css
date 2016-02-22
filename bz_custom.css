@@ -5,10 +5,10 @@
 /* -------------------- */
 #header {
 	background-color: #234;
-	background-image: url("https://s3.amazonaws.com/canvas-prod-assets/braven_bkg_70h_canvas.png");
+	background-image: url("https://s3.amazonaws.com/canvas-stag-assets/braven_bkg_70h_canvas.png");
 }
 #header-logo {
-  background-image:url("https://s3.amazonaws.com/canvas-prod-assets/braven_logo_canvas_red_white.png");
+  background-image:url("https://s3.amazonaws.com/canvas-stag-assets/braven_logo_canvas_red_white.png");
 }
 #menu>li,
 #identity {
@@ -917,4 +917,18 @@ td .bz-practice-box {
 #bz-help-button a:hover {
 	text-decoration: none;
 	background: #C8141F;	
+}
+
+#bz-tz-warning {
+	position: fixed;
+	top: 0px;
+	left: 30%;
+	width: 40%;
+	background-color: #ffff88;
+	padding: 4px;
+	box-sizing: border-box;
+	z-index: 20;
+	border: solid 1px #ccc;
+	border-radius: 0px 0px 4px 4px;
+	text-align: center;
 }
