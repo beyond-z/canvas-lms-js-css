@@ -932,3 +932,38 @@ td .bz-practice-box {
 	border-radius: 0px 0px 4px 4px;
 	text-align: center;
 }
+
+.bz-rsvps {
+	max-height: 8em; /* fallback if vh doesn't work */
+	max-height: 25vh; /* 25% of the screen height */
+	overflow: auto;
+}
+
+/* no reply yet at all */
+.bz-rsvps dt[data-response-status="needsAction"]::before {
+	content: '? ';
+	color: grey;
+	font-style: italic;
+}
+
+.bz-rsvps dt[data-response-status="declined"]::before {
+	content: 'X ';
+	color: red;
+}
+
+
+/* means they replied with a "maybe" answer */
+.bz-rsvps dt[data-response-status="tentative"]::before {
+	content: '? ';
+	color: #cc8800;
+}
+
+
+.bz-rsvps dt[data-response-status="accepted"]::before {
+	content: '\2713 '; /* check box */
+	color: green;
+}
+
+.bz-rsvps dd {
+	display: none;
+}
