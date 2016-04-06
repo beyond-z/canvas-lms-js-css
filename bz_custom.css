@@ -960,7 +960,7 @@ td .bz-practice-box {
 
 
 .bz-rsvps dt[data-response-status="accepted"]::before {
-	content: '\2713 '; /* check box */
+	content: '\2713\a0'; /* check box */
 	color: green;
 }
 
