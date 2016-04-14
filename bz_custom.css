@@ -967,3 +967,67 @@ td .bz-practice-box {
 .bz-rsvps dd {
 	display: none;
 }
+
+#bz-retained-field-dialog-holder {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 500;
+}
+
+#bz-retained-field-dialog {
+    position: fixed;
+    left: 10vw;
+    right: 10vw;
+    top: 10vh;
+    bottom: 10vh;
+    background-color: white;
+    padding: 2em;
+    box-sizing: border-box;
+}
+
+#bz-retained-field-dialog label {
+    display: block
+}
+
+#bz-retained-field-dialog label > span {
+    width: 10em;
+    display: inline-block;
+    text-align: right;
+    font-weight: bold;
+}
+
+#bz-retained-field-dialog .cancel {
+    margin-left: 10em;
+    margin-right: 3em;
+}
+
+#bz-retained-field-dialog .bz-dialog-header {
+    font-weight: bold;
+    margin-bottom: 2em;
+    border-bottom: solid 2px #333;
+    font-size: 16px;
+}
+
+#bz-module-nav,
+#bz-module-nav ul {
+	list-style-type: none;
+	padding: 0em;
+	padding-left: 0.5em;
+}
+
+#bz-module-nav,
+#bz-module-nav ul,
+#bz-module-nav li,
+#bz-module-nav a {
+	margin: 0px;
+	font-size: inherit;
+}
+
+#bz-module-nav a {
+	display: block;
+	padding: 0.25em;
+}

@@ -62,7 +62,7 @@ function bzAutoTOC() {
 			li.className = "bz-toc-current"; 
 		var a = document.createElement("a"); 
 		a.textContent = item.title; 
-		a.href = item.url ? item.url : ("/courses/" + item.context_id + "/items/" + item.id); 
+		a.href = item.url ? item.url : ("/courses/" + item.context_id + "/modules/items/" + item.id); 
 		li.appendChild(a); 
 		ol.appendChild(li); 
 	} 
