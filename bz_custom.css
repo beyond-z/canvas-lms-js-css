@@ -591,7 +591,9 @@ ul.bz-to-do-item {
 	margin-right: auto;	
 }
 .bz-has-tooltip {
-	cursor:pointer;	
+  border-bottom: 2px dotted #5bbbba;
+  cursor: pointer; /* fallback */
+  cursor: help;
 }
 /* Boxes */
 .case-study-box,
@@ -866,12 +868,55 @@ td .bz-practice-box {
     font-size: 1.25em;
   
 }
-
-/* Backlog: */
-/* -------- */
-.bz-component-table{/*e.g. https://portal.beyondz.org/courses/11/pages/what-effective-problem-solving-looks-like?module_item_id=532 */}
-  
-
+/* Quick Quiz */
+/* ---------- */
+.bz-quick-quiz {
+  margin: 40px auto;
+  width: 250px;
+  padding: 20px;
+  border: 1px solid #ccc;
+}
+.bz-quick-quiz li{
+  height: 30px;
+  padding: 5px 5px 5px 35px;
+  border-bottom: 1px solid #ccc;
+  position: relative;
+}
+.bz-quick-quiz li:first-child{
+  border-top: 1px solid #ccc;
+}
+.bz-quick-quiz .success{color:green;}
+.bz-quick-quiz .fail{color:red;}
+.bz-quick-quiz .success:before{
+  display: table-cell;
+  vertical-align: middle;
+  font: bold 16px;
+  position: absolute;
+  left:0;
+  height: 30px;
+  width: 30px;
+  text-align: center;
+  content: "\2713 ";
+}
+/* Real (Magic) Checkboxes    */
+/* (as opposed to list icons) */
+/* (applies to a ul element)  */
+/* -------------------------- */
+.bz-real-checkboxes {
+  margin: 0 0 1em;
+  list-style: none;
+}
+.bz-real-checkboxes li {
+  position: relative;
+  left: 2em;
+}
+.bz-real-checkboxes li input {
+  position: absolute;
+  left: -1.5em;
+  top: 0;
+}
+/* Help Button */
+/* ----------- */
 #bz-help-button {
 	position: fixed;
 	z-index: 99;

@@ -24,6 +24,19 @@ jQuery( document ).ready(function() {
 	/**/	
 	/* In modules view, add a class to items with "after learning lab" in their titles, so we can style them differently: */
 	bzAfterLL();
+
+	/* Quick Quiz functionality: */
+	
+	jQuery('.bz-quick-quiz input[type=radio]').change(function() {
+		console.log(this.value);
+		if (this.value == "correct") {
+			jQuery(this).parents('ul').children('li').removeClass('fail');
+			jQuery(this).parents('li').addClass('success');
+		} else {
+			jQuery(this).parents('ul').children('li').removeClass('fail, success');
+			jQuery(this).parents('li').addClass('fail');
+		}
+	});
 	
 	// run this in case js loads first:
 	jQuery('#bz-auto-toc').each(function(){bzAutoTOC()});
