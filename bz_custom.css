@@ -591,7 +591,9 @@ ul.bz-to-do-item {
 	margin-right: auto;	
 }
 .bz-has-tooltip {
-	cursor:pointer;	
+  border-bottom: 2px dotted #5bbbba;
+  cursor: pointer; /* fallback */
+  cursor: help;
 }
 /* Boxes */
 .case-study-box,
@@ -866,12 +868,55 @@ td .bz-practice-box {
     font-size: 1.25em;
   
 }
-
-/* Backlog: */
-/* -------- */
-.bz-component-table{/*e.g. https://portal.beyondz.org/courses/11/pages/what-effective-problem-solving-looks-like?module_item_id=532 */}
-  
-
+/* Quick Quiz */
+/* ---------- */
+.bz-quick-quiz {
+  margin: 40px auto;
+  width: 250px;
+  padding: 20px;
+  border: 1px solid #ccc;
+}
+.bz-quick-quiz li{
+  height: 30px;
+  padding: 5px 5px 5px 35px;
+  border-bottom: 1px solid #ccc;
+  position: relative;
+}
+.bz-quick-quiz li:first-child{
+  border-top: 1px solid #ccc;
+}
+.bz-quick-quiz .success{color:green;}
+.bz-quick-quiz .fail{color:red;}
+.bz-quick-quiz .success:before{
+  display: table-cell;
+  vertical-align: middle;
+  font: bold 16px;
+  position: absolute;
+  left:0;
+  height: 30px;
+  width: 30px;
+  text-align: center;
+  content: "\2713 ";
+}
+/* Real (Magic) Checkboxes    */
+/* (as opposed to list icons) */
+/* (applies to a ul element)  */
+/* -------------------------- */
+.bz-real-checkboxes {
+  margin: 0 0 1em;
+  list-style: none;
+}
+.bz-real-checkboxes li {
+  position: relative;
+  left: 2em;
+}
+.bz-real-checkboxes li input {
+  position: absolute;
+  left: -1.5em;
+  top: 0;
+}
+/* Help Button */
+/* ----------- */
 #bz-help-button {
 	position: fixed;
 	z-index: 99;
@@ -960,10 +1005,74 @@ td .bz-practice-box {
 
 
 .bz-rsvps dt[data-response-status="accepted"]::before {
-	content: '\2713 '; /* check box */
+	content: '\2713\a0'; /* check box */
 	color: green;
 }
 
 .bz-rsvps dd {
 	display: none;
+}
+
+#bz-retained-field-dialog-holder {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 500;
+}
+
+#bz-retained-field-dialog {
+    position: fixed;
+    left: 10vw;
+    right: 10vw;
+    top: 10vh;
+    bottom: 10vh;
+    background-color: white;
+    padding: 2em;
+    box-sizing: border-box;
+}
+
+#bz-retained-field-dialog label {
+    display: block
+}
+
+#bz-retained-field-dialog label > span {
+    width: 10em;
+    display: inline-block;
+    text-align: right;
+    font-weight: bold;
+}
+
+#bz-retained-field-dialog .cancel {
+    margin-left: 10em;
+    margin-right: 3em;
+}
+
+#bz-retained-field-dialog .bz-dialog-header {
+    font-weight: bold;
+    margin-bottom: 2em;
+    border-bottom: solid 2px #333;
+    font-size: 16px;
+}
+
+#bz-module-nav,
+#bz-module-nav ul {
+	list-style-type: none;
+	padding: 0em;
+	padding-left: 0.5em;
+}
+
+#bz-module-nav,
+#bz-module-nav ul,
+#bz-module-nav li,
+#bz-module-nav a {
+	margin: 0px;
+	font-size: inherit;
+}
+
+#bz-module-nav a {
+	display: block;
+	padding: 0.25em;
 }
