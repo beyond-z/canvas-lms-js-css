@@ -1057,22 +1057,62 @@ td .bz-practice-box {
     font-size: 16px;
 }
 
+/* Module nav in sidebar */
+/* --------------------- */
 #bz-module-nav,
 #bz-module-nav ul {
 	list-style-type: none;
 	padding: 0em;
 	padding-left: 0.5em;
 }
-
+#bz-module-nav > li > ul {
+	padding-left: 0;	
+}
 #bz-module-nav,
 #bz-module-nav ul,
 #bz-module-nav li,
 #bz-module-nav a {
 	margin: 0px;
-	font-size: inherit;
+	font-size: 12px;
+}
+#bz-module-nav li {
+	border-top: 1px solid #dfdfdf;
+}
+#bz-module-nav li > ul > li {
+	border-top: 1px solid #dfdfdf;
+}
+#bz-module-nav ul ul a {
+	font-size: 11px;
+	text-transform: none;
 }
 
 #bz-module-nav a {
 	display: block;
-	padding: 0.25em;
+	padding-top: 3px;
+	padding-bottom: 3px;
+}
+#bz-module-nav a:hover,
+#bz-module-nav a:active {
+	text-decoration: none;
+	background: #fff;
+}
+#bz-module-nav a:link {
+	color: #000;
+}
+#bz-module-nav a:visited {
+	color: #999;
+}
+#bz-module-nav .active a:visited {
+	color: #eb3b46;
+}
+#bz-module-nav .non-active-list-parent {
+	display: none;
+}
+#bz-module-nav .active-parent a {
+	color: #333;
+}
+#bz-module-nav > li {
+	font-size: 14px;
+	color: #000;	
+	border-bottom: 1px solid #dfdfdf;
 }
