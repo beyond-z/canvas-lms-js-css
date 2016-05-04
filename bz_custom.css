@@ -1105,8 +1105,15 @@ td .bz-practice-box {
 #bz-module-nav .active a:visited {
 	color: #eb3b46;
 }
-#bz-module-nav .non-active-list-parent {
+/* module-nav > li are the three modules: previous, current, and next */
+/* module-nav > li > ul is a particular module */
+/* module-nav > li > ul > li is a top-level item in a module */
+#bz-module-nav > li > ul > li ul {
 	display: none;
+}
+#bz-module-nav > li > ul > li.active ul,
+#bz-module-nav > li > ul > li ul.active-parent {
+	display: block;
 }
 #bz-module-nav .active-parent a {
 	color: #333;

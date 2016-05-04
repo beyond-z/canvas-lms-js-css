@@ -39,8 +39,10 @@ jQuery( document ).ready(function() {
 	});
 	
 	/* Modules nav */
+	/*
 	jQuery('#bz-module-nav .active').parents('li, ul').addClass('active-parent');
 	jQuery('#bz-module-nav ul').not('.active-parent').parent('li').addClass('non-active-list-parent');
+	*/
 
 	// run this in case js loads first:
 	jQuery('#bz-auto-toc').each(function(){bzAutoTOC()});
