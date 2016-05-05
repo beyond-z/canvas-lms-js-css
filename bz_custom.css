@@ -1096,9 +1096,11 @@ td .bz-practice-box {
 	text-decoration: none;
 	background: #fff;
 }
+.bz-previous-module a::before,
 .bz-previous-module span::before {
 	content: "Previous: ";
 }
+.bz-next-module a::before,
 .bz-next-module span::before {
 	content: "Next: ";
 }
