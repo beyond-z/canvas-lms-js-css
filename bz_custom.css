@@ -1096,6 +1096,16 @@ td .bz-practice-box {
 	text-decoration: none;
 	background: #fff;
 }
+.bz-previous-module span::before {
+	content: "Previous: ";
+}
+.bz-next-module span::before {
+	content: "Next: ";
+}
+
+#bz-module-nav .active-parent a {
+	color: #333;
+}
 #bz-module-nav a:link {
 	color: #000;
 }
@@ -1114,9 +1124,6 @@ td .bz-practice-box {
 #bz-module-nav > li > ul > li.active ul,
 #bz-module-nav > li > ul > li ul.active-parent {
 	display: block;
-}
-#bz-module-nav .active-parent a {
-	color: #333;
 }
 #bz-module-nav > li {
 	font-size: 14px;
