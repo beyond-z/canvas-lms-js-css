@@ -1100,7 +1100,7 @@ td .bz-practice-box {
 	content: "Previous: ";
 }
 .bz-next-module span::before {
-	content: "Previous: ";
+	content: "Next: ";
 }
 
 #bz-module-nav .active-parent a {
