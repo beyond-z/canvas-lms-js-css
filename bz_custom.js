@@ -8,7 +8,7 @@ css-files-to-my-account
  * */
 
 jQuery( document ).ready(function() {
-	//console.log("jQ working");
+	console.log("jQ working");
 	/* Improve Priorities Quiz */  
 	jQuery('.context-course_11 #question_482_question_text ol li, .context-course_15 #question_619_question_text ol li').prepend('<span class="dynamic"></span>');
 	jQuery('.context-course_11 #question_481_question_text input, .context-course_15 #question_618_question_text input').each(function(i){
@@ -38,6 +38,12 @@ jQuery( document ).ready(function() {
 		}
 	});
 	
+	/* Modules nav */
+	/*
+	jQuery('#bz-module-nav .active').parents('li, ul').addClass('active-parent');
+	jQuery('#bz-module-nav ul').not('.active-parent').parent('li').addClass('non-active-list-parent');
+	*/
+
 	// run this in case js loads first:
 	jQuery('#bz-auto-toc').each(function(){bzAutoTOC()});
 
