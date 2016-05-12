@@ -1082,7 +1082,8 @@ td .bz-practice-box {
 }
 #bz-module-nav li.active,
 #bz-module-nav li.active-parent,
-#bz-module-nav li.active-parent > ul > li {
+#bz-module-nav li.active-parent > ul > li,
+#bz-module-nav li.active > ul > li {
 	display:block;	
 }
 #bz-module-nav a,
@@ -1094,7 +1095,7 @@ td .bz-practice-box {
 #bz-module-nav a:hover {
     color: #0087c2;
 }
-#bz-module-nav .active a {
+#bz-module-nav .active > a {
 	color: #EB3B46;
 }
 #bz-module-nav .active {
