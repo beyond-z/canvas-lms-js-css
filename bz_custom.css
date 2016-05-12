@@ -1063,72 +1063,67 @@ td .bz-practice-box {
 #bz-module-nav ul {
 	list-style-type: none;
 	padding: 0em;
-	padding-left: 0.5em;
+	margin-left: 0;
+}
+#bz-module-nav ul {
+	border-left: solid 1px #bbb;	
 }
 #bz-module-nav > li > ul {
-	padding-left: 0;	
+	border-left: transparent;
 }
-#bz-module-nav,
-#bz-module-nav ul,
-#bz-module-nav li,
-#bz-module-nav a {
-	margin: 0px;
-	font-size: 12px;
+#bz-module-nav {
+	background: #D1D1D1;	
 }
 #bz-module-nav li {
-	border-top: 1px solid #dfdfdf;
-}
-#bz-module-nav li > ul > li {
-	border-top: 1px solid #dfdfdf;
-}
-#bz-module-nav ul ul a {
-	font-size: 11px;
-	text-transform: none;
-}
-
-#bz-module-nav a {
-	display: block;
-	padding-top: 3px;
-	padding-bottom: 3px;
-}
-#bz-module-nav a:hover,
-#bz-module-nav a:active {
-	text-decoration: none;
-	background: #fff;
-}
-.bz-previous-module a::before,
-.bz-previous-module span::before {
-	content: "Previous: ";
-}
-.bz-next-module a::before,
-.bz-next-module span::before {
-	content: "Next: ";
-}
-
-#bz-module-nav .active-parent a {
-	color: #333;
-}
-#bz-module-nav a:link {
-	color: #000;
-}
-#bz-module-nav a:visited {
-	color: #999;
-}
-#bz-module-nav .active > a {
-	color: #eb3b46;
-}
-/* module-nav > li are the three modules: previous, current, and next */
-/* module-nav > li > ul is a particular module */
-/* module-nav > li > ul > li is a top-level item in a module */
-#bz-module-nav > li > ul > li ul {
+	font-size: 12px;
+	padding-left: 0.5em;
+	margin: 5px 0;
 	display: none;
 }
-#bz-module-nav > li > ul > li.active ul,
-#bz-module-nav > li > ul > li ul.active-parent {
-	display: block;
+#bz-module-nav li.active,
+#bz-module-nav li.active-parent,
+#bz-module-nav li.active-parent > ul > li {
+	display:block;	
 }
-#bz-module-nav > li {
-	font-size: 14px;
-	color: #000;	
-	border-bottom: 1px solid #dfdfdf;
+#bz-module-nav a,
+.bz-nav-module-name {
+	display: block;
+	color: #555;
+	text-decoration: none;
+}
+#bz-module-nav a:hover {
+    color: #0087c2;
+}
+#bz-module-nav .active a {
+	color: #EB3B46;
+}
+#bz-module-nav .active {
+	position: relative;
+	padding-right: 15px;
+}
+#bz-module-nav .active:before {
+	position: absolute;
+	right: 0;
+	top: -6px;
+	width: 0; 
+	height: 0; 
+	content: "";
+	border-top: 12px solid transparent;
+	border-bottom: 12px solid transparent; 
+	border-right:12px solid #FFF; 
+}
+#bz-module-nav .bz-previous-module,
+#bz-module-nav .bz-next-module {
+	display: block;
+	background: #E6E6E6;
+	padding: 8px 0.5em 8px;
+}
+.bz-previous-module .bz-nav-module-name::before {
+	content:"\25C0\00a0Previous Module: ";
+}
+.bz-next-module .bz-nav-module-name::before {
+	content:"\25B6\00a0Next Module: ";
+}
+#bz-module-nav > li.active-parent .bz-nav-module-name {
+	color: #000;		
 }
