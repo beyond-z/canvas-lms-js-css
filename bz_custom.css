@@ -1128,3 +1128,18 @@ td .bz-practice-box {
 #bz-module-nav > li.active-parent .bz-nav-module-name {
 	color: #000;		
 }
+/* Accessibility Mapper */
+#bz-accessibility-mapper ul {
+    list-style: none;
+    margin: 0;
+}
+#bz-accessibility-mapper li {
+    line-height: 20px;
+    margin: 20px 0;
+    padding: 15px;
+    background: #efefef;
+}
+#bz-accessibility-mapper li > p {
+	font-weight: bold;
+	color: #EB3B46;	
+}
