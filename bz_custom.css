@@ -870,7 +870,16 @@ td .bz-practice-box {
 }
 /* Quick Quiz */
 /* ---------- */
+.bz-quick-quiz-container {
+	width: 100%;
+	position: relative;
+	padding: 5px 40px;
+	background: #e1e1e1;
+	left: -40px;
+	bottom: -15px;
+}
 .bz-quick-quiz {
+  background: #fff;
   margin: 40px auto;
   width: 250px;
   padding: 20px;
