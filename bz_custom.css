@@ -595,6 +595,10 @@ ul.bz-to-do-item {
   cursor: pointer; /* fallback */
   cursor: help;
 }
+/* Hide tooltip arrow */
+.ui-tooltip::before { 
+	display: none; 
+}
 /* Boxes */
 .case-study-box,
 .bz-case-study-box,
