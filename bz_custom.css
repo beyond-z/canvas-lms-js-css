@@ -1148,6 +1148,7 @@ td .bz-practice-box {
 #bz-module-nav > li.active-parent .bz-nav-module-name {
 	color: #000;		
 }
+
 /* Page mapper and Accessibility Mapper */
 /* ------------------------------------ */
 .page-mapper-page {
@@ -1158,4 +1159,19 @@ td .bz-practice-box {
     -webkit-box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.5);
     -moz-box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.5);
     box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.5);
+}
+
+#bz-accessibility-mapper ul {
+    list-style: none;
+    margin: 0;
+}
+#bz-accessibility-mapper li {
+    line-height: 20px;
+    margin: 20px 0;
+    padding: 15px;
+    background: #efefef;
+}
+#bz-accessibility-mapper li > p {
+	font-weight: bold;
+	color: #EB3B46;	
 }
