@@ -896,7 +896,8 @@ td .bz-practice-box {
 }
 .bz-quick-quiz .success{color:green;}
 .bz-quick-quiz .fail{color:red;}
-.bz-quick-quiz .success:before{
+.bz-quick-quiz .success:before,
+.bz-quick-quiz .fail:before{
   display: table-cell;
   vertical-align: middle;
   font: bold 16px;
@@ -905,8 +906,14 @@ td .bz-practice-box {
   height: 30px;
   width: 30px;
   text-align: center;
+}
+.bz-quick-quiz .success:before{
   content: "\2713 ";
 }
+.bz-quick-quiz .fail:before{
+  content: "\2718 ";
+}
+
 /* Real (Magic) Checkboxes    */
 /* (as opposed to list icons) */
 /* (applies to a ul element)  */
