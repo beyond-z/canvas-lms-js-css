@@ -1175,3 +1175,24 @@ td .bz-practice-box {
 	font-weight: bold;
 	color: #EB3B46;	
 }
+
+iframe.bz-self-reference {
+  display: block;
+  width: 100%;
+  height: 300px;
+}
+
+.bz-in-iframe #bz-module-sequence-progress-container,
+.bz-in-iframe #breadcrumbs,
+.bz-in-iframe .header-bar-outer-container,
+.bz-in-iframe .module-sequence-footer,
+.bz-in-iframe #footer,
+.bz-in-iframe #right-side-wrapper,
+.bz-in-iframe #left-side,
+.bz-in-iframe #header {
+  display: none;
+}
+
+.bz-in-iframe #main {
+  margin-left: 0px;
+}
