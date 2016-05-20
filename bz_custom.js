@@ -43,7 +43,7 @@ jQuery( document ).ready(function() {
 	jQuery('#bz-auto-toc').each(function(){bzAutoTOC()});
 
 	// enable jQuery UI tooltips that override browser styling/interaction: 
-	jQuery( '.has-tooltip' ).tooltip();
+	jQuery(document).tooltip();
 
 
 });
