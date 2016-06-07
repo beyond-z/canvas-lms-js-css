@@ -1159,6 +1159,7 @@ td .bz-practice-box {
     -webkit-box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.5);
     -moz-box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.5);
     box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.5);
+	 background-color: #fff;
 }
 
 #bz-accessibility-mapper ul {
@@ -1195,4 +1196,24 @@ iframe.bz-self-reference {
 
 .bz-in-iframe #main {
   margin-left: 0px;
+}
+/* Page Mapper Tools */
+.bz-page-mapper-body #main,
+.bz-page-mapper-body #content {
+	background-color: transparent !important;
+}
+.bz-pm-pl {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: calc(100% - 10px);
+	 text-align:center;
+    padding: 5px;
+    z-index: 99;
+    font-weight: bold;
+    font-size: smaller;
+    font-family: monospace;
+}
+.bz-pm-pl::after {
+    content: " ("attr(deltaavg)"\0025  of average)";
 }

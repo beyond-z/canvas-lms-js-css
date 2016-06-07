@@ -45,7 +45,8 @@ jQuery( document ).ready(function() {
 	// enable jQuery UI tooltips that override browser styling/interaction: 
 	jQuery(document).tooltip();
 
-
+	// Add character counting tool to pagemapper
+	jQuery('#page-mapper-container').each(function(){bzPageMapperPageCharCount()}).parents('body').addClass('bz-page-mapper-body');
 });
 
 function bzAutoTOC() { 
@@ -92,5 +93,31 @@ function bzAfterLL(){
 		if( jQuery(this).text().toLowerCase().indexOf("after learning lab") > -1 || jQuery(this).text().toLowerCase().indexOf("take a break") > -1) {
 			jQuery(this).addClass('bz-mid-module-break');
 		}
+	});
+}
+
+function bzPageMapperPageCharCount() {
+	console.log('Running bzPageMapperPageCharCount 1259');
+	var pageLengths = [];
+	var pageTotal = 0;
+	jQuery('.page-mapper-page').each(function(){
+		var pageLength = jQuery(this).text().length;
+		pageLengths.push(pageLength);
+		pageTotal += pageLength;
+		jQuery(this).attr('charcount', pageLength);
+		jQuery(this).append('<div class="bz-pm-pl">'+pageLength+'</div>');
+	});
+	var maxLength = Math.max.apply(Math,pageLengths);
+	var avgLength = pageTotal/pageLengths.length;
+	jQuery('.bz-pm-pl').each(function(){
+		var pageLength = jQuery(this).parent().text().length;
+		jQuery(this).css('background', 'rgba(255,0,0,'+((pageLength/avgLength)-1)+')').attr({
+			deltaavg: Math.floor(pageLength/avgLength * 100),
+			deltamax: maxLength-pageLength
+		});
+		
+		/*var pageLengthRatio = jQuery(this).text()/maxLength;
+		jQuery(this).parent().css('border-left', '30px solid rgba(255,0,0,'+pageLengthRatio+')');
+		jQuery(this).append('&nbsp;<span class="bz-pm-pr">'+(Math.ceil(pageLengthRatio*100))+'</span>');*/
 	});
 }
