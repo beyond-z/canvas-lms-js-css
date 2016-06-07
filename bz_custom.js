@@ -95,9 +95,8 @@ function bzAfterLL(){
 		}
 	});
 }
-
 function bzPageMapperPageCharCount() {
-	console.log('Running bzPageMapperPageCharCount 1259');
+	// Counts characters on pagemapper pages, and displays other interesting stats.
 	var pageLengths = [];
 	var pageTotal = 0;
 	jQuery('.page-mapper-page').each(function(){
@@ -112,12 +111,9 @@ function bzPageMapperPageCharCount() {
 	jQuery('.bz-pm-pl').each(function(){
 		var pageLength = jQuery(this).parent().text().length;
 		jQuery(this).css('background', 'rgba(255,0,0,'+((pageLength/avgLength)-1)+')').attr({
+			// using *100 below because we want it displayed as percentage)
 			deltaavg: Math.floor(pageLength/avgLength * 100),
 			deltamax: maxLength-pageLength
-		});
-		
-		/*var pageLengthRatio = jQuery(this).text()/maxLength;
-		jQuery(this).parent().css('border-left', '30px solid rgba(255,0,0,'+pageLengthRatio+')');
-		jQuery(this).append('&nbsp;<span class="bz-pm-pr">'+(Math.ceil(pageLengthRatio*100))+'</span>');*/
+		}); 
 	});
 }
