@@ -595,6 +595,10 @@ ul.bz-to-do-item {
   cursor: pointer; /* fallback */
   cursor: help;
 }
+/* Hide tooltip arrow */
+.ui-tooltip::before { 
+	display: none; 
+}
 /* Boxes */
 .case-study-box,
 .bz-case-study-box,
@@ -870,7 +874,16 @@ td .bz-practice-box {
 }
 /* Quick Quiz */
 /* ---------- */
+.bz-quick-quiz-container {
+	width: 100%;
+	position: relative;
+	padding: 5px 40px;
+	background: #e1e1e1;
+	left: -40px;
+	bottom: -15px;
+}
 .bz-quick-quiz {
+  background: #fff;
   margin: 40px auto;
   width: 250px;
   padding: 20px;
@@ -887,7 +900,8 @@ td .bz-practice-box {
 }
 .bz-quick-quiz .success{color:green;}
 .bz-quick-quiz .fail{color:red;}
-.bz-quick-quiz .success:before{
+.bz-quick-quiz .success:before,
+.bz-quick-quiz .fail:before{
   display: table-cell;
   vertical-align: middle;
   font: bold 16px;
@@ -896,8 +910,14 @@ td .bz-practice-box {
   height: 30px;
   width: 30px;
   text-align: center;
+}
+.bz-quick-quiz .success:before{
   content: "\2713 ";
 }
+.bz-quick-quiz .fail:before{
+  content: "\2718 ";
+}
+
 /* Real (Magic) Checkboxes    */
 /* (as opposed to list icons) */
 /* (applies to a ul element)  */
@@ -1127,4 +1147,73 @@ td .bz-practice-box {
 }
 #bz-module-nav > li.active-parent .bz-nav-module-name {
 	color: #000;		
+}
+
+/* Page mapper and Accessibility Mapper */
+/* ------------------------------------ */
+.page-mapper-page {
+    clear: both;
+    position: relative;
+    padding: 50px;
+    margin: 40px 0;
+    -webkit-box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.5);
+    -moz-box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.5);
+    box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.5);
+	 background-color: #fff;
+}
+
+#bz-accessibility-mapper ul {
+    list-style: none;
+    margin: 0;
+}
+#bz-accessibility-mapper li {
+    line-height: 20px;
+    margin: 20px 0;
+    padding: 15px;
+    background: #efefef;
+}
+#bz-accessibility-mapper li > p {
+	font-weight: bold;
+	color: #EB3B46;	
+}
+
+iframe.bz-self-reference {
+  display: block;
+  width: 100%;
+  height: 300px;
+}
+
+.bz-in-iframe #bz-module-sequence-progress-container,
+.bz-in-iframe #breadcrumbs,
+.bz-in-iframe .header-bar-outer-container,
+.bz-in-iframe .module-sequence-footer,
+.bz-in-iframe #footer,
+.bz-in-iframe #right-side-wrapper,
+.bz-in-iframe #left-side,
+.bz-in-iframe #header {
+  display: none;
+}
+
+.bz-in-iframe #main {
+  margin-left: 0px;
+}
+/* Page Mapper Tools */
+.bz-page-mapper-body #main,
+.bz-page-mapper-body #content {
+	background-color: transparent !important;
+}
+.bz-pm-pl {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: calc(100% - 10px);
+	 text-align:center;
+    padding: 5px;
+    z-index: 99;
+    font-weight: bold;
+    font-size: smaller;
+    font-family: monospace;
+}
+.bz-pm-pl::after {
+    content: " ("attr(deltaavg)"\0025  of average)";
 }
