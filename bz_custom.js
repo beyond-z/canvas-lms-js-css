@@ -43,9 +43,10 @@ jQuery( document ).ready(function() {
 	jQuery('#bz-auto-toc').each(function(){bzAutoTOC()});
 
 	// enable jQuery UI tooltips that override browser styling/interaction: 
-	jQuery( '.has-tooltip' ).tooltip();
+	jQuery(document).tooltip();
 
-
+	// Add character counting tool to pagemapper
+	jQuery('#page-mapper-container').each(function(){bzPageMapperPageCharCount()}).parents('body').addClass('bz-page-mapper-body');
 });
 
 function bzAutoTOC() { 
@@ -95,7 +96,7 @@ function bzAfterLL(){
 	});
 }
 
-
+/* instant survey */
 
 function checkInstantSurvey() {
 	var f = document.getElementById("instant-survey");
@@ -175,4 +176,27 @@ function bzInitializeInstantSurvey() {
 	http.open("GET", "/bz/user_retained_data?name=" + encodeURIComponent(name), true);
 	http.send();
 
+}
+
+function bzPageMapperPageCharCount() {
+	// Counts characters on pagemapper pages, and displays other interesting stats.
+	var pageLengths = [];
+	var pageTotal = 0;
+	jQuery('.page-mapper-page').each(function(){
+		var pageLength = jQuery(this).text().length;
+		pageLengths.push(pageLength);
+		pageTotal += pageLength;
+		jQuery(this).attr('charcount', pageLength);
+		jQuery(this).append('<div class="bz-pm-pl">'+pageLength+'</div>');
+	});
+	var maxLength = Math.max.apply(Math,pageLengths);
+	var avgLength = pageTotal/pageLengths.length;
+	jQuery('.bz-pm-pl').each(function(){
+		var pageLength = jQuery(this).parent().text().length;
+		jQuery(this).css('background', 'rgba(255,0,0,'+((pageLength/avgLength)-1)+')').attr({
+			// using *100 below because we want it displayed as percentage)
+			deltaavg: Math.floor(pageLength/avgLength * 100),
+			deltamax: maxLength-pageLength
+		}); 
+	});
 }
