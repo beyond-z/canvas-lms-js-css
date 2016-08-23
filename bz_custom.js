@@ -7,37 +7,57 @@ css-files-to-my-account
  *
  * */
 
+
+/*
+	Use this like document.ready to call a function when user
+	content is loaded. Since wiki pages load after document.ready,
+	you can't use it directly.
+
+	You may call this from inside scripts on wiki pages, it will handle
+	both cases well.
+*/
+function runOnUserContent(func) {
+	// if it is already there, run it now
+	if(document.querySelector(".user_content"))
+		func();
+	// and schedule to handle future changes
+	$.subscribe("userContent/change", function() { func(); });
+}
+
 jQuery( document ).ready(function() {
 	console.log("jQ working");
-	/* Improve Priorities Quiz */  
-	jQuery('.context-course_11 #question_482_question_text ol li, .context-course_15 #question_619_question_text ol li').prepend('<span class="dynamic"></span>');
-	jQuery('.context-course_11 #question_481_question_text input, .context-course_15 #question_618_question_text input').each(function(i){
-		jQuery(this).change(function(){
-			//console.log('changing big rock');
-			var t = jQuery(this).val()+': '; console.log(t);
-			jQuery('.context-course_11 #question_482_question_text ol li, .context-course_15 #question_619_question_text ol li').eq(i).children('.dynamic').text(t);
+
+	runOnUserContent(function() {
+		/* Improve Priorities Quiz */  
+		jQuery('.context-course_11 #question_482_question_text ol li, .context-course_15 #question_619_question_text ol li').prepend('<span class="dynamic"></span>');
+		jQuery('.context-course_11 #question_481_question_text input, .context-course_15 #question_618_question_text input').each(function(i){
+			jQuery(this).change(function(){
+				//console.log('changing big rock');
+				var t = jQuery(this).val()+': '; console.log(t);
+				jQuery('.context-course_11 #question_482_question_text ol li, .context-course_15 #question_619_question_text ol li').eq(i).children('.dynamic').text(t);
+			});
+		});
+		/**/
+		/* Improve SMART Goals quiz: */
+		jQuery('#bz-smart-quiz input').css('width', '95%');
+		/**/	
+		/* In modules view, add a class to items with "after learning lab" in their titles, so we can style them differently: */
+		bzAfterLL();
+
+		/* Quick Quiz functionality: */
+		
+		jQuery('.bz-quick-quiz input[type=radio]').change(function() {
+			console.log(this.value);
+			if (this.value == "correct") {
+				jQuery(this).parents('ul').children('li').removeClass('fail');
+				jQuery(this).parents('li').addClass('success');
+			} else {
+				jQuery(this).parents('ul').children('li').removeClass('fail, success');
+				jQuery(this).parents('li').addClass('fail');
+			}
 		});
 	});
-	/**/
-	/* Improve SMART Goals quiz: */
-	jQuery('#bz-smart-quiz input').css('width', '95%');
-	/**/	
-	/* In modules view, add a class to items with "after learning lab" in their titles, so we can style them differently: */
-	bzAfterLL();
-
-	/* Quick Quiz functionality: */
-	
-	jQuery('.bz-quick-quiz input[type=radio]').change(function() {
-		console.log(this.value);
-		if (this.value == "correct") {
-			jQuery(this).parents('ul').children('li').removeClass('fail');
-			jQuery(this).parents('li').addClass('success');
-		} else {
-			jQuery(this).parents('ul').children('li').removeClass('fail, success');
-			jQuery(this).parents('li').addClass('fail');
-		}
-	});
-	
+		
 
 	// run this in case js loads first:
 	jQuery('#bz-auto-toc').each(function(){bzAutoTOC()});
