@@ -62,7 +62,7 @@ function bzAutoTOCImpl() {
 	var toc = document.getElementById("bz-auto-toc"); 
 	if(toc == null) return; 
 
-	if(toc.className = "bz-already-loaded")
+	if(toc.className == "bz-already-loaded")
 		return;
 
 	var data = ENV["module_listing_data"]; 
