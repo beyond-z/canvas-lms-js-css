@@ -49,9 +49,22 @@ jQuery( document ).ready(function() {
 	jQuery('#page-mapper-container').each(function(){bzPageMapperPageCharCount()}).parents('body').addClass('bz-page-mapper-body');
 });
 
-function bzAutoTOC() { 
+
+// this is the entry point of the table of contents - it will queue up a handler on
+// the event to handle it when it comes in. Actual impl in bzAutoTOCImpl
+function bzAutoTOC() {
+	bzAutoTOCImpl(); // call now in case it is already there
+	$.subscribe("userContent/change", function() { bzAutoTOCImpl(); }); // and schedule a call in the future
+}
+
+// this is the actual implementation of the auto table of contents
+function bzAutoTOCImpl() { 
 	var toc = document.getElementById("bz-auto-toc"); 
 	if(toc == null) return; 
+
+	if(toc.className = "bz-already-loaded")
+		return;
+
 	var data = ENV["module_listing_data"]; 
 	if(data == null) return; 
 	var mid = location.search; 
@@ -85,6 +98,7 @@ function bzAutoTOC() {
 		ol.appendChild(li); 
 	} 
 	toc.appendChild(ol); 
+	toc.className = "bz-already-loaded";
 } 
 
 
