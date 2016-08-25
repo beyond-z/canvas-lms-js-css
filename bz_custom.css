@@ -169,6 +169,11 @@ ul,
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
 }
+/* Minor UI tweaks */
+#grades_summary th.title .context {
+	line-height: normal;
+}
+
 /* Styling Canvas notifications */
 .ic-notification__icon {
 	background-color: #9ad7d7;
@@ -491,12 +496,6 @@ table.bz-red-heading thead th {
   padding-top: 10px;
 }
 
-/* temporary hack to hide to do list from students at NYC/DC */
-/* --------------------------------------------------------- */
-.context-course_9 #course_show_secondary .course_options,
-.context-course_9 #course_show_secondary .to-do-list {
-	display: none;
-}
 /* Accessibility */
 /* ------------- */
 .says,
