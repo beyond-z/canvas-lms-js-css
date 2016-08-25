@@ -41,8 +41,6 @@ jQuery( document ).ready(function() {
 		/* Improve SMART Goals quiz: */
 		jQuery('#bz-smart-quiz input').css('width', '95%');
 		/**/	
-		/* In modules view, add a class to items with "after learning lab" in their titles, so we can style them differently: */
-		bzAfterLL();
 
 		/* Quick Quiz functionality: */
 		
@@ -67,6 +65,9 @@ jQuery( document ).ready(function() {
 
 	// Add character counting tool to pagemapper
 	jQuery('#page-mapper-container').each(function(){bzPageMapperPageCharCount()}).parents('body').addClass('bz-page-mapper-body');
+
+	/* In modules view, add a class to items with "after learning lab" in their titles, so we can style them differently: */
+	bzAfterLL();
 });
 
 
