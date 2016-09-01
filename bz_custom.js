@@ -152,3 +152,12 @@ function bzPageMapperPageCharCount() {
 		}); 
 	});
 }
+
+var scriptHackAlreadyRun = false;
+runOnUserContent(function() {
+	if(scriptHackAlreadyRun) return;
+	scriptHackAlreadyRun = true;
+	var e = document.getElementById('wiki_page_body');
+	if(e && ENV && ENV["WIKI_PAGE"] && ENV["WIKI_PAGE"]["body"])
+		e.value = ENV["WIKI_PAGE"]["body"];
+});
