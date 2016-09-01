@@ -153,11 +153,14 @@ function bzPageMapperPageCharCount() {
 	});
 }
 
+// the Canvas built in thing strips scripts out of the editor, but
+// leaves it in the ENV. this hack will put it back. The timer is because
+// I don't have a good event to use right now.
 var scriptHackAlreadyRun = false;
-runOnUserContent(function() {
+setTimeout(function() {
 	if(scriptHackAlreadyRun) return;
 	scriptHackAlreadyRun = true;
 	var e = document.getElementById('wiki_page_body');
 	if(e && ENV && ENV["WIKI_PAGE"] && ENV["WIKI_PAGE"]["body"])
 		e.value = ENV["WIKI_PAGE"]["body"];
-});
+}, 3000);
