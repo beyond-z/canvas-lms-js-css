@@ -10,12 +10,12 @@ css-files-to-my-account
 jQuery( document ).ready(function() {
 	//console.log("jQ working");
 	/* Improve Priorities Quiz */  
-	jQuery('.context-course_11 #question_482_question_text ol li, .context-course_15 #question_619_question_text ol li').prepend('<span class="dynamic"></span>');
-	jQuery('.context-course_11 #question_481_question_text input, .context-course_15 #question_618_question_text input').each(function(i){
-		jQuery(this).change(function(){
+  jQuery('.context-course_11 #question_482_question_text ol li, .context-course_15 #question_619_question_text ol li, .context-course_23 #question_1918_question_text ol li').prepend('<span class="dynamic"></span>');
+  jQuery('.spancontext-course_11 #question_481_question_text input, .context-course_15 #question_618_question_text input, .context-course_23 #question_1917_question_text input').each(function(i){
+    jQuery(this).change(function(){
 			//console.log('changing big rock');
 			var t = jQuery(this).val()+': '; console.log(t);
-			jQuery('.context-course_11 #question_482_question_text ol li, .context-course_15 #question_619_question_text ol li').eq(i).children('.dynamic').text(t);
+      jQuery('.context-course_11 #question_482_question_text ol li, .context-course_15 #question_619_question_text ol li, .context-course_23 #question_1918_question_text ol li').eq(i).children('.dynamic').text(t);
 		});
 	});
 	/**/
