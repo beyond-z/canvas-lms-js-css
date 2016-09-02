@@ -18,10 +18,15 @@ css-files-to-my-account
 */
 function runOnUserContent(func) {
 	// if it is already there, run it now
-	if(document.querySelector(".user_content"))
+	if(document.querySelector(".user_content")) {
 		func();
+		console.log('running user content now');
+	}
 	// and schedule to handle future changes
-	$.subscribe("userContent/change", function() { func(); });
+	$.subscribe("userContent/change", function() {
+		console.log('running user content on event');
+		func();
+	});
 }
 
 jQuery( document ).ready(function() {
@@ -163,4 +168,4 @@ setTimeout(function() {
 	var e = document.getElementById('wiki_page_body');
 	if(e && ENV && ENV["WIKI_PAGE"] && ENV["WIKI_PAGE"]["body"])
 		e.value = ENV["WIKI_PAGE"]["body"];
-}, 3000);
+}, 10000);
