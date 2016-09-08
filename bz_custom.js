@@ -68,6 +68,10 @@ jQuery( document ).ready(function() {
 
 	/* In modules view, add a class to items with "after learning lab" in their titles, so we can style them differently: */
 	bzAfterLL();
+	
+	/* Add some interactivity to local modules nav UI: */
+	bzLocalNavUI()
+	
 });
 
 
@@ -150,5 +154,18 @@ function bzPageMapperPageCharCount() {
 			deltaavg: Math.floor(pageLength/avgLength * 100),
 			deltamax: maxLength-pageLength
 		}); 
+	});
+}
+function bzLocalNavUI() {
+	jQuery('#bz-module-nav > li > ul > li:not(.active-parent) > ul li').parent('ul').addClass('non-active-list collapsed').hide().find('li').show();
+	jQuery('#bz-module-nav .non-active-list').siblings('a').click(function(e){
+		e.preventDefault();
+		// traversing to siblings because $(this) is the clickable <a> element.  
+		// Using .css('display') because is(':visible') didn't work consistently.
+		if($(this).siblings('.non-active-list').css('display') != 'none') {
+			$(this).siblings('.non-active-list').toggleClass('expanded collapsed').slideUp();
+		} else {
+			$(this).siblings('.non-active-list').toggleClass('expanded collapsed').slideDown();
+		}
 	});
 }
