@@ -1143,6 +1143,11 @@ td .bz-practice-box {
 #bz-module-nav > li.active-parent .bz-nav-module-name {
 	color: #000;		
 }
+#bz-module-nav .collapsed::after {
+	content:"\2026";
+	border-left: solid 1px #bbb;
+	padding-left: 1em;
+}
 
 /* Page mapper and Accessibility Mapper */
 /* ------------------------------------ */
