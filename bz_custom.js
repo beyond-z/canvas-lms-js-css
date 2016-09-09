@@ -70,7 +70,7 @@ jQuery( document ).ready(function() {
 	bzAfterLL();
 	
 	/* Add some interactivity to local modules nav UI: */
-	bzLocalNavUI()
+	bzLocalNavUI();
 	
 });
 
