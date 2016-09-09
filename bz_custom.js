@@ -157,15 +157,15 @@ function bzPageMapperPageCharCount() {
 	});
 }
 function bzLocalNavUI() {
-	jQuery('#bz-module-nav > li > ul > li:not(.active-parent) > ul li').parent('ul').addClass('non-active-list collapsed').hide().find('li').show();
+	jQuery('#bz-module-nav > li > ul > li:not(.active-parent) > ul li').parent('ul').addClass('non-active-list').hide().parent().addClass('collapsed').find('li').show();
 	jQuery('#bz-module-nav .non-active-list').siblings('a').click(function(e){
 		e.preventDefault();
 		// traversing to siblings because $(this) is the clickable <a> element.  
 		// Using .css('display') because is(':visible') didn't work consistently.
 		if($(this).siblings('.non-active-list').css('display') != 'none') {
-			$(this).siblings('.non-active-list').toggleClass('expanded collapsed').slideUp();
+			$(this).siblings('.non-active-list').slideUp().parent().toggleClass('expanded collapsed');
 		} else {
-			$(this).siblings('.non-active-list').toggleClass('expanded collapsed').slideDown();
+			$(this).siblings('.non-active-list').slideDown().parent().toggleClass('expanded collapsed');
 		}
 	});
 }
