@@ -159,6 +159,21 @@ function bzPageMapperPageCharCount() {
 	});
 }
 
+function bzLocalNavUI() {
+	jQuery('#bz-module-nav .children').siblings('a').addClass(function(){
+			if(jQuery(this).siblings('.children').children('li').css('display') == 'none'){
+				return 'collapsed';
+			} else {
+				return 'expanded';
+			}
+		});
+	jQuery('#bz-module-nav ul.active-parent').parent().siblings('li').addClass('active-uncles').show();
+	jQuery('#bz-module-nav .children').siblings('a').click(function(e){
+		e.preventDefault();
+		jQuery(this).toggleClass('expanded collapsed').siblings('.children').children().slideToggle();
+	});
+}
+
 // the Canvas built in thing strips scripts out of the editor, but
 // leaves it in the ENV. this hack will put it back. The timer is because
 // I don't have a good event to use right now.
