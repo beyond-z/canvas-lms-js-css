@@ -18,10 +18,15 @@ css-files-to-my-account
 */
 function runOnUserContent(func) {
 	// if it is already there, run it now
-	if(document.querySelector(".user_content"))
+	if(document.querySelector(".user_content")) {
 		func();
+		console.log('running user content now');
+	}
 	// and schedule to handle future changes
-	$.subscribe("userContent/change", function() { func(); });
+	$.subscribe("userContent/change", function() {
+		console.log('running user content on event');
+		func();
+	});
 }
 
 jQuery( document ).ready(function() {
@@ -29,12 +34,12 @@ jQuery( document ).ready(function() {
 
 	runOnUserContent(function() {
 		/* Improve Priorities Quiz */  
-		jQuery('.context-course_11 #question_482_question_text ol li, .context-course_15 #question_619_question_text ol li').prepend('<span class="dynamic"></span>');
-		jQuery('.context-course_11 #question_481_question_text input, .context-course_15 #question_618_question_text input').each(function(i){
+		jQuery('.context-course_11 #question_482_question_text ol li, .context-course_15 #question_619_question_text ol li, .context-course_23 #question_1918_question_text ol li').prepend('<span class="dynamic"></span>');
+		jQuery('.context-course_11 #question_481_question_text input, .context-course_15 #question_618_question_text input, .context-course_23 #question_1917_question_text input').each(function(i){
 			jQuery(this).change(function(){
 				//console.log('changing big rock');
 				var t = jQuery(this).val()+': '; console.log(t);
-				jQuery('.context-course_11 #question_482_question_text ol li, .context-course_15 #question_619_question_text ol li').eq(i).children('.dynamic').text(t);
+				jQuery('.context-course_11 #question_482_question_text ol li, .context-course_15 #question_619_question_text ol li, .context-course_23 #question_1918_question_text ol li').eq(i).children('.dynamic').text(t);
 			});
 		});
 		/**/
@@ -68,10 +73,7 @@ jQuery( document ).ready(function() {
 
 	/* In modules view, add a class to items with "after learning lab" in their titles, so we can style them differently: */
 	bzAfterLL();
-	
-	/* Add some interactivity to local modules nav UI: */
-	bzLocalNavUI();
-	
+
 });
 
 
@@ -156,6 +158,7 @@ function bzPageMapperPageCharCount() {
 		}); 
 	});
 }
+
 function bzLocalNavUI() {
 	jQuery('#bz-module-nav .children').siblings('a').addClass(function(){
 			if(jQuery(this).siblings('.children').children('li').css('display') == 'none'){
@@ -170,3 +173,15 @@ function bzLocalNavUI() {
 		jQuery(this).toggleClass('expanded collapsed').siblings('.children').children().slideToggle();
 	});
 }
+
+// the Canvas built in thing strips scripts out of the editor, but
+// leaves it in the ENV. this hack will put it back. The timer is because
+// I don't have a good event to use right now.
+var scriptHackAlreadyRun = false;
+setTimeout(function() {
+	if(scriptHackAlreadyRun) return;
+	scriptHackAlreadyRun = true;
+	var e = document.getElementById('wiki_page_body');
+	if(e && ENV && ENV["WIKI_PAGE"] && ENV["WIKI_PAGE"]["body"])
+		e.value = ENV["WIKI_PAGE"]["body"];
+}, 10000);
