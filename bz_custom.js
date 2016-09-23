@@ -59,6 +59,9 @@ jQuery( document ).ready(function() {
 				jQuery(this).parents('li').addClass('fail');
 			}
 		});
+		/* Local Navigation UI enhancements */
+		bzLocalNavUI();
+		
 	});
 		
 
