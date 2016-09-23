@@ -163,7 +163,7 @@ function bzPageMapperPageCharCount() {
 }
 
 function bzLocalNavUI() {
-	jQuery('#bz-module-nav .children').siblings('a').addClass(function(){
+	jQuery('#bz-module-nav .children').siblings('a').not('.modules').addClass(function(){
 			if(jQuery(this).siblings('.children').children('li').css('display') == 'none'){
 				return 'collapsed';
 			} else {
@@ -171,7 +171,7 @@ function bzLocalNavUI() {
 			}
 		});
 	jQuery('#bz-module-nav ul.active-parent').parent().siblings('li').addClass('active-uncles').show();
-	jQuery('#bz-module-nav .children').siblings('a').click(function(e){
+	jQuery('#bz-module-nav .children').siblings('a').not('.modules').click(function(e){
 		e.preventDefault();
 		jQuery(this).toggleClass('expanded collapsed').siblings('.children').children().slideToggle();
 	});
