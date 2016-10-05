@@ -1220,6 +1220,57 @@ iframe.bz-self-reference {
 .bz-in-iframe #main {
   margin-left: 0px;
 }
+
+/*** INSTANT SURVEY ***/
+
+/* flash of unstyled content protection */
+
+#instant-survey {
+	display: none;
+}
+
+#instant-survey-holder {
+	display: none;
+}
+
+.module-sequence-footer.has-instant-survey #instant-survey-holder {
+	display: block;
+}
+
+/* actual instant survey styles */
+
+#instant-survey-holder {
+	padding: 12px;
+	text-transform: none;
+	font-size: 12px;
+	height: 100%;
+	background-color: rgb(235, 59, 70);
+	color: white;
+	line-height: normal;
+	width: 40%;
+}
+
+#instant-survey-holder #instant-survey {
+	display: block;
+}
+
+#instant-survey label {
+	display: block;
+	white-space: nowrap;
+}
+
+.module-sequence-footer.has-instant-survey,
+.module-sequence-footer.has-instant-survey .module-sequence-footer-content,
+.module-sequence-footer.has-instant-survey .module-sequence-footer-content > *
+{
+	height: 200px;
+	line-height: 200px;
+}
+
+.bz-next-button.discouraged {
+	background-color: #ccc !important;
+}
+
 /* Page Mapper Tools */
 .bz-page-mapper-body #main,
 .bz-page-mapper-body #content {
