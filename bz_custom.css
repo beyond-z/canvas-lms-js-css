@@ -169,6 +169,11 @@ ul,
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
 }
+/* Minor UI tweaks */
+#grades_summary th.title .context {
+	line-height: normal;
+}
+
 /* Styling Canvas notifications */
 .ic-notification__icon {
 	background-color: #9ad7d7;
@@ -491,12 +496,6 @@ table.bz-red-heading thead th {
   padding-top: 10px;
 }
 
-/* temporary hack to hide to do list from students at NYC/DC */
-/* --------------------------------------------------------- */
-.context-course_9 #course_show_secondary .course_options,
-.context-course_9 #course_show_secondary .to-do-list {
-	display: none;
-}
 /* Accessibility */
 /* ------------- */
 .says,
@@ -1082,7 +1081,7 @@ td .bz-practice-box {
 	margin-left: 0;
 }
 #bz-module-nav ul {
-	border-left: solid 1px #bbb;	
+	/*border-left: solid 1px #bbb;*/
 }
 #bz-module-nav > li > ul {
 	border-left: transparent;
@@ -1097,8 +1096,10 @@ td .bz-practice-box {
 	display: none;
 }
 #bz-module-nav li.active,
-#bz-module-nav li.active-parent,
-#bz-module-nav li.active-parent > ul > li,
+#bz-module-nav .active-parent,
+#bz-module-nav .active-ancestor,
+#bz-module-nav .active-parent > li,
+#bz-module-nav > li > ul > li,
 #bz-module-nav li.active > ul > li {
 	display:block;	
 }
@@ -1107,6 +1108,7 @@ td .bz-practice-box {
 	display: block;
 	color: #555;
 	text-decoration: none;
+	position: relative;
 }
 #bz-module-nav a:hover {
     color: #0087c2;
@@ -1143,6 +1145,31 @@ td .bz-practice-box {
 }
 #bz-module-nav > li.active-parent .bz-nav-module-name {
 	color: #000;		
+}
+#bz-module-nav .collapsed::after {
+	content: "\2716";
+	padding-left: 0.5em;
+	font-size: 8px;
+	font-weight: normal;
+	font-family: Arial, sans-serif;
+	display: inline-block;
+	transform: rotate(45deg);
+	position: absolute;
+	top: 0;
+	left: -12px;
+	transition: all 0.5s;
+}
+#bz-module-nav .expanded::after {
+	content: "\2716";
+	padding-left: 0.5em;
+	font-size: 8px;
+	font-weight: normal;
+	font-family: Arial, sans-serif;
+	display: inline-block;
+	position: absolute;
+	top: 0;
+	left: -13px;
+	transition: all 0.5s;
 }
 
 /* Page mapper and Accessibility Mapper */
@@ -1193,6 +1220,57 @@ iframe.bz-self-reference {
 .bz-in-iframe #main {
   margin-left: 0px;
 }
+
+/*** INSTANT SURVEY ***/
+
+/* flash of unstyled content protection */
+
+#instant-survey {
+	display: none;
+}
+
+#instant-survey-holder {
+	display: none;
+}
+
+.module-sequence-footer.has-instant-survey #instant-survey-holder {
+	display: block;
+}
+
+/* actual instant survey styles */
+
+#instant-survey-holder {
+	padding: 12px;
+	text-transform: none;
+	font-size: 12px;
+	height: 100%;
+	background-color: rgb(235, 59, 70);
+	color: white;
+	line-height: normal;
+	width: 40%;
+}
+
+#instant-survey-holder #instant-survey {
+	display: block;
+}
+
+#instant-survey label {
+	display: block;
+	white-space: nowrap;
+}
+
+.module-sequence-footer.has-instant-survey,
+.module-sequence-footer.has-instant-survey .module-sequence-footer-content,
+.module-sequence-footer.has-instant-survey .module-sequence-footer-content > *
+{
+	height: 200px;
+	line-height: 200px;
+}
+
+.bz-next-button.discouraged {
+	background-color: #ccc !important;
+}
+
 /* Page Mapper Tools */
 .bz-page-mapper-body #main,
 .bz-page-mapper-body #content {

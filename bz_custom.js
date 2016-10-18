@@ -34,12 +34,12 @@ jQuery( document ).ready(function() {
 
 	runOnUserContent(function() {
 		/* Improve Priorities Quiz */  
-		jQuery('.context-course_11 #question_482_question_text ol li, .context-course_15 #question_619_question_text ol li').prepend('<span class="dynamic"></span>');
-		jQuery('.context-course_11 #question_481_question_text input, .context-course_15 #question_618_question_text input').each(function(i){
+		jQuery('.context-course_11 #question_482_question_text ol li, .context-course_15 #question_619_question_text ol li, .context-course_23 #question_1918_question_text ol li').prepend('<span class="dynamic"></span>');
+		jQuery('.context-course_11 #question_481_question_text input, .context-course_15 #question_618_question_text input, .context-course_23 #question_1917_question_text input').each(function(i){
 			jQuery(this).change(function(){
 				//console.log('changing big rock');
 				var t = jQuery(this).val()+': '; console.log(t);
-				jQuery('.context-course_11 #question_482_question_text ol li, .context-course_15 #question_619_question_text ol li').eq(i).children('.dynamic').text(t);
+				jQuery('.context-course_11 #question_482_question_text ol li, .context-course_15 #question_619_question_text ol li, .context-course_23 #question_1918_question_text ol li').eq(i).children('.dynamic').text(t);
 			});
 		});
 		/**/
@@ -59,6 +59,9 @@ jQuery( document ).ready(function() {
 				jQuery(this).parents('li').addClass('fail');
 			}
 		});
+		/* Local Navigation UI enhancements */
+		bzLocalNavUI();
+		
 	});
 		
 
@@ -73,6 +76,7 @@ jQuery( document ).ready(function() {
 
 	/* In modules view, add a class to items with "after learning lab" in their titles, so we can style them differently: */
 	bzAfterLL();
+
 });
 
 
@@ -135,6 +139,89 @@ function bzAfterLL(){
 		}
 	});
 }
+
+/* instant survey */
+
+function checkInstantSurvey() {
+	var f = document.getElementById("instant-survey");
+	if(!f)
+		return true;
+
+	// if we ever want to make the survey *required*, we can
+	// change this return to do false if it isn't filled in.
+	//
+	// but for now, next is visually discouraged, but not actually
+	// disabled per the mock.
+	return true;
+}
+
+function bzActivateInstantSurvey(magic_field_name) {
+	// adjust styles of the container to make room  (see CSS)
+	var msf = document.querySelector(".module-sequence-footer");
+	msf.className += ' has-instant-survey';
+
+	// discourage clicking of next without answering first...
+	var nb = document.querySelector(".bz-next-button");
+	var originalNextButtonClass = nb.className;
+	nb.className += ' discouraged';
+
+	// move the survey from the hidden body to the visible footer
+        var i = document.getElementById("instant-survey");
+        if(i) {
+          var h = document.getElementById("instant-survey-holder");
+          h.innerHTML = "";
+          h.appendChild(i.parentNode.removeChild(i));
+        }
+
+	// react to survey click - save and encourage hitting the next button.
+
+	var save = function(value) {
+		var http = new XMLHttpRequest();
+		http.open("POST", "/bz/user_retained_data", true);
+		var data = "name=" + encodeURIComponent(magic_field_name) + "&value=" + encodeURIComponent(value);
+		http.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+		// encourage next clicking again once they are saved
+		http.onload = function() {
+			nb.className = originalNextButtonClass;
+          		var h = document.getElementById("instant-survey-holder");
+			$(h).hide("slow");
+		};
+
+		http.send(data);
+	};
+
+	var inputs = i.querySelectorAll("input");
+	for(var a = 0; a < inputs.length; a++) {
+		inputs[a].onchange = function() {
+			save(this.value);
+		};
+	}
+}
+
+function bzInitializeInstantSurvey() {
+	// only valid on wiki pages
+	if(ENV == null || ENV["WIKI_PAGE"] == null || ENV["WIKI_PAGE"].page_id == null)
+		return;
+
+	// our key in the user magic field data where responses are stored
+	var name = "instant-survey-" + ENV["WIKI_PAGE"].page_id;
+
+	// load the value first. If it is already set, no need to show -
+	// instant survey is supposed to only be done once.
+
+	var http = new XMLHttpRequest();
+	// cut off json p stuff
+	http.onload = function() {
+		var value = http.responseText.substring(9);
+		if(value == null || value == "")
+			bzActivateInstantSurvey(name);
+	};
+	http.open("GET", "/bz/user_retained_data?name=" + encodeURIComponent(name), true);
+	http.send();
+
+}
+
 function bzPageMapperPageCharCount() {
 	// Counts characters on pagemapper pages, and displays other interesting stats.
 	var pageLengths = [];
@@ -155,6 +242,21 @@ function bzPageMapperPageCharCount() {
 			deltaavg: Math.floor(pageLength/avgLength * 100),
 			deltamax: maxLength-pageLength
 		}); 
+	});
+}
+
+function bzLocalNavUI() {
+	jQuery('#bz-module-nav .children').siblings('a').not('.modules').addClass(function(){
+			if(jQuery(this).siblings('.children').children('li').css('display') == 'none'){
+				return 'collapsed';
+			} else {
+				return 'expanded';
+			}
+		});
+	jQuery('#bz-module-nav ul.active-parent').parent().siblings('li').addClass('active-uncles').show();
+	jQuery('#bz-module-nav .children').siblings('a').not('.modules').click(function(e){
+		e.preventDefault();
+		jQuery(this).toggleClass('expanded collapsed').siblings('.children').children().slideToggle();
 	});
 }
 
