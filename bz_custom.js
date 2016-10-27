@@ -156,6 +156,10 @@ function checkInstantSurvey() {
 }
 
 function bzActivateInstantSurvey(magic_field_name) {
+        var i = document.getElementById("instant-survey");
+        if(!i)
+	  return;
+
 	// adjust styles of the container to make room  (see CSS)
 	var msf = document.querySelector(".module-sequence-footer");
 	msf.className += ' has-instant-survey';
@@ -166,12 +170,9 @@ function bzActivateInstantSurvey(magic_field_name) {
 	nb.className += ' discouraged';
 
 	// move the survey from the hidden body to the visible footer
-        var i = document.getElementById("instant-survey");
-        if(i) {
-          var h = document.getElementById("instant-survey-holder");
-          h.innerHTML = "";
-          h.appendChild(i.parentNode.removeChild(i));
-        }
+        var h = document.getElementById("instant-survey-holder");
+        h.innerHTML = "";
+        h.appendChild(i.parentNode.removeChild(i));
 
 	// react to survey click - save and encourage hitting the next button.
 
