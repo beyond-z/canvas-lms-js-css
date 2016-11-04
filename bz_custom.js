@@ -162,6 +162,7 @@ function bzActivateInstantSurvey(magic_field_name) {
 
 	// adjust styles of the container to make room  (see CSS)
 	var msf = document.querySelector(".module-sequence-footer");
+	var originalMsfButtonClass = msf.className;
 	msf.className += ' has-instant-survey';
 
 	// discourage clicking of next without answering first...
@@ -173,6 +174,10 @@ function bzActivateInstantSurvey(magic_field_name) {
         var h = document.getElementById("instant-survey-holder");
         h.innerHTML = "";
         h.appendChild(i.parentNode.removeChild(i));
+
+	var count = h.querySelectorAll("input").length;
+	if(count < 3)
+		msf.className += ' has-short-instant-survey';
 
 	// react to survey click - save and encourage hitting the next button.
 
@@ -187,6 +192,8 @@ function bzActivateInstantSurvey(magic_field_name) {
 			nb.className = originalNextButtonClass;
           		var h = document.getElementById("instant-survey-holder");
 			$(h).hide("slow");
+			// shrinks the container...
+			msf.className = originalMsfButtonClass;
 		};
 
 		http.send(data);

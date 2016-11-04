@@ -1267,6 +1267,14 @@ iframe.bz-self-reference {
 	line-height: 200px;
 }
 
+.module-sequence-footer.has-short-instant-survey,
+.module-sequence-footer.has-short-instant-survey .module-sequence-footer-content,
+.module-sequence-footer.has-short-instant-survey .module-sequence-footer-content > *
+{
+	height: 120px;
+	line-height: 120px;
+}
+
 .bz-next-button.discouraged {
 	background-color: #ccc !important;
 }
