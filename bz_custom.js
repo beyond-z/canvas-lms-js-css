@@ -254,7 +254,6 @@ function bzPageMapperPageCharCount() {
 }
 
 function bzLocalNavUI() {
-	console.log('1245');
 	jQuery('#bz-module-nav .has-children').not('#bz-module-nav > li').append('<div class="bz-nav-ui">+</div>');
 	jQuery('.bz-nav-ui').addClass(function(){
 		// add a class based on whether this is already expanded or collapsed

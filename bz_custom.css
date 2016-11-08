@@ -1160,7 +1160,7 @@ cursor: pointer;
     left: -5px;
     transition: all 0.5s;
 }
-#bz-module-nav .collapsed {
+#bz-module-nav .expanded {
 	transform: rotate(45deg);
 }
 /* Page mapper and Accessibility Mapper */
