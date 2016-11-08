@@ -254,18 +254,20 @@ function bzPageMapperPageCharCount() {
 }
 
 function bzLocalNavUI() {
-	jQuery('#bz-module-nav .children').siblings('a').not('.modules').addClass(function(){
-			if(jQuery(this).siblings('.children').children('li').css('display') == 'none'){
-				return 'collapsed';
-			} else {
-				return 'expanded';
-			}
-		});
-	jQuery('#bz-module-nav ul.active-parent').parent().siblings('li').addClass('active-uncles').show();
-	jQuery('#bz-module-nav .children').siblings('a').not('.modules').click(function(e){
-		e.preventDefault();
+	console.log('1245');
+	jQuery('#bz-module-nav .has-children').not('#bz-module-nav > li').append('<div class="bz-nav-ui">+</div>');
+	jQuery('.bz-nav-ui').addClass(function(){
+		// add a class based on whether this is already expanded or collapsed
+		if(jQuery(this).siblings('.children').children('li').css('display') == 'none'){
+			return 'collapsed';
+		} else {
+			return 'expanded';
+		} 
+	}).click(function(e){
+		console.log('clicked');
 		jQuery(this).toggleClass('expanded collapsed').siblings('.children').children().slideToggle();
 	});
+	jQuery('#bz-module-nav ul.active-parent').parent().siblings('li').addClass('active-uncles').show();
 }
 
 // the Canvas built in thing strips scripts out of the editor, but
