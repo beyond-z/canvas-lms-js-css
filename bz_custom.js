@@ -268,15 +268,6 @@ function bzLocalNavUI() {
 		jQuery(this).toggleClass('expanded collapsed').siblings('.children').children().slideToggle();
 	});
 	jQuery('#bz-module-nav ul.active-parent').parent().siblings('li').addClass('active-uncles').show();
-/*	
-	
-	jQuery('#bz-module-nav .children').siblings('a').not('.modules').
-	
-	jQuery('#bz-module-nav .children').siblings('a').not('.modules').addClass('collapsible').parent().append('<div class="bz-nav-ui">+</div>').click(function(e){
-		jQuery(this).siblings('.collapsible').toggleClass('expanded collapsed').siblings('.children').children().slideToggle();
-		console.log('1209');
-	});
-	*/
 }
 
 // the Canvas built in thing strips scripts out of the editor, but
