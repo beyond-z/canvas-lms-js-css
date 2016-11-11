@@ -178,13 +178,17 @@ function bzActivateInstantSurvey(magic_field_name) {
 	var count = h.querySelectorAll("input").length;
 	if(count < 3)
 		msf.className += ' has-short-instant-survey';
+	else if(count == 3)
+		msf.className += ' has-3-instant-survey';
+	else if(count == 4)
+		msf.className += ' has-4-instant-survey';
 
 	// react to survey click - save and encourage hitting the next button.
 
 	var save = function(value) {
 		var http = new XMLHttpRequest();
 		http.open("POST", "/bz/user_retained_data", true);
-		var data = "name=" + encodeURIComponent(magic_field_name) + "&value=" + encodeURIComponent(value);
+		var data = "name=" + encodeURIComponent(magic_field_name) + "&value=" + encodeURIComponent(value) + "&from=" + encodeURIComponent(location.href);
 		http.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
 		// encourage next clicking again once they are saved

@@ -1254,14 +1254,32 @@ iframe.bz-self-reference {
 .module-sequence-footer.has-instant-survey .module-sequence-footer-content,
 .module-sequence-footer.has-instant-survey .module-sequence-footer-content > *
 {
+	/* fits up to 5 */
 	height: 200px;
 	line-height: 200px;
+}
+
+.module-sequence-footer.has-4-instant-survey,
+.module-sequence-footer.has-4-instant-survey .module-sequence-footer-content,
+.module-sequence-footer.has-4-instant-survey .module-sequence-footer-content > *
+{
+	height: 170px;
+	line-height: 170px;
+}
+
+.module-sequence-footer.has-3-instant-survey,
+.module-sequence-footer.has-3-instant-survey .module-sequence-footer-content,
+.module-sequence-footer.has-3-instant-survey .module-sequence-footer-content > *
+{
+	height: 150px;
+	line-height: 150px;
 }
 
 .module-sequence-footer.has-short-instant-survey,
 .module-sequence-footer.has-short-instant-survey .module-sequence-footer-content,
 .module-sequence-footer.has-short-instant-survey .module-sequence-footer-content > *
 {
+	/* fits one or two */
 	height: 120px;
 	line-height: 120px;
 }
