@@ -160,6 +160,10 @@ function bzActivateInstantSurvey(magic_field_name) {
         if(!i)
 	  return;
 
+	var ssrbtn = document.getElementById("see-survey-results-button");
+	if(ssrbtn)
+	  ssrbtn.style.display = '';
+
 	// adjust styles of the container to make room  (see CSS)
 	var msf = document.querySelector(".module-sequence-footer");
 	var originalMsfButtonClass = msf.className;
