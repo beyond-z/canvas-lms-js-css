@@ -156,14 +156,6 @@ function checkInstantSurvey() {
 }
 
 function bzActivateInstantSurvey(magic_field_name) {
-        var i = document.getElementById("instant-survey");
-        if(!i)
-	  return;
-
-	var ssrbtn = document.getElementById("see-survey-results-button");
-	if(ssrbtn)
-	  ssrbtn.style.display = '';
-
 	// adjust styles of the container to make room  (see CSS)
 	var msf = document.querySelector(".module-sequence-footer");
 	var originalMsfButtonClass = msf.className;
@@ -219,6 +211,17 @@ function bzInitializeInstantSurvey() {
 	// only valid on wiki pages
 	if(ENV == null || ENV["WIKI_PAGE"] == null || ENV["WIKI_PAGE"].page_id == null)
 		return;
+
+	// if there's no survey in the document, don't need to query.
+        var i = document.getElementById("instant-survey");
+        if(!i)
+	  return;
+
+	// show the button for editors (if present) if a survey exists
+	var ssrbtn = document.getElementById("see-survey-results-button");
+	if(ssrbtn)
+	  ssrbtn.style.display = '';
+
 
 	// our key in the user magic field data where responses are stored
 	var name = "instant-survey-" + ENV["WIKI_PAGE"].page_id;
