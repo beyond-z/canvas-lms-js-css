@@ -35,6 +35,9 @@
 #wiki_page_show {
 	font-family: Georgia, serif;
 }
+#menu a.menu-item-no-drop:focus, #menu a.menu-item-no-drop:hover {
+	color: #fff;
+}
 /*a {
 	color:#2E6D99;
 }
@@ -132,15 +135,14 @@ ul,
 #content #wiki_page_show ul {
 		list-style-position: outside;
 }
-.btn {
+.btn, .Button--primary {
 	border: 0;
 	/*border-radius: 0;*/
-	
 }
-.btn-primary {
+.btn-primary, .Button--primary {	
 	background: #eb3b46;
 }
-.btn-primary:hover {
+.btn-primary:hover, .Button--primary:hover {
 	background: #c8141f; 	
 }
 .btn-secondary {
@@ -158,7 +160,7 @@ ul,
 	background: #ebf7f7 !important;
 }
 .toolbarView#discussion-toolbar .headerBar {
-	background:#D7EFEF !important;
+	background: #D7EFEF !important;
 }
 .table>thead {
 	background: #ebf7f7 !important;
@@ -166,6 +168,28 @@ ul,
 .question_holder .display_question .file-upload-question-holder .file-upload-box {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
+}
+/* Minor UI tweaks */
+#grades_summary th.title .context {
+	line-height: normal;
+}
+
+/* Styling Canvas notifications */
+.ic-notification__icon {
+	background-color: #9ad7d7;
+}
+.ic-notification {
+	margin-top: 1em;
+	border: none;
+	box-shadow: none;
+	border-radius: none;
+}
+.ic-notification__title {
+	font-family: "TradeGothicNo.20-CondBold", "Oswald", "Open Sans", sans-serif;
+	text-transform: uppercase;
+	line-height: normal;
+	font-weight: bold;
+	font-weight: 700;
 }
 /* Create visual separation in modules view after learning lab: */
 .bz-mid-module-break {
@@ -203,29 +227,6 @@ ul,
 }
 .form-actions{
 	border: none;
-}
-/* Fixing the header bar after hiding breadcrumbs and "view all pages" button: 
-#wiki_page_show .header-bar,
-.context-course_15 #wiki_page_show .header-bar {
-	min-height: 0;
-	padding: 0;
-	border: 0 none;
-}
-#content .header-bar-outer-container,
-#content .header-bar-container,
-#content .header-bar,
-.context-course_15 #content .header-bar-outer-container,
-.context-course_15 #content .header-bar-container,
-.context-course_15 #content .header-bar {
-	height: auto;
-	min-height: inherit;
-	box-shadow: none;
-}
-#content .header-bar-right,
-.context-course_15 #content .header-bar-right {
-	position: absolute;
-	right: 15px;
-	top: 15px;
 }
 /**/
 /* styles for alternative navigation */
@@ -495,12 +496,6 @@ table.bz-red-heading thead th {
   padding-top: 10px;
 }
 
-/* temporary hack to hide to do list from students at NYC/DC */
-/* --------------------------------------------------------- */
-.context-course_9 #course_show_secondary .course_options,
-.context-course_9 #course_show_secondary .to-do-list {
-	display: none;
-}
 /* Accessibility */
 /* ------------- */
 .says,
@@ -1086,7 +1081,7 @@ td .bz-practice-box {
 	margin-left: 0;
 }
 #bz-module-nav ul {
-	border-left: solid 1px #bbb;	
+	/*border-left: solid 1px #bbb;*/
 }
 #bz-module-nav > li > ul {
 	border-left: transparent;
@@ -1101,8 +1096,10 @@ td .bz-practice-box {
 	display: none;
 }
 #bz-module-nav li.active,
-#bz-module-nav li.active-parent,
-#bz-module-nav li.active-parent > ul > li,
+#bz-module-nav .active-parent,
+#bz-module-nav .active-ancestor,
+#bz-module-nav .active-parent > li,
+#bz-module-nav > li > ul > li,
 #bz-module-nav li.active > ul > li {
 	display:block;	
 }
@@ -1111,6 +1108,7 @@ td .bz-practice-box {
 	display: block;
 	color: #555;
 	text-decoration: none;
+	position: relative;
 }
 #bz-module-nav a:hover {
     color: #0087c2;
@@ -1148,7 +1146,23 @@ td .bz-practice-box {
 #bz-module-nav > li.active-parent .bz-nav-module-name {
 	color: #000;		
 }
-
+#bz-module-nav .has-children {
+	position: relative;	
+}
+#bz-module-nav .bz-nav-ui {	
+cursor: pointer;
+    font-size: 1.2em;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+	 color:#0087c2;
+    position: absolute;
+    top: -1px;
+    left: -5px;
+    transition: all 0.5s;
+}
+#bz-module-nav .expanded {
+	transform: rotate(45deg);
+}
 /* Page mapper and Accessibility Mapper */
 /* ------------------------------------ */
 .page-mapper-page {
@@ -1197,6 +1211,83 @@ iframe.bz-self-reference {
 .bz-in-iframe #main {
   margin-left: 0px;
 }
+
+/*** INSTANT SURVEY ***/
+
+/* flash of unstyled content protection */
+
+#instant-survey {
+	display: none;
+}
+
+#instant-survey-holder {
+	display: none;
+}
+
+.module-sequence-footer.has-instant-survey #instant-survey-holder {
+	display: block;
+}
+
+/* actual instant survey styles */
+
+#instant-survey-holder {
+	padding: 12px;
+	text-transform: none;
+	font-size: 12px;
+	height: 100%;
+	background-color: rgb(235, 59, 70);
+	color: white;
+	line-height: normal;
+	width: 40%;
+}
+
+#instant-survey-holder #instant-survey {
+	display: block;
+}
+
+#instant-survey label {
+	display: block;
+	white-space: nowrap;
+}
+
+.module-sequence-footer.has-instant-survey,
+.module-sequence-footer.has-instant-survey .module-sequence-footer-content,
+.module-sequence-footer.has-instant-survey .module-sequence-footer-content > *
+{
+	/* fits up to 5 */
+	height: 200px;
+	line-height: 200px;
+}
+
+.module-sequence-footer.has-4-instant-survey,
+.module-sequence-footer.has-4-instant-survey .module-sequence-footer-content,
+.module-sequence-footer.has-4-instant-survey .module-sequence-footer-content > *
+{
+	height: 170px;
+	line-height: 170px;
+}
+
+.module-sequence-footer.has-3-instant-survey,
+.module-sequence-footer.has-3-instant-survey .module-sequence-footer-content,
+.module-sequence-footer.has-3-instant-survey .module-sequence-footer-content > *
+{
+	height: 150px;
+	line-height: 150px;
+}
+
+.module-sequence-footer.has-short-instant-survey,
+.module-sequence-footer.has-short-instant-survey .module-sequence-footer-content,
+.module-sequence-footer.has-short-instant-survey .module-sequence-footer-content > *
+{
+	/* fits one or two */
+	height: 120px;
+	line-height: 120px;
+}
+
+.bz-next-button.discouraged {
+	background-color: #ccc !important;
+}
+
 /* Page Mapper Tools */
 .bz-page-mapper-body #main,
 .bz-page-mapper-body #content {
