@@ -156,6 +156,9 @@ function checkInstantSurvey() {
 }
 
 function bzActivateInstantSurvey(magic_field_name) {
+        var i = document.getElementById("instant-survey");
+	if(!i) return;
+
 	// adjust styles of the container to make room  (see CSS)
 	var msf = document.querySelector(".module-sequence-footer");
 	var originalMsfButtonClass = msf.className;
