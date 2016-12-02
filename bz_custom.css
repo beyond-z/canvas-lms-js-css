@@ -930,6 +930,12 @@ td .bz-practice-box {
   left: -1.5em;
   top: 0;
 }
+
+/* Magic textareas */
+textarea[data-bz-retained] {
+	width:100%;	
+}
+
 /* Help Button */
 /* ----------- */
 #bz-help-button {
