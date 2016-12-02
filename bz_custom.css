@@ -1308,3 +1308,19 @@ iframe.bz-self-reference {
 .bz-pm-pl::after {
     content: " ("attr(deltaavg)"\0025  of average)";
 }
+
+/* Instant survey results formatting */
+#instant-survey-report caption,
+#instant-survey-report-details caption {
+	text-align: left;
+	padding: 1em 0 0.25em;
+	font-style: italic;
+}
+#instant-survey-report th,
+#instant-survey-report td,
+#instant-survey-report-details th,
+#instant-survey-report-details td {
+	text-align: left;
+	padding: 10px;
+	border: 1px solid #CCC;	
+}
