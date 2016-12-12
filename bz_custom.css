@@ -1394,12 +1394,12 @@ iframe.bz-self-reference {
 
 .bz-course-part-task-box.completed::after,
 .bz-course-part-module-box.completed::after {
-  background-image: url("https://stagingportal.bebraven.org/images/bz/dynamic-syllabus-icons-completed.png");
+  background-image: url("dynamic-syllabus-icons-completed.png");
 }
 
 .bz-course-part-task-box.locked::after,
 .bz-course-part-module-box.locked::after {
-  background-image: url("https://stagingportal.bebraven.org/images/bz/dynamic-syllabus-icons-locked.png");
+  background-image: url("dynamic-syllabus-icons-locked.png");
 }
 
 .bz-course-part-module-box .bz-module-image {
@@ -1437,7 +1437,7 @@ iframe.bz-self-reference {
 
 .bz-course-part-module-box.completed .bz-button-pick-up::before {
   content: "\a0";
-  background-image: url("https://stagingportal.bebraven.org/images/bz/dynamic-syllabus-icons-completed.png");
+  background-image: url("dynamic-syllabus-icons-completed.png");
   background-repeat: no-repeat;
   background-size: contain;
   display: inline-block;
