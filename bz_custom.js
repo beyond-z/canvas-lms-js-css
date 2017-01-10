@@ -62,6 +62,16 @@ jQuery( document ).ready(function() {
 		/* Local Navigation UI enhancements */
 		bzLocalNavUI();
 		
+		// Init local selector (hides/shows content based on user's choice of location
+		jQuery('.locale').hide(); 
+		jQuery('.locale-chooser').click(function(e){
+			e.preventDefault();
+			var target = jQuery(this).attr('href');
+			jQuery('.locale').hide(1,function(){
+				jQuery(target).show();
+			});
+		});
+		
 	});
 		
 
