@@ -1357,7 +1357,7 @@ iframe.bz-self-reference {
 }
 
 .bz-course-part-task-box {
-  padding: 10px;
+  padding: 0px;
   margin: 10px;
   background-color: #ddd;
 }
@@ -1379,10 +1379,10 @@ iframe.bz-self-reference {
 .bz-course-part-task-box .events_list {
   box-sizing: border-box;
   width: 25%;
-  display: inline-block;
+  float: left;
   vertical-align: top;
-  margin-right: 8px;
-  padding-right: 8px;
+  margin: 0px;
+  padding: 8px;
   border-right: solid 1px #ccc;
 }
 
