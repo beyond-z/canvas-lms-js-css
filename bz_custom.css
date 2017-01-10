@@ -1331,7 +1331,6 @@ iframe.bz-self-reference {
 	border: 1px solid #CCC;	
 }
 
-
 /* Dynamic Syllabus components */
 
 .bz-dynamic-syllabus {
@@ -1357,7 +1356,43 @@ iframe.bz-self-reference {
   margin: 16px 0px;
 }
 
-.bz-course-part-task-box,
+.bz-course-part-task-box {
+  padding: 10px;
+  margin: 10px;
+  background-color: #ddd;
+}
+
+.bz-course-part-task-box .course-options {
+  float: right;
+  width: 200px;
+}
+
+.bz-course-part-task-box #course_show_secondary,
+.bz-course-part-task-box .events_list {
+  width: 300px;
+  float: left;
+  vertical-align: top;
+  margin-right: 4px;
+  padding-right: 4px;
+  border-right: solid 1px #ccc;
+}
+
+.bz-course-part-task-box #course_show_secondary h2,
+#content .bz-course-part-task-box .events_list h2 {
+  font-size: 1rem !important;
+}
+
+.bz-course-part-task-box .events_list a {
+  float: right;
+}
+
+.bz-course-part-task-box::after {
+  clear: both;
+  display: block;
+  content: '\a0';
+}
+
+
 .bz-course-part-module-box {
   display: inline-block;
   width: 220px;
@@ -1369,14 +1404,11 @@ iframe.bz-self-reference {
   position: relative;
 }
 
-.bz-course-part-task-box:hover::after,
 .bz-course-part-module-box:hover::after {
   display: none !important; /* the important means i don't have to do specificity on EVERY hover after for the classes too */
 }
 
-.bz-course-part-task-box.completed::after,
 .bz-course-part-module-box.completed::after,
-.bz-course-part-task-box.locked::after,
 .bz-course-part-module-box.locked::after {
   background-position: top center;
   background-size: contain;
@@ -1392,14 +1424,12 @@ iframe.bz-self-reference {
   background-color: rgba(250, 250, 250, 0.8);
 }
 
-.bz-course-part-task-box.completed::after,
 .bz-course-part-module-box.completed::after {
-  background-image: url("/images/bz/dynamic-syllabus-icons-completed.png");
+  background-image: url("dynamic-syllabus-icons-completed.png");
 }
 
-.bz-course-part-task-box.locked::after,
 .bz-course-part-module-box.locked::after {
-  background-image: url("/images/bz/dynamic-syllabus-icons-locked.png");
+  background-image: url("dynamic-syllabus-icons-locked.png");
 }
 
 .bz-course-part-module-box .bz-module-image {
@@ -1437,7 +1467,7 @@ iframe.bz-self-reference {
 
 .bz-course-part-module-box.completed .bz-button-pick-up::before {
   content: "\a0";
-  background-image: url("/images/bz/dynamic-syllabus-icons-completed.png");
+  background-image: url("dynamic-syllabus-icons-completed.png");
   background-repeat: no-repeat;
   background-size: contain;
   display: inline-block;
