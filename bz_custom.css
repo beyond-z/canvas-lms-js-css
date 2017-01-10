@@ -1386,6 +1386,16 @@ iframe.bz-self-reference {
   border-right: solid 1px #ccc;
 }
 
+.student-logged-in .bz-course-part-task-box #course_show_secondary,
+.student-logged-in .bz-course-part-task-box .events_list {
+  width: 33.3%;
+}
+
+.student-logged-in .bz-course-part-task-box .course-options {
+  display: none;
+}
+
+
 .bz-course-part-task-box #course_show_secondary h2,
 #content .bz-course-part-task-box .events_list h2 {
   font-size: 1rem !important;
