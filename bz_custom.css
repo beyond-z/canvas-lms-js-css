@@ -1364,16 +1364,25 @@ iframe.bz-self-reference {
 
 .bz-course-part-task-box .course-options {
   float: right;
-  width: 200px;
+  width: 25%;
+  box-sizing: border-box;
+}
+
+.bz-course-part-task-box .course-options .btn {
+  width: 100%;
+  box-sizing: border-box;
+  text-align: left;
+  margin-bottom: 4px;
 }
 
 .bz-course-part-task-box #course_show_secondary,
 .bz-course-part-task-box .events_list {
-  width: 300px;
-  float: left;
+  box-sizing: border-box;
+  width: 25%;
+  display: inline-block;
   vertical-align: top;
-  margin-right: 4px;
-  padding-right: 4px;
+  margin-right: 8px;
+  padding-right: 8px;
   border-right: solid 1px #ccc;
 }
 
@@ -1382,8 +1391,9 @@ iframe.bz-self-reference {
   font-size: 1rem !important;
 }
 
-.bz-course-part-task-box .events_list a {
+.bz-course-part-task-box .events_list h2 a {
   float: right;
+  font-weight: normal;
 }
 
 .bz-course-part-task-box::after {
