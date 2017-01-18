@@ -1358,8 +1358,10 @@ iframe.bz-self-reference {
 
 .bz-course-part-task-box {
   padding: 0px;
-  margin: 10px;
-  background-color: #ddd;
+  margin: 10px 0;
+  background-color: #EEE;
+  overflow-y: auto;
+  height: 200px;
 }
 
 .bz-course-part-task-box .course-options {
@@ -1412,6 +1414,32 @@ iframe.bz-self-reference {
   content: '\a0';
 }
 
+.bz-course-part-task-box ul {
+  margin-left: 0;
+  list-style: outside none;
+}
+
+.bz-course-part-task-box li p,
+.bz-course-part-task-box li .event-details,
+.bz-course-part-task-box .item > * {
+  display: inline;
+}
+
+.bz-course-part-task-box .todo {
+  margin: 0 30px 10px 0;
+  position: relative;
+}
+
+.bz-course-part-task-box .IgnoreButton {
+  position: absolute;
+  right: -30px;
+  top: 0;
+  padding: 5px;
+}
+
+.bz-course-part-task-box .events_list .event {
+	margin: 5px 0;
+}
 
 .bz-course-part-module-box {
   display: inline-block;
@@ -1419,7 +1447,7 @@ iframe.bz-self-reference {
   height: 400px;
   padding: 10px;
   margin: 10px;
-  background-color: #ddd;
+  background-color: #EEE;
   vertical-align: top;
   position: relative;
 }
