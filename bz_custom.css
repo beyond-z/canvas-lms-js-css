@@ -1362,8 +1362,10 @@ iframe.bz-self-reference {
 
 .bz-course-part-task-box {
   padding: 0px;
-  margin: 10px;
-  background-color: #ddd;
+  margin: 10px 0;
+  background-color: #EEE;
+  overflow-y: auto;
+  height: 200px;
 }
 
 .bz-course-part-task-box .course-options {
@@ -1416,6 +1418,32 @@ iframe.bz-self-reference {
   content: '\a0';
 }
 
+.bz-course-part-task-box ul {
+  margin-left: 0;
+  list-style: outside none;
+}
+
+.bz-course-part-task-box li p,
+.bz-course-part-task-box li .event-details,
+.bz-course-part-task-box .item > * {
+  display: inline;
+}
+
+.bz-course-part-task-box .todo {
+  margin: 0 30px 10px 0;
+  position: relative;
+}
+
+.bz-course-part-task-box .IgnoreButton {
+  position: absolute;
+  right: -30px;
+  top: 0;
+  padding: 5px;
+}
+
+.bz-course-part-task-box .events_list .event {
+	margin: 5px 0;
+}
 
 .bz-course-part-module-box {
   display: inline-block;
@@ -1423,7 +1451,7 @@ iframe.bz-self-reference {
   height: 400px;
   padding: 10px;
   margin: 10px;
-  background-color: #ddd;
+  background-color: #EEE;
   vertical-align: top;
   position: relative;
 }
@@ -1511,4 +1539,130 @@ iframe.bz-self-reference {
 .bz-dynamic-syllabus-editor label > span {
   display: block;
   font-weight: bold;
+}
+
+/* Guideposts diagram: */
+#wiki_page_show table.bz-guideposts, 
+#wiki_page_show table.bz-guideposts tr, 
+#wiki_page_show table.bz-guideposts th, 
+#wiki_page_show table.bz-guideposts td { 	
+	margin: 0;
+	padding: 0;
+	border-color:transparent;
+	border-width: 0;
+	vertical-align: top;
+}
+
+#wiki_page_show table.bz-guideposts .parts td {
+ 	width: 1%;
+}
+#wiki_page_show table.bz-guideposts thead td,
+#wiki_page_show table.bz-guideposts thead th {
+	text-align: center;
+	background: #D7EFEF;
+	color: #262426;
+}
+
+td.track, 
+td.terminal {
+	position: relative;
+	width: 1%;
+}
+
+#wiki_page_show table.bz-guideposts td.track {
+	border-bottom: 3px solid #262426 !important;
+}
+#terminal-start,
+#terminal-end {
+	border-bottom: 3px solid #ffffff !important;
+}
+table.bz-guideposts span.station {
+	display:block;
+	font-family:"TradeGothicNo.20-CondBold", "Oswald", "Open Sans", sans-serif;
+	color: #262426;
+	font-weight: 700;
+	font-size: 18px;
+	text-align: center;
+	width: 20px;
+	height: 20px;
+	background: #ffffff;
+	border: #262426 2px solid;
+	position: absolute;
+	left: -16px;
+	bottom:-16px;
+	-moz-border-radius: 20px;
+	-webkit-border-radius: 20px;
+	border-radius: 20px;
+}
+
+#wiki_page_show table.bz-guideposts .parts th {
+	padding: 1.5em 0 0.5em !important;
+}
+
+.guideposts-modules-list td {
+	vertical-align: top;
+	text-align: left;
+}
+
+.bz-guideposts {
+	background: #EBF7F7;
+}
+
+#wiki_page_show table.bz-guideposts {
+	padding: 1em !important;
+	border: 1px #D1D1D1 solid !important;
+	margin: 1em auto 1.5em;
+}
+/* Syllabus in brief table formatting */
+.bz-special-event {
+    color: #000000;
+}
+
+.bz-heading {
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.bz-special-event span {
+    color: #eb3b46;
+}
+
+.bz-course-overview {
+    margin: 15px auto;
+}
+
+.bz-course-overview * {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.bz-course-overview tr {
+    border-bottom: 1px solid #222;
+}
+
+.bz-course-overview td,
+.bz-course-overview th {
+    vertical-align: middle !important;
+}
+
+.bz-course-overview tr.bcp {
+    background: #e5e5e5;
+}
+
+.bz-course-overview tr.dyc {
+    background: #eaf6f6;
+}
+
+.bz-course-overview tr.exp {
+    background: #f5eede;
+}
+
+.bz-course-overview tr.cap {
+    background: #f8d7d9;
+}
+
+.bz-course-overview tr.gen,
+.bz-course-overview th {
+    background: #f2f2f2;
+    color: #000;
 }

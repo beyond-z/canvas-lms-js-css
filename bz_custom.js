@@ -34,12 +34,12 @@ jQuery( document ).ready(function() {
 
 	runOnUserContent(function() {
 		/* Improve Priorities Quiz */  
-		jQuery('.context-course_11 #question_482_question_text ol li, .context-course_15 #question_619_question_text ol li, .context-course_23 #question_1918_question_text ol li').prepend('<span class="dynamic"></span>');
-		jQuery('.context-course_11 #question_481_question_text input, .context-course_15 #question_618_question_text input, .context-course_23 #question_1917_question_text input').each(function(i){
+		jQuery('.context-course_11 #question_482_question_text ol li, .context-course_15 #question_619_question_text ol li, .context-course_23 #question_1918_question_text ol li, .context-course_25 #question_2260_question_text ol li').prepend('<span class="dynamic"></span>');
+		jQuery('.context-course_11 #question_481_question_text input, .context-course_15 #question_618_question_text input, .context-course_23 #question_1917_question_text input, .context-course_25 #question_2259_question_text input').each(function(i){
 			jQuery(this).change(function(){
 				//console.log('changing big rock');
 				var t = jQuery(this).val()+': '; console.log(t);
-				jQuery('.context-course_11 #question_482_question_text ol li, .context-course_15 #question_619_question_text ol li, .context-course_23 #question_1918_question_text ol li').eq(i).children('.dynamic').text(t);
+				jQuery('.context-course_11 #question_482_question_text ol li, .context-course_15 #question_619_question_text ol li, .context-course_23 #question_1918_question_text ol li, .context-course_25 #question_2260_question_text ol li').eq(i).children('.dynamic').text(t);
 			});
 		});
 		/**/
@@ -61,6 +61,16 @@ jQuery( document ).ready(function() {
 		});
 		/* Local Navigation UI enhancements */
 		bzLocalNavUI();
+		
+		// Init local selector (hides/shows content based on user's choice of location
+		jQuery('.locale').hide(); 
+		jQuery('.locale-chooser').click(function(e){
+			e.preventDefault();
+			var target = jQuery(this).attr('href');
+			jQuery('.locale').hide(1,function(){
+				jQuery(target).show();
+			});
+		});
 		
 	});
 		
