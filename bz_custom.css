@@ -1356,6 +1356,10 @@ iframe.bz-self-reference {
   margin: 16px 0px;
 }
 
+.bz-course-part.bz-part-collapsed .bz-expand-collapse-button ~ * {
+  display: none;
+}
+
 .bz-course-part-task-box {
   padding: 0px;
   margin: 10px 0;
