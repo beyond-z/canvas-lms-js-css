@@ -72,20 +72,19 @@ jQuery( document ).ready(function() {
 			});
 		});
 		
-	});
+		// Create auto table of contents
+		jQuery('#bz-auto-toc').each(function(){bzAutoTOC()});
+	
+		// Enable jQuery UI tooltips that override browser styling/interaction: 
+		jQuery(document).tooltip();
+	
+		// Add character counting tool to pagemapper
+		jQuery('#page-mapper-container').each(function(){bzPageMapperPageCharCount()}).parents('body').addClass('bz-page-mapper-body');
+	
+		/* In modules view, add a class to items with "after learning lab" in their titles, so we can style them differently: */
+		bzAfterLL();
 		
-
-	// run this in case js loads first:
-	jQuery('#bz-auto-toc').each(function(){bzAutoTOC()});
-
-	// enable jQuery UI tooltips that override browser styling/interaction: 
-	jQuery(document).tooltip();
-
-	// Add character counting tool to pagemapper
-	jQuery('#page-mapper-container').each(function(){bzPageMapperPageCharCount()}).parents('body').addClass('bz-page-mapper-body');
-
-	/* In modules view, add a class to items with "after learning lab" in their titles, so we can style them differently: */
-	bzAfterLL();
+	});
 
 });
 
