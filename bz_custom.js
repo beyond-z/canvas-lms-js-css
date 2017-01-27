@@ -297,6 +297,7 @@ function bzLocalNavUI() {
 /* Load a rubric criterion (bypassing sanitizer): */
 function bzAjaxLoad() {
 	jQuery('.bz-ajax-replace').each(function(e){
+		var el = jQuery(this);
 		var replaceURL = jQuery(this).attr('href');
 		if (replaceURL.indexOf('#')){
 			var rb = replaceURL.split('#');
@@ -304,9 +305,9 @@ function bzAjaxLoad() {
 		}
 		if (replaceURL.indexOf('rubric')) {
 
-			console.log('Loading ' + replaceURL);
-			jQuery(this).replaceWith(jQuery('table').load(replaceURL, function() {
-				$(this).addClass('bz-ajax-loaded-rubric bz-ajax-loaded');
+			console.log('Loading ' + replaceURL + ' into ' + jQuery(this).attr('class'));
+			el.replaceWith(jQuery('<table />').load(replaceURL, function() {
+				jQuery(this).addClass('bz-ajax-loaded-rubric bz-ajax-loaded');
 			}));
 			
 		}
