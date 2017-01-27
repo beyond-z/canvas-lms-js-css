@@ -60,7 +60,9 @@ h6,
 nav li,
 #identity li,
 .module-sequence-footer,
-.btn {
+.btn,
+.bz-ajax-loaded-rubric .nobr,
+.bz-ajax-loaded-rubric td.criterion_description {
 	font-family: "TradeGothicNo.20-CondBold", "Oswald", "Open Sans", sans-serif;
 	text-transform: uppercase;
 	line-height: normal;
@@ -1665,4 +1667,54 @@ table.bz-guideposts span.station {
 .bz-course-overview th {
     background: #f2f2f2;
     color: #000;
+}
+
+/* Rubrics and assignment review: */
+.bz-retained-field-replaced {
+    background: #FF0;
+}
+.bz-ajax-loaded-rubric {
+	background: #EBF7F7;
+}
+#wiki_page_show table.bz-ajax-loaded-rubric .criterion > td,
+.bz-ajax-loaded-rubric .criterion > td {
+	border: 0;
+}
+.bz-ajax-loaded-rubric .container {
+	width: inherit;
+}
+.bz-ajax-loaded-rubric .learning_outcome_flag,
+.bz-ajax-loaded-rubric .links,
+.bz-ajax-loaded-rubric .points_form,
+.bz-ajax-loaded-rubric .editing,
+.bz-ajax-loaded-rubric .long_description_holder,
+.bz-ajax-loaded-rubric .threshold {
+	display: none;
+}
+
+.bz-ajax-loaded-rubric td.rating,
+#wiki_page_show .bz-ajax-loaded-rubric table td.rating {
+	width: 100px;
+	position: relative;
+	padding-bottom: 2.5em !important;
+}
+#content table.bz-ajax-loaded-rubric td.criterion_description {
+	vertical-align: middle;
+	width: 200px;
+}
+.bz-ajax-loaded-rubric .nobr {
+    position: absolute;
+    font-size: 1em;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    border-top: 1px solid #eee;
+    padding: 5px 0;
+}
+.bz-ajax-loaded-rubric tr:hover {
+	background: #F6EFDF;
+}
+.bz-ajax-loaded-rubric .rating:hover {
+	background: #EDDCBE;
 }
