@@ -30,7 +30,7 @@ function runOnUserContent(func) {
 }
 
 jQuery( document ).ready(function() {
-	console.log("jQ working");
+	console.log("jQ working!");
 
 	runOnUserContent(function() {
 		/* Improve Priorities Quiz */  
@@ -84,10 +84,12 @@ jQuery( document ).ready(function() {
 		/* In modules view, add a class to items with "after learning lab" in their titles, so we can style them differently: */
 		bzAfterLL();
 		
+		/* Load rubric criteria into content */
+		bzAjaxLoad();
+		
 	});
 
 });
-
 
 // this is the entry point of the table of contents - it will queue up a handler on
 // the event to handle it when it comes in. Actual impl in bzAutoTOCImpl
@@ -292,6 +294,31 @@ function bzLocalNavUI() {
 	jQuery('#bz-module-nav ul.active-parent').parent().siblings('li').addClass('active-uncles').show();
 }
 
+/* Load a rubric criterion (bypassing sanitizer): */
+function bzAjaxLoad() {
+	jQuery('.bz-ajax-replace').each(function(e){
+		var el = jQuery(this);
+		var replaceURL = jQuery(this).attr('href');
+		if (replaceURL.indexOf('#')){
+			var rb = replaceURL.split('#');
+			replaceURL = rb[0]+' #'+rb[1];
+		}
+		if (replaceURL.indexOf('rubric')) {
+
+			console.log('Loading ' + replaceURL + ' into ' + jQuery(this).attr('class'));
+			el.replaceWith(jQuery('<table />').load(replaceURL, function() {
+				jQuery(this).addClass('bz-ajax-loaded-rubric bz-ajax-loaded');
+			}));
+			
+		}
+		
+		//jQuery('#wiki_page_show').replaceWith(jQuery('table').load('/courses/10/rubrics/9 #criterion_9_7861'));
+		
+	}).click(function(e){
+		e.preventDefault();
+	});
+};
+
 // the Canvas built in thing strips scripts out of the editor, but
 // leaves it in the ENV. this hack will put it back. The timer is because
 // I don't have a good event to use right now.
@@ -302,4 +329,4 @@ setTimeout(function() {
 	var e = document.getElementById('wiki_page_body');
 	if(e && ENV && ENV["WIKI_PAGE"] && ENV["WIKI_PAGE"]["body"])
 		e.value = ENV["WIKI_PAGE"]["body"];
-}, 10000);
+}, 1000);
