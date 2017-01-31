@@ -1681,8 +1681,9 @@ table.bz-guideposts span.station {
 	border: 0;
 }
 .bz-ajax-loaded-rubric .container {
-	width: inherit;
+	width: 100%;
 }
+
 .bz-ajax-loaded-rubric .learning_outcome_flag,
 .bz-ajax-loaded-rubric .links,
 .bz-ajax-loaded-rubric .points_form,
@@ -1691,16 +1692,23 @@ table.bz-guideposts span.station {
 .bz-ajax-loaded-rubric .threshold {
 	display: none;
 }
+.bz-ajax-loaded-rubric .container {
+	margin: 0;
+	width: 100%;
+}
 
 .bz-ajax-loaded-rubric td.rating,
 #wiki_page_show .bz-ajax-loaded-rubric table td.rating {
-	width: 100px;
+	width: 25%;
 	position: relative;
+	padding: 10px !important;
 	padding-bottom: 2.5em !important;
+	border-left: 1px #DDD solid;
+
 }
 #content table.bz-ajax-loaded-rubric td.criterion_description {
 	vertical-align: middle;
-	width: 200px;
+	width: 30%;
 }
 .bz-ajax-loaded-rubric .nobr {
     position: absolute;
@@ -1717,6 +1725,10 @@ table.bz-guideposts span.station {
 }
 .bz-ajax-loaded-rubric .rating:hover {
 	background: #EDDCBE;
+}
+/* Hide the canvas display of rubrics below assignments since we're loading them dynamically into the content: */
+.assignments #rubrics {
+	display: none;
 }
 
 /* Styling for quizzes/assignments that use magic fields to layout complex content */
