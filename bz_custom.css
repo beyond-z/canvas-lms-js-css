@@ -1727,7 +1727,7 @@ table.bz-guideposts span.station {
 	background: #EDDCBE;
 }
 /* Hide the canvas display of rubrics below assignments since we're loading them dynamically into the content: */
-.assignments #rubrics {
+.student-logged-in .assignments #rubrics {
 	display: none;
 }
 
