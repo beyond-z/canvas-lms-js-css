@@ -241,3 +241,8 @@ setTimeout(function() {
 	if(e && ENV && ENV["WIKI_PAGE"] && ENV["WIKI_PAGE"]["body"])
 		e.value = ENV["WIKI_PAGE"]["body"];
 }, 1000);
+
+
+// try hiding the assignment link a bit sooner so the button doesn't
+// flash as long.
+runOnUserContent(function() { $("#assignment_show:has(input[data-bz-retained]) .submit_assignment_link").hide(); });
