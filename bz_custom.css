@@ -882,12 +882,12 @@ td .bz-practice-box {
 .bz-quick-quiz {
   background: #fff;
   margin: 40px auto;
-  width: 250px;
+  width: 67%;
   padding: 20px;
   border: 1px solid #ccc;
 }
 .bz-quick-quiz li{
-  height: 30px;
+  min-height: 30px;
   padding: 5px 5px 5px 35px;
   border-bottom: 1px solid #ccc;
   position: relative;
@@ -1727,12 +1727,11 @@ table.bz-guideposts span.station {
 	background: #EDDCBE;
 }
 /* Hide the canvas display of rubrics below assignments since we're loading them dynamically into the content: */
-.student-logged-in .assignments #rubrics {
+.student-logged-in.assignments #rubrics {
 	display: none;
 }
 
 /* Styling for quizzes/assignments that use magic fields to layout complex content */
-
 .bz-magic-field-assignment h3,
 .bz-magic-field-submission h3 {
 	font-size: 30px;
