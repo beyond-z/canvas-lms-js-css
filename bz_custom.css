@@ -1928,3 +1928,7 @@ table.bz-guideposts span.station {
 .bz-magic-field-submission .timeline input {
 	width: calc(100% - 20px);
 }
+
+.bz-script, .bz-style {
+	display: none;
+}
