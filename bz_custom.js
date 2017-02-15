@@ -33,6 +33,32 @@ jQuery( document ).ready(function() {
 	console.log("jQ working!");
 
 	runOnUserContent(function() {
+		// add script and style from magic divs
+		var i;
+		var scripts = document.querySelectorAll("bz-script");
+		for(i = 0; i < scripts.length; i++) {
+			var s = scripts[i];
+			try {
+				eval(s.textContent);
+			} catch(e) {
+				console.log("User content script error: " + s);
+			}
+			s.parentNode.removeChild(s);
+		}
+		var styles = document.querySelectorAll("bz-style");
+		var styleString = "";
+		for(i = 0; i < styles.length; i++) {
+			var s = styles[i];
+			styleString += s.textContent;
+			s.parentNode.removeChild(s);
+		}
+
+		var styleElement = document.createElement("style");
+		styleElement.textContent = styleString;
+		document.body.appendChild(styleElement);
+	});
+
+	runOnUserContent(function() {
 		/* Improve Priorities Quiz */  
 		jQuery('.context-course_11 #question_482_question_text ol li, .context-course_15 #question_619_question_text ol li, .context-course_23 #question_1918_question_text ol li, .context-course_25 #question_2260_question_text ol li').prepend('<span class="dynamic"></span>');
 		jQuery('.context-course_11 #question_481_question_text input, .context-course_15 #question_618_question_text input, .context-course_23 #question_1917_question_text input, .context-course_25 #question_2259_question_text input').each(function(i){
