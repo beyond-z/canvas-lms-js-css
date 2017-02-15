@@ -35,7 +35,7 @@ jQuery( document ).ready(function() {
 	runOnUserContent(function() {
 		// add script and style from magic divs
 		var i;
-		var scripts = document.querySelectorAll("bz-script");
+		var scripts = document.querySelectorAll(".bz-script");
 		for(i = 0; i < scripts.length; i++) {
 			var s = scripts[i];
 			try {
@@ -45,7 +45,7 @@ jQuery( document ).ready(function() {
 			}
 			s.parentNode.removeChild(s);
 		}
-		var styles = document.querySelectorAll("bz-style");
+		var styles = document.querySelectorAll(".bz-style");
 		var styleString = "";
 		for(i = 0; i < styles.length; i++) {
 			var s = styles[i];
