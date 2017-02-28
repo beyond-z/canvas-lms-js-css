@@ -371,10 +371,10 @@ ul,
 /* wyld stylez for tables! */
 #wiki_page_show table td,
 #wiki_page_show table th,
-.bz-magic-field-assignment td,
-.bz-magic-field-submission td,
-.bz-magic-field-assignment th,
-.bz-magic-field-submission th {
+.bz-magic-field-assignment .bz-regular td,
+.bz-magic-field-submission .bz-regular td,
+.bz-magic-field-assignment .bz-regular th,
+.bz-magic-field-submission .bz-regular th {
 	border: 1px solid #eee;
 	padding: 0.3em 0.5em !important;	
 }
