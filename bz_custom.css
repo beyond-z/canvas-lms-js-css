@@ -370,14 +370,18 @@ ul,
 }
 /* wyld stylez for tables! */
 #wiki_page_show table td,
-#wiki_page_show table th {
+#wiki_page_show table th,
+.bz-magic-field-assignment .bz-regular td,
+.bz-magic-field-submission .bz-regular td,
+.bz-magic-field-assignment .bz-regular th,
+.bz-magic-field-submission .bz-regular th {
 	border: 1px solid #eee;
 	padding: 0.3em 0.5em !important;	
 }
 #wiki_page_show table.bz-matrix td,
 #wiki_page_show table.bz-matrix th {
 	border: 1px solid #ccc;
-   padding: 1em;
+	padding: 1em;
 }
 table.bz-naked,
 table.bz-naked th,
