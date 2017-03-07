@@ -35,16 +35,9 @@ jQuery( document ).ready(function() {
 	runOnUserContent(function() {
 		// add script and style from magic divs
 		var i;
-		var scripts = document.querySelectorAll(".bz-script");
-		for(i = 0; i < scripts.length; i++) {
-			var s = scripts[i];
-			try {
-				eval(s.textContent);
-			} catch(e) {
-				console.log("User content script error: " + s);
-			}
-			s.parentNode.removeChild(s);
-		}
+
+		// style first just so it is applied before things
+		// that block in the user script
 		var styles = document.querySelectorAll(".bz-style");
 		var styleString = "";
 		for(i = 0; i < styles.length; i++) {
@@ -56,6 +49,17 @@ jQuery( document ).ready(function() {
 		var styleElement = document.createElement("style");
 		styleElement.textContent = styleString;
 		document.body.appendChild(styleElement);
+
+		var scripts = document.querySelectorAll(".bz-script");
+		for(i = 0; i < scripts.length; i++) {
+			var s = scripts[i];
+			try {
+				eval(s.textContent);
+			} catch(e) {
+				console.log("User content script error: " + s);
+			}
+			s.parentNode.removeChild(s);
+		}
 	});
 
 	runOnUserContent(function() {
@@ -272,3 +276,39 @@ setTimeout(function() {
 // try hiding the assignment link a bit sooner so the button doesn't
 // flash as long.
 runOnUserContent(function() { $("#assignment_show:has(input[data-bz-retained]) .submit_assignment_link").hide(); });
+
+
+/* Display disaggregated assignment scores by criteria section */
+function bzDisagScoresForCopying() {
+	var scoresClass = 'bz-score-totals-for-copying';
+	var copyableScores = '<table class="'+scoresClass+'"><caption>Copy these into the tracker:</caption><tbody><tr>';
+	var sectionScores = {};
+	jQuery('.rubric_summary .rubric_table .criterion').not('.blank').each(function(){
+		var desc = jQuery(this).find('.criterion_description .description_title').html();
+		var section = desc.substring(0,desc.indexOf("."));
+		var val = jQuery(this).find('.criterion_points').text();
+		var outOf = jQuery(this).find('.criterion_points_possible').text();
+		if (jQuery.isEmptyObject(sectionScores[section]) || sectionScores[section] == "undefined") {
+			// set up an object to contain actual score and max score:
+			sectionScores[section] = {v:0,o:0};
+		}
+		sectionScores[section]['v'] += Number(val);
+		sectionScores[section]['o'] += Number(outOf);
+	});
+	
+	for (var key in sectionScores) {
+		// skip loop if the property is from prototype
+		if (!sectionScores.hasOwnProperty(key)) continue;
+		var obj = sectionScores[key];
+		if (!isNaN(obj.v) && !isNaN(obj.o)) {
+			var score = (obj.v/obj.o)*100;
+			copyableScores += '<td>' + String(score) + '%</td>';
+		}
+	}
+	copyableScores += '</tr></tbody></table>';
+	jQuery('.'+scoresClass).remove();
+	jQuery('.rubric_summary tr.summary td').append(copyableScores);
+	console.log(copyableScores);
+}
+
+window.onSpeedGraderLoaded = bzDisagScoresForCopying;
