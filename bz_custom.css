@@ -62,7 +62,8 @@ nav li,
 .module-sequence-footer,
 .btn,
 .bz-ajax-loaded-rubric .nobr,
-.bz-ajax-loaded-rubric td.criterion_description {
+.bz-ajax-loaded-rubric td.criterion_description,
+.bz-expand-collapse-button {
 	font-family: "TradeGothicNo.20-CondBold", "Oswald", "Open Sans", sans-serif;
 	text-transform: uppercase;
 	line-height: normal;
@@ -121,7 +122,7 @@ h2.page-title,
 .show-content td,
 .show-content dt,
 .show-content dd {
-	font-size: 14px;
+	font-size: 16px;
 	line-height: 1.5em;
 }
 .show-content blockquote p{
@@ -338,10 +339,10 @@ ul,
 }
 .intro,
 .bz-intro {
-	font-size: 1.5em;
-	line-height: 1.5;
+	font-size: 1.25em;
+	line-height: 1.25;
 	font-style: italic;
-	font-color: #262426;	
+	font-color: #262426;
 }
 /* fancy dandy stuff */
 /* ----------------- */
@@ -595,6 +596,9 @@ ul.bz-to-do-item {
   border-bottom: 2px dotted #5bbbba;
   cursor: pointer; /* fallback */
   cursor: help;
+}
+.ui-widget.ui-tooltip {
+	font-size: 13px;
 }
 /* Hide tooltip arrow */
 .ui-tooltip::before { 
@@ -1532,6 +1536,17 @@ iframe.bz-self-reference {
   height: 2em;
   width: 2em;
   vertical-align: middle;
+}
+
+.bz-expand-collapse-button {
+	border: none;
+	background: #EB3B46;
+	color: #FFF;
+	padding: 6px 10px;
+}
+
+.bz-expand-collapse-button:hover {
+	background: #C8141F;
 }
 
 .bz-dynamic-syllabus-editor {
