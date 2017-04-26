@@ -1786,8 +1786,8 @@ table.bz-guideposts span.station {
 .bz-magic-field-submission .bz-watch-out-box:before {
 	content: "Important to note";
 }
-.bz-magic-field-assignment #content table.narrow,
-.bz-magic-field-submission #content table.narrow,
+.bz-magic-field-assignment table.narrow,
+.bz-magic-field-submission table.narrow,
 .bz-magic-field-assignment .bz-watch-out-box,
 .bz-magic-field-submission .bz-watch-out-box,
 .bz-magic-field-assignment .bz-helpful-tip-box,
@@ -1796,21 +1796,21 @@ table.bz-guideposts span.station {
 	width: 60%;
 	margin: 1em auto;	
 }
-.bz-magic-field-assignment #content table.steps td,
-.bz-magic-field-submission #content table.steps td,
-.bz-magic-field-assignment #content table.steps th,
-.bz-magic-field-submission #content table.steps th,
-.bz-magic-field-assignment #content table.bz-inputs-table th,
-.bz-magic-field-submission #content table.bz-inputs-table th,
-.bz-magic-field-assignment #content table.bz-inputs-table td,
-.bz-magic-field-submission #content table.bz-inputs-table td {
+.bz-magic-field-assignment table.steps td,
+.bz-magic-field-submission table.steps td,
+.bz-magic-field-assignment table.steps th,
+.bz-magic-field-submission table.steps th,
+.bz-magic-field-assignment table.bz-inputs-table th,
+.bz-magic-field-submission table.bz-inputs-table th,
+.bz-magic-field-assignment table.bz-inputs-table td,
+.bz-magic-field-submission table.bz-inputs-table td {
 	vertical-align: middle;
 	text-align: left;
 	padding: 10px;
 	border: 1px solid #EEE;
 }
-.bz-magic-field-assignment #content li,
-.bz-magic-field-submission #content li {
+.bz-magic-field-assignment li,
+.bz-magic-field-submission li {
 	margin: 0.5em 0;	
 }
 .bz-magic-field-assignment iframe.rubric,
