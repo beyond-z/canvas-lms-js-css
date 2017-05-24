@@ -117,6 +117,9 @@ jQuery( document ).ready(function() {
 		/* Load rubric criteria into content */
 		bzAjaxLoad();
 		
+		/* Scrape assignment due date and insert it into assignment text: */
+		jQuery('#bz-dynamic-due-date').text(function(){return jQuery('.student-assignment-overview .date_text').text();})
+		
 	});
 
 });
