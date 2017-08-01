@@ -131,6 +131,158 @@ jQuery( document ).ready(function() {
 
 });
 
+runOnUserContent(function() {
+  
+	/* START NEW UI STUFF: */
+	
+	/* Box reveal functionality:
+	jQuery('.bz-toggle-all-next').click(function(e){
+		jQuery(this).attr('disabled', 'disabled');
+		bzUnhideNext(this);
+	}).parents('.bz-box').addClass('bz-has-toggle-btn').nextAll().hide();
+	
+	function bzUnhideNext(obj) {
+		var elementsUntil = jQuery(obj).parents('.bz-box').nextUntil('.bz-has-toggle-btn').addBack();
+		jQuery(obj).parents('.bz-box').nextUntil(elementsUntil).add(elementsUntil.next()).slideDown();
+	}
+	*/
+	// Score a checklist question:
+	jQuery('.for-checklist').click(function(){
+		var checklist = jQuery(this).attr('data-bz-for-checklist');
+		var maxScore = jQuery(checklist).attr('data-bz-max-score');
+		var checklistScore = 0;
+		var falsePositives = 0;
+		jQuery(checklist).children().each(function(){
+			if( jQuery(this).children('input').is(':checked') ) {
+				jQuery(this).addClass('show-answers').find('.feedback').show();
+				if (jQuery(this).is('.correct')) {
+					checklistScore++;
+				} else {
+					falsePositives++;
+				}
+			} 
+			if ( jQuery(this).children('input').not(':checked') ) {
+				jQuery(this).addClass('unchecked');
+			}
+		});
+		var finalScore = (checklistScore-falsePositives)/maxScore;
+		var feedbackClass = "";
+		var answerSpace = jQuery(this).parents('.question').next('.answer');
+		var feedback = "You got " + checklistScore + " out of " + maxScore + " right";
+		if ( 0 < falsePositives ) {
+			feedback += ", but you also got " + falsePositives + " incorrect answer";
+			if ( 1 < falsePositives ) {
+				feedback += "s";
+			}
+		}
+		feedback += ". ";
+		if ( 1 <= finalScore ) {
+			feedback += "Perfect!";
+			feedbackClass = 'correct';
+		} else if ( 1 > finalScore && 0.75 <= finalScore ) {
+			feedback += "Very good!";
+			feedbackClass = 'correct';
+		} else if ( 0 >= finalScore ) {
+			feedback = "Oops! " + feedback;
+			feedbackClass = 'wrong';
+		}
+		bzGiveFeedback(feedback, answerSpace, feedbackClass);
+	});	
+
+	// Display current value of a range question:
+	jQuery ('[data-bz-range-answer]').change(function() {
+		var currentVal = jQuery(this).val();
+		jQuery(this).parent().find('.current-value').text(currentVal);
+	}).change();
+
+	// Score a range question:
+	jQuery ('.for-range').click(function() {
+		var range = jQuery(this).parents('.question').find('[data-bz-range-answer]');
+		var falsePositives = 0;
+		var currentVal = jQuery(range ).val();
+		var correctVal = jQuery(range ).attr('data-bz-range-answer');
+		var min = jQuery(range).attr('min');
+		var max = jQuery(range).attr('max');
+		var feedback = "";
+		var feedbackClass = "";
+		// The following calculates the relative distance between the user's choice and the correct answer, and returns a rounded down value between 0 and max score.
+		var rangeScore = max - (max * Math.abs(correctVal - currentVal) / (max - min));
+		console.log(rangeScore);
+		if ( max <= rangeScore) {
+			feedback = "Amazing! You got it exactly right!";
+			feedbackClass = 'correct';
+		} else if ( (0.95*max) <= rangeScore ) {
+			feedback = "Very close!";
+			feedbackClass = 'correct';
+		} else if ( (0.85*max) < rangeScore ) {
+			feedback = "Close!";
+			feedbackClass = '';
+		} else {
+			feedback = "Not quite.";
+			feedbackClass = 'wrong';
+		}
+		var answerSpace = jQuery(this).parents('.question').next('.answer');
+		bzGiveFeedback(feedback, answerSpace, feedbackClass);
+	});
+
+	// Show feedback in an answer following a question:
+	function bzGiveFeedback(feedback, answerSpace, feedbackClass) {
+		jQuery(answerSpace).addClass(feedbackClass).children('.box-title').text(function(){
+			return feedback;
+		});
+	}
+
+  // Add checkboxes to multi-checklist lists, and provide feedback when any are checked:
+	jQuery('.multi-checklist').find('li').each(function(){
+		jQuery(this).wrapInner('<label></label>').prepend('<input type="checkbox" />');
+	}).change(function(){
+			jQuery(this).find('.feedback').slideToggle();
+	});
+	
+	// Reveal hidden content immediately following a hint button:
+	jQuery('.reveal-next').click(function(e){
+		e.preventDefault();
+		var target = jQuery(this).attr('href');
+		jQuery(target).slideToggle();
+	});
+	
+	// Allow users to add a Magic Field text input for "other" answers:
+	jQuery('.add-other-field').val('+ Add another text field').click(function(){
+		jQuery(this).closest('.add-fields-here').append(function(){
+  		var newField = '<p><input type="text" data-bz-retained="blah" /></p>';
+	  	return newField;
+  	});
+	});
+	
+	// Add share relesse checkbox where applicable:
+	jQuery('[data-bz-share-release]').after(function(){
+		var shareRelease = '<div class="share-release"><input type="checkbox" checked />I agree to share this with others</div>';
+		return shareRelease;
+	});
+	
+	// Load user-added magic fields if they already have input
+	/* TBD */
+	
+	// Referenced sources numbering:
+	/* TBD */
+	
+	// Automatically generate a navigable table of contents for a h2-level section out of its nested h3 elements
+	/* TBD */
+	
+	// Automatically add sharing release checkbox to inputs with the relevant attribute data-bz-share-release
+	/* TBD */
+	
+	// Assorted anecdotal functions we didn't want to put inline with the html:
+	jQuery("#bz-values-matrix td").click(function(){ 
+		// console.log('matrix cell clicked '+jQuery(this).text());
+		jQuery(this).toggleClass("v-selected"); 
+	});
+	
+	/* END NEW UI STUFF */
+	
+});
+
+
 // this is the entry point of the table of contents - it will queue up a handler on
 // the event to handle it when it comes in. Actual impl in bzAutoTOCImpl
 function bzAutoTOC() {
