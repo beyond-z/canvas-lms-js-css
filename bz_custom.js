@@ -19,8 +19,8 @@ css-files-to-my-account
 function runOnUserContent(func) {
 	// if it is already there, run it now
 	if(document.querySelector(".user_content")) {
-		func();
 		console.log('running user content now');
+		func();
 	}
 	// and schedule to handle future changes
 	$.subscribe("userContent/change", function() {
@@ -474,3 +474,16 @@ function bzDisagScoresForCopying() {
 }
 
 window.onSpeedGraderLoaded = bzDisagScoresForCopying;
+
+
+runOnUserContent(function(){
+  jQuery('.bz-toggle-all-next').click(function(e){
+    unhideNext(this);
+  }).parents('.bz-box').addClass('bz-has-toggle-btn').nextAll().hide();
+
+  function unhideNext(obj) {
+    // addBack isn't in the jquery canvas has... but i think we can do without it
+    var elementsUntil = jQuery(obj).parent().nextUntil('.bz-has-toggle-btn');//.addBack();
+    jQuery(obj).parents('.bz-box').nextUntil(elementsUntil).add(elementsUntil.next()).slideDown();
+  }
+});
