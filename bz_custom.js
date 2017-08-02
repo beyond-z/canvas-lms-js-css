@@ -109,7 +109,7 @@ jQuery( document ).ready(function() {
 		jQuery(document).tooltip();
 	
 		// Add character counting tool to pagemapper
-		jQuery('#page-mapper-container').each(function(){bzPageMapperPageCharCount()}).parents('body').addClass('bz-page-mapper-body');
+		//jQuery('#page-mapper-container').each(function(){bzPageMapperPageCharCount()}).parents('body').addClass('bz-page-mapper-body');
 	
 		/* In modules view, add a class to items with "after learning lab" in their titles, so we can style them differently: */
 		bzAfterLL();
