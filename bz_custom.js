@@ -19,8 +19,8 @@ css-files-to-my-account
 function runOnUserContent(func) {
 	// if it is already there, run it now
 	if(document.querySelector(".user_content")) {
-		func();
 		console.log('running user content now');
+		func();
 	}
 	// and schedule to handle future changes
 	$.subscribe("userContent/change", function() {
@@ -109,7 +109,7 @@ jQuery( document ).ready(function() {
 		jQuery(document).tooltip();
 	
 		// Add character counting tool to pagemapper
-		jQuery('#page-mapper-container').each(function(){bzPageMapperPageCharCount()}).parents('body').addClass('bz-page-mapper-body');
+		//jQuery('#page-mapper-container').each(function(){bzPageMapperPageCharCount()}).parents('body').addClass('bz-page-mapper-body');
 	
 		/* In modules view, add a class to items with "after learning lab" in their titles, so we can style them differently: */
 		bzAfterLL();
@@ -474,3 +474,16 @@ function bzDisagScoresForCopying() {
 }
 
 window.onSpeedGraderLoaded = bzDisagScoresForCopying;
+
+
+runOnUserContent(function(){
+  jQuery('.bz-toggle-all-next').click(function(e){
+    unhideNext(this);
+  }).parents('.bz-box').addClass('bz-has-toggle-btn').nextAll().hide();
+
+  function unhideNext(obj) {
+    // addBack isn't in the jquery canvas has... but i think we can do without it
+    var elementsUntil = jQuery(obj).parent().nextUntil('.bz-has-toggle-btn');//.addBack();
+    jQuery(obj).parents('.bz-box').nextUntil(elementsUntil).add(elementsUntil.next()).slideDown();
+  }
+});
