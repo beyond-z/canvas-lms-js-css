@@ -475,15 +475,57 @@ function bzDisagScoresForCopying() {
 
 window.onSpeedGraderLoaded = bzDisagScoresForCopying;
 
+function collectStuffAfterBox(button) {
+  /*
+    It needs to hide the parent box and everything after
+    it in the entire page. A page looks like this
+
+    <div class="show-content">
+      <div wrappers>
+        <div class="bz-box">
+          // stuff
+          <button here>
+        </div>
+        // more stuff - should be hidden (1)
+      </div>
+      // more stuff - should be hidden (2)
+    </div>
+  */
+
+  var box = button;
+  while(!box.classList.contains('bz-box')) {
+    box = box.parentNode;
+  }
+
+  var after = [];
+  while(!box.classList.contains('show-content')) {
+    var next = box.nextElementSibling;
+    while(next) {
+      after.push(next);
+      next = next.nextElementSibling;
+    }
+    box = box.parentNode;
+  }
+
+  return after;
+}
 
 runOnUserContent(function(){
+  function unhideNext(obj) {
+    var n = collectStuffAfterBox(obj);
+    for(var i = 0; i < n.length; i++) {
+      $(n[i]).slideDown();
+      if(n[i].querySelector(".bz-toggle-all-next"))
+        break;
+    }
+  }
+
+  var first = document.querySelector(".bz-toggle-all-next");
+  var list = collectStuffAfterBox(first);
+  for(var i = 0; i < list.length; i++)
+    $(list[i]).hide();
+
   jQuery('.bz-toggle-all-next').click(function(e){
     unhideNext(this);
-  }).parents('.bz-box').addClass('bz-has-toggle-btn').nextAll().hide();
-
-  function unhideNext(obj) {
-    // addBack isn't in the jquery canvas has... but i think we can do without it
-    var elementsUntil = jQuery(obj).parent().nextUntil('.bz-has-toggle-btn');//.addBack();
-    jQuery(obj).parents('.bz-box').nextUntil(elementsUntil).add(elementsUntil.next()).slideDown();
-  }
+  }).parents('.bz-box').addClass('bz-has-toggle-btn');
 });
