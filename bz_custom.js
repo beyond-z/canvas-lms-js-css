@@ -135,17 +135,6 @@ runOnUserContent(function() {
   
 	/* START NEW UI STUFF: */
 	
-	/* Box reveal functionality:
-	jQuery('.bz-toggle-all-next').click(function(e){
-		jQuery(this).attr('disabled', 'disabled');
-		bzUnhideNext(this);
-	}).parents('.bz-box').addClass('bz-has-toggle-btn').nextAll().hide();
-	
-	function bzUnhideNext(obj) {
-		var elementsUntil = jQuery(obj).parents('.bz-box').nextUntil('.bz-has-toggle-btn').addBack();
-		jQuery(obj).parents('.bz-box').nextUntil(elementsUntil).add(elementsUntil.next()).slideDown();
-	}
-	*/
 	// Score a checklist question:
 	jQuery('.for-checklist').click(function(){
 		var checklist = jQuery(this).attr('data-bz-for-checklist');
@@ -159,6 +148,7 @@ runOnUserContent(function() {
 					checklistScore++;
 				} else {
 					falsePositives++;
+					jQuery(this).find('.feedback').slideDown();
 				}
 			} 
 			if ( jQuery(this).children('input').not(':checked') ) {
@@ -227,9 +217,13 @@ runOnUserContent(function() {
 
 	// Show feedback in an answer following a question:
 	function bzGiveFeedback(feedback, answerSpace, feedbackClass) {
-		jQuery(answerSpace).addClass(feedbackClass).children('.box-title').text(function(){
-			return feedback;
-		});
+		jQuery(answerSpace).addClass(feedbackClass);
+		if(jQuery(answerSpace).find('.box-title')){
+			jQuery('.box-title').text(feedback);
+		} else {
+			feedback = '<p class="box-title">'+feedback+'</p>';
+			jQuery(this).prepend(feedback);
+		}
 	}
 
   // Add checkboxes to multi-checklist lists, and provide feedback when any are checked:
@@ -239,6 +233,11 @@ runOnUserContent(function() {
 			jQuery(this).find('.feedback').slideToggle();
 	});
 	
+	jQuery('.radio-list').find('input').each(function(){
+		jQuery(this).change(function(){
+			jQuery(this).closest('li').find('.feedback').slideToggle();
+		});
+	});
 	// Reveal hidden content immediately following a hint button:
 	jQuery('.reveal-next').click(function(e){
 		e.preventDefault();
@@ -260,6 +259,51 @@ runOnUserContent(function() {
 		return shareRelease;
 	});
 	
+	// Show answers based on what's checked:
+	jQuery('.selective-feedback').click(function(){
+		//var choicesSource = jQuery(this).attr('data-bz-for-checklist');
+		//var userChoices = jQuery(choicesSource).find(':checked');
+		jQuery(this).parents('.question').next('.answer').find('[data-bz-reference]').each(function(){
+			var ref = jQuery(this).attr('data-bz-reference');
+			var refCheckbox = jQuery('[data-bz-retained="'+ref+'"]');
+			console.log(jQuery(this).parent().html());
+			if( jQuery(refCheckbox).is(':checked') ) {
+				jQuery(this).show();
+			} else {
+				jQuery(this).hide();
+			}
+		});
+	});
+	
+	// 
+	jQuery(".selectable-cells td").click(function(){ 
+		// console.log('matrix cell clicked '+jQuery(this).text());
+		jQuery(this).toggleClass("v-selected"); 
+	});
+	
+	// Allow sorting to match elements in a table (apply .sortable to the row, sorting is done by moving cells sideways:
+	jQuery(".sortable").sortable({
+    disableSelection: true,
+		items : ':not(th):not(.unsortable)'
+	});
+	
+	// Check a user-sorted table and give feedback:
+	jQuery('.for-match').click(function(){
+		var feedback, feedbackClass;
+		var valuesToMatch = jQuery(this).parents('.question').find('.match-to [data-bz-matching]');
+		var valuesToTest = jQuery(this).parents('.question').find('.sortable [data-bz-matching]');
+		valuesToMatch.each(function(){
+			var valueToMatch = jQuery(this).attr('data-bz-matching');
+			var matchingValue = jQuery(valuesToTest).find('[data-bz-matching="'+valueToMatch+'"]');
+			console.log(matchingValue.parents('li').text());
+			
+		});
+		var answerSpace = jQuery(this).parents('.question').next('.answer');
+		bzGiveFeedback(feedback, answerSpace, feedbackClass);
+	});
+	// Mix up checklists 
+	/* TBD */
+	
 	// Load user-added magic fields if they already have input
 	/* TBD */
 	
@@ -269,14 +313,6 @@ runOnUserContent(function() {
 	// Automatically generate a navigable table of contents for a h2-level section out of its nested h3 elements
 	/* TBD */
 	
-	// Automatically add sharing release checkbox to inputs with the relevant attribute data-bz-share-release
-	/* TBD */
-	
-	// Assorted anecdotal functions we didn't want to put inline with the html:
-	jQuery("#bz-values-matrix td").click(function(){ 
-		// console.log('matrix cell clicked '+jQuery(this).text());
-		jQuery(this).toggleClass("v-selected"); 
-	});
 	
 	/* END NEW UI STUFF */
 	
