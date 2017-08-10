@@ -528,6 +528,9 @@ function collectStuffAfterBox(button) {
     </div>
   */
 
+  if(button == null)
+  	return [];
+
   var box = button;
   while(!box.classList.contains('bz-box')) {
     box = box.parentNode;
@@ -546,7 +549,29 @@ function collectStuffAfterBox(button) {
   return after;
 }
 
+if (!String.prototype.startsWith) {
+    String.prototype.startsWith = function(searchString, position){
+      return this.substr(position || 0, searchString.length) === searchString;
+  };
+}
+
 runOnUserContent(function(){
+
+  var position_magic_field_name = window.position_magic_field_name ? window.position_magic_field_name : ("module_position_" + ENV["WIKI_PAGE"].page_id);
+
+  var openPosition = 0;
+
+  /*
+  // if we ever want a url override for direct linking, we can keep
+  // this, but I think it is actually a slight negative right now
+  if(window.location.hash.startsWith("#box-")) {
+    openPosition = Number(window.location.hash.substr("#box-".length));
+  } else if(window.openBzBoxPosition) {
+    openPosition = window.openBzBoxPosition;
+  }
+  */
+  openPosition = Number(window.openBzBoxPosition);
+
   function unhideNext(obj) {
     var n = collectStuffAfterBox(obj);
     for(var i = 0; i < n.length; i++) {
@@ -556,12 +581,95 @@ runOnUserContent(function(){
     }
   }
 
-  var first = document.querySelector(".bz-toggle-all-next");
+  var allBoxesWithStoppingPoints = [];
+  // only ones with a button are actually stopping points
+  var start = document.querySelectorAll(".bz-box");
+  for(var a = 0; a < start.length; a++)
+    if(start[a].querySelector(".bz-toggle-all-next"))
+        allBoxesWithStoppingPoints.push(start[a]);
+
+  if(allBoxesWithStoppingPoints.length <= openPosition)
+    return; // no boxes here
+
+  for(var a = 0; a < allBoxesWithStoppingPoints.length; a++) {
+    allBoxesWithStoppingPoints[a].setAttribute("id", "box-" + a);
+    allBoxesWithStoppingPoints[a].setAttribute("data-box-sequence", a);
+  }
+
+  var first = allBoxesWithStoppingPoints[openPosition].querySelector(".bz-toggle-all-next");
   var list = collectStuffAfterBox(first);
-  for(var i = 0; i < list.length; i++)
+  for(var i = 0; i < list.length; i++) {
     $(list[i]).hide();
+  }
 
   jQuery('.bz-toggle-all-next').click(function(e){
     unhideNext(this);
+
+    var pos = $(this).parent('.bz-box').attr("data-box-sequence");
+    pos |= 0;
+    pos += 1; // they just advanced!
+
+    var http = new XMLHttpRequest();
+    http.open("POST", "/bz/user_retained_data", true);
+    var data = "optional=1&name="+encodeURIComponent(position_magic_field_name)+"&value=" + encodeURIComponent(pos) + "&from=" + encodeURIComponent(location.href);
+    http.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    http.send(data);
+
   }).parents('.bz-box').addClass('bz-has-toggle-btn');
+
+  if(openPosition && allBoxesWithStoppingPoints.length > 0)
+  	allBoxesWithStoppingPoints[openPosition].scrollIntoView();
 });
+
+
+
+// if we ever want a url to auto update, this script will
+// do it, but the code above does a better job with explicit
+// clicks right now imo
+if(0)
+runOnUserContent(function() {
+  var last_known_scroll_position = 0;
+  var ticking = false;
+
+  var sections = document.querySelectorAll(".bz-box");
+  if(sections.length == 0)
+    return;
+
+  var activeSection = -1;
+
+  function getWindowOffset(ele) {
+    var a = 0;
+    var e = ele;
+    while(e) {
+      a += e.offsetTop;
+      e = e.offsetParent;
+    }
+    return a;
+  }
+
+  function doSomething(scroll_pos) {
+    var start = activeSection + 1;
+    if(start >= sections.length)
+      return;
+    for(var a = sections.length - 1; a >= start; a--) {
+      if(getWindowOffset(sections[a]) < scroll_pos) {
+        activeSection = a;
+        window.location.hash = sections[a].id;
+        //alert('changed');
+        break;
+      }
+    }
+  }
+
+  window.addEventListener('scroll', function(e) {
+    last_known_scroll_position = window.scrollY;
+    if (!ticking) {
+      window.requestAnimationFrame(function() {
+        doSomething(last_known_scroll_position);
+        ticking = false;
+      });
+    }
+    ticking = true;
+  });
+});
+
