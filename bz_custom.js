@@ -68,7 +68,8 @@ jQuery( document ).ready(function() {
 		jQuery('.context-course_11 #question_481_question_text input, .context-course_15 #question_618_question_text input, .context-course_23 #question_1917_question_text input, .context-course_25 #question_2259_question_text input').each(function(i){
 			jQuery(this).change(function(){
 				//console.log('changing big rock');
-				var t = jQuery(this).val()+': '; console.log(t);
+				var t = jQuery(this).val()+': '; 
+				console.log(t);
 				jQuery('.context-course_11 #question_482_question_text ol li, .context-course_15 #question_619_question_text ol li, .context-course_23 #question_1918_question_text ol li, .context-course_25 #question_2260_question_text ol li').eq(i).children('.dynamic').text(t);
 			});
 		});
@@ -137,27 +138,24 @@ runOnUserContent(function() {
 	
 	// Score a checklist question:
 	jQuery('.for-checklist').click(function(){
-		var checklist = jQuery(this).attr('data-bz-for-checklist');
-		var maxScore = jQuery(checklist).attr('data-bz-max-score');
+		var checklist = jQuery(this).parents('.question').find('.checklist');
+		var maxScore = checklist.find('.correct').length;
 		var checklistScore = 0;
 		var falsePositives = 0;
-		jQuery(checklist).children().each(function(){
+		checklist.children().each(function(){
+			jQuery(this).addClass('show-answers')
 			if( jQuery(this).children('input').is(':checked') ) {
-				jQuery(this).addClass('show-answers').find('.feedback').show();
-				if (jQuery(this).is('.correct')) {
+				jQuery(this).addClass('checked')
+				if ( jQuery(this).is('.correct') || jQuery(this).parents('li').is('.correct') ) {
 					checklistScore++;
 				} else {
 					falsePositives++;
-					jQuery(this).find('.feedback').slideDown();
 				}
 			} 
-			if ( jQuery(this).children('input').not(':checked') ) {
-				jQuery(this).addClass('unchecked');
-			}
 		});
 		var finalScore = (checklistScore-falsePositives)/maxScore;
 		var feedbackClass = "";
-		var answerSpace = jQuery(this).parents('.question').next('.answer');
+		var answerSpace = checklist.parents('.question').next('.answer');
 		var feedback = "You got " + checklistScore + " out of " + maxScore + " right";
 		if ( 0 < falsePositives ) {
 			feedback += ", but you also got " + falsePositives + " incorrect answer";
@@ -176,13 +174,13 @@ runOnUserContent(function() {
 			feedback = "Oops! " + feedback;
 			feedbackClass = 'wrong';
 		}
-		bzGiveFeedback(feedback, answerSpace, feedbackClass);
+		bzGiveVerboseFeedback(feedback, answerSpace, feedbackClass);
 	});	
 
 	// Display current value of a range question:
-	jQuery ('[data-bz-range-answer]').change(function() {
+	jQuery ('[type="range"]').change(function() {
 		var currentVal = jQuery(this).val();
-		jQuery(this).parent().find('.current-value').text(currentVal);
+		jQuery(this).parents('.question').find('.current-value').text(currentVal);
 	}).change();
 
 	// Score a range question:
@@ -212,32 +210,42 @@ runOnUserContent(function() {
 			feedbackClass = 'wrong';
 		}
 		var answerSpace = jQuery(this).parents('.question').next('.answer');
-		bzGiveFeedback(feedback, answerSpace, feedbackClass);
+		bzGiveVerboseFeedback(feedback, answerSpace, feedbackClass);
 	});
 
 	// Show feedback in an answer following a question:
-	function bzGiveFeedback(feedback, answerSpace, feedbackClass) {
-		jQuery(answerSpace).addClass(feedbackClass);
-		if(jQuery(answerSpace).find('.box-title')){
-			jQuery('.box-title').text(feedback);
-		} else {
-			feedback = '<p class="box-title">'+feedback+'</p>';
-			jQuery(this).prepend(feedback);
-		}
+	function bzGiveVerboseFeedback(feedback, answerSpace, feedbackClass) {
+		jQuery(answerSpace).addClass(feedbackClass).find('.box-title').text(feedback);
 	}
 
-  // Add checkboxes to multi-checklist lists, and provide feedback when any are checked:
-	jQuery('.multi-checklist').find('li').each(function(){
-		jQuery(this).wrapInner('<label></label>').prepend('<input type="checkbox" />');
-	}).change(function(){
-			jQuery(this).find('.feedback').slideToggle();
+  // Provide instant feedback when any input on a list is checked:
+	jQuery('ul.instant-feedback').find('input').change(function(){
+		var liParent = jQuery(this).parents('li').toggleClass('show-answers');
+		if ( jQuery(this).is('[type="radio"]') ){
+			liParent.siblings().removeClass('show-answers')
+		}
 	});
 	
-	jQuery('.radio-list').find('input').each(function(){
-		jQuery(this).change(function(){
-			jQuery(this).closest('li').find('.feedback').slideToggle();
-		});
-	});
+	
+	function bzToggleInputFeedback(input){
+		var currentInput = jQuery(this);
+		console.log(currentInput.html());
+		var currentListItem = jQuery(this).parents('li'); //.addClass('show-answers');
+		console.log(currentListItem.html());
+		/* var feedback = currentListItem.find('.feedback');
+		if (currentInput.is(':checked')) {
+			feedback.slideDown();
+		} else {
+			feedback.slideUp();
+			if (currentListItem.is('.correct')) {
+				currentListItem.addClass('unchecked');
+			} else {
+				currentListItem.removeClass('show-answers');
+			}
+		}
+		*/
+	}
+		
 	// Reveal hidden content immediately following a hint button:
 	jQuery('.reveal-next').click(function(e){
 		e.preventDefault();
@@ -266,7 +274,6 @@ runOnUserContent(function() {
 		jQuery(this).parents('.question').next('.answer').find('[data-bz-reference]').each(function(){
 			var ref = jQuery(this).attr('data-bz-reference');
 			var refCheckbox = jQuery('[data-bz-retained="'+ref+'"]');
-			console.log(jQuery(this).parent().html());
 			if( jQuery(refCheckbox).is(':checked') ) {
 				jQuery(this).show();
 			} else {
@@ -294,12 +301,10 @@ runOnUserContent(function() {
 		var valuesToTest = jQuery(this).parents('.question').find('.sortable [data-bz-matching]');
 		valuesToMatch.each(function(){
 			var valueToMatch = jQuery(this).attr('data-bz-matching');
-			var matchingValue = jQuery(valuesToTest).find('[data-bz-matching="'+valueToMatch+'"]');
-			console.log(matchingValue.parents('li').text());
-			
+			var matchingValue = jQuery(valuesToTest).find('[data-bz-matching="'+valueToMatch+'"]');		
 		});
 		var answerSpace = jQuery(this).parents('.question').next('.answer');
-		bzGiveFeedback(feedback, answerSpace, feedbackClass);
+		bzGiveVerboseFeedback(feedback, answerSpace, feedbackClass);
 	});
 	// Mix up checklists 
 	/* TBD */
@@ -315,6 +320,7 @@ runOnUserContent(function() {
 	
 	
 	/* END NEW UI STUFF */
+
 	
 });
 
