@@ -143,7 +143,9 @@ runOnUserContent(function() {
 		var checklistScore = 0;
 		var falsePositives = 0;
 		checklist.children().each(function(){
+			jQuery(this).addClass('show-answers')
 			if( jQuery(this).children('input').is(':checked') ) {
+				jQuery(this).addClass('checked')
 				if ( jQuery(this).is('.correct') || jQuery(this).parents('li').is('.correct') ) {
 					checklistScore++;
 				} else {
@@ -172,7 +174,6 @@ runOnUserContent(function() {
 			feedback = "Oops! " + feedback;
 			feedbackClass = 'wrong';
 		}
-		bzDisplayFeedback(checklist);
 		bzGiveVerboseFeedback(feedback, answerSpace, feedbackClass);
 	});	
 
@@ -219,27 +220,30 @@ runOnUserContent(function() {
 
   // Provide instant feedback when any input on a list is checked:
 	jQuery('ul.instant-feedback').find('input').change(function(){
-		var list = jQuery(this).parents('ul');
-		bzDisplayFeedback(list);
+		var liParent = jQuery(this).parents('li').toggleClass('show-answers');
+		if ( jQuery(this).is('[type="radio"]') ){
+			liParent.siblings().removeClass('show-answers')
+		}
 	});
 	
-	function bzDisplayFeedback(list){
-		// FIX THIS THING!!!
-			jQuery(list).find('input').each(function(){
-				  var currentInput = jQuery(this);
-					var currentListItem = currentInput.parents('li');
-					var feedback = currentListItem.addClass('show-answers').find('.feedback');
-					if (currentInput.is(':checked')) {
-						feedback.slideDown();
-					} else {
-						feedback.slideUp();
-						if (currentListItem.is('.correct')) {
-							currentListItem.addClass('unchecked');
-						} else {
-							currentListItem.removeClass('show-answers');
-						}
-					}
-			});
+	
+	function bzToggleInputFeedback(input){
+		var currentInput = jQuery(this);
+		console.log(currentInput.html());
+		var currentListItem = jQuery(this).parents('li'); //.addClass('show-answers');
+		console.log(currentListItem.html());
+		/* var feedback = currentListItem.find('.feedback');
+		if (currentInput.is(':checked')) {
+			feedback.slideDown();
+		} else {
+			feedback.slideUp();
+			if (currentListItem.is('.correct')) {
+				currentListItem.addClass('unchecked');
+			} else {
+				currentListItem.removeClass('show-answers');
+			}
+		}
+		*/
 	}
 		
 	// Reveal hidden content immediately following a hint button:
@@ -316,6 +320,7 @@ runOnUserContent(function() {
 	
 	
 	/* END NEW UI STUFF */
+
 	
 });
 
