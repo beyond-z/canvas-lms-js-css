@@ -611,7 +611,7 @@ runOnUserContent(function(){
   jQuery('.bz-toggle-all-next').click(function(e){
     unhideNext(this);
 
-    var pos = $(this).parent('.bz-box').attr("data-box-sequence");
+    var pos = $(this).parents('.bz-box').attr("data-box-sequence");
     pos |= 0;
     pos += 1; // they just advanced!
 
