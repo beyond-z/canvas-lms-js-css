@@ -144,7 +144,7 @@ runOnUserContent(function() {
 		var falsePositives = 0;
 		checklist.children().each(function(){
 			if( jQuery(this).children('input').is(':checked') ) {
-				if (jQuery(this).is('.correct')) {
+				if ( jQuery(this).is('.correct') || jQuery(this).parents('li').is('.correct') ) {
 					checklistScore++;
 				} else {
 					falsePositives++;
