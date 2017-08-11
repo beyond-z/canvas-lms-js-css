@@ -205,10 +205,6 @@ html {
 	text-align: center;
 }
 
-.feedback {
-	display: none;
-}
-
 figcaption {
 	margin: 15px auto;
 }
@@ -219,21 +215,32 @@ figcaption {
 	margin-left: 0;
 }
 
-.revealable {
+.revealable, 
+.feedback {
 	display: none;
+}
+
+.show-answers .feedback {
+	display: block;
 }
 
 .show-answers.correct {
 	color: #22B573;
 }
 
-.correct.unchecked,
-.show-answers.wrong {
-	color: #eb3b46;
+.show-answers.maybe,
+ul:not(.instant-feedback) .show-answers.correct:not(.checked) {
+	color: #EB3B46;
+}
+
+.show-answers.wrong,
+ul:not(.instant-feedback) .show-answers.checked:not(.correct) {
+	color: #B08833;
 }
 
 .feedback.inline {
-	margin: 0.5em 0;
+	padding: 3px 6px;
+	background: #EEE;
 }
 
 .display-value {
@@ -241,14 +248,12 @@ figcaption {
 }
 
 .checklist,
-.radio-list,
-.multi-checklist {
+.radio-list {
 	padding-left: 0;
 }
 
 .checklist li,
-.radio-list li,
-.multi-checklist li {
+.radio-list li {
 	position: relative;
 	margin: 0.5em 0;
 	padding-left: 2em;
@@ -264,7 +269,6 @@ figcaption {
 	position: inherit;
 }
 
-.multi-checklist,
 .radio-list {
 	list-style: none;
 }
