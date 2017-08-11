@@ -2,14 +2,10 @@
 body {
 	font-family: Georgia, serif;
 }
-h1, h2, h3, h4, h5, h6, 
-input[type="button"],
-.media-duration,
-th,
-.match-heading-style {
+h1, h2, h3, h4, h5, h6, input[type="button"], .media-duration, th, .-heading-style {
 	font-family: "TradeGothicNo.20-CondBold", "Trade Gothic LT Std Cn", "Oswald", "Open Sans", sans-serif;
-  text-transform: uppercase;
-  line-height: normal;
+	text-transform: uppercase;
+	line-height: normal;
 	font-weight: normal;
 }
 .bz-module {
@@ -22,14 +18,11 @@ a {
 a:visited {
 	color: #235877
 }
-h2, 
-h3, 
-h4 {
-	margin-top: 3em;	
+h2, h3, h4 {
+	margin-top: 3em;
 }
-h2, 
-h4, h6 {
-		color: #EB3B46;
+h2, h4, h6 {
+	color: #EB3B46;
 }
 h2 {
 	font-size: 34px;
@@ -40,8 +33,12 @@ h3 {
 h4 {
 	font-size: 24px;
 }
-h5, h6, .box-title {
+h5, .box-title {
 	font-size: 20px;
+}
+.bz-box h5:not(.box-title), h6 {
+ font-size: 16px;
+ letter-spacing: 0.1em;
 }
 .box-title {
 	margin: 0;
@@ -60,47 +57,84 @@ figcaption {
 .share-release {
 	font-size: 0.8em;
 }
-input,
-textarea {
+input, textarea {
 	font: monospace;
-}
-.show-answers {
-	font-weight: bold;
 }
 .ref-source {
 	font-size: 50%;
 	vertical-align: super;
 	text-decoration: none;
 }
-.correct.unchecked {
-	font-weight: bold;
-}
 .feedback.inline {
 	font-style: italic;
 	font-weight: normal;
 	color: #000;
+}
+blockquote {
+	margin: inherit;
+	color: #333;
+	padding: 20px;
+}
+.vignette {
+	border: 1px solid #333;
+	overflow-y: scroll;
+	height: 20em;
+}
+.vignette blockquote {
+	font-style: italic;
+}
+.tbd {
+	background: #FF0;
 }
 /* HEADER NUMBERING */
 body {
 	counter-reset: h2counter;
 }
 h2:not(.box-title):before {
-	content: counter(h2counter) ".\0000a0\0000a0";
-	counter-increment: h2counter;
+ content: counter(h2counter) ".\0000a0\0000a0";
+ counter-increment: h2counter;
 }
 h2:not(.box-title) {
-	counter-reset: h3counter;
+ counter-reset: h3counter;
 }
 h3:not(.box-title):before {
-	content: counter(h2counter) "." counter(h3counter) ".\0000a0\0000a0";
-	counter-increment: h3counter;
+ content: counter(h2counter) "." counter(h3counter) ".\0000a0\0000a0";
+ counter-increment: h3counter;
 }
 h3:not(.box-title) {
-	counter-reset: h4counter;
+ counter-reset: h4counter;
 }
 h4:not(.box-title):before {
-	content: counter(h2counter) "." counter(h3counter) "." counter(h4counter) ".\0000a0\0000a0";
-	counter-increment: h4counter;
+ content: counter(h2counter) "." counter(h3counter) "." counter(h4counter) ".\0000a0\0000a0";
+ counter-increment: h4counter;
+}
+/* TOOLTIP: */
+.bz-tooltip {
+	display:none;
+	position:absolute;
+	border:1px solid #333;
+	background-color:#161616;
+	border-radius:5px;
+	padding:10px;
+	color:#fff;
+	font-size:12px;
+	margin: 2em;
+}
+.bz-uses-tooltips {
+	position: relative;
+	margin-right: auto;
+}
+.bz-has-tooltip {
+	border-bottom: 2px dotted #5bbbba;
+	cursor: pointer; /* fallback */
+	cursor: help;
+}
+.ui-widget.ui-tooltip {
+	font-size: 13px;
+}
+/* Hide tooltip arrow */
+.ui-tooltip::before {
+ display: none;
 }
 /* LAYOUT */
 html {
@@ -123,6 +157,9 @@ html {
 .bz-box.video {
 	text-align: center;
 }
+.feedback {
+	display: none;
+}
 figcaption {
 	margin: 15px auto;
 }
@@ -131,44 +168,41 @@ figcaption {
 	padding-left: 0;
 	margin-left: 0;
 }
-.show-answers {
-	color: #eb3b46;
-}
 .revealable {
 	display: none;
 }
 .show-answers.correct {
 	color: #22B573;
 }
+.correct.unchecked,
+.show-answers.wrong {
+	color: #eb3b46;
+}
 .feedback.inline {
 	margin: 0.5em 0;
 }
-.feedback {
-	display: none;
-}
+
 .display-value {
 	text-align: center;
 }
-.checklist,
-.radio-list,
-.multi-checklist {
+.checklist, .radio-list, .multi-checklist {
 	padding-left: 0;
 }
-.checklist li,
-.radio-list li,
-.multi-checklist li {
+.checklist li, .radio-list li, .multi-checklist li {
 	position: relative;
 	margin: 0.5em 0;
 	padding-left: 2em;
 }
-.checklist li input,
-.radio-list li input,
-.multi-checklist li input {
+.checklist [type='checkbox'], 
+.radio-list [type='radio']
+ {
 	position: absolute;
 	left: 0;
 }
-.multi-checklist,
-.radio-list {
+.share-release [type='checkbox'] {
+	position: inherit;
+}
+.multi-checklist, .radio-list {
 	list-style: none;
 }
 input[type="button"] {
@@ -176,8 +210,7 @@ input[type="button"] {
 	background: #EB3B46;
 	color: #FFF;
 }
-input,
-textarea {
+input, textarea {
 	background: #F6EFDF;
 	padding: 10px;
 	border: 1px solid #CCC;
@@ -192,9 +225,8 @@ input[type='button']:disabled {
 	background: #CCC;
 	color: #666;
 }
-.question, .answer, .reflection, .video, .pulse, .key, .action, .values,
-.video .box-title {
-  padding-left: 60px;
+.question, .answer, .reflection, .video, .pulse, .key, .action, .values, .read, .video .box-title {
+	padding-left: 60px;
 	background: 0px 13px no-repeat;
 	position: relative;
 }
@@ -244,9 +276,11 @@ figure {
 .values {
 	background-image: url('images/50px/lms-icons-47.png');
 }
-li input:not([type="button"]):not([type="radio"]):not([type="checkbox"]), 
-li textarea {
-	margin: 0.5em;	
+.read {
+	background-image: url('images/50px/lms-icons-read-56.png');
+}
+li input:not([type="button"]):not([type="radio"]):not([type="checkbox"]), li textarea {
+ margin: 0.5em;
 }
 .full {
 	width: 100%;
@@ -265,65 +299,69 @@ figcaption {
 	text-align: center;
 }
 .bz-box textarea {
-  width: calc( 100% - 2em );
+	width: calc( 100% - 2em );
 	height: 3.5em;
 }
 table {
 	border-collapse: collapse;
 }
-td,
-th {
+td, th {
 	padding: 0.75em;
 	border: 1px solid #CCC;
 }
 .sortable td:not(.unsortable) {
-	border: 1px solid #CCC;
-	cursor: pointer;
+ border: 1px solid #CCC;
+ cursor: pointer;
 }
-
-.tip {}
-
-
+.tip {
+}
+.sort-to-match {
+	cursor: move;
+}
+.match-to {
+	cursor: inherit;
+}
 /* Assorted anecdotal styles we didn't want to put inline: */
 #bz-values-matrix {
 	border-collapse: collapse;
 }
-
-#bz-values-matrix td { 
+#bz-values-matrix td {
 	cursor: pointer;
 	padding: 5px;
-	border: 1px solid #DDD; 
+	border: 1px solid #DDD;
 	margin: 0;
 	height: 3em;
 	text-align: center;
 	font-size: 15px;
 	letter-spacing: 0.02em;
 }
-
-.v-selected{ 
-	background: #D7EFEF; 
+.v-selected {
+	background: #D7EFEF;
 }
-
-#match-course-parts th {
+#-course-parts th {
 	text-align: left;
 }
-
-#match-course-parts tr:not(.sortable) td {
-	text-align: center;
-	vertical-align: top;
+ #-course-parts tr:not(.sortable) td {
+ text-align: center;
+ vertical-align: top;
 }
 #comms-options td:not(:first-child) {
-	text-align: center;
+ text-align: center;
 }
 #comms-options {
 	font-size: 0.8em;
+	float:left;
+	clear: both;
+	margin-bottom: 20px;
+}
+.for-range, .for-checklist {
+	/* TBD */
 }
 @media screen and (max-width: 700px) {
 	.bz-module {
 		width: 100%;
 		padding: 5px;
 	}
-	
 	figure iframe {
 		width: 100%;
 	}
