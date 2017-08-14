@@ -328,15 +328,15 @@ figure {
 }
 
 .question {
-	background-image: url('images/50px/lms-icons-04.png');
+	background-image: url('https://s3.amazonaws.com/canvas-stag-assets/images/lms-icons-04.png');
 }
 
 .answer {
-	background-image: url('images/50px/lms-icons-100.png');
+	background-image: url('https://s3.amazonaws.com/canvas-stag-assets/images/lms-icons-100.png');
 }
 
 .answer.correct {
-	background-image: url('images/50px/lms-icons-99.png');
+	background-image: url('https://s3.amazonaws.com/canvas-stag-assets/images/lms-icons-99.png');
 }
 
 .answer.correct .box-title {
@@ -344,7 +344,7 @@ figure {
 }
 
 .answer.wrong {
-	background-image: url('images/50px/lms-icons-98.png');
+	background-image: url('https://s3.amazonaws.com/canvas-stag-assets/images/lms-icons-98.png');
 }
 
 .answer.wrong .box-title {
@@ -352,31 +352,31 @@ figure {
 }
 
 .reflection {
-	background-image: url('images/50px/lms-icons-14.png');
+	background-image: url('https://s3.amazonaws.com/canvas-stag-assets/images/lms-icons-14.png');
 }
 
 .video {
-	background-image: url('images/50px/lms-icons-23.png');
+	background-image: url('https://s3.amazonaws.com/canvas-stag-assets/images/lms-icons-23.png');
 }
 
 .pulse {
-	background-image: url('images/50px/lms-icons-30.png');
+	background-image: url('https://s3.amazonaws.com/canvas-stag-assets/images/lms-icons-30.png');
 }
 
 .key {
-	background-image: url('images/50px/lms-icons-33.png');
+	background-image: url('https://s3.amazonaws.com/canvas-stag-assets/images/lms-icons-33.png');
 }
 
 .action {
-	background-image: url('images/50px/lms-icons-41.png');
+	background-image: url('https://s3.amazonaws.com/canvas-stag-assets/images/lms-icons-41.png');
 }
 
 .values {
-	background-image: url('images/50px/lms-icons-47.png');
+	background-image: url('https://s3.amazonaws.com/canvas-stag-assets/images/lms-icons-47.png');
 }
 
 .read {
-	background-image: url('images/50px/lms-icons-read-56.png');
+	background-image: url('https://s3.amazonaws.com/canvas-stag-assets/images/lms-icons-read-56.png');
 }
 li input:not([type="button"]):not([type="radio"]):not([type="checkbox"]), li textarea {
  margin: 0.5em;
