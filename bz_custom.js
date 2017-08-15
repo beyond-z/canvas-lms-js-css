@@ -307,7 +307,12 @@ runOnUserContent(function() {
 		bzGiveVerboseFeedback(feedback, answerSpace, feedbackClass);
 	});
 	// Mix up checklists 
-	/* TBD */
+	jQuery('.checklist, .radio-list').not('.dont-mix').each(function(){
+		var itemsToMix = jQuery(this).children();
+		for (var i = itemsToMix.length; i >= 0; i--) {
+			jQuery(this).append(itemsToMix[Math.random() * i | 0]);
+		}
+	});
 	
 	// Load user-added magic fields if they already have input
 	/* TBD */
