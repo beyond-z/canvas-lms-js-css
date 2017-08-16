@@ -1,0 +1,483 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>New UI Prototype: Module 5</title>
+<script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous">
+</script>
+<link rel="stylesheet" type="text/css" href="../bz_newui.css">
+</head>
+<body>
+<div class="bz-module">
+  <h2 id="what">What are we talking about?</h2>
+  <div class="bz-box question">
+    <h3 class="box-title">Quick Question</h3>
+    <p>What would you guess are the <strong>top five</strong> factors that make people happy at work?</p>
+    <ul id="bcg-satisfaction" class="checklist" data-bz-max-score="5">
+      <li>
+        <input name="" type="checkbox" value="" />
+        Salary and benefits</li>
+      <li class="correct">
+        <input name="" type="checkbox" value="2" />
+        Having a good relationship with your manager</li>
+      <li>
+        <input name="" type="checkbox" value="" />
+        Opportunities to learn new things</li>
+      <li>
+        <input name="" type="checkbox" value="" />
+        Potential for promotion</li>
+      <li class="correct">
+        <input name="" type="checkbox" value="3" />
+        Good work-life balance</li>
+      <li>
+        <input name="" type="checkbox" value="" />
+        Good fit between talents/skills and what the job requires</li>
+      <li class="correct">
+        <input name="" type="checkbox" value="4" />
+        Good fit between company values and personal values</li>
+      <li>
+        <input name="" type="checkbox" value="" />
+        Working for a company/organization with good reputation</li>
+      <li>
+        <input name="" type="checkbox" value="" />
+        Perks like free lunch</li>
+      <li>
+        <input name="" type="checkbox" value="" />
+        Casual dress code</li>
+      <li>
+        <input name="" type="checkbox" value="" />
+        Job security</li>
+      <li>
+        <input name="" type="checkbox" value="" />
+        Lots of travel</li>
+      <li class="correct">
+        <input name="" type="checkbox" value="5" />
+        Being appreciated for your work</li>
+      <li class="correct">
+        <input name="" type="checkbox" value="1" />
+        Working for a financially stable company</li>
+      <li>
+        <input name="" type="checkbox" value="" />
+        Working in a cool office space</li>
+      <li>
+        <input name="" type="checkbox" value="" />
+        Working remotely (not in an office)</li>
+      <li>
+        <input name="" type="checkbox" value="" />
+        Working on interesting things (interesting job content)</li>
+    </ul>
+    <p>
+      <input class="for-checklist bz-toggle-all-next" type="button" value="Done" data-bz-for-checklist="#bcg-satisfaction" />
+    </p>
+  </div>
+  <div class="bz-box answer">
+    <h4 class="box-title">&nbsp;</h4>
+    <p>According to a recent BCG survey<a class="ref-source" href="https://www.bcgperspectives.com/content/articles/human_resources_leadership_decoding_global_talent/?chapter=5#chapter5">#</a> these are the top five factors that made Americans most satisfied at work:</p>
+    <ol>
+      <li>Working for a financially stable company</li>
+      <li>Having a good relationship with your manager</li>
+      <li>Good work-life balance</li>
+      <li>Good fit between company values and personal values</li>
+      <li>Being appreciated for your work</li>
+    </ol>
+  </div>
+  <p>Looking at the survey results above, you'll notice that people who are happiest at work have jobs that align with their needs and with what they're good at; in other words, they are living their <em>hustle</em>.</p>
+  <p>&nbsp;</p>
+  <figure><img class="two-thirds" src="/courses/27/pages/unlock-your-hustle/images/braven-head-heart-hustle.png" alt="Venn diagram showing two intersecting circles. One says head, the other says heart, and the intersection is labeled hustle." data-api-endpoint="https://stagingportal.bebraven.org/api/v1/courses/27/pages/unlock-your-hustle" data-api-returntype="Page" /></figure>
+  <p>&nbsp;</p>
+  <p>Your hustle is the result of your heart &ndash; your values, passions, interests &ndash; and head &ndash; your strengths and talents, what you know &ndash; working in line with each other. You know that feeling when you are in the zone, losing track of time? If you can find work (for enough money) that makes you feel this way, that's your hustle.</p>
+  <h2 id="why">Why does this matter?</h2>
+  <div class="bz-box question">
+    <h3 class="box-title">Quick Question</h3>
+    <p>What percentage of Americans would you guess feel engaged at work?</p>
+    <input id="gallup-engaged" class="two-thirds" max="100" min="0" step="5" type="range" data-bz-range-answer="30" />
+    <div class="display-value"><span class="current-value">&nbsp;</span>%</div>
+    <p>
+      <input class="for-range bz-toggle-all-next" type="button" value="Done" data-bz-for-range="#gallup-engaged" />
+    </p>
+  </div>
+  <div class="bz-box answer">
+    <h3 class="box-title">&nbsp;</h3>
+    <p>According to a Gallop survey<a class="ref-source" href="#">#</a>, only 30% of Americans are engaged at work. That means most Americans are either indifferent or unhappy with what they are doing with the majority of their time. But does it have to be this way?</p>
+  </div>
+  <div class="bz-box video">
+    <h3 class="box-title">Watch this</h3>
+    <figure>
+      <iframe src="https://www.youtube.com/embed/jpe-LKn-4gM?rel=0" width="672" height="378" frameborder="0" allowfullscreen="allowfullscreen"></iframe>
+      <figcaption>
+        <p>Entrepreneur Scott Dinsmore talks about how he quit his unsatisfying job, and the three questions he asked himself in order to find a great job.</p>
+        <span class="media-duration">About 18 minutes, but it's okay to stop after 7 minutes.</span></figcaption>
+    </figure>
+  </div>
+  <div class="bz-box pulse">
+    <h3 class="box-title">Pulse Check</h3>
+    <p>How are you feeling right now?</p>
+    <ul class="instant-feedback checklist">
+      <li>
+        <input type="checkbox" />
+        <q>I don't know what Hustle is / I just don't know what I like / have no strong opinions about different career options</q>
+        <div class="inline feedback">That's okay, you'll have a chance to reflect and identify it through this week's module and Learning Lab.</div>
+      </li>
+      <li>
+        <input type="checkbox" />
+        <q>I'm already supposed to do X and don't think I can change it now.</q>
+        <div class="inline feedback">That's a common challenge many young people face. While you may be facing many outside pressures, take the time this week to dig into your hustle, because we know that the happiest and most successful people do what they love and excel at.</div>
+      </li>
+      <li>
+        <input type="checkbox" />
+        <q>The things I want (or am good at) are not practical as career choices.</q>
+        <div class="inline feedback">It's true that some talents, skills, and interests are harder to turn into a sustainable career. There might be interesting career options you haven't considered yet, where you can be happy and your strengths could be applied.</div>
+      </li>
+      <li>
+        <input type="checkbox" />
+        <q>I'm feeling okay; none of the above bothers me too much.</q>
+        <div class="inline feedback">Great! Let's get started unlocking your hustle.</div>
+      </li>
+    </ul>
+  </div>
+  <h2>How is it done?</h2>
+  <h3>How to identify what's important to you <small>(your heart)</small></h3>
+  <h4>Values</h4>
+  <div class="bz-box reflection">
+    <h5 class="box-title">Get to know yourself</h5>
+    <p>Which of the following things do you feel you value most in life? It's okay if these are values you aspire to rather than live out day to day right now. Check as many as apply:</p>
+    <table id="bz-values-matrix" class="selectable-cells match-heading-style">
+      <tbody>
+        <tr>
+          <td width="16%">achievement</td>
+          <td width="16%">cooperation</td>
+          <td width="16%">freedom</td>
+          <td width="16%">individualism</td>
+          <td width="16%">productivity</td>
+          <td width="16%">status</td>
+        </tr>
+        <tr>
+          <td>adventure</td>
+          <td>control</td>
+          <td>friendship</td>
+          <td>innovation</td>
+          <td>power</td>
+          <td>teamwork</td>
+        </tr>
+        <tr>
+          <td>balance</td>
+          <td>creativity</td>
+          <td>fun</td>
+          <td>integrity</td>
+          <td>quality</td>
+          <td>trust</td>
+        </tr>
+        <tr>
+          <td>caring</td>
+          <td>curiosity</td>
+          <td>growth</td>
+          <td>justice</td>
+          <td>quantity</td>
+          <td>uniqueness</td>
+        </tr>
+        <tr>
+          <td>caution</td>
+          <td>determination</td>
+          <td>happiness</td>
+          <td>learning</td>
+          <td>respect</td>
+          <td>variety</td>
+        </tr>
+        <tr>
+          <td>challenge</td>
+          <td>diversity</td>
+          <td>hard work</td>
+          <td>luxury</td>
+          <td>responsibility</td>
+          <td>winning</td>
+        </tr>
+        <tr>
+          <td>communication</td>
+          <td>fairness</td>
+          <td>health and wellness</td>
+          <td>loyalty</td>
+          <td>risk</td>
+          <td>wisdom</td>
+        </tr>
+        <tr>
+          <td>competition</td>
+          <td>family time</td>
+          <td>honesty</td>
+          <td>organization</td>
+          <td>safety / security</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>community</td>
+          <td>financial well-being</td>
+          <td>human relationships</td>
+          <td>people</td>
+          <td>service to others</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>convenience</td>
+          <td>flexibility</td>
+          <td>independence</td>
+          <td>predictability</td>
+          <td>speed</td>
+          <td>&nbsp;</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="add-fields-here">
+      <p>Add your own if it's missing from the list:</p>
+      <input class="add-other-field" type="button" />
+    </div>
+    <p>Feeling stuck? <a class="reveal-next" href="#stuck-with-values">Click here for hints.</a></p>
+    <div id="stuck-with-values" class="tip revealable">
+      <p>Here are some questions to help you think through this:</p>
+      <ul>
+        <li>How did you decide on which college you would attend? What were the factors at play?</li>
+        <li>Think about a recent challenge you've had. What values helped guide your decision-making?</li>
+        <li>How did you decide to be in &ndash; or end -- major relationships you've been in (either friendly or romantic)?</li>
+        <li>How did you decide where to live?</li>
+        <li>Think about how you spend your time and money. What does that say about what you value?</li>
+        <li>Think about a time when you went against something you valued or had to make a particularly tough trade-off. What was that like? What was the context?</li>
+      </ul>
+    </div>
+    <input class="bz-toggle-all-next" type="button" value="Done" />
+  </div>
+  <div class="bz-box reflection">
+    <h5 class="box-title">Narrow it down</h5>
+    <p>Great job so far! Now copy the top five values (or fewer) into the fields below, starting with the most important one. Reflect on why each of these values is important to you.</p>
+    <ol>
+      <li>
+        <input type="text" placeholder="value" />
+        <br />
+        <textarea placeholder="Why this value is important to me"></textarea>
+      </li>
+      <li>
+        <input type="text" placeholder="value" />
+        <br />
+        <textarea placeholder="Why this value is important to me"></textarea>
+      </li>
+      <li>
+        <input type="text" placeholder="value" />
+        <br />
+        <textarea placeholder="Why this value is important to me"></textarea>
+      </li>
+      <li>
+        <input type="text" placeholder="value" />
+        <br />
+        <textarea placeholder="Why this value is important to me"></textarea>
+      </li>
+      <li>
+        <input type="text" placeholder="value" />
+        <br />
+        <textarea placeholder="Why this value is important to me"></textarea>
+      </li>
+    </ol>
+    <input class="bz-toggle-all-next" type="button" value="Done" />
+  </div>
+  <h4>Interests and Passions</h4>
+  <div class="bz-box action">
+    <h5 class="box-title">Arts and Crafts Time!</h5>
+    <figure><img class="full" src="/courses/27/pages/unlock-your-hustle/images/17116730591_a42ae3a7f3_o(flickr_cc_by_Kyle_Pearce).jpg" alt="" data-api-endpoint="https://stagingportal.bebraven.org/api/v1/courses/27/pages/unlock-your-hustle" data-api-returntype="Page" />
+      <figcaption>Example of a vision board<br />
+        <span class="credit cc sa">Photo by Kyle Pearce (Flickr)</span></figcaption>
+    </figure>
+    <p>Create a vision board representing your interests and passions (not just professional/academic). You can do this digitally by using a service like Pinterest, a slide deck etc. Or you can do it the traditional way, by cutting and pasting clippings from magazines or your own artwork, if you prefer.</p>
+    <p class="tip">It doesn't have to be very pretty, so don't go overboard making it perfect! Ten minutes should be more than enough to make a basic board.</p>
+    <p>When you're done, paste a link to your vision board (or to a high quality image of it) here:</p>
+    <input type="url" data-bz-share-release="" />
+    <br />
+    <input class="bz-toggle-all-next" type="button" value="Done" />
+  </div>
+  <div class="bz-box answer">
+    <h5 class="box-title">Good job!</h5>
+    <p>Being highly aware of your values and interests will make you happier at work when your values and passions align with the job you're doing. It will also help you narrow down career/job choices based on shared company/organization values and interests.</p>
+  </div>
+  <h3>How to identify your strengths <small>(your head)</small></h3>
+  <p>Now that you've explored your heart, it's time to uncover what's in your head - your unique strengths and skills.</p>
+  <div class="bz-box action">
+    <h4 class="box-title">Get to Know Yourself</h4>
+    <p>There are many ways to uncover your strengths. For example, as part of your Design Your Career project you'll be asking people who know you for stories that highlight your strengths. Another option is to take personality tests (such as <a href="https://www.strengthstest.com/" target="_blank">Strengths Finder</a> or <a href="http://www.myersbriggs.org/" target="_blank">Myers Briggs</a>, which are also popular with recruiters).</p>
+    <p>One of the most comprehensive tests is the <a href="http://www.viacharacter.org/" target="_blank">VIA Character Strengths Assessment</a>. Take the test now (requires registration, and takes about 20 minutes) and when you're done, paste your top five strengths in here:</p>
+    <ol>
+      <li>
+        <input type="text" />
+      </li>
+      <li>
+        <input type="text" />
+      </li>
+      <li>
+        <input type="text" />
+      </li>
+      <li>
+        <input type="text" />
+      </li>
+      <li>
+        <input type="text" />
+      </li>
+    </ol>
+    <input type="button" value="DONE" />
+  </div>
+  <div class="bz-box reflection">
+    <h5 class="box-title">Reflect</h5>
+    <p>Did any of the strengths surprise you? If so, which ones?</p>
+    <textarea></textarea>
+    <p>What are some times that you exemplified these strengths?</p>
+    <textarea></textarea>
+  </div>
+  <div class="bz-box question">
+    <h4 class="box-title">Quick Question</h4>
+    <p>You may have noticed that most of the strengths in the VIA test focus on interpersonal relations and character traits, as opposed to skills, knowledge, or specific talents. Why are those important to your career choice?</p>
+    <ul id="via-reasons" class="checklist" data-bz-max-score="3">
+      <li class="correct">
+        <input type="checkbox" value="1" />
+        Employers sometimes use these tests to sort through job candidates, and it's useful to know what they'll be seeing about me</li>
+      <li class="correct">
+        <input type="checkbox" value="1" />
+        It always helps to know yourself</li>
+      <li class="correct">
+        <input type="checkbox" value="1" />
+        Some careers or jobs have more room to apply certain strengths than others, and knowing what those are can help me find a good fit.</li>
+    </ul>
+    <input class="for-checklist bz-toggle-all-next" type="button" value="DONE" />
+  </div>
+  <div class="bz-box answer">
+    <h4 class="box-title">&nbsp;</h4>
+    <p>All of the above are correct. When you encounter similar tests in the future it's usually helpful to try them out (but also keep in mind they're not all scientific, so take the results with a grain of salt).</p>
+  </div>
+  <div class="bz-box action">
+    <h4 class="box-title">Get to Know Yourself Even Further</h4>
+    <p>Braven has partnered with experts and employers to create the following list of critical skills for securing career accelerating opportunities.</p>
+    <p class="tbd">[replace with ranges] On a scale of 1 to 5, with 1 meaning little to no experience and 5 meaning full mastery, how would you rate yourself on your proficiency with these skills?</p>
+    <table class="bz-naked bz-survey">
+      <tbody>
+        <tr>
+          <td><h5>Working in Teams</h5></td>
+          <td><p>1&nbsp;=&nbsp;little&nbsp;to&nbsp;no experience <br />
+              5&nbsp;=&nbsp;full&nbsp;mastery</p></td>
+        </tr>
+        <tr>
+          <td>I work effectively in teams and add value to toward team goals.</td>
+          <td><input max="5" min="1" step="1" type="number" data-bz-retained="test-self-ass-01" /></td>
+        </tr>
+        <tr>
+          <td>I navigate cultural difference on teams.</td>
+          <td><input max="5" min="1" step="1" type="number" data-bz-retained="test-self-ass-02" /></td>
+        </tr>
+        <tr>
+          <td>I cultivate belonging and safety for myself and others.</td>
+          <td><input max="5" min="1" step="1" type="number" data-bz-retained="test-self-ass-03" /></td>
+        </tr>
+        <tr>
+          <td colspan="2"><h5>Strategic Problem-Solving</h5></td>
+        </tr>
+        <tr>
+          <td>I identify the underlying complexity and ambiguity of problems.</td>
+          <td><input max="5" min="1" step="1" type="number" data-bz-retained="test-self-ass-04" /></td>
+        </tr>
+        <tr>
+          <td>I implement effective solutions.</td>
+          <td><input max="5" min="1" step="1" type="number" data-bz-retained="test-self-ass-05" /></td>
+        </tr>
+        <tr>
+          <td colspan="2"><h5><span style="font-weight: 400;">Operating and Managing</span></h5></td>
+        </tr>
+        <tr>
+          <td>I manage my time and personal to-dos well.</td>
+          <td><input max="5" min="1" step="1" type="number" data-bz-retained="test-self-ass-06" /></td>
+        </tr>
+        <tr>
+          <td>I manage projects to on-time and successful completion.</td>
+          <td><input max="5" min="1" step="1" type="number" data-bz-retained="test-self-ass-07" /></td>
+        </tr>
+        <tr>
+          <td>I give and receive feedback effectively.</td>
+          <td><input max="5" min="1" step="1" type="number" data-bz-retained="test-self-ass-08" /></td>
+        </tr>
+        <tr>
+          <td colspan="2"><h5>Networking and Communicating</h5></td>
+        </tr>
+        <tr>
+          <td>I clearly present myself and ideas.</td>
+          <td><input max="5" min="1" step="1" type="number" data-bz-retained="test-self-ass-09" /></td>
+        </tr>
+        <tr>
+          <td>I demonstrate professional polish and understanding of workplace dos and
+            <g id="38" data-gr-id="38" class="gr_ gr_38 gr-alert gr_spell gr_run_anim ContextualSpelling">don&rsquo;ts</g>
+            .</td>
+          <td><input max="5" min="1" step="1" type="number" data-bz-retained="test-self-ass-10" /></td>
+        </tr>
+        <tr>
+          <td>I actively build and strengthen my professional network.</td>
+          <td><input max="5" min="1" step="1" type="number" data-bz-retained="test-self-ass-11" /></td>
+        </tr>
+        <tr>
+          <td colspan="2"><h5>Self-Driven Leading</h5></td>
+        </tr>
+        <tr>
+          <td>I am grounded in my purpose, clear on my path, and leverage my assets and values.</td>
+          <td><input max="5" min="1" step="1" type="number" data-bz-retained="test-self-ass-12" /></td>
+        </tr>
+        <tr>
+          <td>I learn from both wins and failure.</td>
+          <td><input max="5" min="1" step="1" type="number" data-bz-retained="test-self-ass-13" /></td>
+        </tr>
+      </tbody>
+    </table>
+    <p>&nbsp;</p>
+    <p>
+      <input class="" type="button" value="DONE" />
+    </p>
+  </div>
+  <div class="bz-box answer">
+    <h3 class="box-title">Good job.</h3>
+    <p>At the end of the semester, you will have the chance to assess yourself on these skills again and see how far you have come and where you still have room to grow.</p>
+  </div>
+  <h3>How to Define Your Hustle</h3>
+  <p>You'll be doing more work to define your hustle during this week's Learning Lab. The following should give you a great head start:</p>
+  <div class="bz-box question">
+    <h4 class="box-title">Quick Question</h4>
+    <p>Imagine you can magically create any job at any organization to fit you perfectly. With your values, interests, and strengths in mind, create up to three wanted ads for such perfect fit jobs:</p>
+    <ol>
+      <li>
+        <textarea></textarea>
+      </li>
+      <li>
+        <textarea></textarea>
+      </li>
+      <li>
+        <textarea></textarea>
+      </li>
+    </ol>
+  </div>
+  <div class="bz-box action">
+    <h4 class="box-title">Back to the Real World</h4>
+    <p>Take a few minutes to search job sites (monster, indeed, theladders, linkedin... ) using your strengths and values as search keywords.</p>
+    <p>What came up?</p>
+    <ul class="instant-feedback checklist dont-mix">
+      <li>
+        <input type="checkbox" />
+        <q>Nothing that would interest me.</q>
+        <p class="feedback inline">Don't fret. The jobs you're looking for might be using different terms to describe what they're looking for, or might be advertising in other places. And at least you have a sense of what you don't want, which narrows down the search.</p>
+      </li>
+      <li>
+        <input type="checkbox" />
+        <q>Some surprising things I wasn't even thinking about.</q>
+        <p class="feedback inline">Great! Take note of these surprising jobs and explore them further. You may be onto something.</p>
+      </li>
+      <li>
+        <input type="checkbox" />
+        <q>Lots of jobs that would interest me.</q>
+        <p class="feedback inline">That's great! You're way ahead of the game.</p>
+      </li>
+    </ul>
+  </div>
+  <h2>Wrap-up</h2>
+  <p>A career that is aligned with your head (what you're good at) and your heart (what you love to do) is likelier to make you happy and successful. In this module we began to explore what your head and heart are about, and we'll be using this new knowledge to identify the most promising career paths for you.</p>
+</div>
+<script src="../new-ui-sandbox.js"></script>
+</body>
+</html>

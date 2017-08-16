@@ -1,0 +1,684 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>BZ Box PoC</title>
+<script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous">
+</script>
+<script
+  src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+  integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+  crossorigin="anonymous">
+</script>
+<link rel="stylesheet" type="text/css" href="../bz_newui.css">
+</head>
+<body>
+<div class="bz-module">
+  <h2>Why Does This Matter?</h2>
+  <div class="bz-box question">
+    <h3 class="box-title">Quick Question:</h3>
+    <p>Why do new hires spend time onboarding when they first begin a new job? (check all that apply)</p>
+    <ul id="onboarding-reasons" class="checklist" data-bz-max-score="3">
+      <li class="correct">
+        <input name="" type="checkbox" value="" />
+        To acquire the information, resources, and connections they need to be effective in their role, on their team, and at the organization</li>
+      <li class="correct">
+        <input name="" type="checkbox" value="" />
+        Because if they jump into projects and important work before onboarding, they might make critical mistakes their first days on the job</li>
+      <li class="correct">
+        <input name="" type="checkbox" value="" />
+        Their expectations may not be aligned to their manager&rsquo;s expectations for what success looks like</li>
+      <li class="wrong">
+        <input name="" type="checkbox" value="" />
+        To have a slow start and cut you some slack in the first few weeks
+        <p class="feedback inline">Employers actually appreciate quick learners who can be productive sooner.</p>
+      </li>
+      <li class="wrong">
+        <input name="" type="checkbox" value="" />
+        To prepare for a test that ensures they know everything about the job
+        <p class="feedback inline">Most workplaces don&rsquo;t run such tests, so this answer is not universally correct.</p>
+      </li>
+      <li class="wrong">
+        <input name="" type="checkbox" value="" />
+        Because they need to prepare to interview for the job
+        <p class="feedback inline">Onboarding begins once you&rsquo;ve already started the job.</p>
+      </li>
+    </ul>
+    <p>
+      <input class="for-checklist bz-toggle-all-next" type="button" value="Done" />
+    </p>
+  </div>
+  <div class="bz-box answer">
+    <h3 class="box-title">Answer</h3>
+    <p>Braven is unlike any other course you&rsquo;ve taken in college. In fact, it&rsquo;s more like a job in how you&rsquo;ll interact with your colleagues and what they&rsquo;ll expect of you.</p>
+    <p>You&rsquo;ll need to take the time to onboard to Braven to ensure you&rsquo;re successful in your role of Braven Fellow this semester. &nbsp;</p>
+  </div>
+  <div class="bz-box video">
+    <h3 class="box-title">Watch this</h3>
+    <figure>
+      <iframe src="https://www.youtube.com/embed/NpEaa2P7qZI?rel=0" width="672" height="378" frameborder="0" allowfullscreen="allowfullscreen"></iframe>
+      <figcaption>
+        <p>Post-Accelerator Fellows talk about the importance of spending the time up front to get acquainted with Braven before the work really begins.</p>
+        <span class="media-duration">About TBD minutes.</span></figcaption>
+    </figure>
+  </div>
+  <div class="bz-box pulse">
+    <h3 class="box-title">Pulse Check</h3>
+    <p>How are you feeling about onboarding to the Braven Accelerator?</p>
+    <ul class="instant-feedback checklist dont-mix">
+      <li>
+        <p>
+          <input type="checkbox" />
+          <strong>Excited!</strong> I want to learn more about what I&rsquo;ll be doing this semester and how to be successful.</p>
+        <p class="feedback inline">Great! We&rsquo;re excited that you&rsquo;re excited :) It&rsquo;s going to be an awesome semester!</p>
+      </li>
+      <li>
+        <p>
+          <input type="checkbox" />
+          <strong>Wary.</strong> I&rsquo;m nervous about all the things I need to juggle this semester.</p>
+        <p class="feedback inline">We totally get this. You have a lot of commitments. This is why onboarding is so important. We&rsquo;ll take you step-by-step through what&rsquo;s expected of you and provide some suggestions for how to manage your time.</p>
+      </li>
+      <li>
+        <p>
+          <input type="checkbox" />
+          <strong>Bored.</strong> This might be a waste of time.</p>
+        <p class="feedback inline">We haven&rsquo;t convinced you yet of how important onboarding is?! No worries, we still have this whole module to turn you around :)</p>
+      </li>
+      <li>
+        <p>
+          <input type="checkbox" />
+          <strong>Other:</strong></p>
+        <p>
+          <textarea></textarea>
+        </p>
+      </li>
+    </ul>
+    <p>
+      <input class="bz-toggle-all-next" type="button" value="Next" />
+    </p>
+  </div>
+  <h2>How do I do this?</h2>
+  <h3>WHAT&rsquo;S IN STORE FOR THIS SEMESTER AND BEYOND</h3>
+  <div class="bz-box question">
+    <h4 class="box-title">Quick question:</h4>
+    <p>Why did you join Braven? (check all that apply)</p>
+    <ul id="joining-reasons" class="checklist dont mix">
+      <li>
+        <input name="" type="checkbox" value="" data-bz-retained="reasons-001" />
+        To meet new people</li>
+      <li>
+        <input name="" type="checkbox" value="" data-bz-retained="reasons-002" />
+        I need the credits</li>
+      <li>
+        <input name="" type="checkbox" value="" data-bz-retained="reasons-003" />
+        I want to be better prepared for the workplace</li>
+      <li>
+        <input name="" type="checkbox" value="" data-bz-retained="reasons-004" />
+        I want a summer internship</li>
+      <li>
+        <input name="" type="checkbox" value="" data-bz-retained="reasons-005" />
+        I want to understand what today&rsquo;s employers are looking for in candidates</li>
+      <li>
+        <input name="" type="checkbox" value="" data-bz-retained="reasons-006" />
+        I want to build my confidence in workplace settings</li>
+      <li>
+        <input name="" type="checkbox" value="" data-bz-retained="reasons-007" />
+        I want a mentor</li>
+      <li>
+        <input name="" type="checkbox" value="" data-bz-retained="reasons-008" />
+        I want to build my skills in interviewing, networking, pitching myself, resume-writing, etc.</li>
+      <li>
+        <input name="" type="checkbox" value="" data-bz-retained="reasons-009" />
+        I want to be part of a community on campus</li>
+      <li>
+        <input name="" type="checkbox" value="" data-bz-retained="reasons-010" />
+        I want connections to employers</li>
+      <li>
+        <input name="" type="checkbox" value="" data-bz-retained="reasons-011" />
+        My friend told me to join, so I did</li>
+      <li>
+        <input name="" type="checkbox" value="" data-bz-retained="reasons-012" />
+        I want to not only get a job, but be successful in that job</li>
+      <li>
+        <input name="" type="checkbox" value="" data-bz-retained="reasons-013" />
+        Those Braven t-shirts are cool!</li>
+      <li>
+        <input name="" type="checkbox" value="" data-bz-retained="reasons-other" />
+        Other:
+        <p>
+          <textarea></textarea>
+        </p>
+      </li>
+    </ul>
+    <p>
+      <input class="bz-toggle-all-next selective-feedback" type="button" value="Done" />
+    </p>
+  </div>
+  <div class="bz-box answer correct">
+    <h4 class="box-title">These are all valid reasons to join the Braven community!</h4>
+    <p>The Braven experience starts with the Accelerator (the course you&rsquo;re in right now) and then continues through your college graduation until you secure your first career-accelerating opportunity.</p>
+    <p>Here&rsquo;s when you&rsquo;ll get to experience the reasons you joined Braven:</p>
+    <table id="match-components" class="match">
+      <thead>
+        <tr>
+          <th width="24%"> <p>Reason for joining Braven</p>
+          </th>
+          <th width="38%"> <p>Accelerator (this course)</p>
+          </th>
+          <th width="*"> <p>Post-Accelerator Experience (after you complete this course)</p>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr data-bz-reference="reasons-001">
+          <td><p>To meet new people</p></td>
+          <td><p>You&rsquo;ll form bonds with the other 4-6 Fellows in your cohort as you meet weekly. You&rsquo;ll also get to meet Braven Fellows across your entire chapter at events and during specific Learning Labs that require cross-cohort collaboration.</p></td>
+          <td><p>The Braven student club on campus hosts events where you&rsquo;ll meet Braven Fellows in different chapters and continue to expand your network.</p></td>
+        </tr>
+        <tr data-bz-reference="reasons-002">
+          <td><p>I need the credits</p></td>
+          <td><p>Understood! Get those credits!</p></td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr data-bz-reference="reasons-003">
+          <td><p>I want to be better prepared for the workplace</p></td>
+          <td><p>Everything you do in the Accelerator will better prepare you for the workplace. You&rsquo;ll build your skill in the following areas, which define the potential employers hire for: [insert the Braven skills matrix?]</p></td>
+          <td><p>You&rsquo;ll continue to build your skill through opportunities like working with a career-aligned Professional Mentor, attending networking events, and attending corporate-sponsored Hackathons. &nbsp;</p></td>
+        </tr>
+        <tr data-bz-reference="reasons-004">
+          <td><p>I want a summer internship</p></td>
+          <td><p>Part 2 of the Accelerator, Hustle to Career, will take you step by step through the process of applying for internships or other opportunities.</p></td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr data-bz-reference="reasons-005">
+          <td><p>I want to understand what today&rsquo;s employers are looking for in candidates</p></td>
+          <td><p>You&rsquo;ll be happy to know that Braven strongly focuses on the skills that make you likelier to get a job and thrive in it.</p></td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr data-bz-reference="reasons-006">
+          <td><p>I want to build my confidence in workplace settings</p></td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr data-bz-reference="reasons-007">
+          <td><p>I want a mentor</p></td>
+          <td><p>Our volunteer Leadership Coaches will mentor you throughout the Accelerator, and the networking skills you&rsquo;ll build through the course will help you connect with more mentors as well.</p></td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr data-bz-reference="reasons-008">
+          <td><p>I want to build my skills in interviewing, networking, pitching myself, resume-writing, etc.</p></td>
+          <td><p>You&rsquo;ll get a chance to learn and practice these critical career skills.</p></td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr data-bz-reference="reasons-009">
+          <td><p>I want to be part of a community on campus</p></td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr data-bz-reference="reasons-010">
+          <td><p>I want connections to employers</p></td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr data-bz-reference="reasons-011">
+          <td><p>My friend told me to join, so I did</p></td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr data-bz-reference="reasons-012">
+          <td><p>I want to not only get a job, but be successful in that job</p></td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr data-bz-reference="reasons-013">
+          <td><p>Those Braven t-shirts are cool!</p></td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <h4>BRAVEN ACCELERATOR DEEPER DIVE</h4>
+  <div class="bz-box question">
+    <h5 class="box-title">Quick question</h5>
+    <p>The Braven Accelerator is made up of 3 parts that follow an arc of experience and learning. Match the title of each part to its description:</p>
+    <table id="match-course-parts" class="sort-to-match">
+      <thead>
+        <tr>
+          <th width="1%">Part:</th>
+          <th width="1%">Description:</th>
+        </tr>
+      </thead>
+      <tbody>
+		    <tr>
+          <td>1. Design your Career</td>
+          <td>You will plan a career path that aligns with your strengths and your 'hustle.' You will explore why and how you lead and the promise of your unique potential.</td>
+				</tr>
+        <tr>
+          <td>2. Hustle to Career</td>
+          <td>Once you have direction, you will go after your career and get on your way toward achieving your goals by taking actions to secure a career-accelerating spring or summer experience.</td>
+        </tr>
+        <tr class="sortable">
+          <td>3. Tackle Career Challenges</td>
+					<td>You will work with your team to solve complex, real-world problems to build your record of success and ensure you're ready to tackle obstacles you will face in your career.</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      <input class="for-match bz-toggle-all-next" type="button" value="Done" />
+    </p>
+  </div>
+  <div class="bz-box question">
+    <h5 class="box-title">Let's try one more Match Game</h5>
+    <p>There are several things you&rsquo;ll do in each part of the Accelerator to gain the necessary skills, mindsets, and experiences to be successful in your career. Match each to its description: [need to mix them up - they&rsquo;re currently matched]</p>
+    <table id="match-course-elements" class="sort-to-match">
+      <tbody>
+        <tr>
+          <td><p>Learning Labs</p></td>
+          <td><p>Weekly in-person meetings with your cohort and Leadership Coach where you&rsquo;ll collaborate, discuss, and simulate workplace situations</p></td>
+        </tr>
+        <tr>
+          <td><p>Modules</p></td>
+          <td><p>You&rsquo;re looking at it! It&rsquo;s the interactive online pre-work you&rsquo;ll do each week to ensure you&rsquo;re prepared to actively participate in Learning Lab.</p></td>
+        </tr>
+        <tr>
+          <td><p>Storytelling as Leadership Workshop</p></td>
+          <td><p>One-time, mandatory Saturday event at the beginning of the Accelerator where you explore your Story of Self and leadership</p></td>
+        </tr>
+        <tr>
+          <td><p>Projects</p></td>
+          <td><p>The three large assignments you will complete throughout the semester. They are aligned with each part of the Accelerator and require you to manage your time well.</p></td>
+        </tr>
+        <tr>
+          <td><p>Capstone Challenge</p></td>
+          <td><p>The group project you&rsquo;ll complete with your cohort in the last part of the semester. You&rsquo;ll solve a design thinking challenge for a company partner and have the chance to win a grand prize! &nbsp;</p></td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      <input class="for-checklist bz-toggle-all-next" type="button" value="Done" />
+    </p>
+  </div>
+  <div class="bz-box answer">
+    <h5 class="box-title">&nbsp;</h5>
+    <p>Download your location's syllabus to see what the semester will look like on a weekly basis:</p>
+    <ul>
+      <li><span class="tbd">SJSU</span></li>
+      <li><span class="tbd">RU-N</span></li>
+      <li><span class="tbd">NLU</span></li>
+    </ul>
+  </div>
+  <div class="bz-box reflection">
+    <h5 class="box-title">Reflect</h5>
+    <p>In the syllabus you just downloaded, which weeks are you most excited about? Why?</p>
+    <textarea></textarea>
+    <p>
+      <input class="bz-toggle-all-next" type="button" value="Done" />
+    </p>
+  </div>
+  <h4>BRAVEN&rsquo;S CORE VALUES</h4>
+  <p>People have core values (you&rsquo;re explore your own in a few weeks). So do families, companies, and organizations. They help guide the day-to-day life and and work of these communities. Braven&rsquo;s core values are central to the work of our own community, and you&rsquo;ll see them appear again and again throughout the semester and beyond.</p>
+  <div class="bz-box video">
+    <h5 class="box-title">Watch this</h5>
+    <p class="tbd">[a short Braven core values video]</p>
+  </div>
+  <h3>WHAT&rsquo;S EXPECTED OF YOU</h3>
+  <div class="bz-box question">
+    <h4 class="box-title">Quick question:</h4>
+    <p>When you think of a job/internship you have or a job/internship you&rsquo;d like to have, what does/will your manager expect of you? (check all that apply)</p>
+    <p>You will...</p>
+    <ul class="checklist">
+      <li class="correct">
+        <input type="checkbox" />
+        <p>Come prepared to actively participate in each meeting</p>
+      </li>
+      <li class="correct">
+        <input type="checkbox" />
+        <p>Manage your projects and meet deadlines</p>
+      </li>
+      <li class="correct">
+        <input type="checkbox" />
+        <p>Attend work each day and get there on time</p>
+      </li>
+      <li class="correct">
+        <input type="checkbox" />
+        <p>Seek help from others when you need it</p>
+      </li>
+      <li class="correct">
+        <input type="checkbox" />
+        <p>Put in your best effort</p>
+      </li>
+      <li class="correct">
+        <input type="checkbox" />
+        <p>Communicate well ahead of time when you&rsquo;re running late to a meeting or on a project</p>
+      </li>
+      <li class="wrong">
+        <input type="checkbox" />
+        <p><span class="tbd">Non-examples?</span></p>
+      </li>
+    </ul>
+    <br />
+    <p>
+      <input class="for-checklist bz-toggle-all-next" type="button" value="Done" />
+    </p>
+  </div>
+  <div class="bz-box answer">
+    <h5 class="box-title">&nbsp;</h5>
+    <p>It just so happens that at Braven, we expect the very same things a manager in a job expects of you.</p>
+  </div>
+  <h4>PROJECTS</h4>
+  <p>In the workplace you&rsquo;ll be given projects and deadlines, and then it&rsquo;s up to you to figure out how to manage your time to ensure you meet the deadline. The same is true at Braven.</p>
+  <p>Here are the major projects you will complete throughout the semester. They assess your mastery of the skills you will learn at Braven, but they will also look good in your career portfolio and help you land a career-accelerating opportunity.</p>
+  <p class="tbd">Please select your location: SJSU SCI75, SJSU SCI125, RU-N, NLU</p>
+  <br />
+  <p class="tbd">[e.g.]</p>
+  <p><img src="https://lh5.googleusercontent.com/McgXkuXAHXU0ua0P3Xkl0TRJT5-hNSd1T0ty8i_cwj1D0jrj1nAZN2wZTpghi08toslCoe3iCdFZYQiJl7GSgmnFcrOsTYqZjZc1RZPKtPUb2TG9ekUo_BuFZHhRAme7gf_mcqpr" alt="" width="624" height="360" /></p>
+  <p>There is no <em>secret</em> to success in the Braven Accelerator; we want to be transparent about what you need to do to succeed. That&rsquo;s why each project will have a rubric to guide how you approach and complete the project.</p>
+  <p class="tbd">Here&rsquo;s an example of a rubric row from the first project, Design Your Career. Hover over each part of it to learn more about how to use it.</p>
+  <br />
+  <p><img src="https://lh3.googleusercontent.com/fYbRk4wLAQ8kMrEaNlWkdoLAe2NE8QLFIPMUM2c4tmrRwKjmDAZZpKId-hp6T1D4jDet3UnMK5TM7ZlHuXJ0aNHT4YAhIU9tucaWpu4EjxKcReypZyogmdS2C8ofqZ04H-obdJDk" alt="" width="624" height="139" /></p>
+  <p class="tbd">[When hover over different parts, Fellows will see some of this info: Braven rubrics are organized into rows and columns. The rows list the expectations and the columns describe the different levels of mastery: Meets or Exceeds (10 points), Somewhat Meets (8 points), Developing (6 points), or Does Not Meet (0 points). To get full credit on this rubric row, you want to look at what it will take to meet or exceed the expectation, which means writing a Portrait that includes a discussion of three of your strengths and includes specific examples from your own life for each of those strengths.]</p>
+  <div class="bz-box question">
+    <h5 class="box-title">Quick question:</h5>
+    <p>When should you consult a project&rsquo;s rubric? (check all that apply)</p>
+    <ul class="checklist">
+      <li class="correct">
+        <input type="checkbox" />
+        Before starting to work on the project, to understand how you&rsquo;ll be assessed</li>
+      <li class="correct">
+        <input type="checkbox" />
+        While working on the project, if you have questions</li>
+      <li class="correct">
+        <input type="checkbox" />
+        Before submitting the project, to ensure you&rsquo;ve met all the expectations</li>
+      <li class="correct">
+        <input type="checkbox" />
+        After you receive your graded project, to determine what you did well and what you need to improve</li>
+    </ul>
+    <p>
+      <input class="for-checklist bz-toggle-all-next" type="button" value="Done" />
+    </p>
+  </div>
+  <div class="bz-box answer">
+    <h5 class="box-title">&nbsp;</h5>
+    <p>That&rsquo;s right - it&rsquo;s smart to reference rubrics quite a lot so that you know the expectations and how to meet them.</p>
+    <p>It&rsquo;s also helpful to do so in any job: get clear on what&rsquo;s expected and refer to those expectations as you work.</p>
+  </div>
+  <h4>PROFESSIONALISM</h4>
+  <div class="bz-box question">
+    <h5 class="box-title">Quick question:</h5>
+    <p>What could professionalism mean at Braven? (check all that apply)</p>
+    <ul class="checklist dont-mix">
+      <li class="correct">
+        <input type="checkbox" />
+        Showing up on time
+        </p>
+      </li>
+      <li class="correct">
+        <input type="checkbox" />
+        Dressing up </li>
+      <li class="correct">
+        <input type="checkbox" />
+        Shaking one&rsquo;s hand </li>
+      <li class="correct">
+        <input type="checkbox" />
+        Making eye contact </li>
+      <li class="correct">
+        <input type="checkbox" />
+        Communicating clearly </li>
+      <li>
+        <input type="checkbox" />
+        Other:
+        <p>
+          <input type="text" />
+        </p>
+      </li>
+    </ul>
+    <p>
+      <input class="for-checklist bz-toggle-all-next" type="button" value="Done" />
+    </p>
+  </div>
+  <div class="bz-box answer">
+    <h5 class="box-title">&nbsp;</h5>
+    <p>Braven is a career accelerator, so we do focus on professionalism to ensure you feel confident in professional workplaces.</p>
+    <p>Professionalism at Braven looks like this (the <strong>bolded points</strong> affect your grade):</p>
+    <ul>
+      <li>Attending all Learning Labs and the mandatory Saturday event, Storytelling as Leadership</li>
+      <li>Showing up to all meetings on time</li>
+      <li>Communicating with the Braven team, your Leadership Coach, and the other Fellows as far in advance as possible if you have a conflict and must miss a meeting (no later than 24 hours in advance)</li>
+      <li>Communicating with the Braven team, your Leadership Coach, and the other Fellows in your cohort if you are running late</li>
+      <li><strong>Showing up to Learning Lab prepared by engaging thoroughly with online modules (10 points per module, 150 points total)</strong></li>
+      <li><strong>Completing Pre- and Post-Accelerator surveys (25 points each) </strong></li>
+      <li><strong>Turning in all projects on time </strong></li>
+      <li>Attending office hours when you have questions for the Teaching Assistants/Fellows about projects or your grade</li>
+      <li><strong>Dressing professionally for the Storytelling as Leadership workshop, Ace your interviews Learning Lab, and Capstone Challenge Presentations Learning Lab</strong></li>
+      <li>Taking full advantage of this experience</li>
+    </ul>
+  </div>
+  <h3>HOW TO NAVIGATE THE BRAVEN ONLINE MODULES</h3>
+  <div class="bz-box question">
+    <h4 class="box-title">Quick Question</h4>
+    <p>How tech-savvy would you say you are?</p>
+    <ul class="instant-feedback radio-list dont-mix">
+      <li>
+        <p>
+          <input name="tech-savvy" type="radio" />
+          I&rsquo;m a computer whiz! Whenever my friends or family need tech troubleshooting help, they call me.</p>
+        <p class="inline feedback">Great! The Braven Portal will be a cinch for you. Hopefully you can pay it forward and help your peers on the Braven Help forum if they run into any trouble.</p>
+      </li>
+      <li>
+        <p>
+          <input name="tech-savvy" type="radio" />
+          I navigate most tech. When I run into issues, I Google it and can usually figure it out.</p>
+        <p class="inline feedback">We love to hear that you&rsquo;re self-reliant and try to problem solve.</p>
+      </li>
+      <li>
+        <p>
+          <input name="tech-savvy" type="radio" />
+          I struggle! Tech is just not intuitive for me. I have to ask for help a lot.</p>
+        <p class="inline feedback">No worries! We&rsquo;re going to walk you through the online Portal step-by-step, and there&rsquo;s even a whole website, Braven Help, dedicated to answering your questions.</p>
+      </li>
+    </ul>
+  </div>
+  <div class="bz-box video">
+    <h4 class="box-title">Take this quick tour</h4>
+    <p class="tbd">[Can we do a video tour of the important things on the Portal?! Includes Braven Help]</p>
+  </div>
+  <h3>WHO ELSE IS JOINING YOU ON THIS JOURNEY</h3>
+  <div class="bz-box question">
+    <h4 class="box-title">Quick Question</h4>
+    <p>Many people will be joining you on this Braven journey. Match the following people to their roles in your Braven experience:</p>
+    <table class="sort-to-match">
+      <tbody>
+        <tr>
+          <td><p>Your cohort</p></td>
+          <td><p>Made up of 5-7 Fellows as well as your Leadership Coach. You will meet with them every week at Learning Lab. This is your dream team!</p></td>
+        </tr>
+        <tr>
+          <td><p>Your Leadership Coach (LC)</p></td>
+          <td><p>Like a manager, coach, cheerleader, and mentor all in one. Not like a professor or teacher though!</p></td>
+        </tr>
+        <tr>
+          <td><p>Your Teaching Assistant (TA) or Teaching Fellow (TF)</p></td>
+          <td><p>The person who grades your projects, holds weekly office hours, and who can answer questions about grades</p></td>
+        </tr>
+        <tr>
+          <td><p>The Braven Regional Team, including Braven interns</p></td>
+          <td><p>The awesome folks who make the Braven experience happen for you, often behind the scenes &nbsp;</p></td>
+        </tr>
+        <tr>
+          <td><p>The Braven Design Team</p></td>
+          <td><p>The people who designed this course and who always love feedback from you to make the experience better and better</p></td>
+        </tr>
+        <tr>
+          <td><p>Your chapter</p></td>
+          <td><p>All the Braven Fellows who are in the Accelerator on your campus this semester</p></td>
+        </tr>
+        <tr>
+          <td><p>Braven Nation</p></td>
+          <td><p>The entire Braven community, including Fellows and Post-Accelerator Fellows across the country</p></td>
+        </tr>
+        <tr>
+          <td><p>Post-Accelerator Fellows (PAFs)</p></td>
+          <td><p>Fellows who are still in college who have already completed the Accelerator</p></td>
+        </tr>
+        <tr>
+          <td><p>Braven E-Board</p></td>
+          <td><p>Post-Accelerator Fellows who lead the Braven student club</p></td>
+        </tr>
+        <tr>
+          <td><p>Braven Champions</p></td>
+          <td><p>Professionals from different companies and organizations who volunteer their time to work with you because they care about your success in the workforce</p></td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      <input class="for-match bz-toggle-all-next" type="button" value="Done" />
+    </p>
+  </div>
+  <div class="bz-box answer">
+    <h4 class="box-title">&nbsp;</h4>
+    <p>At Braven, we are one big, happy, diverse family! Welcome!</p>
+  </div>
+  <div class="bz-box question">
+    <h4 class="box-title">One last quick question</h4>
+    <p>Now that you know all the people joining you in this journey, how can you stay in touch and communicate with them? Select the appropriate mode(s) of communication for each of these groups of people.</p>
+    <table id="comms-options">
+      <tbody>
+        <tr>
+          <td>&nbsp;</td>
+          <td>Email</td>
+          <td>Group text</td>
+          <td>Personal call/text</td>
+          <td>Facebook</td>
+          <td>LinkedIn</td>
+          <td>Snapchat</td>
+          <td>Twitter</td>
+        </tr>
+        <tr>
+          <td>Your cohort</td>
+          <td><input type="checkbox" /></td>
+          <td><input type="checkbox" /></td>
+          <td><input type="checkbox" /></td>
+          <td><input type="checkbox" /></td>
+          <td><input type="checkbox" /></td>
+          <td><input type="checkbox" /></td>
+          <td><input type="checkbox" /></td>
+        </tr>
+        <tr>
+          <td>Your Leadership Coach (LC)</td>
+          <td><input type="checkbox" /></td>
+          <td><input type="checkbox" /></td>
+          <td><input type="checkbox" /></td>
+          <td><input type="checkbox" /></td>
+          <td><input type="checkbox" /></td>
+          <td><input type="checkbox" /></td>
+          <td><input type="checkbox" /></td>
+        </tr>
+        <tr>
+          <td>Your Teaching Assistant (TA) or Teaching Fellow (TF)</td>
+          <td><input type="checkbox" /></td>
+          <td><input type="checkbox" /></td>
+          <td><input type="checkbox" /></td>
+          <td><input type="checkbox" /></td>
+          <td><input type="checkbox" /></td>
+          <td><input type="checkbox" /></td>
+          <td><input type="checkbox" /></td>
+        </tr>
+        <tr>
+          <td>The Braven Regional Team, including Braven interns</td>
+          <td><input type="checkbox" /></td>
+          <td><input type="checkbox" /></td>
+          <td><input type="checkbox" /></td>
+          <td><input type="checkbox" /></td>
+          <td><input type="checkbox" /></td>
+          <td><input type="checkbox" /></td>
+          <td><input type="checkbox" /></td>
+        </tr>
+        <tr>
+          <td>The Braven Design Team</td>
+          <td><input type="checkbox" /></td>
+          <td><input type="checkbox" /></td>
+          <td><input type="checkbox" /></td>
+          <td><input type="checkbox" /></td>
+          <td><input type="checkbox" /></td>
+          <td><input type="checkbox" /></td>
+          <td><input type="checkbox" /></td>
+        </tr>
+        <tr>
+          <td>Your chapter</td>
+          <td><input type="checkbox" /></td>
+          <td><input type="checkbox" /></td>
+          <td><input type="checkbox" /></td>
+          <td><input type="checkbox" /></td>
+          <td><input type="checkbox" /></td>
+          <td><input type="checkbox" /></td>
+          <td><input type="checkbox" /></td>
+        </tr>
+        <tr>
+          <td>Braven Nation</td>
+          <td><input type="checkbox" /></td>
+          <td><input type="checkbox" /></td>
+          <td><input type="checkbox" /></td>
+          <td><input type="checkbox" /></td>
+          <td><input type="checkbox" /></td>
+          <td><input type="checkbox" /></td>
+          <td><input type="checkbox" /></td>
+        </tr>
+        <tr>
+          <td>Post-Accelerator Fellows (PAFs)</td>
+          <td><input type="checkbox" /></td>
+          <td><input type="checkbox" /></td>
+          <td><input type="checkbox" /></td>
+          <td><input type="checkbox" /></td>
+          <td><input type="checkbox" /></td>
+          <td><input type="checkbox" /></td>
+          <td><input type="checkbox" /></td>
+        </tr>
+        <tr>
+          <td>Braven E-Board</td>
+          <td><input type="checkbox" /></td>
+          <td><input type="checkbox" /></td>
+          <td><input type="checkbox" /></td>
+          <td><input type="checkbox" /></td>
+          <td><input type="checkbox" /></td>
+          <td><input type="checkbox" /></td>
+          <td><input type="checkbox" /></td>
+        </tr>
+        <tr>
+          <td>Braven Champions</td>
+          <td><input type="checkbox" /></td>
+          <td><input type="checkbox" /></td>
+          <td><input type="checkbox" /></td>
+          <td><input type="checkbox" /></td>
+          <td><input type="checkbox" /></td>
+          <td><input type="checkbox" /></td>
+          <td><input type="checkbox" /></td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      <input class="tbd bz-toggle-all-next" type="button" value="Done" />
+    </p>
+  </div>
+  <div class="bz-box">
+    <p class="tbd">Want to learn more about the people &mdash; yes real humans! &mdash; who designed the Braven Accelerator? Check us out here:</p>
+    <p><img src="https://lh6.googleusercontent.com/DrIbuX894ljlO-pRBTUHqu9sfMaZtgZ91K1QsJQyillAX0dUHclNMYj_MKkcgq_MGrQRr6gJG7NOkB6s8lofR7jkmuA0Dku3j6ErtdT33OmhfngPHaJy1vhJx6k9LymY1yqCR_Y8" alt="" width="624" height="645" /></p>
+  </div>
+  <h2>Wrap-up</h2>
+  <p>Onboarding well is the secret to getting a strong start in a new job, group, or project. This online module covered the basic things you&rsquo;ll need to know in order to make the most of the Braven experience:</p>
+  <ul>
+    <li>What the semester will look and feel like (i.e. not like a typical college course)</li>
+    <li>What success looks like (projects and rubrics, professionalism)</li>
+    <li>How to make the most of the online content and help each other on Braven Help</li>
+    <li>Who else is part of the Accelerator, what their roles are, and how to communicate</li>
+  </ul>
+  <p>If there's anything you feel less than certain about, feel free to revisit the content, ask on Braven Help, or contact us with feedback.</p>
+  <p>See you at the next Learning Lab!</p>
+</div>
+<script src="../new-ui-sandbox.js"></script>
+</body>
+</html>
