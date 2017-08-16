@@ -14,7 +14,7 @@ input[type="button"],
 .media-duration,
 th,
 .-heading-style {
-	font-family: "TradeGothicNo.20-CondBold", "Trade Gothic LT Std Cn", "Oswald", "Open Sans", sans-serif;
+	font-family: "TradeGothicNo.20-CondBold", "Trade Gothic LT Std Cn", "Oswald", "Arial Narrow", sans-serif;
 	text-transform: uppercase;
 	line-height: normal;
 	font-weight: normal;
@@ -109,7 +109,21 @@ blockquote {
 	color: #333;
 	padding: 20px;
 }
-
+.bz-module > blockquote {
+	margin: 0;
+	width: calc( 100% - 6em );
+	padding: 3em;
+	font-style: italic;
+	font-size: 1.2em;
+	text-align: center;
+	color: #D1AB5C;
+}
+.bz-module > blockquote:before {
+	content: open-quote;
+}
+.bz-module > blockquote:after {
+	content: close-quote;
+}
 .vignette {
 	border: 1px solid #333;
 	overflow-y: scroll;
@@ -228,14 +242,28 @@ figcaption {
 	color: #22B573;
 }
 
+tr:not(.suppress-answers) td.show-answers.correct {
+	background: #22B573;
+	color: #FFF;
+}
+
 .show-answers.maybe,
 ul:not(.instant-feedback) .show-answers.correct:not(.checked) {
+	color: #B08833;
+}
+
+tr:not(.suppress-answers) td.show-answers.maybe {
+	background: #B08833;
+}
+
+.show-answers.incorrect,
+ul:not(.instant-feedback) .show-answers.checked:not(.correct) {
 	color: #EB3B46;
 }
 
-.show-answers.wrong,
-ul:not(.instant-feedback) .show-answers.checked:not(.correct) {
-	color: #B08833;
+tr:not(.suppress-answers) td.show-answers.incorrect {
+	background: #EB3B46;
+	color: #FFF;
 }
 
 .feedback.inline {
@@ -343,11 +371,11 @@ figure {
 	color: #22B573;
 }
 
-.answer.wrong {
+.answer.incorrect {
 	background-image: url('images/lms-icons-98.png');
 }
 
-.answer.wrong .box-title {
+.answer.incorrect .box-title {
 	color: #C1272D;
 }
 
@@ -395,6 +423,25 @@ li input:not([type="button"]):not([type="radio"]):not([type="checkbox"]), li tex
 	text-align: center;
 }
 
+.to-columns {
+	-webkit-column-count: 3;
+	   -moz-column-count: 3;
+	        column-count: 3;
+	-webkit-column-gap: 10px;
+		 -moz-column-gap: 10px;
+					column-gap: 10px;			
+}
+.to-columns li {
+	margin: 0;
+	display: inline-block;
+	padding: 0.75em  0.75em  0.75em 1.5em;
+	-webkit-column-break-inside: avoid;
+						page-break-inside: avoid;
+								 break-inside: avoid;
+}
+.to-columns li:nth-child(odd) {
+	background: #F6F6F6;
+}
 figcaption {
 	width: 66%;
 	margin: 0.5em 17%;
@@ -423,14 +470,13 @@ th {
 .tip {
 }
 
-.sort-to-match {
+.sort-to-match td {
 	cursor: move;
 }
-
-.match-to {
+.sort-to-match thead,
+.sort-to-match .fixed {
 	cursor: inherit;
 }
-
 /* Assorted anecdotal styles we didn't want to put inline: */
 #bz-values-matrix {
 	border-collapse: collapse;
@@ -469,8 +515,37 @@ th {
 	margin-bottom: 20px;
 }
 
+#goals-vs-vision td {
+	text-align: center;
+}
+
+#goals-vs-vision tr:first-child() td {
+	height: 180px;
+	overflow: hidden;
+}
+
+#goals-smart {
+	table-layout: fixed;
+	width: 100%;
+}
+
+#goals-smart td {
+	text-align: center;
+}
+
+#goals-smart td:first-child {
+	text-align: left;
+	font-style: italic;
+}
+
+#match-smart-example tr:first-child {
+	border: 2px solid #666;
+}
+
 .for-range,
-.for-checklist {
+.for-checklist,
+.instant-feedback,
+.bz-toggle-all-next {
 /* TBD */
 }
 @media screen and (max-width: 700px) {
@@ -481,4 +556,8 @@ th {
 	figure iframe {
 		width: 100%;
 	}
+.to-columns {
+	-webkit-column-count: 1;
+	   -moz-column-count: 1;
+	        column-count: 1;
 }
