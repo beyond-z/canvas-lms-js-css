@@ -501,9 +501,6 @@ th {
 .tip {
 }
 
-.sort-to-match td {
-	cursor: move;
-}
 .sort-to-match thead,
 .sort-to-match .fixed {
 	cursor: inherit;
@@ -571,6 +568,11 @@ th {
 
 #match-smart-example tr:first-child {
 	border: 2px solid #666;
+}
+
+#match-smart-example tr.correct:not(:first-child),
+#match-smart-example tr.incorrect:not(:first-child)  {
+	background: none;
 }
 
 .instant-mood {
@@ -700,6 +702,26 @@ th {
 .bz-magic-field-assignment .timeline input,
 .bz-magic-field-submission .timeline input {
 	width: calc(100% - 20px);
+}
+
+/* Drag and drop: */
+
+[draggable] {
+	cursor: move;
+}
+
+.inside-dragging {
+	border: dashed 2px black;
+}
+
+.sort-to-match .correct,
+.sort-to-match:not(.no-zebra) tr.correct:nth-child(odd):not(.no-zebra) {
+	background: #22B573;
+}
+
+.sort-to-match .incorrect,
+.sort-to-match:not(.no-zebra) tr.incorrect:nth-child(odd):not(.no-zebra) {
+	background: #EB3B46;
 }
 
 @media screen and (max-width: 700px) {
