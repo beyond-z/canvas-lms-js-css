@@ -13,7 +13,7 @@ h6,
 input[type="button"],
 .media-duration,
 th,
-.-heading-style {
+.heading-style {
 	font-family: "TradeGothicNo.20-CondBold", "Trade Gothic LT Std Cn", "Oswald", "Arial Narrow", sans-serif;
 	text-transform: uppercase;
 	line-height: normal;
@@ -89,7 +89,7 @@ figcaption {
 
 input,
 textarea {
-	font: monospace;
+	font-family: monospace;
 }
 
 .ref-source {
@@ -454,9 +454,11 @@ li input:not([type="button"]):not([type="radio"]):not([type="checkbox"]), li tex
 .to-columns {
 	-webkit-column-count: 3;
 	   -moz-column-count: 3;
+	    -ms-column-count: 3;
 	        column-count: 3;
 	-webkit-column-gap: 10px;
 		 -moz-column-gap: 10px;
+	    -ms-column-gap: 10px;
 					column-gap: 10px;			
 }
 .to-columns li {
@@ -525,13 +527,15 @@ th {
 	background: #D7EFEF;
 }
 
-#-course-parts th {
+#match-course-parts th {
 	text-align: left;
 }
- #-course-parts tr:not(.sortable) td {
+
+#match-course-parts tr:not(.sortable) td {
  text-align: center;
  vertical-align: top;
 }
+
 #comms-options td:not(:first-child) {
  text-align: center;
 }
@@ -547,7 +551,7 @@ th {
 	text-align: center;
 }
 
-#goals-vs-vision tr:first-child() td {
+#goals-vs-vision tr:first-child td {
 	height: 180px;
 	overflow: hidden;
 }
@@ -679,8 +683,9 @@ th {
 
 .bz-magic-field-assignment .timeline .milestone.first flag-wrapper:before,
 .bz-magic-field-submission .timeline .milestone.first flag-wrapper:before {
-  border color: #CCC;
+  border-color: #CCC;
 }
+
 .bz-magic-field-assignment .timeline li:nth-child(even) .flag-wrapper:before,
 .bz-magic-field-submission .timeline li:nth-child(even) .flag-wrapper:before {
   left: -40px;
@@ -732,8 +737,11 @@ th {
 	figure iframe {
 		width: 100%;
 	}
-.to-columns {
-	-webkit-column-count: 1;
-	   -moz-column-count: 1;
-	        column-count: 1;
+	
+	.to-columns {
+		-webkit-column-count: 1;
+			 -moz-column-count: 1;
+			  -ms-column-count: 1;
+						column-count: 1;
+	}
 }
