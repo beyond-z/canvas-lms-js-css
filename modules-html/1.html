@@ -97,9 +97,8 @@
       <li>
         <p>
           <input type="checkbox" />
-          <strong>Other:</strong></p>
-        <p>
-          <textarea></textarea>
+          <strong>Other:</strong><br />
+          <textarea class="checklist-other"></textarea>
         </p>
       </li>
     </ul>
@@ -160,7 +159,7 @@
     <p>
       <input  type="checkbox" value="" data-bz-retained="reasons-other" />
       Other:<br />
-      <textarea></textarea>
+      <textarea class="checklist-other"></textarea>
     </p>
     <p>
       <input class="bz-toggle-all-next selective-feedback" type="button" value="Done" />
@@ -170,7 +169,8 @@
     <h4 class="box-title">These are all valid reasons to join the Braven community!</h4>
     <p>The Braven experience starts with the Accelerator (the course you&rsquo;re in right now) and then continues through your college graduation until you secure your first <span class="bz-has-tooltip" title="a job or fellowship in your field of interest that requires the bachelor's degree you just earned, or graduate school">career-accelerating opportunity</span>.</p>
     <p>Here&rsquo;s when you&rsquo;ll get to experience the reasons you joined Braven:</p>
-    <table id="match-components" class="match">
+    <div class="view-box">
+    <table id="expectations-aligned-w-reasons" class="">
       <thead>
         <tr>
           <th><p>Reason for joining Braven</p>
@@ -249,6 +249,7 @@
         </tr>
       </tbody>
     </table>
+    </div>
   </div>
   <h4>BRAVEN ACCELERATOR DEEPER DIVE</h4>
   <div class="bz-box question">
@@ -283,7 +284,7 @@
   </div>
   <div class="bz-box question">
     <h5 class="box-title">Let's try one more Match Game</h5>
-    <p>There are several things you&rsquo;ll do in each part of the Accelerator to gain the necessary skills, mindsets, and experiences to be successful in your career. Match each to its description: (Drag cells on the right to match the left)</p>
+    <p>There are several things you&rsquo;ll do in each part of the Accelerator to gain the necessary skills, mindsets, and experiences to be successful in your career. Match each to its description: (Drag cells up or down along the right column to match the cells on the left)</p>
     <table id="match-course-elements" class="sort-to-match">
       <tbody>
         <tr>
@@ -481,14 +482,12 @@
       <li class="correct">
         <input type="checkbox" />
         Communicating clearly </li>
-      <li>
-        <input type="checkbox" />
-        Other:
-        <p>
-          <input type="text" />
-        </p>
-      </li>
+
     </ul>
+    <p>
+      <input type="checkbox" />
+      Other: <br />
+      <input type="text" class="checklist-other" />
     <p>
       <input class="for-checklist bz-toggle-all-next" type="button" value="Done" />
     </p>

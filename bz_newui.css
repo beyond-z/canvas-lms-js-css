@@ -733,12 +733,22 @@ th {
     font-size: 0.9em;
 }
 
-#match-components thead th:first-child {
-	 width: 24%;
+#expectations-aligned-w-reasons thead th:first-child {
+	 width: 20%;
 }
-#match-components thead th:nth-child(1) {
-	 width: 38%;
+
+#expectations-aligned-w-reasons thead th:nth-child(2) {
+	 width: 40%;
 }
+
+expectations-aligned-w-reasons * {
+	font-size: 80%;
+}
+
+.checklist-other {
+	margin: 1em 0;
+}
+
 .for-range,
 .for-checklist,
 .instant-feedback,
