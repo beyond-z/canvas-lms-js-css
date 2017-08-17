@@ -172,10 +172,33 @@ runOnUserContent(function() {
 			feedbackClass = 'correct';
 		} else if ( 0 >= finalScore ) {
 			feedback = "Oops! " + feedback;
-			feedbackClass = 'wrong';
+			feedbackClass = 'incorrect';
 		}
 		bzGiveVerboseFeedback(feedback, answerSpace, feedbackClass);
 	});	
+
+	// Score a radio-list question and return feedback:
+	jQuery('.for-radio-list').click(function(){
+		var list = jQuery(this).parents('.question').find('.radio-list');
+		var feedback = "";
+		var feedbackClass = "";
+		var answerSpace = list.parents('.question').next('.answer');
+		list.children().each(function(){
+			jQuery(this).addClass('show-answers');
+			if( jQuery(this).children('input').is(':checked') ) {
+				jQuery(this).addClass('checked')
+				if ( jQuery(this).is('.correct') || jQuery(this).parents('li').is('.correct') ) {
+					feedback = "Good job!";
+					feedbackClass = 'correct';
+				} else {
+					feedback = "Oops!";
+					feedbackClass = 'incorrect';
+				}
+			} 
+		});
+		bzGiveVerboseFeedback(feedback, answerSpace, feedbackClass);		
+		
+	});
 
 	// Display current value of a range question:
 	jQuery ('[type="range"]').change(function() {
@@ -207,7 +230,7 @@ runOnUserContent(function() {
 			feedbackClass = '';
 		} else {
 			feedback = "Not quite.";
-			feedbackClass = 'wrong';
+			feedbackClass = 'incorrect';
 		}
 		var answerSpace = jQuery(this).parents('.question').next('.answer');
 		bzGiveVerboseFeedback(feedback, answerSpace, feedbackClass);
@@ -219,10 +242,10 @@ runOnUserContent(function() {
 	}
 
   // Provide instant feedback when any input on a list is checked:
-	jQuery('ul.instant-feedback').find('input').change(function(){
-		var liParent = jQuery(this).parents('li').toggleClass('show-answers');
+	jQuery('.instant-feedback').find('input').change(function(){
+		var liParent = jQuery(this).parents('li, td').toggleClass('show-answers');
 		if ( jQuery(this).is('[type="radio"]') ){
-			liParent.siblings().removeClass('show-answers')
+			liParent.siblings().removeClass('show-answers');
 		}
 	});
 	
@@ -288,30 +311,153 @@ runOnUserContent(function() {
 		jQuery(this).toggleClass("v-selected"); 
 	});
 	
-	// Allow sorting to match elements in a table (apply .sortable to the row, sorting is done by moving cells sideways:
-	jQuery(".sortable").sortable({
-    disableSelection: true,
-		items : ':not(th):not(.unsortable)'
-	});
+	// Sort to match:
+		function sortToMatchSetup() {
+		var sortToMatch = document.querySelectorAll(".sort-to-match td");
+		for(var i = 0; i < sortToMatch.length; i++) {
+			var td = sortToMatch[i];
+
+			// wrap the contents in the draggable div so
+			// it moves rather than the table cell itself
+			var wrapper = document.createElement("div");
+			wrapper.innerHTML = td.innerHTML;
+			wrapper.id = "draggable-" + i;
+			wrapper.setAttribute("draggable", "true");
+			td.id = "droppable-" + i;
+			td.className += " droppable";
+			td.innerHTML = "";
+			td.appendChild(wrapper);
+
+			// make it draggable
+			wrapper.addEventListener("dragstart", function(event) {
+				event.dataTransfer.setData("text/id", this.getAttribute("id"));
+			});
+
+			// make the tds valid drop targets
+			td.addEventListener("dragenter", function(event) {
+				event.preventDefault();
+				this.className += " inside-dragging";
+			});
+			td.addEventListener("dragleave", function(event) {
+				this.className = this.className.replace(" inside-dragging", "");
+			});
+			td.addEventListener("dragover", function(event) {
+				event.preventDefault();
+			});
+			td.addEventListener("drop", function(event) {
+				event.preventDefault();
+				event.stopPropagation();
+
+				var dragging = document.getElementById(event.dataTransfer.getData("text/id"));
+				if(dragging.parentNode) {
+					// swap our existing contents for the draggable one
+					var from = dragging.parentNode;
+					dragging.parentNode.removeChild(dragging);
+					var existing = this.querySelector("[draggable]");
+					if(existing) {
+						this.removeChild(existing);
+						from.appendChild(existing);
+					}
+				}
+				this.appendChild(dragging);
+
+
+				this.className = this.className.replace(" inside-dragging", "");
+
+
+				// delete these next few lines if you don't
+				// want instant feedback (prolly don't)
+				var parentTable = this;
+				while(parentTable.tagName != "TABLE")
+					parentTable = parentTable.parentNode;
+				sortToMatchCheck(parentTable);
+			});
+		}
+
+		// and now that drag&drop is set up, shuffle the contents so the
+		// user gets to have fun sorting them back
+		var sortToMatch = document.querySelectorAll(".sort-to-match");
+		for(var i = 0; i < sortToMatch.length; i++) {
+			var table = sortToMatch[i];
+			// NOTE: this may break with colspan, so don't do that
+			var firstRow = table.querySelector("tr");
+			var columns = firstRow.children;
+			// always skipping the first column as it is likely a header
+			for(var col = 1; col < columns.length; col++) {
+				// nth-child uses 1-based indexing
+				var draggablesDom = table.querySelectorAll("td:nth-child("+(col+1)+").droppable > [draggable]");
+				var droppables = table.querySelectorAll("td:nth-child("+(col+1)+").droppable");
+				// I have to copy the node list to a regular array
+				// since modifying a node list is non-standard
+				var draggables = [];
+				for(var a = 0; a < draggablesDom.length; a++)
+					draggables.push(draggablesDom[a]);
+
+				// then create an array which we will propagate in
+				// random order to achieve best randomness...
+				var shuffled = [];
+				shuffled.length = draggables.length;
+				var pos = 0;
+				while(draggables.length) {
+					var random = Math.floor(Math.random() * draggables.length);
+					var d = draggables[random];
+					d.parentNode.removeChild(d);
+
+					shuffled[pos] = d;
+					pos += 1;
+
+					draggables[random] = draggables[draggables.length - 1];
+					draggables.length -= 1;
+				}
+				// then put the random stuff back in the table.
+				for(var a = 0; a < shuffled.length; a++)
+					droppables[a].appendChild(shuffled[a]);
+			}
+		}
+	}
+
+	sortToMatchSetup();
+
+	function sortToMatchCheck(sortToMatchTable) {
+		var rows = sortToMatchTable.querySelectorAll("tr");
+		for(var row = 0; row < rows.length; row++) {
+			var tr = rows[row];
+			var all = tr.querySelectorAll("[draggable]");
+			var allCorrect = true;
+			for(var a = 0; a < all.length; a++) {
+				var d = all[a];
+				// since I set the ID to be the same above with the wrapper
+				// except draggable vs droppable, a simple string replace will
+				// tell us if they are back where they are supposed to be!
+				var thisOneCorrect = (d.parentNode.id == d.id.replace("draggable", "droppable"));
+
+				if(!thisOneCorrect) {
+					allCorrect = false;
+					break;
+				}
+			}
+
+			if(all.length)
+				tr.className = allCorrect ? "correct" : "incorrect";
+		}
+	}
+
 	
-	// Check a user-sorted table and give feedback:
-	jQuery('.for-match').click(function(){
-		var feedback, feedbackClass;
-		var valuesToMatch = jQuery(this).parents('.question').find('.match-to [data-bz-matching]');
-		var valuesToTest = jQuery(this).parents('.question').find('.sortable [data-bz-matching]');
-		valuesToMatch.each(function(){
-			var valueToMatch = jQuery(this).attr('data-bz-matching');
-			var matchingValue = jQuery(valuesToTest).find('[data-bz-matching="'+valueToMatch+'"]');		
-		});
-		var answerSpace = jQuery(this).parents('.question').next('.answer');
-		bzGiveVerboseFeedback(feedback, answerSpace, feedbackClass);
-	});
-	// Mix up checklists 
+	// Mix up checklists:
 	jQuery('.checklist, .radio-list').not('.dont-mix').each(function(){
 		var itemsToMix = jQuery(this).children();
 		for (var i = itemsToMix.length; i >= 0; i--) {
 			jQuery(this).append(itemsToMix[Math.random() * i | 0]);
 		}
+	});
+	
+	// Instant feedback when sliding range input about "how are you feeling":
+	jQuery('.instant-mood [type="range"]').change(function(){
+		var min = jQuery(this).attr('min');
+		var max = jQuery(this).attr('max');
+		var val = jQuery(this).val();
+		var answerSpace = jQuery(this).parents('tr').next();
+		answerSpace.find('.feedback').css('opacity', 1);
 	});
 	
 	// Load user-added magic fields if they already have input
@@ -322,6 +468,20 @@ runOnUserContent(function() {
 	
 	// Automatically generate a navigable table of contents for a h2-level section out of its nested h3 elements
 	/* TBD */
+	
+	// Create years 
+	jQuery('[data-bz-insert-offset-year]').each(function(){
+		var offset = +(jQuery(this).attr('data-bz-insert-offset-year'));
+		if( jQuery(this).is('input') && ( '' === jQuery(this).val() ) ){
+			jQuery(this).attr('placeholder', function(){
+				return (new Date().getFullYear()+offset);
+			});
+		} else {
+			jQuery(this).text(function(){
+				return (new Date().getFullYear()+offset);
+			});
+		}
+	});
 	
 	
 	/* END NEW UI STUFF */
