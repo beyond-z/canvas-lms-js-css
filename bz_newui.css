@@ -1,5 +1,5 @@
-
 /* Custom CSS for new UI that is more interactive.  Applied to new courses after we made the change (Fall 2017) */
+
 /* Custom header stuff: */
 /* -------------------- */
 #header {
@@ -24,8 +24,6 @@
 #identity .emphasize-name {
 	color:  #eddcbe;
 }
-
-/* TODO: pull in any other general CSS that we need that is not specific to the new interactive UI. */
 
 /* TYPOGRAPHY */
 body {
@@ -55,10 +53,11 @@ th,
 .match-heading-style,
 .inner-toc,
 .main-toc {
-	font-family: "TradeGothicNo.20-CondBold", "Oswald", "Open Sans", sans-serif;
+	font-family: "TradeGothicNo.20-CondBold", "Oswald", sans-serif;
 	text-transform: uppercase;
 	line-height: normal;
 	font-weight: normal;
+	font-size: 1.2em;
 }
 
 #menu a.menu-item-no-drop:focus,
@@ -69,6 +68,11 @@ th,
 .bz-module {
 	font-size: 18px;
 	line-height: 1.25;
+}
+
+.bz-module li {
+	line-height: normal;
+	margin-bottom: 0.5em;
 }
 
 a {
@@ -92,20 +96,20 @@ h6 {
 }
 
 h2 {
-	font-size: 34px;
+	font-size: 40px;
 }
 
 h3 {
-	font-size: 28px;
+	font-size: 34px;
 }
 
 h4 {
-	font-size: 24px;
+	font-size: 27px;
 }
 
 h5,
 .box-title {
-	font-size: 20px;
+	font-size: 24px;
 }
 .bz-box h5:not(.box-title), h6, .inner-toc, .main-toc {
  font-size: 16px;
@@ -115,7 +119,7 @@ h5,
 .box-title {
 	margin: 0;
 	text-align: left;
-	color: #000;
+	color: #222;
 }
 
 figcaption {
@@ -147,7 +151,7 @@ textarea {
 .feedback.inline {
 	font-style: italic;
 	font-weight: normal;
-	color: #000;
+	color: #222;
 }
 
 blockquote {
@@ -201,23 +205,28 @@ blockquote {
 .bz-module {
 	counter-reset: bzh2counter;
 }
+
 .bz-module h2:not(.box-title):before {
- content: counter(bzh2counter) ".\0000a0\0000a0";
- counter-increment: bzh2counter;
+	content: counter(bzh2counter) ".\0000a0\0000a0";
+	counter-increment: bzh2counter;
 }
+
 .bz-module h2:not(.box-title) {
- counter-reset: bzh3counter;
+	counter-reset: bzh3counter;
 }
+
 .bz-module h3:not(.box-title):before {
- content: counter(bzh2counter) "." counter(bzh3counter) ".\0000a0\0000a0";
- counter-increment: bzh3counter;
+	content: counter(bzh2counter) "." counter(bzh3counter) ".\0000a0\0000a0";
+	counter-increment: bzh3counter;
 }
+
 .bz-module h3:not(.box-title) {
- counter-reset: bzh4counter;
+	counter-reset: bzh4counter;
 }
+
 .bz-module h4:not(.box-title):before {
- content: counter(bzh2counter) "." counter(bzh3counter) "." counter(bzh4counter) ".\0000a0\0000a0";
- counter-increment: bzh4counter;
+	content: counter(bzh2counter) "." counter(bzh3counter) "." counter(bzh4counter) ".\0000a0\0000a0";
+	counter-increment: bzh4counter;
 }
 
 /* TOOLTIP: */
@@ -517,8 +526,19 @@ li input:not([type="button"]):not([type="radio"]):not([type="checkbox"]), li tex
 	page-break-inside: avoid;
 	break-inside: avoid;
 }
- table:not(.no-zebra) tr:nth-child(odd):not(.no-zebra), .to-columns li:nth-child(odd) {
+
+table:not(.no-zebra) tr:nth-child(odd):not(.no-zebra), 
+.to-columns li:nth-child(odd) {
  background: #F6F6F6;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+.bz-box.video iframe {
+	width: 672px;
+	height: 378px;
 }
 
 figcaption {
@@ -532,9 +552,9 @@ figcaption {
 	height: 3.5em;
 }
 
-table {
-	border-collapse: collapse;
+.user_content table:not([cellpadding]) {
 	margin-left: 0;
+	border-collapse: collapse;
 }
 
 td,
@@ -575,15 +595,17 @@ th {
 	background: #D7EFEF;
 }
 
-#match-course-parts th {
-	text-align: left;
+#match-course-parts tbody td:first-child {
+	text-align: center;
+	width: 50%;
 }
- #match-course-parts tr:not(.sortable) td {
- text-align: center;
- vertical-align: top;
+
+#match-course-elements td:first-child {
+	width: 33%;
 }
- #comms-options td:not(:first-child) {
- text-align: center;
+
+#comms-options td:not(:first-child) {
+	text-align: center;
 }
 
 #comms-options {
@@ -642,6 +664,10 @@ th {
 	padding: 0;
 }
 
+#rubric-demo table *:hover {
+	background: #F6F6F6;
+}
+
 #rubric-demo,
 #criteria-demo,
 #max-score-demo,
@@ -687,13 +713,14 @@ th {
 
 .diagram-legend li {
 	margin: 0.5em;
+	position: relative;
 }
 
 .diagram-legend li:before {
     content: counter(legend-counter);
     counter-increment: legend-counter;
     position: absolute;
-    left: 1em;
+    left: -1.5em;
     display: block;
     width: 20px;
     height: 20px;
@@ -733,7 +760,7 @@ th {
 .bz-magic-field-submission h4 {
 	font-size: 26px;
 	margin-top: 1.5em;
-	color: #000;
+	color: #222;
 }
 
 .bz-magic-field-assignment h5,
@@ -1021,9 +1048,9 @@ th {
 		width: 100%;
 		padding: 5px;
 	}
-	figure iframe {
+	.bz-box.video iframe {
 		width: 100%;
-	}
+	}	
 	.to-columns {
 		-webkit-column-count: 1;
 		-moz-column-count: 1;
