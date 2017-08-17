@@ -466,9 +466,34 @@ runOnUserContent(function() {
 	// Referenced sources numbering:
 	/* TBD */
 	
-	// Automatically generate a navigable table of contents for a h2-level section out of its nested h3 elements
-	/* TBD */
-	
+	// Automatically generate a navigable table of contents for the top level out of h2 elements, 
+	// and a h2-level section out of its nested h3 elements
+	jQuery('.bz-module').prepend(function(){
+		var mainToc = '<p class="match-heading-style">The big picture:</p><ol class="main-toc">';
+		var mainHasKids = false;
+		var h2counter = 0;
+		// this level will gather h2 headings into a table of contents:
+		jQuery('.bz-module h2').each(function(){
+			mainHasKids = true;
+			h2counter ++;
+			mainToc += '<li>' + jQuery(this).text() + '</li>';
+			// this level generates tables of contents under each h2:
+			var innerToc = '<ol class="inner-toc">';
+			var innerHasKids = false;
+			var nextLevelDown = jQuery(this).nextUntil('h2');
+			nextLevelDown.each(function(){
+				var current = jQuery(this);
+				if (current.is('h3')) {
+					innerHasKids = true;
+					innerToc += '<li>' + current.text() + '</li>';
+				}
+			});
+			innerToc += '</ol>'
+			if (innerHasKids) jQuery(this).after(innerToc);
+		});
+		if (mainHasKids) return mainToc;
+	});
+
 	// Create years 
 	jQuery('[data-bz-insert-offset-year]').each(function(){
 		var offset = +(jQuery(this).attr('data-bz-insert-offset-year'));
