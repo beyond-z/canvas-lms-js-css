@@ -1,3 +1,27 @@
+/* Custom CSS for new UI that is more interactive.  Applied to new courses after we made the change (Fall 2017) */
+
+/* Custom header stuff: */
+/* -------------------- */
+#header {
+	background-color: #234;
+	background-image: url("https://s3.amazonaws.com/canvas-stag-assets/braven_bkg_70h_canvas.png");
+}
+#header-logo {
+  background-image:url("https://s3.amazonaws.com/canvas-stag-assets/braven_logo_canvas_red_white.png");
+}
+#menu>li,
+#identity {
+    background: rgba(0,0,0,0.2);
+}
+#identity {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+#identity .emphasize-name {
+	color: 	#eddcbe;
+}
+
+/* TODO: pull in any other general CSS that we need that is not specific to the new interactive UI. */
 
 /* TYPOGRAPHY */
 body {
