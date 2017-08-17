@@ -508,6 +508,10 @@ runOnUserContent(function() {
 		}
 	});
 	
+	// Automatically check the "other" box if text input or textarea is filled, uncheck if cleared:
+	jQuery('.checklist-other').bind("keyup blur", function(e) {
+		jQuery(this).siblings('[type="checkbox"], [type="radio"]').prop('checked', ( ( jQuery(this).val() ) ? true : false ) );
+	});
 	
 	/* END NEW UI STUFF */
 
