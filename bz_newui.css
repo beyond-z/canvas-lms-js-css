@@ -1,50 +1,78 @@
 /* Custom CSS for new UI that is more interactive.  Applied to new courses after we made the change (Fall 2017) */
+
 /* Custom header stuff: */
 /* -------------------- */
 #header {
-        background-color: #234;
-        background-image: url("https://s3.amazonaws.com/canvas-stag-assets/braven_bkg_70h_canvas.png");
+	background-color: #234;
+	background-image: url("https://s3.amazonaws.com/canvas-stag-assets/braven_bkg_70h_canvas.png");
 }
+
 #header-logo {
-  background-image:url("https://s3.amazonaws.com/canvas-stag-assets/braven_logo_canvas_red_white.png");
+	background-image:url("https://s3.amazonaws.com/canvas-stag-assets/braven_logo_canvas_red_white.png");
 }
+
 #menu>li,
 #identity {
-    background: rgba(0,0,0,0.2);
+	background: rgba(0, 0, 0, 0.2);
 }
+
 #identity {
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 0;
 }
+
 #identity .emphasize-name {
-        color:  #eddcbe;
+	color:  #eddcbe;
 }
-/* TODO: pull in any other general CSS that we need that is not specific to the new interactive UI. */
 
 /* TYPOGRAPHY */
 body {
 	font-family: Georgia, serif;
 }
 
+.bz-heading,
+th,
 h1,
 h2,
 h3,
 h4,
 h5,
 h6,
+.h1,
+.menu-item,
+nav li,
+#identity li,
+.module-sequence-footer,
+.btn,
+.bz-ajax-loaded-rubric .nobr,
+.bz-ajax-loaded-rubric td.criterion_description,
+.bz-expand-collapse-button,
 input[type="button"],
 .media-duration,
 th,
-.heading-style {
-	font-family: "TradeGothicNo.20-CondBold", "Trade Gothic LT Std Cn", "Oswald", "Arial Narrow", sans-serif;
+.match-heading-style,
+.inner-toc,
+.main-toc {
+	font-family: "TradeGothicNo.20-CondBold", "Oswald", sans-serif;
 	text-transform: uppercase;
 	line-height: normal;
 	font-weight: normal;
+	font-size: 1.2em;
+}
+
+#menu a.menu-item-no-drop:focus,
+#menu a.menu-item-no-drop:hover {
+	color: #fff;
 }
 
 .bz-module {
 	font-size: 18px;
 	line-height: 1.25;
+}
+
+.bz-module li {
+	line-height: normal;
+	margin-bottom: 0.5em;
 }
 
 a {
@@ -68,22 +96,22 @@ h6 {
 }
 
 h2 {
-	font-size: 34px;
+	font-size: 40px;
 }
 
 h3 {
-	font-size: 28px;
+	font-size: 34px;
 }
 
 h4 {
-	font-size: 24px;
+	font-size: 27px;
 }
 
 h5,
 .box-title {
-	font-size: 20px;
+	font-size: 24px;
 }
-.bz-box h5:not(.box-title), h6 {
+.bz-box h5:not(.box-title), h6, .inner-toc, .main-toc {
  font-size: 16px;
  letter-spacing: 0.1em;
 }
@@ -91,7 +119,7 @@ h5,
 .box-title {
 	margin: 0;
 	text-align: left;
-	color: #000;
+	color: #222;
 }
 
 figcaption {
@@ -123,7 +151,7 @@ textarea {
 .feedback.inline {
 	font-style: italic;
 	font-weight: normal;
-	color: #000;
+	color: #222;
 }
 
 blockquote {
@@ -133,7 +161,7 @@ blockquote {
 }
 
 .bz-module > blockquote {
-	background: bottom center no-repeat #D1AB5C; 
+	background: bottom center no-repeat #D1AB5C;
 	background-image: url('images/bkg700-03.jpg');
 	position: relative;
 	margin: 0;
@@ -144,17 +172,15 @@ blockquote {
 	text-align: center;
 	color: #FFF;
 }
-
-.bz-module > blockquote:nth-of-type(3n+0) {
-	background-image: url('images/bkg700-02.jpg');
+ .bz-module > blockquote:nth-of-type(3n+0) {
+ background-image: url('images/bkg700-02.jpg');
 }
-
-.bz-module > blockquote:nth-of-type(3n+1) {
-	background-image: url('images/bkg700-01.jpg');
+ .bz-module > blockquote:nth-of-type(3n+1) {
+ background-image: url('images/bkg700-01.jpg');
 }
 
 .quote-source {
-	font-size: 75%;	
+	font-size: 75%;
 }
 
 .quote-source:before {
@@ -176,26 +202,31 @@ blockquote {
 }
 
 /* HEADER NUMBERING */
-body {
-	counter-reset: h2counter;
+.bz-module {
+	counter-reset: bzh2counter;
 }
-h2:not(.box-title):before {
- content: counter(h2counter) ".\0000a0\0000a0";
- counter-increment: h2counter;
+
+.bz-module h2:not(.box-title):before {
+	content: counter(bzh2counter) ".\0000a0\0000a0";
+	counter-increment: bzh2counter;
 }
-h2:not(.box-title) {
- counter-reset: h3counter;
+
+.bz-module h2:not(.box-title) {
+	counter-reset: bzh3counter;
 }
-h3:not(.box-title):before {
- content: counter(h2counter) "." counter(h3counter) ".\0000a0\0000a0";
- counter-increment: h3counter;
+
+.bz-module h3:not(.box-title):before {
+	content: counter(bzh2counter) "." counter(bzh3counter) ".\0000a0\0000a0";
+	counter-increment: bzh3counter;
 }
-h3:not(.box-title) {
- counter-reset: h4counter;
+
+.bz-module h3:not(.box-title) {
+	counter-reset: bzh4counter;
 }
-h4:not(.box-title):before {
- content: counter(h2counter) "." counter(h3counter) "." counter(h4counter) ".\0000a0\0000a0";
- counter-increment: h4counter;
+
+.bz-module h4:not(.box-title):before {
+	content: counter(bzh2counter) "." counter(bzh3counter) "." counter(bzh4counter) ".\0000a0\0000a0";
+	counter-increment: bzh4counter;
 }
 
 /* TOOLTIP: */
@@ -242,7 +273,7 @@ html {
 	position: relative;
 }
 
-.bz-module {	
+.bz-module {
 	margin: 0 auto 200px;
 }
 
@@ -273,13 +304,23 @@ figcaption {
 	margin: 15px auto;
 }
 
+#wiki_page_show table td,
+#wiki_page_show table th,
+.bz-magic-field-assignment .bz-regular td,
+.bz-magic-field-submission .bz-regular td,
+.bz-magic-field-assignment .bz-regular th,
+.bz-magic-field-submission .bz-regular th {
+	border: 1px solid #eee;
+	padding: 0.3em 0.5em !important;
+}
+
 .checklist {
 	list-style:none outside;
 	padding-left: 0;
 	margin-left: 0;
 }
 
-.revealable, 
+.revealable,
 .feedback {
 	display: none;
 }
@@ -291,29 +332,22 @@ figcaption {
 .show-answers.correct {
 	color: #22B573;
 }
-
-tr:not(.suppress-answers) td.show-answers.correct {
-	background: #22B573;
-	color: #FFF;
+ tr:not(.suppress-answers) td.show-answers.correct {
+ background: #22B573;
+ color: #FFF;
 }
-
-.show-answers.maybe,
-ul:not(.instant-feedback) .show-answers.correct:not(.checked) {
-	color: #B08833;
+ .show-answers.maybe, ul:not(.instant-feedback) .show-answers.correct:not(.checked) {
+ color: #B08833;
 }
-
-tr:not(.suppress-answers) td.show-answers.maybe {
-	background: #B08833;
+ tr:not(.suppress-answers) td.show-answers.maybe {
+ background: #B08833;
 }
-
-.show-answers.incorrect,
-ul:not(.instant-feedback) .show-answers.checked:not(.correct) {
-	color: #EB3B46;
+ .show-answers.incorrect, ul:not(.instant-feedback) .show-answers.checked:not(.correct) {
+ color: #EB3B46;
 }
-
-tr:not(.suppress-answers) td.show-answers.incorrect {
-	background: #EB3B46;
-	color: #FFF;
+ tr:not(.suppress-answers) td.show-answers.incorrect {
+ background: #EB3B46;
+ color: #FFF;
 }
 
 .feedback.inline {
@@ -357,13 +391,6 @@ input[type="button"] {
 	color: #FFF;
 }
 
-input,
-textarea {
-	background: #F6EFDF;
-	padding: 10px;
-	border: 1px solid #CCC;
-}
-
 input[type="button"]:hover {
 	background: #C8141F;
 }
@@ -375,6 +402,13 @@ input[type="button"]:active {
 input[type='button']:disabled {
 	background: #CCC;
 	color: #666;
+}
+
+.bz-module input[type='text'],
+.bz-module textarea {
+	background: #F6EFDF;
+	padding: 10px;
+	border: 1px solid #CCC;
 }
 
 .question,
@@ -475,26 +509,36 @@ li input:not([type="button"]):not([type="radio"]):not([type="checkbox"]), li tex
 
 .to-columns {
 	-webkit-column-count: 3;
-	   -moz-column-count: 3;
-	    -ms-column-count: 3;
-	        column-count: 3;
+	-moz-column-count: 3;
+	-ms-column-count: 3;
+	column-count: 3;
 	-webkit-column-gap: 10px;
-		 -moz-column-gap: 10px;
-	    -ms-column-gap: 10px;
-					column-gap: 10px;			
+	-moz-column-gap: 10px;
+	-ms-column-gap: 10px;
+	column-gap: 10px;
 }
+
 .to-columns li {
 	margin: 0;
 	display: inline-block;
-	padding: 0.75em  0.75em  0.75em 1.5em;
+	padding: 0.75em 0.75em 0.75em 1.5em;
 	-webkit-column-break-inside: avoid;
-						page-break-inside: avoid;
-								 break-inside: avoid;
+	page-break-inside: avoid;
+	break-inside: avoid;
 }
 
-table:not(.no-zebra) tr:nth-child(odd):not(.no-zebra),
+table:not(.no-zebra) tr:nth-child(odd):not(.no-zebra), 
 .to-columns li:nth-child(odd) {
-	background: #F6F6F6;
+ background: #F6F6F6;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+.bz-box.video iframe {
+	width: 672px;
+	height: 378px;
 }
 
 figcaption {
@@ -508,7 +552,8 @@ figcaption {
 	height: 3.5em;
 }
 
-table {
+.user_content table:not([cellpadding]) {
+	margin-left: 0;
 	border-collapse: collapse;
 }
 
@@ -529,6 +574,7 @@ th {
 .sort-to-match .fixed {
 	cursor: inherit;
 }
+
 /* Assorted anecdotal styles we didn't want to put inline: */
 #bz-values-matrix {
 	border-collapse: collapse;
@@ -549,17 +595,17 @@ th {
 	background: #D7EFEF;
 }
 
-#match-course-parts th {
-	text-align: left;
+#match-course-parts tbody td:first-child {
+	text-align: center;
+	width: 50%;
 }
 
-#match-course-parts tr:not(.sortable) td {
- text-align: center;
- vertical-align: top;
+#match-course-elements td:first-child {
+	width: 33%;
 }
 
 #comms-options td:not(:first-child) {
- text-align: center;
+	text-align: center;
 }
 
 #comms-options {
@@ -595,10 +641,8 @@ th {
 #match-smart-example tr:first-child {
 	border: 2px solid #666;
 }
-
-#match-smart-example tr.correct:not(:first-child),
-#match-smart-example tr.incorrect:not(:first-child)  {
-	background: none;
+ #match-smart-example tr.correct:not(:first-child), #match-smart-example tr.incorrect:not(:first-child) {
+ background: none;
 }
 
 .instant-mood {
@@ -607,8 +651,8 @@ th {
 
 .instant-mood .feedback {
 	display: inherit;
-  transition: opacity 0.2s linear;
-  opacity: 0;
+	transition: opacity 0.2s linear;
+	opacity: 0;
 }
 
 .inputs-row {
@@ -620,6 +664,91 @@ th {
 	padding: 0;
 }
 
+#rubric-demo table *:hover {
+	background: #F6F6F6;
+}
+
+#rubric-demo,
+#criteria-demo,
+#max-score-demo,
+#expectation-demo {
+	position: relative;
+}
+
+#criteria-demo:after,
+#max-score-demo:after,
+#expectation-demo:after {
+	content: '1';
+	display: block;
+	position: absolute;
+	width: 20px;
+	height: 20px;
+	background: #EB3B46;
+	padding: 5px;
+	text-align: center;
+	color: #FFF;
+	font-family: sans-serif;
+	left: 5px;
+	top: 5px;
+	font-weight: bold;
+	border-radius: 20px;
+}
+
+#criteria-demo:after {
+	content: '2';
+	left: calc( 25% - 10px );
+	top: 5px;
+}
+
+#max-score-demo:after {
+	content: '3';
+	left: -32px;
+	bottom: 10px;
+}
+
+.diagram-legend {
+	counter-reset: legend-counter;
+	list-style: none;
+}
+
+.diagram-legend li {
+	margin: 0.5em;
+	position: relative;
+}
+
+.diagram-legend li:before {
+    content: counter(legend-counter);
+    counter-increment: legend-counter;
+    position: absolute;
+    left: -1.5em;
+    display: block;
+    width: 20px;
+    height: 20px;
+    background: #EB3B46;
+    text-align: center;
+    font-weight: bold;
+    font-family: sans-serif;
+    color: #FFF;
+    border-radius: 20px;
+    font-size: 0.9em;
+}
+
+#expectations-aligned-w-reasons thead th:first-child {
+	 width: 20%;
+}
+
+#expectations-aligned-w-reasons thead th:nth-child(2) {
+	 width: 40%;
+}
+
+expectations-aligned-w-reasons * {
+	font-size: 80%;
+}
+
+.checklist-other {
+	margin: 1em 0;
+}
+
 .for-range,
 .for-checklist,
 .instant-feedback,
@@ -627,105 +756,212 @@ th {
 /* TBD */
 }
 
+/* Styling for quizzes/assignments that use magic fields to layout complex content */
+.bz-magic-field-assignment h3,
+.bz-magic-field-submission h3 {
+	font-size: 30px;
+	color: #EB3B46;
+	margin-top: 30px;
+	padding-top: 10px;
+	border-top: 1px solid #999;
+}
+
+.bz-magic-field-assignment h4,
+.bz-magic-field-submission h4 {
+	font-size: 26px;
+	margin-top: 1.5em;
+	color: #222;
+}
+
+.bz-magic-field-assignment h5,
+.bz-magic-field-submission h5 {
+	font-size: 22px;
+}
+
+.bz-magic-field-assignment h6,
+.bz-magic-field-submission h6 {
+	font-size: 18px;
+}
+
+.bz-magic-field-assignment .bz-inputs-table input,
+.bz-magic-field-submission .bz-inputs-table input {
+	width: calc(100% - 20px);
+}
+
+.bz-magic-field-assignment textarea[data-bz-retained],
+.bz-magic-field-submission textarea[data-bz-retained] {
+	width: calc(100% - 20px);
+	height: 3em;
+}
+
+.bz-magic-field-assignment .bz-watch-out-box:before,
+.bz-magic-field-submission .bz-watch-out-box:before {
+	content: "Important to note";
+}
+
+.bz-magic-field-assignment table.narrow,
+.bz-magic-field-submission table.narrow,
+.bz-magic-field-assignment .bz-watch-out-box,
+.bz-magic-field-submission .bz-watch-out-box,
+.bz-magic-field-assignment .bz-helpful-tip-box,
+.bz-magic-field-submission .bz-helpful-tip-box {
+	float: none;
+	width: 60%;
+	margin: 1em auto;
+}
+
+.bz-magic-field-assignment table.steps td,
+.bz-magic-field-submission table.steps td,
+.bz-magic-field-assignment table.steps th,
+.bz-magic-field-submission table.steps th,
+.bz-magic-field-assignment table.bz-inputs-table th,
+.bz-magic-field-submission table.bz-inputs-table th,
+.bz-magic-field-assignment table.bz-inputs-table td,
+.bz-magic-field-submission table.bz-inputs-table td {
+	vertical-align: middle;
+	text-align: left;
+	padding: 10px;
+	border: 1px solid #EEE;
+}
+
+.bz-magic-field-assignment li,
+.bz-magic-field-submission li {
+	margin: 0.5em 0;
+}
+
+.bz-magic-field-assignment iframe.rubric,
+.bz-magic-field-submission iframe.rubric {
+	width: 100%;
+	height: 300px;
+	border: 2px solid #000;
+}
+
+.bz-magic-field-assignment iframe.rubric #main,
+.bz-magic-field-submission iframe.rubric #main {
+	width: 100% !important;
+}
+
+.bz-magic-field-assignment iframe.rubric #bz-help-button,
+.bz-magic-field-submission iframe.rubric #bz-help-button {
+	display: none !important;
+}
+
+.bz-magic-field-assignment iframe.rubric body,
+.bz-magic-field-submission iframe.rubric body,
+.bz-magic-field-assignment iframe.rubric .with-right-side.with-left-side,
+.bz-magic-field-submission iframe.rubric .with-right-side.with-left-side,
+.bz-magic-field-assignment iframe.rubric .with-right-side,
+.bz-magic-field-submission iframe.rubric .with-right-side,
+.bz-magic-field-assignment iframe.rubric .with-left-side,
+.bz-magic-field-submission iframe.rubric .with-left-side {
+	min-width: 0 !important;
+	width: 100% !important;
+}
+
+.bz-magic-field-assignment iframe.rubric .with-right-side #main,
+.bz-magic-field-submission iframe.rubric .with-right-side #main,
+.bz-magic-field-assignment iframe.rubric .with-left-side #main,
+.bz-magic-field-submission iframe.rubric .with-left-side #main {
+	margin-right: 0 !important;
+	margin-left: 0 !important;
+}
+
 /* Timline */
 .bz-magic-field-assignment .timeline,
 .bz-magic-field-submission .timeline {
-  position: relative;
-  width: 480px;
-  margin: 20px auto;
-  padding: 20px 0;
-  list-style: none;
+	position: relative;
+	width: 480px;
+	margin: 20px auto;
+	padding: 20px 0;
+	list-style: none;
 }
 
 .bz-magic-field-assignment .timeline:before,
 .bz-magic-field-submission .timeline:before {
-  /* the vertical line */
+	/* the vertical line */
   position: absolute;
-  left: 50%;
-  top: 0;
-  content: ' ';
-  display: block;
-  width: 6px;
-  height: 100%;
-  margin-left: -3px;
-  background: rgb(80,80,80);
-  background: -moz-linear-gradient(top, rgba(80,80,80,0) 0%, rgb(80,80,80) 8%, rgb(80,80,80) 92%, rgba(80,80,80,0) 100%);
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(30,87,153,1)), color-stop(100%,rgba(125,185,232,1)));
-  background: -webkit-linear-gradient(top, rgba(80,80,80,0) 0%, rgb(80,80,80) 8%, rgb(80,80,80) 92%, rgba(80,80,80,0) 100%);
-  background: -o-linear-gradient(top, rgba(80,80,80,0) 0%, rgb(80,80,80) 8%, rgb(80,80,80) 92%, rgba(80,80,80,0) 100%);
-  background: -ms-linear-gradient(top, rgba(80,80,80,0) 0%, rgb(80,80,80) 8%, rgb(80,80,80) 92%, rgba(80,80,80,0) 100%);
-  background: linear-gradient(to bottom, rgba(80,80,80,0) 0%, rgb(80,80,80) 8%, rgb(80,80,80) 92%, rgba(80,80,80,0) 100%);
+	left: 50%;
+	top: 0;
+	content: ' ';
+	display: block;
+	width: 6px;
+	height: 100%;
+	margin-left: -3px;
+	background: rgb(80,80,80);
+	background: -moz-linear-gradient(top, rgba(80, 80, 80, 0) 0%, rgb(80,80,80) 8%, rgb(80,80,80) 92%, rgba(80, 80, 80, 0) 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(30, 87, 153, 1)), color-stop(100%, rgba(125, 185, 232, 1)));
+	background: -webkit-linear-gradient(top, rgba(80, 80, 80, 0) 0%, rgb(80,80,80) 8%, rgb(80,80,80) 92%, rgba(80, 80, 80, 0) 100%);
+	background: -o-linear-gradient(top, rgba(80, 80, 80, 0) 0%, rgb(80,80,80) 8%, rgb(80,80,80) 92%, rgba(80, 80, 80, 0) 100%);
+	background: -ms-linear-gradient(top, rgba(80, 80, 80, 0) 0%, rgb(80,80,80) 8%, rgb(80,80,80) 92%, rgba(80, 80, 80, 0) 100%);
+	background: linear-gradient(to bottom, rgba(80, 80, 80, 0) 0%, rgb(80,80,80) 8%, rgb(80,80,80) 92%, rgba(80, 80, 80, 0) 100%);
 }
 
 .bz-magic-field-assignment .timeline li:after,
 .bz-magic-field-submission .timeline li:after {
 	/* clearfix for floats */
   content: "";
-  display: block;
-  height: 0;
-  clear: both;
-  visibility: hidden;
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
 }
 
 .bz-magic-field-assignment .timeline .milestone,
-.bz-magic-field-submission .timeline .milestone  {
-  position: relative;
-  width: 210px;
-  float: left;
-  text-align: right;
+.bz-magic-field-submission .timeline .milestone {
+	position: relative;
+	width: 210px;
+	float: left;
+	text-align: right;
 }
-
-.bz-magic-field-assignment .timeline li:nth-child(even) .milestone,
-.bz-magic-field-submission .timeline li:nth-child(even) .milestone {
-  float: right;
+ .bz-magic-field-assignment .timeline li:nth-child(even) .milestone, .bz-magic-field-submission .timeline li:nth-child(even) .milestone {
+ float: right;
 }
 
 .bz-magic-field-assignment .timeline .flag-wrapper,
 .bz-magic-field-submission .timeline .flag-wrapper {
-  position: relative;
-  text-align: center;
-  background: none;
+	position: relative;
+	text-align: center;
+	background: none;
 }
 
 .bz-magic-field-assignment .timeline .flag-wrapper:before,
 .bz-magic-field-submission .timeline .flag-wrapper:before {
-  position: absolute;
-  top: 50%;
-  right: -40px;
-  content: ' ';
-  display: block;
-  width: 12px;
-  height: 12px;
-  margin-top: -10px;
-  background: #fff;
-  border-radius: 10px;
-  border: 4px solid #EB3B46;
-  z-index: 10;
+	position: absolute;
+	top: 50%;
+	right: -40px;
+	content: ' ';
+	display: block;
+	width: 12px;
+	height: 12px;
+	margin-top: -10px;
+	background: #fff;
+	border-radius: 10px;
+	border: 4px solid #EB3B46;
+	z-index: 10;
 }
 
 .bz-magic-field-assignment .timeline .milestone.first flag-wrapper:before,
 .bz-magic-field-submission .timeline .milestone.first flag-wrapper:before {
-  border-color: #CCC;
+	border-color: #CCC;
 }
-
-.bz-magic-field-assignment .timeline li:nth-child(even) .flag-wrapper:before,
-.bz-magic-field-submission .timeline li:nth-child(even) .flag-wrapper:before {
-  left: -40px;
+ .bz-magic-field-assignment .timeline li:nth-child(even) .flag-wrapper:before, .bz-magic-field-submission .timeline li:nth-child(even) .flag-wrapper:before {
+ left: -40px;
 }
 
 .bz-magic-field-assignment .timeline .desc,
 .bz-magic-field-submission .timeline .desc {
-  margin: 10px;
-  font-style: italic;
-  line-height: 1.5em;
+	margin: 10px;
+	font-style: italic;
+	line-height: 1.5em;
 }
 
 .bz-magic-field-assignment .timeline .milestone.final textarea,
 .bz-magic-field-submission .timeline .milestone.final textarea,
 .bz-magic-field-assignment .timeline .milestone.final input,
-.bz-magic-field-submission .timeline .milestone.final input  {
+.bz-magic-field-submission .timeline .milestone.final input {
 	border: 2px solid #EB3B46;
 }
+
 .bz-magic-field-assignment .timeline input,
 .bz-magic-field-submission .timeline input {
 	width: calc(100% - 20px);
@@ -734,36 +970,101 @@ th {
 /* Drag and drop: */
 
 [draggable] {
-	cursor: move;
+ cursor: move;
 }
 
 .inside-dragging {
 	border: dashed 2px black;
 }
-
-.sort-to-match .correct,
-.sort-to-match:not(.no-zebra) tr.correct:nth-child(odd):not(.no-zebra) {
-	background: #22B573;
+ .sort-to-match .correct, .sort-to-match:not(.no-zebra) tr.correct:nth-child(odd):not(.no-zebra) {
+ background: #22B573;
+}
+ .sort-to-match .incorrect, .sort-to-match:not(.no-zebra) tr.incorrect:nth-child(odd):not(.no-zebra) {
+ background: #EB3B46;
 }
 
-.sort-to-match .incorrect,
-.sort-to-match:not(.no-zebra) tr.incorrect:nth-child(odd):not(.no-zebra) {
-	background: #EB3B46;
+/* Rubrics and assignment review: */
+.bz-retained-field-replaced {
+	background: #FF0;
+}
+
+.bz-ajax-loaded-rubric {
+	background: #EBF7F7;
+}
+
+#wiki_page_show table.bz-ajax-loaded-rubric .criterion > td,
+.bz-ajax-loaded-rubric .criterion > td {
+	border: 0;
+}
+
+.bz-ajax-loaded-rubric .container {
+	width: 100%;
+}
+
+.bz-ajax-loaded-rubric .learning_outcome_flag,
+.bz-ajax-loaded-rubric .links,
+.bz-ajax-loaded-rubric .points_form,
+.bz-ajax-loaded-rubric .editing,
+.bz-ajax-loaded-rubric .long_description_holder,
+.bz-ajax-loaded-rubric .threshold {
+	display: none;
+}
+
+.bz-ajax-loaded-rubric .container {
+	margin: 0;
+	width: 100%;
+}
+
+.bz-ajax-loaded-rubric td.rating,
+#wiki_page_show .bz-ajax-loaded-rubric table td.rating {
+	width: 25%;
+	position: relative;
+	padding: 10px !important;
+	padding-bottom: 2.5em !important;
+	border-left: 1px #DDD solid;
+}
+
+#content table.bz-ajax-loaded-rubric td.criterion_description {
+	vertical-align: middle;
+	width: 30%;
+}
+
+.bz-ajax-loaded-rubric .nobr {
+	position: absolute;
+	font-size: 1em;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	text-align: center;
+	border-top: 1px solid #eee;
+	padding: 5px 0;
+}
+
+.bz-ajax-loaded-rubric tr:hover {
+	background: #F6EFDF;
+}
+
+.bz-ajax-loaded-rubric .rating:hover {
+	background: #EDDCBE;
+}
+
+/* Hide the canvas display of rubrics below assignments since we're loading them dynamically into the content: */
+.student-logged-in.assignments #rubrics {
+	display: none;
 }
 
 @media screen and (max-width: 700px) {
-	.bz-module {
+ .bz-module {
 		width: 100%;
 		padding: 5px;
 	}
-	figure iframe {
+	.bz-box.video iframe {
 		width: 100%;
-	}
-	
+	}	
 	.to-columns {
 		-webkit-column-count: 1;
-			 -moz-column-count: 1;
-			  -ms-column-count: 1;
-						column-count: 1;
+		-moz-column-count: 1;
+		-ms-column-count: 1;
+		column-count: 1;
 	}
 }

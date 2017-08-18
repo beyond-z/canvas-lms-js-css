@@ -20,7 +20,7 @@
   <h2 id="why">WHY DOES THIS MATTER?</h2>
   <div class="bz-box question">
     <h3 class="box-title">Take a Guess</h3>
-    <p>What is the ratio of people of color to white people in <em>executive positions</em> in the U.S. tech sector?</p>
+    <p>What percent of <em>executive positions</em> in the U.S. tech sector are filled by people of color?</p>
     <p>
       <input class="two-thirds" max="100" min="0" step="1" type="range" data-bz-range-answer="17" />
     </p>
@@ -42,7 +42,7 @@
   </div>
   <div class="bz-box question">
     <h3 class="box-title">Here&rsquo;s Another</h3>
-    <p>How many <span class="bz-has-tooltip" title="Chief Executive Officers of the 500 U.S. corpotations with the highest revenues as of last year.">Fortune 500 CEOs</span> are women?</p>
+    <p>What percent of <span class="bz-has-tooltip" title="Chief Executive Officers of the 500 U.S. corpotations with the highest revenues as of last year.">Fortune 500 CEOs</span> are women?</p>
     <p>
       <input class="two-thirds" max="100" min="0" step="1" type="range" data-bz-range-answer="6" />
     </p>
@@ -74,7 +74,7 @@
   </div>
   <div class="bz-box question">
     <h3 class="box-title">Last one for now</h3>
-    <p>What is the rate of first generation college students who find a strong first job within 12 months after graduating from college (meaning a job that matches their level of education)?</p>
+    <p>What percent of first generation college students find a strong first job within 12 months after graduating from college (meaning a job that matches their level of education)?</p>
     <p>
       <input class="two-thirds" max="100" min="0" step="1" type="range" data-bz-range-answer="25" />
     </p>
@@ -129,9 +129,8 @@
         <p class="feedback inline">X</p>
       </li>
     </ul>
-    <p>Other:</p>
-    <p>
-      <textarea></textarea>
+    <p><input type="checkbox" />Other:<br />
+      <textarea class="checklist-other"></textarea>
     </p>
     <p>
       <input class="bz-toggle-all-next" type="button" value="Next" />
@@ -140,27 +139,27 @@
   <h2 id="how">How do I do this?</h2>
   <h3>HOW TO IDENTIFY CULTURAL BIASES</h3>
   <div class="bz-box question">
-    <h4 class="box-title">Quick question:</h4>
+    <h4 class="box-title">Quick question</h4>
     <p>Have you or someone close to you ever experience something like the following: (check all that apply)</p>
     <ul id="joining-reasons" class="checklist dont-mix">
       <li>
         <p>
-          <input name="" type="checkbox" value="" />
+          <input  type="checkbox" value="" />
           <em>You&rsquo;re talking to some friends in your chemistry class about the homework. You feel confident in the material; you&rsquo;re even answering some clarifying questions for your classmates. Then you get to class and try to answer the professor&rsquo;s question, but you suddenly feel inarticulate and anxious. You feel like you sound stupid, even though you thought you were confident in the material.</em></p>
       </li>
       <li>
         <p>
-          <input name="" type="checkbox" value="" />
+          <input  type="checkbox" value="" />
           <em>You are about to give a presentation. You feel good because your slides look great and you&rsquo;ve practiced in front of the mirror dozens of times. You get to class and as you&rsquo;re watching the other students deliver their presentations, you begin to lose confidence. You&rsquo;re the only _____ (woman, person of color, transgender person, immigrant, freshman, person over 30, etc.) in the room. You start to tell yourself, "I&rsquo;m not good at presenting. Who am I kidding?" It&rsquo;s your turn to present, and as you begin, you hear yourself stumbling over your words.</em></p>
       </li>
       <li>
         <p>
-          <input name="" type="checkbox" value="" />
+          <input  type="checkbox" value="" />
           <em>It&rsquo;s the first day of your summer internship. You worked hard to get this internship, and you know it&rsquo;s going to give you a competitive edge when looking for jobs after you graduate. You get pulled into a meeting with many of the managers at the company. They&rsquo;re discussing social media marketing, an area you know super well. Suddenly, your manager turns to you and says, "You&rsquo;re a millennial, what do you think millennials would like?" You freeze and your mind goes blank. You do have opinions, but suddenly they seem pointless and not worth mentioning.</em></p>
       </li>
       <li>
         <p>
-          <input name="" type="checkbox" value="" />
+          <input  type="checkbox" value="" />
           Do you have a personal experience like this? Write it here:</p>
         <p>
           <textarea data-bz-share-release=""></textarea>
@@ -220,7 +219,7 @@
   </div>
   <div class="bz-box reflection">
     <h5 class="box-title">How does this relate to me?</h5>
-    <p>Here are some common stereotypes across social groups. Check the ones that are stereotypes you've heard about your own perceived social group.</p>
+    <p>Here are some common stereotypes across social groups. Which ones have you heard about your own perceived social group?</p>
     <table>
       <thead>
         <tr>
@@ -235,63 +234,66 @@
       </thead>
       <tbody>
         <tr>
-          <td colspan="3"><input max="5" min="0" step="1" type="range" /></td>
+          <td colspan="3"><input max="5" min="1" step="1" type="range" /></td>
           <td>Math</td>
         </tr>
         <tr>
-          <td colspan="3"><input max="5" min="0" step="1" type="range" /></td>
+          <td colspan="3"><input max="5" min="1" step="1" type="range" /></td>
           <td>Studying hard</td>
         </tr>
         <tr>
-          <td colspan="3"><input max="5" min="0" step="1" type="range" /></td>
+          <td colspan="3"><input max="5" min="1" step="1" type="range" /></td>
           <td>Public speaking</td>
         </tr>
         <tr>
-          <td colspan="3"><input max="5" min="0" step="1" type="range" /></td>
+          <td colspan="3"><input max="5" min="1" step="1" type="range" /></td>
           <td>Playing basketball</td>
         </tr>
         <tr>
-          <td colspan="3"><input max="5" min="0" step="1" type="range" /></td>
+          <td colspan="3"><input max="5" min="1" step="1" type="range" /></td>
           <td>Financial stuff</td>
         </tr>
         <tr>
-          <td colspan="3"><input max="5" min="0" step="1" type="range" /></td>
+          <td colspan="3"><input max="5" min="1" step="1" type="range" /></td>
           <td>Technology</td>
         </tr>
         <tr>
-          <td colspan="3"><input max="5" min="0" step="1" type="range" /></td>
+          <td colspan="3"><input max="5" min="1" step="1" type="range" /></td>
           <td>Working through tough problems</td>
         </tr>
         <tr>
-          <td colspan="3"><input max="5" min="0" step="1" type="range" /></td>
+          <td colspan="3"><input max="5" min="1" step="1" type="range" /></td>
           <td>Singing or Dancing</td>
         </tr>
         <tr>
-          <td colspan="3"><input max="5" min="0" step="1" type="range" /></td>
+          <td colspan="3"><input max="5" min="1" step="1" type="range" /></td>
           <td>Driving</td>
         </tr>
         <tr>
-          <td colspan="3"><input max="5" min="0" step="1" type="range" /></td>
+          <td colspan="3"><input max="5" min="1" step="1" type="range" /></td>
           <td>Swimming</td>
         </tr>
         <tr>
-          <td colspan="3"><input max="5" min="0" step="1" type="range" /></td>
+          <td colspan="3"><input max="5" min="1" step="1" type="range" /></td>
           <td>Caring for children</td>
         </tr>
         <tr>
-          <td colspan="3"><input max="5" min="0" step="1" type="range" /></td>
+          <td colspan="3"><input max="5" min="1" step="1" type="range" /></td>
           <td>Making my own decisions</td>
         </tr>
         <tr>
-          <td colspan="3"><input max="5" min="0" step="1" type="range" /></td>
+          <td colspan="3"><input max="5" min="1" step="1" type="range" /></td>
           <td>Communicating in English</td>
         </tr>
         <tr>
-          <td colspan="3"><input max="5" min="0" step="1" type="range" /></td>
+          <td colspan="3"><input max="5" min="1" step="1" type="range" /></td>
           <td>Leading other people</td>
         </tr>
       </tbody>
     </table>
+    <p>
+    <input class="bz-toggle-all-next" type="button" value="Next" />
+    </p>
   </div>
   <div class="bz-box question">
     <h5 class="box-title">Quick Question</h5>
