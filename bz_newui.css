@@ -52,7 +52,9 @@ input[type="button"],
 th,
 .match-heading-style,
 .inner-toc,
-.main-toc {
+.main-toc,
+.toggle-transcript,
+.ic-notification__title {
 	font-family: "TradeGothicNo.20-CondBold", "Oswald", sans-serif;
 	text-transform: uppercase;
 	line-height: normal;
@@ -127,10 +129,20 @@ figcaption {
 	color: #666;
 }
 
-.media-duration {
+.media-duration,
+.toggle-transcript {
 	text-transform: uppercase;
 	font-size: 14px;
 	font-weight: normal;
+}
+
+.toggle-transcript {
+	color: #2E6D99;
+	cursor: pointer;
+}
+
+.transcript {
+	text-align: left;
 }
 
 .share-release {
@@ -199,6 +211,577 @@ blockquote {
 
 .tbd {
 	background: #FF0;
+}
+
+/* Styling Canvas notifications */
+.ic-notification__icon {
+	background-color: #9ad7d7;
+}
+.ic-notification {
+	margin-top: 1em;
+	border: 0;
+	box-shadow: none;
+	border-radius: 0;
+}
+
+
+/* Hiding stuff the students don't need to see: */
+/* -------------------------------------------- */
+.student-logged-in #content .header-bar-outer-container,
+.student-logged-in .context-course_15 #content .header-bar-outer-container,
+.student-logged-in #quiz-time-elapsed,
+.student-logged-in #topbar #identity .inbox,
+.student-logged-in #menu #grades_menu_item,
+.student-logged-in #quiz-attributes-student,
+.student-logged-in #quiz_student_details,
+.student-logged-in div #quiz_show .alert,
+.student-logged-in .question .mce-toolbar-grp,
+.student-logged-in .question .mce-path {
+	display: none !important;	
+}
+/* 
+   can't just hide breadcrumbs; 
+   need to keep this a certain height 
+   to keep the sidebar from hiding under header 
+*/
+.student-logged-in #breadcrumbs {
+	height: 28px;
+	border-bottom: none 0 !important;
+}
+.student-logged-in #breadcrumbs ul {
+	display: none;
+}
+.form-actions{
+	border: none;
+}
+/**/
+/* styles for alternative navigation */
+/* --------------------------------- */
+.bz-hide {
+	display: none;
+}
+
+/* Accessibility */
+/* ------------- */
+.says,
+.screen-reader-text,
+.screenreader-only {
+	clip: rect(1px, 1px, 1px, 1px);
+	height: 1px;
+	width: 1px;
+	margin: 1px;
+	padding: 0;
+	overflow: hidden;
+	position: absolute !important;
+}
+
+
+/* Pick up where you left off */
+/* -------------------------- */
+#pick-up-where-you-left-off {
+  list-style: none; /* Assuming it has to be an li element. Otherwise delete this.*/
+}
+#pick-up-where-you-left-off .stream_header{
+  background: #EBF7F7;
+}
+#pick-up-where-you-left-off .stream_header:hover{
+  background: #D7EFEF;
+}
+#course_home_content #pick-up-where-you-left-off .stream_header .links {
+  display: block;
+}
+#pick-up-where-you-left-off .image-block-content {
+    font-family: "TradeGothicNo.20-CondBold", "Oswald", "Open Sans", sans-serif;
+    text-transform: uppercase;
+    line-height: normal;
+    font-weight: bold;
+    font-weight: 700;
+    font-size: 1.25em;
+  
+}
+
+/* Help Button */
+/* ----------- */
+#bz-help-button {
+	position: fixed;
+	z-index: 99;
+	right: 0em;
+	bottom: 33%;
+	font-size: 12pt;
+	font-family: "TradeGothicNo.20-CondBold", "Oswald", "Open Sans", sans-serif;
+	text-transform: uppercase;
+	line-height: normal;
+	font-weight: bold;/* fallback */
+	font-weight: 700;
+	margin: 0px;
+	padding: 0px;
+}
+
+#bz-help-button a {
+	display: block;
+	
+	transform: rotate(270deg);
+	transform-origin: 100% 100%;
+	-ms-transform: rotate(270deg);
+	-ms-transform-origin: 100% 100%;
+	-webkit-transform: rotate(270deg);
+	-webkit-transform-origin: 100% 100%;
+	-moz-transform: rotate(270deg);
+	-moz-transform-origin: 100% 100%;
+	
+	margin: 0px;
+	
+	padding: 0.5em 0.8em;
+	background-color: #EB3B46;
+	/*border-radius: 6px 6px 0px 0px;*/
+	border: none;
+	border-bottom: none;
+	text-decoration: none;
+	color: white;
+}
+#bz-help-button a:active, 
+#bz-help-button a:visited,
+#bz-help-button a:link  {
+	color: #FFF;
+}
+#bz-help-button a:hover {
+	text-decoration: none;
+	background: #C8141F;	
+}
+
+#bz-tz-warning {
+	position: fixed;
+	top: 0px;
+	left: 30%;
+	width: 40%;
+	background-color: #ffff88;
+	padding: 4px;
+	box-sizing: border-box;
+	z-index: 20;
+	border: solid 1px #ccc;
+	border-radius: 0px 0px 4px 4px;
+	text-align: center;
+}
+
+.bz-rsvps {
+	max-height: 8em; /* fallback if vh doesn't work */
+	max-height: 25vh; /* 25% of the screen height */
+	overflow: auto;
+}
+
+/* no reply yet at all */
+.bz-rsvps dt[data-response-status="needsAction"]::before {
+	content: '? ';
+	color: grey;
+	font-style: italic;
+}
+
+.bz-rsvps dt[data-response-status="declined"]::before {
+	content: 'X ';
+	color: red;
+}
+
+
+/* means they replied with a "maybe" answer */
+.bz-rsvps dt[data-response-status="tentative"]::before {
+	content: '? ';
+	color: #cc8800;
+}
+
+
+.bz-rsvps dt[data-response-status="accepted"]::before {
+	content: '\2713\a0'; /* check box */
+	color: green;
+}
+
+.bz-rsvps dd {
+	display: none;
+}
+
+#bz-retained-field-dialog-holder {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 500;
+}
+
+#bz-retained-field-dialog {
+    position: fixed;
+    left: 10vw;
+    right: 10vw;
+    top: 10vh;
+    bottom: 10vh;
+    background-color: white;
+    padding: 2em;
+    box-sizing: border-box;
+}
+
+#bz-retained-field-dialog label {
+    display: block
+}
+
+#bz-retained-field-dialog label > span {
+    width: 10em;
+    display: inline-block;
+    text-align: right;
+    font-weight: bold;
+}
+
+#bz-retained-field-dialog .cancel {
+    margin-left: 10em;
+    margin-right: 3em;
+}
+
+#bz-retained-field-dialog .bz-dialog-header {
+    font-weight: bold;
+    margin-bottom: 2em;
+    border-bottom: solid 2px #333;
+    font-size: 16px;
+}
+
+/* Module nav in sidebar */
+/* --------------------- */
+#bz-module-nav,
+#bz-module-nav ul {
+	list-style-type: none;
+	padding: 0em;
+	margin-left: 0;
+}
+#bz-module-nav ul {
+	/*border-left: solid 1px #bbb;*/
+}
+#bz-module-nav > li > ul {
+	border-left: transparent;
+}
+#bz-module-nav {
+	background: #D1D1D1;	
+}
+#bz-module-nav li {
+	font-size: 12px;
+	padding-left: 0.5em;
+	margin: 5px 0;
+	display: none;
+}
+#bz-module-nav li.active,
+#bz-module-nav .active-parent,
+#bz-module-nav .active-ancestor,
+#bz-module-nav .active-parent > li,
+#bz-module-nav > li > ul > li,
+#bz-module-nav li.active > ul > li {
+	display:block;	
+}
+#bz-module-nav a,
+.bz-nav-module-name {
+	display: block;
+	color: #555;
+	text-decoration: none;
+	position: relative;
+}
+#bz-module-nav a:hover {
+    color: #0087c2;
+}
+#bz-module-nav .active > a {
+	color: #EB3B46;
+}
+#bz-module-nav .active {
+	position: relative;
+	padding-right: 15px;
+}
+#bz-module-nav .active:before {
+	position: absolute;
+	right: 0;
+	top: -6px;
+	width: 0; 
+	height: 0; 
+	content: "";
+	border-top: 12px solid transparent;
+	border-bottom: 12px solid transparent; 
+	border-right:12px solid #FFF; 
+}
+#bz-module-nav .bz-previous-module,
+#bz-module-nav .bz-next-module {
+	display: block;
+	background: #E6E6E6;
+	padding: 8px 0.5em 8px;
+}
+.bz-previous-module .bz-nav-module-name::before {
+	content:"\25C0\00a0Previous Module: ";
+}
+.bz-next-module .bz-nav-module-name::before {
+	content:"\25B6\00a0Next Module: ";
+}
+#bz-module-nav > li.active-parent .bz-nav-module-name {
+	color: #000;		
+}
+#bz-module-nav .has-children {
+	position: relative;	
+}
+#bz-module-nav .bz-nav-ui {	
+cursor: pointer;
+    font-size: 1.2em;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+	 color:#0087c2;
+    position: absolute;
+    top: -1px;
+    left: -5px;
+    transition: all 0.5s;
+}
+#bz-module-nav .expanded {
+	transform: rotate(45deg);
+}
+
+/* Dynamic Syllabus components */
+
+.bz-dynamic-syllabus {
+
+}
+
+.bz-dynamic-syllabus h1 {
+  color: #ee2640;
+  font-size: 2em;
+}
+
+.bz-dynamic-syllabus .bz-course-intro-text {
+  font-style: italic;
+}
+
+.bz-dynamic-syllabus .bz-course-part > p {
+  font-style: italic;
+}
+
+.bz-course-part {
+  border-left: solid 8px black;
+  padding-left: 8px;
+  margin: 16px 0px;
+}
+
+.bz-course-part.bz-part-collapsed .bz-expand-collapse-button ~ * {
+  display: none;
+}
+
+.bz-course-part-task-box {
+  padding: 0px;
+  margin: 10px 0;
+  background-color: #EEE;
+  overflow-y: auto;
+  height: 200px;
+}
+
+.bz-course-part-task-box .course-options {
+  float: right;
+  width: 25%;
+  box-sizing: border-box;
+}
+
+.bz-course-part-task-box .course-options .btn {
+  width: 100%;
+  box-sizing: border-box;
+  text-align: left;
+  margin-bottom: 4px;
+}
+
+.bz-course-part-task-box #course_show_secondary,
+.bz-course-part-task-box .events_list {
+  box-sizing: border-box;
+  width: 25%;
+  float: left;
+  vertical-align: top;
+  margin: 0px;
+  padding: 8px;
+  border-right: solid 1px #ccc;
+}
+
+.student-logged-in .bz-course-part-task-box #course_show_secondary,
+.student-logged-in .bz-course-part-task-box .events_list {
+  width: 33.3%;
+}
+
+.student-logged-in .bz-course-part-task-box .course-options {
+  display: none;
+}
+
+
+.bz-course-part-task-box #course_show_secondary h2,
+#content .bz-course-part-task-box .events_list h2 {
+  font-size: 1rem !important;
+}
+
+.bz-course-part-task-box .events_list h2 a {
+  float: right;
+  font-weight: normal;
+}
+
+.bz-course-part-task-box::after {
+  clear: both;
+  display: block;
+  content: '\a0';
+}
+
+.bz-course-part-task-box ul {
+  margin-left: 0;
+  list-style: outside none;
+}
+
+.bz-course-part-task-box li p,
+.bz-course-part-task-box li .event-details,
+.bz-course-part-task-box .item > * {
+  display: inline;
+}
+
+.bz-course-part-task-box .todo {
+  margin: 0 30px 10px 0;
+  position: relative;
+}
+
+.bz-course-part-task-box .IgnoreButton {
+  position: absolute;
+  right: -30px;
+  top: 0;
+  padding: 5px;
+}
+
+.bz-course-part-task-box .events_list .event {
+	margin: 5px 0;
+}
+
+.bz-course-part-module-box {
+  display: inline-block;
+  width: 220px;
+  height: 400px;
+  padding: 10px;
+  margin: 10px;
+  background-color: #EEE;
+  vertical-align: top;
+  position: relative;
+}
+
+.bz-course-part-module-box:hover::after {
+  display: none !important; /* the important means i don't have to do specificity on EVERY hover after for the classes too */
+}
+
+.bz-course-part-module-box.completed::after,
+.bz-course-part-module-box.locked::after {
+  background-position: top center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  content: "\a0";
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  top: 0px;
+  bottom: 0px;
+  display: block;
+  background-color: #eee;
+  background-color: rgba(250, 250, 250, 0.8);
+}
+
+.bz-course-part-module-box.completed::after {
+  background-image: url("dynamic-syllabus-icons-completed.png");
+}
+
+.bz-course-part-module-box.locked::after {
+  background-image: url("dynamic-syllabus-icons-locked.png");
+}
+
+.bz-course-part-module-box .bz-module-image {
+  display: block;
+  padding: 0px;
+  margin: 0px;
+  margin-bottom: 4px;
+  height: 200px;
+  text-align: center;
+}
+
+.bz-course-part-module-box .bz-module-image img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.bz-course-part-module-box .bz-button-pick-up {
+  display: block;
+  text-align: center;
+  text-transform: uppercase;
+  background-color: #ee2640;
+  color: white;
+  font-weight: bold;
+
+  position: absolute;
+  bottom: 8px;
+  left: 12px;
+  right: 12px;
+}
+
+.bz-course-part-module-box.completed .bz-button-pick-up {
+  color: green;
+  background-color: transparent;
+}
+
+.bz-course-part-module-box.completed .bz-button-pick-up::before {
+  content: "\a0";
+  background-image: url("dynamic-syllabus-icons-completed.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  display: inline-block;
+  height: 2em;
+  width: 2em;
+  vertical-align: middle;
+}
+
+.bz-expand-collapse-button {
+	border: none;
+	background: #EB3B46;
+	color: #FFF;
+	padding: 6px 10px;
+}
+
+.bz-expand-collapse-button:hover {
+	background: #C8141F;
+}
+
+.bz-dynamic-syllabus-editor {
+
+}
+
+.bz-dynamic-syllabus-editor label {
+  display: block;
+}
+
+.bz-dynamic-syllabus-editor label > span {
+  display: block;
+  font-weight: bold;
+}
+
+/* Customizing the modules list view */
+/* --------------------------------- */
+#context_modules {
+	font-family: sans-serif;	
+}
+
+/* Customize modules list to remove ellipsis */
+#context_modules .ig-title {
+	flex: 0 0 65%;
+}
+
+#context_modules .ig-title,
+#context_modules .ig-header-title {
+	font-family: "TradeGothicNo.20-CondBold", "Oswald", "Open Sans", sans-serif;
+	font-size: 1.2em;
+}
+.context_module_item .item_name .title {
+	font-size: 16px !important;	
+}
+#context_modules .ig-header-title {
+	text-transform: uppercase;
+}
+#context_modules .ig-header-title .name {
+	font-size: 1.4em;
+}
+.indent_0 {
+	text-transform:uppercase;	
 }
 
 /* HEADER NUMBERING */
@@ -409,6 +992,11 @@ input[type='button']:disabled {
 	background: #F6EFDF;
 	padding: 10px;
 	border: 1px solid #CCC;
+}
+
+input[type='button'].add-other-field {
+	font-size: 16px;
+	padding: 5px 8px;
 }
 
 .question,
@@ -659,7 +1247,7 @@ th {
 	text-align: center;
 }
 
-#reflect-milestones [type="range"] {
+table [type="range"] {
 	width: 100%;
 	padding: 0;
 }
