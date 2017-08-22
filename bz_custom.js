@@ -765,7 +765,38 @@ if (!String.prototype.startsWith) {
   };
 }
 
+// call this BEFORE the function that hides
+// bz-boxes, but after everything else is loaded!
+function createBzProgressBar() {
+  var input = document.createElement("progress");
+  input.setAttribute("max", "100");
+  input.setAttribute("id", "bz-progress-bar");
+  document.body.appendChild(input);
+
+  var height = document.body.scrollHeight;
+
+  var ticking = false;
+
+  window.addEventListener('scroll', function(e) {
+    last_known_scroll_position = window.scrollY;
+    if (!ticking) {
+      window.requestAnimationFrame(function() {
+        var pos = last_known_scroll_position + window.innerHeight;
+        input.value = Math.ceil(pos / height * 100);
+        ticking = false;
+      });
+    }
+    ticking = true;
+  });
+
+  input.value = Math.ceil((window.scrollY + window.innerHeight) / height * 100);
+}
+
+
+
 runOnUserContent(function(){
+
+  createBzProgressBar();
 
   var position_magic_field_name = window.position_magic_field_name ? window.position_magic_field_name : ("module_position_" + ENV["WIKI_PAGE"].page_id);
 
