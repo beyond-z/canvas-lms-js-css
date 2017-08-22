@@ -203,8 +203,10 @@ runOnUserContent(function() {
 	// Display current value of a range question:
 	jQuery ('[type="range"]').change(function() {
 		var currentVal = jQuery(this).val();
-		jQuery(this).parents('.question').find('.current-value').text(currentVal);
+		jQuery(this).parents('.question').find('.display-value .current-value').text(currentVal);
+		jQuery(this).parents('td').siblings('.current-value').text(currentVal);
 	}).change();
+
 
 	// Score a range question:
 	jQuery ('.for-range').click(function() {
@@ -286,7 +288,7 @@ runOnUserContent(function() {
 	
 	// Add share relesse checkbox where applicable:
 	jQuery('[data-bz-share-release]').after(function(){
-		var shareRelease = '<div class="share-release"><input type="checkbox" checked />I agree to share this with others</div>';
+		var shareRelease = '<div class="share-release"><input type="checkbox" checked />I agree to let Braven share this with other Fellows</div>';
 		return shareRelease;
 	});
 	
@@ -513,8 +515,16 @@ runOnUserContent(function() {
 		jQuery(this).siblings('[type="checkbox"], [type="radio"]').prop('checked', ( ( jQuery(this).val() ) ? true : false ) );
 	});
 	
+	// Create a button to toggle transcripts for videos
+	jQuery('.transcript').hide().before(function(){
+		var transcript = jQuery(this);
+		var btn = '<span class="toggle-transcript">Transcript<span>';
+		return jQuery(btn).click(function(){
+			transcript.slideToggle();
+		});;
+	});
+	
 	/* END NEW UI STUFF */
-
 	
 });
 
@@ -755,7 +765,38 @@ if (!String.prototype.startsWith) {
   };
 }
 
+// call this BEFORE the function that hides
+// bz-boxes, but after everything else is loaded!
+function createBzProgressBar() {
+  var input = document.createElement("progress");
+  input.setAttribute("max", "100");
+  input.setAttribute("id", "bz-progress-bar");
+  document.body.appendChild(input);
+
+  var height = document.body.scrollHeight;
+
+  var ticking = false;
+
+  window.addEventListener('scroll', function(e) {
+    last_known_scroll_position = window.scrollY;
+    if (!ticking) {
+      window.requestAnimationFrame(function() {
+        var pos = last_known_scroll_position + window.innerHeight;
+        input.value = Math.ceil(pos / height * 100);
+        ticking = false;
+      });
+    }
+    ticking = true;
+  });
+
+  input.value = Math.ceil((window.scrollY + window.innerHeight) / height * 100);
+}
+
+
+
 runOnUserContent(function(){
+
+  createBzProgressBar();
 
   var position_magic_field_name = window.position_magic_field_name ? window.position_magic_field_name : ("module_position_" + ENV["WIKI_PAGE"].page_id);
 

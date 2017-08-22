@@ -2,12 +2,24 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Module 3</title>
+<title>Module 3 unlock your hustle</title>
 <script
   src="https://code.jquery.com/jquery-3.2.1.min.js"
   integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
   crossorigin="anonymous">
 </script>
+<script
+  src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+  integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+  crossorigin="anonymous">
+</script>
+<style>
+@font-face {
+    font-family: "TradeGothicNo.20-CondBold";
+    src: url('../TradeGothicLTStd-BdCn20.otf');
+}
+
+</style>
 <link rel="stylesheet" type="text/css" href="../bz_newui.css">
 </head>
 <body>
@@ -15,7 +27,7 @@
   <h2 id="what">What are we talking about?</h2>
   <div class="bz-box question">
     <h3 class="box-title">Quick Question</h3>
-    <p>What would you guess are the <strong>top five</strong> factors that make people happy at work?</p>
+    <p>What would you guess are the <strong>top five</strong> factors that most people say make them happiest at work?</p>
     <ul id="bcg-satisfaction" class="checklist" data-bz-max-score="5">
       <li>
         <input  type="checkbox" value="" />
@@ -230,7 +242,7 @@
     </table>
     <div class="add-fields-here">
       <p>Add your own if it's missing from the list:</p>
-      <input class="add-other-field" type="button" />
+      <input class="add-other-field" type="button" value="+ Add" />
     </div>
     <p>Feeling stuck? <a class="reveal-next" href="#stuck-with-values">Click here for hints.</a></p>
     <div id="stuck-with-values" class="tip revealable">
@@ -288,7 +300,7 @@
     <p>Create a vision board representing your interests and passions (not just professional/academic). You can do this digitally by using a service like Pinterest, a slide deck etc. Or you can do it the traditional way, by cutting and pasting clippings from magazines or your own artwork, if you prefer.</p>
     <p class="tip">It doesn't have to be very pretty, so don't go overboard making it perfect! Ten minutes should be more than enough to make a basic board.</p>
     <p>When you're done, paste a link to your vision board (or to a high quality image of it) here:</p>
-    <input type="url" data-bz-share-release="" />
+    <input type="url" data-bz-share-release />
     <br />
     <input class="bz-toggle-all-next" type="button" value="Done" />
   </div>
@@ -300,7 +312,7 @@
   <p>Now that you've explored your heart, it's time to uncover what's in your head - your unique strengths and skills.</p>
   <div class="bz-box action">
     <h4 class="box-title">Get to Know Yourself</h4>
-    <p>There are many ways to uncover your strengths. For example, as part of your Design Your Career project you'll be asking people who know you for stories that highlight your strengths. Another option is to take personality tests (such as <a href="https://www.strengthstest.com/" target="_blank">Strengths Finder</a> or <a href="http://www.myersbriggs.org/" target="_blank">Myers Briggs</a>, which are also popular with recruiters).</p>
+    <p>There are many ways to uncover your strengths. For example, as part of your <a href="https://portal.bebraven.org/courses/27/assignments/650" target="_blank">Design Your Career project</a> you'll be asking people who know you for stories that highlight your strengths. Another option is to take personality tests (such as <a href="https://www.strengthstest.com/" target="_blank">Strengths Finder</a> or <a href="http://www.myersbriggs.org/" target="_blank">Myers Briggs</a>, which are also popular with recruiters).</p>
     <p>One of the most comprehensive tests is the <a href="http://www.viacharacter.org/" target="_blank">VIA Character Strengths Assessment</a>. Take the test now (requires registration, and takes about 20 minutes) and when you're done, paste your top five strengths in here:</p>
     <ol>
       <li>
@@ -319,7 +331,7 @@
         <input type="text" />
       </li>
     </ol>
-    <input type="button" value="DONE" />
+    <input type="button" class="bz-toggle-all-next" value="Done" />
   </div>
   <div class="bz-box reflection">
     <h5 class="box-title">Reflect</h5>
@@ -342,7 +354,7 @@
         <input type="checkbox" value="1" />
         Some careers or jobs have more room to apply certain strengths than others, and knowing what those are can help me find a good fit.</li>
     </ul>
-    <input class="for-checklist bz-toggle-all-next" type="button" value="DONE" />
+    <input class="for-checklist bz-toggle-all-next" type="button" value="Done" />
   </div>
   <div class="bz-box answer">
     <h4 class="box-title">Answer</h4>
@@ -351,89 +363,93 @@
   <div class="bz-box action">
     <h4 class="box-title">Get to Know Yourself Even Further</h4>
     <p>Braven has partnered with experts and employers to create the following list of critical skills for securing career accelerating opportunities.</p>
-    <p class="tbd">[replace with ranges] On a scale of 1 to 5, with 1 meaning little to no experience and 5 meaning full mastery, how would you rate yourself on your proficiency with these skills?</p>
+    <p>On a scale of 1 to 5, how would you rate yourself on your proficiency with these skills?</p>
     <table class="bz-naked bz-survey">
       <tbody>
         <tr>
           <td><h5>Working in Teams</h5></td>
           <td><p>1&nbsp;=&nbsp;little&nbsp;to&nbsp;no experience <br />
-              5&nbsp;=&nbsp;full&nbsp;mastery</p></td>
+          </p></td>
+          <td>&nbsp;</td>
+          <td>5&nbsp;=&nbsp;full&nbsp;mastery</td>
+          <td>&nbsp;</td>
         </tr>
         <tr>
           <td>I work effectively in teams and add value to toward team goals.</td>
-          <td><input max="5" min="1" step="1" type="number" data-bz-retained="test-self-ass-01" /></td>
+          <td colspan="3"><input max="5" min="1" step="1" type="range" data-bz-retained="test-self-ass-01" /></td>
+          <td class="current-value"></td>
         </tr>
         <tr>
           <td>I navigate cultural difference on teams.</td>
-          <td><input max="5" min="1" step="1" type="number" data-bz-retained="test-self-ass-02" /></td>
+          <td colspan="3"><input max="5" min="1" step="1" type="range" data-bz-retained="test-self-ass-02" /></td><td class="current-value"></td>
         </tr>
         <tr>
           <td>I cultivate belonging and safety for myself and others.</td>
-          <td><input max="5" min="1" step="1" type="number" data-bz-retained="test-self-ass-03" /></td>
+          <td colspan="3"><input max="5" min="1" step="1" type="range" data-bz-retained="test-self-ass-03" /></td><td class="current-value"></td>
         </tr>
         <tr>
-          <td colspan="2"><h5>Strategic Problem-Solving</h5></td>
+          <td colspan="5"><h5>Strategic Problem-Solving</h5></td>
         </tr>
         <tr>
           <td>I identify the underlying complexity and ambiguity of problems.</td>
-          <td><input max="5" min="1" step="1" type="number" data-bz-retained="test-self-ass-04" /></td>
+          <td colspan="3"><input max="5" min="1" step="1" type="range" data-bz-retained="test-self-ass-04" /></td><td class="current-value"></td>
         </tr>
         <tr>
           <td>I implement effective solutions.</td>
-          <td><input max="5" min="1" step="1" type="number" data-bz-retained="test-self-ass-05" /></td>
+          <td colspan="3"><input max="5" min="1" step="1" type="range" data-bz-retained="test-self-ass-05" /></td><td class="current-value"></td>
         </tr>
         <tr>
-          <td colspan="2"><h5><span style="font-weight: 400;">Operating and Managing</span></h5></td>
+          <td colspan="5"><h5><span style="font-weight: 400;">Operating and Managing</span></h5></td>
         </tr>
         <tr>
           <td>I manage my time and personal to-dos well.</td>
-          <td><input max="5" min="1" step="1" type="number" data-bz-retained="test-self-ass-06" /></td>
+          <td colspan="3"><input max="5" min="1" step="1" type="range" data-bz-retained="test-self-ass-06" /></td><td class="current-value"></td>
         </tr>
         <tr>
           <td>I manage projects to on-time and successful completion.</td>
-          <td><input max="5" min="1" step="1" type="number" data-bz-retained="test-self-ass-07" /></td>
+          <td colspan="3"><input max="5" min="1" step="1" type="range" data-bz-retained="test-self-ass-07" /></td><td class="current-value"></td>
         </tr>
         <tr>
           <td>I give and receive feedback effectively.</td>
-          <td><input max="5" min="1" step="1" type="number" data-bz-retained="test-self-ass-08" /></td>
+          <td colspan="3"><input max="5" min="1" step="1" type="range" data-bz-retained="test-self-ass-08" /></td><td class="current-value"></td>
         </tr>
         <tr>
-          <td colspan="2"><h5>Networking and Communicating</h5></td>
+          <td colspan="5"><h5>Networking and Communicating</h5></td>
         </tr>
         <tr>
           <td>I clearly present myself and ideas.</td>
-          <td><input max="5" min="1" step="1" type="number" data-bz-retained="test-self-ass-09" /></td>
+          <td colspan="3"><input max="5" min="1" step="1" type="range" data-bz-retained="test-self-ass-09" /></td><td class="current-value"></td>
         </tr>
         <tr>
           <td>I demonstrate professional polish and understanding of workplace dos and
-            <g id="38" data-gr-id="38" class="gr_ gr_38 gr-alert gr_spell gr_run_anim ContextualSpelling">don&rsquo;ts</g>
-            .</td>
-          <td><input max="5" min="1" step="1" type="number" data-bz-retained="test-self-ass-10" /></td>
+           don&rsquo;ts.</td>
+          <td colspan="3"><input max="5" min="1" step="1" type="range" data-bz-retained="test-self-ass-10" /></td><td class="current-value"></td>
         </tr>
         <tr>
           <td>I actively build and strengthen my professional network.</td>
-          <td><input max="5" min="1" step="1" type="number" data-bz-retained="test-self-ass-11" /></td>
+          <td colspan="3"><input max="5" min="1" step="1" type="range" data-bz-retained="test-self-ass-11" /></td><td class="current-value"></td>
         </tr>
         <tr>
-          <td colspan="2"><h5>Self-Driven Leading</h5></td>
+          <td colspan="5"><h5>Self-Driven Leading</h5></td>
         </tr>
         <tr>
           <td>I am grounded in my purpose, clear on my path, and leverage my assets and values.</td>
-          <td><input max="5" min="1" step="1" type="number" data-bz-retained="test-self-ass-12" /></td>
+          <td colspan="3"><input max="5" min="1" step="1" type="range" data-bz-retained="test-self-ass-12" /></td><td class="current-value"></td>
         </tr>
         <tr>
           <td>I learn from both wins and failure.</td>
-          <td><input max="5" min="1" step="1" type="number" data-bz-retained="test-self-ass-13" /></td>
+          <td colspan="3"><input max="5" min="1" step="1" type="range" data-bz-retained="test-self-ass-13" /></td><td class="current-value"></td>
         </tr>
       </tbody>
     </table>
     <p>&nbsp;</p>
     <p>
-      <input class="" type="button" value="DONE" />
+      <input class="bz-toggle-all-next" type="button" value="Done" />
     </p>
   </div>
   <div class="bz-box answer">
     <h3 class="box-title">Good job.</h3>
+    <p>If you rated yourself harshly on any of these skills, don't sweat it! The Braven Accelerator is focused on developing these very skills, so you will have ample time to practice and grow.</p>
     <p>At the end of the semester, you will have the chance to assess yourself on these skills again and see how far you have come and where you still have room to grow.</p>
   </div>
   <h3>How to Define Your Hustle</h3>
@@ -455,7 +471,9 @@
   </div>
   <div class="bz-box action">
     <h4 class="box-title">Back to the Real World</h4>
-    <p>Take a few minutes to search job sites (monster, indeed, theladders, linkedin... ) using your strengths and values as search keywords.</p>
+    <p>Take a few minutes to search job sites using your strengths and values as search keywords (<a href="https://portal.bebraven.org/courses/27/pages/recommended-resources-for-your-opportunity-hunt?module_item_id=3757" target="_blank">find a list of job search sites here</a>).</p>
+    <p>List any jobs you find that align with your hustle here:</p>
+    <p><textarea></textarea></p>
     <p>What came up?</p>
     <ul class="instant-feedback checklist dont-mix">
       <li>
@@ -474,9 +492,21 @@
         <p class="feedback inline">That's great! You're way ahead of the game.</p>
       </li>
     </ul>
+    <p>Other:</p>
+    <textarea class="checklist-other"></textarea>
+    <p><input class="bz-toggle-all-next" type="button" value="Done" />
+		</p>
   </div>
   <h2 id="wrap-up">Wrap-up</h2>
-  <p>A career that is aligned with your head (what you're good at) and your heart (what you love to do) is likelier to make you happy and successful. In this module we began to explore what your head and heart are about, and we'll be using this new knowledge to identify the most promising career paths for you.</p>
+  <div>
+  <p>A career that is aligned with your head (what you're good at) and your heart (what you love to do) is likelier to make you happy and successful. Remember the following equation:</p>
+  <p class="match-heading-style">HEAD + HEART = HUSTLE</p>
+  <p>In Learning Lab this week, you'll dig deeper into your head and heart in order to explore career paths aligned with your hustle.
+</p>
+  <p>As always, if there are any loose ends feel free to run through the module again, talk to other Fellows on BravenHelp, talk to your cohort mates or Leadership Coach, or simply ask us directly: <a href="mailto:support@bebraven.org" target="_blank">support@bebraven.org</a>.</p>
+  <p>See you at the next Learning Lab!</p>
+  </div>
+  
 </div>
 <script src="../new-ui-sandbox.js"></script>
 </body>
