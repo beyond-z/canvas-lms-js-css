@@ -1951,3 +1951,6 @@ table.bz-guideposts span.station {
 .bz-script, .bz-style {
 	display: none;
 }
+
+
+@import url("bz_newui.css");
