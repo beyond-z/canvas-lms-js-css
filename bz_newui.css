@@ -542,16 +542,19 @@ progress[value]::-webkit-progress-bar {
 	font-size: 16px;
 }
 
-.bz-course-part:nth-of-type(n+1) {
-	border-left-color: #EB3B46;
-}
-
-.bz-course-part:nth-of-type(n+2) {
+.bz-course-part:nth-of-type(4n+1) {
+	/* Sky */
 	border-left-color: #9AD7D7;
 }
 
-.bz-course-part:nth-of-type(n+3) {
+.bz-course-part:nth-of-type(4n+3) {
+	/* Gold */
 	border-left-color: #D1AB5C;
+}
+
+.bz-course-part:nth-of-type(4n+4) {
+	/* Red */
+	border-left-color: #EB3B46;
 }
 
 .bz-course-part.bz-part-collapsed .bz-expand-collapse-button ~ * {
