@@ -272,30 +272,29 @@ runOnUserContent(function() {
 	}
 		
 	// Reveal hidden content immediately following a hint button:
-	jQuery('.reveal-next').click(function(e){
-		e.preventDefault();
-		var target = jQuery(this).attr('href');
-		jQuery(target).slideToggle();
+	jQuery('.reveal-next').click(function(){
+		jQuery(this).parent().next().slideToggle();
 	});
 	
-	// Allow users to add a Magic Field text input for "other" answers:
+	// Allow users to add a Magic Field text input for "other" answers: 
+	/*
 	jQuery('.add-other-field').val('+ Add another text field').click(function(){
 		jQuery(this).closest('.add-fields-here').append(function(){
   		var newField = '<p><input type="text" data-bz-retained="blah" /></p>';
 	  	return newField;
   	});
 	});
+	*/
 	
-	// Add share relesse checkbox where applicable:
+	// Add share release checkbox where applicable:
 	jQuery('[data-bz-share-release]').after(function(){
 		var shareRelease = '<div class="share-release"><input type="checkbox" checked />I agree to let Braven share this with other Fellows</div>';
 		return shareRelease;
 	});
 	
 	// Show answers based on what's checked:
+	/*
 	jQuery('.selective-feedback').click(function(){
-		//var choicesSource = jQuery(this).attr('data-bz-for-checklist');
-		//var userChoices = jQuery(choicesSource).find(':checked');
 		jQuery(this).parents('.question').next('.answer').find('[data-bz-reference]').each(function(){
 			var ref = jQuery(this).attr('data-bz-reference');
 			var refCheckbox = jQuery('[data-bz-retained="'+ref+'"]');
@@ -306,11 +305,13 @@ runOnUserContent(function() {
 			}
 		});
 	});
-	
+	*/
 	// 
 	jQuery(".selectable-cells td").click(function(){ 
-		// console.log('matrix cell clicked '+jQuery(this).text());
-		jQuery(this).toggleClass("v-selected"); 
+		jQuery(this).toggleClass('inner-checked').find('input').each(function(){
+			// toggle the input inside the cell:
+			jQuery(this).prop('checked', !jQuery(this).prop('checked')); 
+		});
 	});
 	
 	// Sort to match:
@@ -524,7 +525,13 @@ runOnUserContent(function() {
 		});;
 	});
 	
+	// Make buttons appear differently once you've submitted:
+	jQuery('.bz-box input[type="button"]').click(function(){
+		jQuery(this).attr('data-bz-retained', 'clicked');
+	});
+	
 	/* END NEW UI STUFF */
+
 	
 });
 
