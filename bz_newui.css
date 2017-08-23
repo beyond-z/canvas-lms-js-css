@@ -79,12 +79,14 @@ th,
 	margin-bottom: 0.5em;
 }
 
-a {
-	color: #2E6D99
+a,
+.reveal-next {
+	color: #2E6D99;
+	cursor: pointer
 }
 
 a:visited {
-	color: #235877
+	color: #235877;
 }
 
 h2,
@@ -992,10 +994,12 @@ input[type='button']:disabled {
 	border: 1px solid #CCC;
 }
 
+/*
 input[type='button'].add-other-field {
 	font-size: 16px;
 	padding: 5px 8px;
 }
+*/
 
 .question,
 .answer,
@@ -1177,7 +1181,7 @@ th {
 	letter-spacing: 0.02em;
 }
 
-.v-selected {
+.inner-checked {
 	background: #D7EFEF;
 }
 
@@ -1199,6 +1203,10 @@ th {
 	float:left;
 	clear: both;
 	margin-bottom: 20px;
+}
+
+#designers {
+	font-size: 0.8em;
 }
 
 #goals-vs-vision td {
