@@ -876,12 +876,17 @@ html {
 	margin-top:0;
 }
 
-.bz-box.video {
+figcaption {
+	margin: 15px auto;
 	text-align: center;
 }
 
-figcaption {
-	margin: 15px auto;
+.centered {
+	text-align: center;
+}
+
+.conditional-show {
+	display: none;
 }
 
 #wiki_page_show table td,
@@ -1127,7 +1132,7 @@ table {
 	border-collapse: collapse;
 }
 
-.bz-box.video iframe {
+.bz-box.video figure iframe {
 	width: 672px;
 	height: 378px;
 }
