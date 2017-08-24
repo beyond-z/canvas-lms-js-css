@@ -272,6 +272,15 @@ runOnUserContent(function() {
 	
 	// Sort to match:
 		function sortToMatchSetup() {
+			function isValidDropTarget(event, dropping) {
+				var dragging = document.getElementById(event.dataTransfer.getData("text/id"));
+				if(!dragging)
+					return false;
+				if(dragging.getAttribute("data-column-number") == dropping.getAttribute("data-column-number"))
+					return true;
+				return false;
+			}
+
 		// skip the first column as it is a label column
 		var sortToMatch = document.querySelectorAll(".sort-to-match td:not(:first-child)");
 		for(var i = 0; i < sortToMatch.length; i++) {
@@ -295,6 +304,7 @@ runOnUserContent(function() {
 
 			// make the tds valid drop targets
 			td.addEventListener("dragenter", function(event) {
+				if(!isValidDropTarget(event, this)) return true;
 				event.preventDefault();
 				this.className += " inside-dragging";
 			});
@@ -302,6 +312,7 @@ runOnUserContent(function() {
 				this.className = this.className.replace(" inside-dragging", "");
 			});
 			td.addEventListener("dragover", function(event) {
+				if(!isValidDropTarget(event, this)) return true;
 				event.preventDefault();
 			});
 			td.addEventListener("drop", function(event) {
@@ -387,6 +398,8 @@ runOnUserContent(function() {
 						allInOrder = false;
 					}
 					droppables[a].appendChild(shuffled[a]);
+					shuffled[a].setAttribute("data-column-number", col);
+					droppables[a].setAttribute("data-column-number", col);
 				}
 			}
 		}
