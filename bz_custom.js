@@ -256,12 +256,6 @@ runOnUserContent(function() {
 		jQuery(this).parent().next().slideToggle();
 	});
 	
-	// Add share release checkbox where applicable:
-	jQuery('[data-bz-share-release]').after(function(){
-		var shareRelease = '<div class="share-release"><input type="checkbox" checked />I agree to let Braven share this with other Fellows</div>';
-		return shareRelease;
-	});
-	
 	// Check/uncheck boxes by clicking surrounding table cell
 	jQuery(".selectable-cells td").click(function(){ 
 		jQuery(this).toggleClass('inner-checked').find('input').each(function(){
@@ -272,7 +266,20 @@ runOnUserContent(function() {
 	
 	// Sort to match:
 		function sortToMatchSetup() {
-		var sortToMatch = document.querySelectorAll(".sort-to-match td");
+			// on chrome, it doesn't allow getData in anything but the drop event
+			// so i use this helper variable instead...
+			var currentlyDragging = null;
+			function isValidDropTarget(event, dropping) {
+				var dragging = currentlyDragging;
+				if(!dragging)
+					return false;
+				if(dragging.getAttribute("data-column-number") == dropping.getAttribute("data-column-number"))
+					return true;
+				return false;
+			}
+
+		// skip the first column as it is a label column
+		var sortToMatch = document.querySelectorAll(".sort-to-match td:not(:first-child)");
 		for(var i = 0; i < sortToMatch.length; i++) {
 			var td = sortToMatch[i];
 
@@ -290,10 +297,12 @@ runOnUserContent(function() {
 			// make it draggable
 			wrapper.addEventListener("dragstart", function(event) {
 				event.dataTransfer.setData("text/id", this.getAttribute("id"));
+				currentlyDragging = this; // need for a chrome hack
 			});
 
 			// make the tds valid drop targets
 			td.addEventListener("dragenter", function(event) {
+				if(!isValidDropTarget(event, this)) return true;
 				event.preventDefault();
 				this.className += " inside-dragging";
 			});
@@ -301,6 +310,7 @@ runOnUserContent(function() {
 				this.className = this.className.replace(" inside-dragging", "");
 			});
 			td.addEventListener("dragover", function(event) {
+				if(!isValidDropTarget(event, this)) return true;
 				event.preventDefault();
 			});
 			td.addEventListener("drop", function(event) {
@@ -322,7 +332,7 @@ runOnUserContent(function() {
 
 
 				this.className = this.className.replace(" inside-dragging", "");
-
+				currentlyDragging = null;
 
 				// delete these next few lines if you don't
 				// want instant feedback (prolly don't)
@@ -368,9 +378,25 @@ runOnUserContent(function() {
 					draggables[random] = draggables[draggables.length - 1];
 					draggables.length -= 1;
 				}
+
 				// then put the random stuff back in the table.
-				for(var a = 0; a < shuffled.length; a++)
+				var allInOrder = true; // in order is a legit shuffle, but we don't want it....
+				for(var a = 0; a < shuffled.length; a++) {
+					if(shuffled[a].id.replace("draggable", "droppable") == droppables[a].id) {
+						// we shuffled but randomly ended up with all in order...
+						// so we'll swap the final item so the user has to do something
+						if(allInOrder && a == shuffled.length - 2) {
+							var tmp = shuffled[a];
+							shuffled[a] = shuffled[a + 1];
+							shuffled[a + 1] = tmp;
+						}
+					} else {
+						allInOrder = false;
+					}
 					droppables[a].appendChild(shuffled[a]);
+					shuffled[a].setAttribute("data-column-number", col);
+					droppables[a].setAttribute("data-column-number", col);
+				}
 			}
 		}
 	}
@@ -401,6 +427,10 @@ runOnUserContent(function() {
 		}
 	}
 
+	// Show feedback on sort-to-match questions:
+	jQuery('.for-match').click(function(){
+		jQuery(this).parents('.bz-box').find('.sort-to-match').addClass('show-answers');
+	});
 	
 	// Mix up checklists:
 	jQuery('.checklist, .radio-list').not('.dont-mix').each(function(){
@@ -423,18 +453,6 @@ runOnUserContent(function() {
 			}
 		});
 	});
-	/*
-	jQuery('.instant-range-feedback [type="range"]').change(function(){
-		var min = jQuery(this).attr('min');
-		var max = jQuery(this).attr('max');
-		var val = jQuery(this).val();
-		var answerSpace = jQuery(this).parents('tr').next();
-		answerSpace.find('.feedback').css('opacity', 1);
-	});
-	*/
-	
-	// Load user-added magic fields if they already have input
-	/* TBD */
 	
 	// Referenced sources numbering:
 	/* TBD */
@@ -484,7 +502,7 @@ runOnUserContent(function() {
 	// Automatically check the "other" box if text input or textarea is filled, uncheck if cleared:
 	jQuery('.checklist-other').bind("keyup blur", function(e) {
 		jQuery(this).siblings('[type="checkbox"], [type="radio"]').prop('checked', ( ( jQuery(this).val() ) ? true : false ) );
-	});
+	}).parent('p').addClass('bz-has-other');
 	
 	// Create a button to toggle transcripts for videos
 	jQuery('.transcript').hide().before(function(){
@@ -495,20 +513,15 @@ runOnUserContent(function() {
 		});;
 	});
 	
-	// Make buttons appear differently once you've submitted:
-	/* jQuery('.bz-box input[type="button"]').click(function(){
-		jQuery(this).attr('data-bz-retained', 'clicked');
-	});*/
-	
 	// Show list items in onboarding module only if there's relevant bz-retained:
 	jQuery('.conditional-show-source').find('input').change(function(){
 		var magicInput = jQuery(this);
-		jQuery('.conditional-show[data-bz-retained='+magicInput.data('bz-retained')+']').each(function(){
+		jQuery('.conditional-show [data-bz-retained='+magicInput.data('bz-retained')+']').each(function(){
 			if( magicInput.val() != "" ) {
-				jQuery(this).parent('li').show();
+				jQuery(this).parents('.conditional-show').show();
 			} else {
 				// if it's empty, hide the whole row:				
-				jQuery(this).parent('li').hide();
+				jQuery(this).parents('.conditional-show').hide();
 			}
 		});
 	

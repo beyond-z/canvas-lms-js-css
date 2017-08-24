@@ -33,7 +33,7 @@
     </p>
     <div class="display-value"><span class="current-value">&nbsp;</span>%</div>
     <p>
-      <input class="for-range bz-toggle-all-next" type="button" value="Done" />
+      <input class="for-range bz-toggle-all-next" type="button" data-bz-retained="authentic-btn-1" value="Done" />
     </p>
   </div>
   <div class="bz-box answer">
@@ -55,7 +55,7 @@
     </p>
     <div class="display-value"><span class="current-value">&nbsp;</span>%</div>
     <p>
-      <input class="for-range bz-toggle-all-next" type="button" value="Done" />
+      <input class="for-range bz-toggle-all-next" type="button" data-bz-retained="authentic-btn-2" value="Done" />
     </p>
   </div>
   <div class="bz-box answer">
@@ -72,7 +72,7 @@
     </p>
     <div class="display-value"><span class="current-value">&nbsp;</span>%</div>
     <p>
-      <input class="for-range bz-toggle-all-next" type="button" value="Done" />
+      <input class="for-range bz-toggle-all-next" type="button" data-bz-retained="authentic-btn-3" value="Done" />
     </p>
   </div>
   <div class="bz-box answer">
@@ -87,7 +87,7 @@
     </p>
     <div class="display-value"><span class="current-value">&nbsp;</span>%</div>
     <p>
-      <input class="for-range bz-toggle-all-next" type="button" value="Done" />
+      <input class="for-range bz-toggle-all-next" type="button" data-bz-retained="authentic-btn-4" value="Done" />
     </p>
   </div>
   <div class="bz-box answer">
@@ -135,11 +135,11 @@
         <p class="feedback inline">We're happy to know you've got a head start on the topic; it means you can help other Fellows and go further together!</p>
       </li>
     </ul>
-    <p><input type="checkbox" data-bz-retained="authentic-009" />Other:<br />
-      <textarea class="checklist-other"  data-bz-retained="authentic-009-other"></textarea>
+    <p><input type="checkbox" data-bz-retained="authentic-009-other" class="bz-optional-magic-field" />Other:<br />
+      <textarea class="checklist-other bz-optional-magic-field"  data-bz-retained="authentic-009-other-text"></textarea>
     </p>
     <p>
-      <input class="bz-toggle-all-next" type="button" value="Done" />
+      <input class="bz-toggle-all-next" type="button" data-bz-retained="authentic-btn-5" value="Done" />
     </p>
   </div>
   <h2 id="how">How do I do this?</h2>
@@ -168,12 +168,13 @@
           <input type="checkbox" data-bz-retained="authentic-014" />
           Do you have a personal experience like this? Write it here:</p>
         <p>
-          <textarea data-bz-share-release data-bz-retained="authentic-015"></textarea>
+          <textarea class="bz-optional-magic-field" data-bz-share-release data-bz-retained="authentic-015"></textarea>
+        	<div class="share-release"><input type="checkbox" data-bz-retained="authentic-015-share-release" checked />I agree to let Braven share this with other Fellows</div>
         </p>
       </li>
     </ul>
     <p>
-      <input class="bz-toggle-all-next selective-feedback" type="button" value="Done" />
+      <input class="bz-toggle-all-next selective-feedback" type="button" data-bz-retained="authentic-btn-6" value="Done" />
     </p>
   </div>
   <div class="bz-box answer">
@@ -223,7 +224,7 @@
       </li>
     </ul>
     <p>
-    	<input type="button" value="Done" class="bz-toggle-all-next" />
+    	<input type="button" data-bz-retained="authentic-btn-7" value="Done" class="bz-toggle-all-next" />
     </p>
   </div>
   <div class="bz-box reflection">
@@ -301,7 +302,7 @@
       </tbody>
     </table>
     <p>
-    <input class="bz-toggle-all-next" type="button" value="Done" />
+    <input class="bz-toggle-all-next" type="button" data-bz-retained="authentic-btn-8" value="Done" />
     </p>
   </div>
   <div class="bz-box answer">
@@ -325,7 +326,7 @@
         <input type="checkbox" data-bz-retained="authentic-037" />
         Only people who are not good enough at what they do to offset any biases.</li>
     </ul>
-    <input class="bz-toggle-all-next" type="button" value="Done" />
+    <input class="bz-toggle-all-next" type="button" data-bz-retained="authentic-btn-9" value="Done" />
   </div>
   <div class="bz-box reflection">
     <h5 class="box-title">Reflect</h5>
@@ -333,7 +334,7 @@
     <p>
       <textarea data-bz-retained="authentic-038"></textarea>
     </p>
-    <input class="bz-toggle-all-next" type="button" value="Done" />
+    <input class="bz-toggle-all-next" type="button" data-bz-retained="authentic-btn-10" value="Done" />
   </div>
   <p>You could probably think of many other times you've experienced stereotype threat in your life up until now. But what about what lies ahead as you navigate your career? You guessed right: you will also experience stereotype threat in the workplace.</p>
   <p>Coping productively with stereotype threat starts with being able to identify when it's happening.</p>
@@ -368,7 +369,7 @@
       </tbody>
     </table>
     <p>
-      <input class="for-match bz-toggle-all-next" type="button" value="Done" />
+      <input class="for-match bz-toggle-all-next" type="button" data-bz-retained="authentic-btn-11" value="Done" />
     </p>
   </div>
   <div class="bz-box answer">
@@ -463,7 +464,7 @@
       </tbody>
     </table>
     <p>
-      <input type="button" class="bz-toggle-all-next" value="Done" />
+      <input type="button" data-bz-retained="authentic-btn-12" class="bz-toggle-all-next for-match" value="Done" />
     </p>
   </div>
   <div class="bz-box answer question">
@@ -512,12 +513,12 @@
   	<h4 class="box-title">Quick Question</h4>
   	<p>How does Neil deGrasse Tyson lead as his authentic self?</p>
     <ul class="radio-list instant-feedback">
-    	<li class="correct"><input type="radio" name="tyson" data-bz-retained="authentic-040" />He becomes an exceptional scientist</li>
-    	<li class="incorrect"><input type="radio" name="tyson" data-bz-retained="authentic-041" />He becomes a Rhodes Scholar</li>
-    	<li class="incorrect"><input type="radio" name="tyson" data-bz-retained="authentic-042" />He becomes a community organizer in economically disadvantaged neighborhoods</li>
-    	<li class="incorrect"><input type="radio" name="tyson" data-bz-retained="authentic-043" />He becomes a TV star</li> 
+    	<li class="correct"><input type="radio" value="option1" name="tyson" data-bz-retained="authentic-tyson" />He becomes an exceptional scientist</li>
+    	<li class="incorrect"><input type="radio" value="option2" name="tyson" data-bz-retained="authentic-tyson" />He becomes a Rhodes Scholar</li>
+    	<li class="incorrect"><input type="radio" value="option3" name="tyson" data-bz-retained="authentic-tyson" />He becomes a community organizer in economically disadvantaged neighborhoods</li>
+    	<li class="incorrect"><input type="radio" value="option4" name="tyson" data-bz-retained="authentic-tyson" />He becomes a TV star</li> 
     </ul>
-    <input class="bz-toggle-all-next" type="button" value="Done" />
+    <input class="bz-toggle-all-next" type="button" data-bz-retained="authentic-btn-13" value="Done" />
   </div>
   <blockquote>
 	  <p>The greatest of people that have ever been in society, they were never versions of someone else. They were themselves.</p>
@@ -528,9 +529,10 @@
     <p>When are some times when you felt you were leading as your authentic, true self?</p>
     <p>
       <textarea data-bz-share-release  data-bz-retained="authentic-044"></textarea>
+      <div class="share-release"><input type="checkbox" data-bz-retained="authentic-044-share-release" checked />I agree to let Braven share this with other Fellows</div>
     </p>
     <p>
-      <input class="bz-toggle-all-next" type="button" value="Done" />
+      <input class="bz-toggle-all-next" type="button" data-bz-retained="authentic-btn-14" value="Done" />
     </p>
   </div>
   <h2 id="wrap-up">Wrap-up</h2>
@@ -544,9 +546,13 @@
     <li>Have a growth mindset: stereotypes cannot define the limits of how far you can go.</li>
   </ul>
   <p> Out of the Big Five components of your personality, your story  and the role you play in it are yours to define and control (self-defined life narrative). </p>
-  <p>In coming weeks you will have the opportunity to work on your narrative through identifying strengths (next week), the Storytelling as Leadership workshop, and the Reflected Best-Self exercise.</p>
-<p>If there's anything you feel less than certain about, feel free to revisit the content, ask on Braven Help, or <a href="mailto:support@bebraven.org" target="_blank">contact us</a> with feedback.</p>
-  <p>See you at the next Learning Lab!</p>
+ <h3>Next Steps:</h3>
+    <ul>
+      <li>In coming weeks you will have the opportunity to work on your narrative through identifying strengths (next week), the Storytelling as Leadership workshop, and the Reflected Best-Self exercise.</li>
+      <li>If there's anything you feel less than certain about regarding the module you just finished feel free to revisit the content, ask on <a href="https://help.bebraven.org" target="_blank">Braven Help</a>, or <a href="mailto:support@bebraven.org" target="_blank">contact us</a> with feedback.</li>
+      <li>To be prepared for Learning Lab, be sure to read through your first project, the <span class="tbd">Design Your Career Project</span>.</li>
+      </li>
+    </ul>
   </div>
 </div>
 <script src="../new-ui-sandbox.js"></script>

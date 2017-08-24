@@ -82,7 +82,7 @@
         Working on interesting things (interesting job content)</li>
     </ul>
     <p>
-      <input class="for-checklist bz-toggle-all-next" type="button" value="Done" />
+      <input class="for-checklist bz-toggle-all-next" type="button" data-bz-retained="unlock-btn-1" value="Done" />
     </p>
   </div>
   <div class="bz-box answer">
@@ -108,7 +108,7 @@
     <input id="gallup-engaged" class="two-thirds" max="100" min="0" step="5" type="range" data-bz-range-answer="30" data-bz-retained="unlock-020" />
     <div class="display-value"><span class="current-value">&nbsp;</span>%</div>
     <p>
-      <input class="for-range bz-toggle-all-next" type="button" value="Done" data-bz-retained="unlock-021" />
+      <input class="for-range bz-toggle-all-next" type="button" data-bz-retained="unlock-btn-2" value="Done" data-bz-retained="unlock-021" />
     </p>
   </div>
   <div class="bz-box answer">
@@ -240,10 +240,12 @@
         </tr>
       </tbody>
     </table>
-    <div class="add-fields-here"><input type="checkbox" data-bz-retained="values-matrix-other" />&nbsp;Add your own if you can't find it/them on the list:
-      <textarea class="checklist-other" data-bz-retained="values-matrix-other-text"></textarea>
-    </div>
-    <p>Feeling stuck? <span class="reveal-next">Click here for hints.</span></p>
+    <p>
+    	<input type="checkbox" data-bz-retained="values-matrix-other" class="bz-optional-magic-field" />
+    	&nbsp;Add your own if you can't find it/them on the list:<br />
+      <textarea class="checklist-other bz-optional-magic-field" data-bz-retained="values-matrix-other-text"></textarea>
+    </p
+    ><p>Feeling stuck? <span class="reveal-next">Click here for hints.</span></p>
     <div id="stuck-with-values" class="tip revealable">
       <p>Here are some questions to help you think through this:</p>
       <ul>
@@ -255,7 +257,7 @@
         <li>Think about a time when you went against something you valued or had to make a particularly tough trade-off. What was that like? What was the context?</li>
       </ul>
     </div>
-    <input class="bz-toggle-all-next" type="button" value="Done" />
+    <input class="bz-toggle-all-next" type="button" data-bz-retained="unlock-btn-3" value="Done" />
   </div>
   <div class="bz-box reflection">
     <h5 class="box-title">Narrow it down</h5>
@@ -267,27 +269,27 @@
         <textarea placeholder="Why this value is important to me" data-bz-retained="unlock-101-text" ></textarea>
       </li>
       <li>
-        <input type="text" placeholder="value" data-bz-retained="unlock-102" />
+        <input class="bz-optional-magic-field" type="text" placeholder="value" data-bz-retained="unlock-102" />
         <br />
-        <textarea placeholder="Why this value is important to me" data-bz-retained="unlock-102-text" ></textarea>
+        <textarea class="bz-optional-magic-field" placeholder="Why this value is important to me" data-bz-retained="unlock-102-text" ></textarea>
       </li>
       <li>
-        <input type="text" placeholder="value" data-bz-retained="unlock-103" />
+        <input class="bz-optional-magic-field" type="text" placeholder="value" data-bz-retained="unlock-103" />
         <br />
-        <textarea placeholder="Why this value is important to me" data-bz-retained="unlock-103-text" ></textarea>
+        <textarea class="bz-optional-magic-field" placeholder="Why this value is important to me" data-bz-retained="unlock-103-text" ></textarea>
       </li>
       <li>
-        <input type="text" placeholder="value" data-bz-retained="unlock-104" />
+        <input class="bz-optional-magic-field" type="text" placeholder="value" data-bz-retained="unlock-104" />
         <br />
-        <textarea placeholder="Why this value is important to me" data-bz-retained="unlock-104-text" ></textarea>
+        <textarea class="bz-optional-magic-field" placeholder="Why this value is important to me" data-bz-retained="unlock-104-text" ></textarea>
       </li>
       <li>
-        <input type="text" placeholder="value" data-bz-retained="unlock-105" />
+        <input class="bz-optional-magic-field" type="text" placeholder="value" data-bz-retained="unlock-105" />
         <br />
-        <textarea placeholder="Why this value is important to me" data-bz-retained="unlock-105-text" ></textarea>
+        <textarea class="bz-optional-magic-field" placeholder="Why this value is important to me" data-bz-retained="unlock-105-text" ></textarea>
       </li>
     </ol>
-    <input class="bz-toggle-all-next" type="button" value="Done" />
+    <input class="bz-toggle-all-next" type="button" data-bz-retained="unlock-btn-4" value="Done" />
   </div>
   <h4>Interests and Passions</h4>
   <div class="bz-box action">
@@ -299,9 +301,12 @@
     <p>Create a vision board representing your interests and passions (not just professional/academic). You can do this digitally by using a service like Pinterest, a slide deck etc. Or you can do it the traditional way, by cutting and pasting clippings from magazines or your own artwork, if you prefer.</p>
     <p class="tip">It doesn't have to be very pretty, so don't go overboard making it perfect! Ten minutes should be more than enough to make a basic board.</p>
     <p>When you're done, paste a link to your vision board (or to a high quality image of it) here:</p>
-    <input type="url" data-bz-share-release data-bz-retained="vision-board" />
-    <br />
-    <input class="bz-toggle-all-next" type="button" value="Done" />
+      <input type="url" data-bz-share-release data-bz-retained="vision-board" />
+      <div class="share-release"><input type="checkbox" data-bz-retained="vision-board-share-release" checked />I agree to let Braven share this with other Fellows</div>
+    </div>
+    <p>
+	    <input class="bz-toggle-all-next" type="button" data-bz-retained="unlock-btn-5" value="Done" />
+    </p>
   </div>
   <div class="bz-box answer">
     <h5 class="box-title">Good job!</h5>
@@ -330,7 +335,7 @@
         <input type="text" data-bz-retained="strengths-05" />
       </li>
     </ol>
-    <input type="button" class="bz-toggle-all-next" value="Done" />
+    <input type="button" data-bz-retained="unlock-btn-6" class="bz-toggle-all-next" value="Done" />
   </div>
   <div class="bz-box reflection">
     <h5 class="box-title">Reflect</h5>
@@ -353,7 +358,7 @@
         <input type="checkbox" value="1" data-bz-retained="unlock-203" />
         Some careers or jobs have more room to apply certain strengths than others, and knowing what those are can help me find a good fit.</li>
     </ul>
-    <input class="for-checklist bz-toggle-all-next" type="button" value="Done" />
+    <input class="for-checklist bz-toggle-all-next" type="button" data-bz-retained="unlock-btn-7" value="Done" />
   </div>
   <div class="bz-box answer">
     <h4 class="box-title">Answer</h4>
@@ -443,7 +448,7 @@
     </table>
     <p>&nbsp;</p>
     <p>
-      <input class="bz-toggle-all-next" type="button" value="Done" />
+      <input class="bz-toggle-all-next" type="button" data-bz-retained="unlock-btn-8" value="Done" />
     </p>
   </div>
   <div class="bz-box answer">
@@ -455,7 +460,7 @@
   <p>You'll be doing more work to define your hustle during this week's Learning Lab. The following should give you a great head start:</p>
   <div class="bz-box question">
     <h4 class="box-title">Quick Question</h4>
-    <p>Imagine you can magically create any job at any organization to fit you perfectly. With your values, interests, and strengths in mind, create up to three wanted ads for such perfect fit jobs:</p>
+    <p>Imagine you can magically create any job at any organization to fit you perfectly. With your values, interests, and strengths in mind, create two to three wanted ads for such perfect fit jobs:</p>
     <ol>
       <li>
         <textarea data-bz-retained="unlock-210"></textarea>
@@ -464,45 +469,52 @@
         <textarea data-bz-retained="unlock-211"></textarea>
       </li>
       <li>
-        <textarea data-bz-retained="unlock-212"></textarea>
+        <textarea class="bz-optional-magic-field" data-bz-retained="unlock-212"></textarea>
       </li>
     </ol>
   </div>
   <div class="bz-box action">
     <h4 class="box-title">Back to the Real World</h4>
     <p>Take a few minutes to search job sites using your strengths and values as search keywords (<a href="https://portal.bebraven.org/courses/27/pages/recommended-resources-for-your-opportunity-hunt?module_item_id=3757" target="_blank">find a list of job search sites here</a>).</p>
-    <p>List any jobs you find that align with your hustle here:</p>
+    <p>List any jobs you find that align with your hustle here (list the job titles or link to the jobs postings):</p>
     <p><textarea data-bz-retained="unlock-213"></textarea></p>
-    <p>What came up?</p>
-    <ul class="instant-feedback checklist dont-mix">
+    <p>Looking at the job postings, what do you see?</p>
+    <ul class="instant-feedback radio-list dont-mix">
       <li>
-        <input type="checkbox" data-bz-retained="unlock-214" />
+        <input type="radio" name="unlock-214" value="nothing" data-bz-retained="unlock-214" />
         <q>Nothing that would interest me.</q>
         <p class="feedback inline">Don't fret. The jobs you're looking for might be using different terms to describe what they're looking for, or might be advertising in other places. And at least you have a sense of what you don't want, which narrows down the search.</p>
       </li>
       <li>
-        <input type="checkbox" data-bz-retained="unlock-215" />
+        <input type="radio" name="unlock-214" value="surprise" data-bz-retained="unlock-214" />
         <q>Some surprising things I wasn't even thinking about.</q>
         <p class="feedback inline">Great! Take note of these surprising jobs and explore them further. You may be onto something.</p>
       </li>
       <li>
-        <input type="checkbox" data-bz-retained="unlock-216" />
+        <input type="radio" name="unlock-214" value="lots" data-bz-retained="unlock-214" />
         <q>Lots of jobs that would interest me.</q>
         <p class="feedback inline">That's great! You're way ahead of the game.</p>
       </li>
     </ul>
-    <p>Other:</p>
-    <textarea class="checklist-other" data-bz-retained="unlock-217-other"></textarea>
-    <p><input class="bz-toggle-all-next" type="button" data-bz-retained="unlock-217-other-text" value="Done" />
+    <p><input type="checkbox" data-bz-retained="unlock-217-other" class="bz-optional-magic-field" />Other:</p>
+    	<textarea class="checklist-other bz-optional-magic-field" data-bz-retained="unlock-217-other-text"></textarea>
+    </p>
+    <p>
+    <input class="bz-toggle-all-next" type="button" data-bz-retained="unlock-btn-9" value="Done" />
 		</p>
   </div>
   <h2 id="wrap-up">Wrap-up</h2>
   <div>
   <p>A career that is aligned with your head (what you're good at) and your heart (what you love to do) is likelier to make you happy and successful. Remember the following equation:</p>
   <p class="match-heading-style">HEAD + HEART = HUSTLE</p>
-  <p>In Learning Lab this week, you'll dig deeper into your head and heart in order to explore career paths aligned with your hustle.
-</p>
-  <p>As always, if there are any loose ends feel free to run through the module again, talk to other Fellows on BravenHelp, talk to your cohort mates or Leadership Coach, or simply ask us directly: <a href="mailto:support@bebraven.org" target="_blank">support@bebraven.org</a>.</p>
+	<h3>Next Steps:</h3>
+    <ul>
+      <li>If there's anything you feel less than certain about, feel free to revisit the content, ask on <a href="https://help.bebraven.org" target="_blank">Braven Help</a>, or <a href="mailto:support@bebraven.org" target="_blank">contact us</a> with feedback.</li>
+      <li>In Learning Lab this week, you'll dig deeper into your head and heart in order to explore career paths aligned with your hustle.</li>
+      <li>Be sure to begin working on the first part of the <span class="tbd">Design Your Career Project</span>.</li>
+      <li>Select a Song of Significance <span class="tbd">(link to assignment)</span> for Learning Lab this week.</li>
+    </ul>
+
   <p>See you at the next Learning Lab!</p>
   </div>
   

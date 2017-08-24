@@ -51,7 +51,7 @@
       </li>
     </ul>
     <p>
-      <input type="button" class="bz-toggle-all-next" value="Done" />
+      <input type="button" data-bz-retained="path-btn-1" class="bz-toggle-all-next" value="Done" />
     </p>
   </div>
   <div class="bz-box answer">
@@ -82,7 +82,7 @@
     <p>What is your definition of a vision?</p>
     <textarea data-bz-retained="unlock-005"></textarea>
     <p>
-      <input type="button" class="bz-toggle-all-next" value="Done" />
+      <input type="button" data-bz-retained="path-btn-2" class="bz-toggle-all-next" value="Done" />
     </p>
   </div>
   <div class="bz-box answer">
@@ -174,7 +174,7 @@
       </li>
     </ul>
     <p>
-    	<input type="button" class="bz-toggle-all-next" value="Done" />
+    	<input type="button" data-bz-retained="path-btn-3" class="bz-toggle-all-next" value="Done" />
     </p>
   </div>
   <div class="bz-box question">
@@ -239,7 +239,7 @@
       </li>
     </ul>
     <p>
-      <input type="button" class="bz-toggle-all-next" value="Done" />
+      <input type="button" data-bz-retained="path-btn-4" class="bz-toggle-all-next" value="Done" />
     </p>
   </div>
   <div class="bz-box reflection">
@@ -248,13 +248,16 @@
     <textarea data-bz-retained="my_vision"></textarea>
     <p class="tip">If you're having trouble thinking of a vision, remember your hustle from last week. And remember, it's completely normal to be unsure of what you want to do, but it's better to have a tentative vision than none at all. </p>
     <p>
-      <input type="button" class="bz-toggle-all-next" value="Done" />
+      <input type="button" data-bz-retained="path-btn-5" class="bz-toggle-all-next" value="Done" />
     </p>
   </div>
   <div class="bz-box question">
     <h5 class="box-title">Did you hit the mark?</h5>
     <p>Use the checklist below to make sure your vision statement meets all the right criteria (and to fix what's missing):</p>
-    <textarea data-bz-retained="my_vision" data-bz-share-release></textarea>
+    <p>
+	    <textarea data-bz-retained="my_vision" data-bz-share-release></textarea>
+      <div class="share-release"><input type="checkbox" data-bz-retained="my_vision-share-release" checked />I agree to let Braven share this with other Fellows</div>
+    </p>
     <ul class="checklist">
       <li>
          <input type="checkbox" data-bz-retained="path-045" />
@@ -282,7 +285,7 @@
       </li>
     </ul>
     <p>
-      <input type="button" class="bz-toggle-all-next" value="Done" />
+      <input type="button" data-bz-retained="path-btn-6" class="bz-toggle-all-next" value="Done" />
     </p>
   </div>
   <h3>How to know when you've achieved your vision (goals)</h3>
@@ -304,13 +307,13 @@
         <td width="50%"><img width="100%" alt="Wheelchair racer Paul Nunnari celebrates victory at a 2000 Sydney Paralympics race" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/141100_-_Athletics_wheelchair_racing_Paul_Nunnari_celebrates_-_3b_-_2000_Sydney_race_photo.jpg/512px-141100_-_Athletics_wheelchair_racing_Paul_Nunnari_celebrates_-_3b_-_2000_Sydney_race_photo.jpg"/></td>
       </tr>
       <tr>
-        <td class="correct"><input type="radio" name="goalvsvision" data-bz-retained="unlock-051" />
+        <td class="correct"><input type="radio" value="goal" class="bz-optional-magic-field" name="goalvsvision" data-bz-retained="unlock-goalvsvision" />
           This one</td>
-        <td class="incorrect"><input type="radio" name="goalvsvision" data-bz-retained="unlock-052" />
+        <td class="incorrect"><input type="radio" value="vision" class="bz-optional-magic-field" name="goalvsvision" data-bz-retained="unlock-goalvsvision" />
           This one</td>
     </table>
     <p>
-      <input type="button" class="bz-toggle-all-next" value="Done" />
+      <input type="button" data-bz-retained="path-btn-7" class="bz-toggle-all-next" value="Done" />
     </p>
   </div>
   <div class="bz-box answer">
@@ -342,6 +345,9 @@
         <td>You must reach the finish line within a certain time, at least before they take it down and call it a day.</td>
       </tr>
     </table>
+    <p>
+      <input type="button" data-bz-retained="path-btn-7b" class="bz-toggle-all-next for-match" value="Done" />
+    </p>
   </div>
   <div class="bz-box question">
     <h5 class="box-title">Let's practice a bit</h5>
@@ -434,7 +440,7 @@
       </tbody>
     </table>
     <p>
-      <input type="button" class="bz-toggle-all-next" value="Done" />
+      <input type="button" data-bz-retained="path-btn-8" class="bz-toggle-all-next" value="Done" />
     </p>
   </div>
   <div class="bz-box question">
@@ -458,7 +464,7 @@
       </tr>
     </table>
     <p>
-      <input type="button" class="bz-toggle-all-next" value="Done" />
+      <input type="button" data-bz-retained="path-btn-9" class="bz-toggle-all-next for-match" value="Done" />
     </p>
   </div>
   <div class="bz-box action">
@@ -487,7 +493,7 @@
     <textarea data-bz-retained="my_smart_goal"></textarea>
     <p>Remember it's okay if you decide to modify your goal later, just keep it SMART. It's not set in stone!</p>
     <p>
-      <input type="button" class="bz-toggle-all-next" value="Done" />
+      <input type="button" data-bz-retained="path-btn-10" class="bz-toggle-all-next" value="Done" />
     </p>
   </div>
   <blockquote>"A goal without a plan is just a wish."</blockquote>
@@ -497,20 +503,20 @@
     <p>When you go on a trip, what's the optimal way to decide what to pack?</p>
     <ul class="radio-list">
       <li class="incorrect">
-        <input type="radio" name="packing" data-bz-retained="path-110" />
+        <input type="radio" value="option1" name="packing" data-bz-retained="path-packing" />
         Just take whatever's clean and stuff it in my suitcase</li>
       <li class="incorrect">
-        <input type="radio" name="packing" data-bz-retained="path-111" />
+        <input type="radio" value="option2" name="packing" data-bz-retained="path-packing" />
         I'll just buy what I need when I get there</li>
       <li class="correct">
-        <input type="radio" name="packing" data-bz-retained="path-112" />
+        <input type="radio" value="option3" name="packing" data-bz-retained="path-packing" />
         Find out what the weather will be like, what activities I'll be doing, and consider how long I'll be staying to decide what to bring.</li>
       <li class="incorrect">
-        <input type="radio" name="packing" data-bz-retained="path-113" />
+        <input type="radio" value="option4" name="packing" data-bz-retained="path-packing" />
         I travel ultra-light. Just a toothbrush and a bottle opener.</li>
     </ul>
     <p>
-      <input type="button" class="bz-toggle-all-next" value="Done" />
+      <input type="button" data-bz-retained="path-btn-11" class="bz-toggle-all-next" value="Done" />
     </p>
   </div>
   <div class="bz-box answer">
@@ -541,54 +547,54 @@
         <div class="milestone">
           <div class="desc"><strong>Fill this box last!</strong> Scroll to the bottom and fill the boxes back up to here)</div>
           <div class="flag-wrapper">
-            <input type="text" placeholder="Year" data-bz-retained="dyc-0502" />
+            <input class="bz-optional-magic-field" type="text" placeholder="Year" data-bz-retained="dyc-0502" />
             <br />
-            <textarea class="flag" placeholder="" data-bz-retained="dyc-0503"></textarea>
+            <textarea class="bz-optional-magic-field flag" placeholder="" data-bz-retained="dyc-0503"></textarea>
           </div>
         </div>
       </li>
       <li>
         <div class="milestone">
           <div class="flag-wrapper">
-            <input type="text" placeholder="Year" data-bz-retained="dyc-0510" />
+            <input class="bz-optional-magic-field" type="text" placeholder="Year" data-bz-retained="dyc-0510" />
             <br />
-            <textarea class="flag" placeholder="" data-bz-retained="dyc-0511"></textarea>
+            <textarea class="bz-optional-magic-field flag" placeholder="" data-bz-retained="dyc-0511"></textarea>
           </div>
         </div>
       </li>
       <li>
         <div class="milestone">
           <div class="flag-wrapper">
-            <input type="text" placeholder="Year" data-bz-retained="dyc-0520" />
+            <input class="bz-optional-magic-field" type="text" placeholder="Year" data-bz-retained="dyc-0520" />
             <br />
-            <textarea class="flag" placeholder="" data-bz-retained="dyc-0521"></textarea>
+            <textarea class="bz-optional-magic-field flag" placeholder="" data-bz-retained="dyc-0521"></textarea>
           </div>
         </div>
       </li>
       <li>
         <div class="milestone">
           <div class="flag-wrapper">
-            <input type="text" placeholder="Year" data-bz-retained="dyc-0530" />
+            <input class="bz-optional-magic-field" type="text" placeholder="Year" data-bz-retained="dyc-0530" />
             <br />
-            <textarea class="flag" placeholder="" data-bz-retained="dyc-0531"></textarea>
+            <textarea class="bz-optional-magic-field flag" placeholder="" data-bz-retained="dyc-0531"></textarea>
           </div>
         </div>
       </li>
       <li>
         <div class="milestone">
           <div class="flag-wrapper">
-            <input type="text" placeholder="Year" data-bz-retained="dyc-0540" />
+            <input class="bz-optional-magic-field" type="text" placeholder="Year" data-bz-retained="dyc-0540" />
             <br />
-            <textarea class="flag" placeholder="" data-bz-retained="dyc-0541"></textarea>
+            <textarea class="bz-optional-magic-field flag" placeholder="" data-bz-retained="dyc-0541"></textarea>
           </div>
         </div>
       </li>
       <li>
         <div class="milestone">
           <div class="flag-wrapper">
-            <input type="text" placeholder="Year" data-bz-retained="dyc-0550" />
+            <input class="bz-optional-magic-field" type="text" placeholder="Year" data-bz-retained="dyc-0550" />
             <br />
-            <textarea class="flag" placeholder="" data-bz-retained="dyc-0551"></textarea>
+            <textarea class="bz-optional-magic-field flag" placeholder="" data-bz-retained="dyc-0551"></textarea>
           </div>
           <div class="desc"><strong>Remember:</strong> You don&rsquo;t have to fill up all the boxes.</div>
         </div>
@@ -596,27 +602,27 @@
       <li>
         <div class="milestone">
           <div class="flag-wrapper">
-            <input type="text" placeholder="Year" data-bz-retained="dyc-0560" />
+            <input class="bz-optional-magic-field" type="text" placeholder="Year" data-bz-retained="dyc-0560" />
             <br />
-            <textarea class="flag" placeholder="" data-bz-retained="dyc-0561"></textarea>
+            <textarea class="bz-optional-magic-field flag" placeholder="" data-bz-retained="dyc-0561"></textarea>
           </div>
         </div>
       </li>
       <li>
         <div class="milestone">
           <div class="flag-wrapper">
-            <input type="text" placeholder="Year" data-bz-retained="dyc-0570" />
+            <input class="bz-optional-magic-field" type="text" placeholder="Year" data-bz-retained="dyc-0570" />
             <br />
-            <textarea class="flag" placeholder="" data-bz-retained="dyc-0571"></textarea>
+            <textarea class="bz-optional-magic-field flag" placeholder="" data-bz-retained="dyc-0571"></textarea>
           </div>
         </div>
       </li>
       <li>
         <div class="milestone">
           <div class="flag-wrapper">
-            <input type="text" placeholder="Year" data-bz-retained="dyc-0580" />
+            <input class="bz-optional-magic-field" type="text" placeholder="Year" data-bz-retained="dyc-0580" />
             <br />
-            <textarea class="flag" placeholder="" data-bz-retained="dyc-0581"></textarea>
+            <textarea class="bz-optional-magic-field flag" placeholder="" data-bz-retained="dyc-0581"></textarea>
           </div>
         </div>
       </li>
@@ -634,7 +640,7 @@
         <div class="milestone final">
           <div class="desc"><strong>Start here:</strong> This is your destination, about 10 years from now.</div>
           <div class="flag-wrapper">
-            <input type="text" placeholder="Year" data-bz-insert-offset-year="10" data-bz-retained="dyc-0598" />
+            <input class="bz-optional-magic-field" type="text" placeholder="Year" data-bz-insert-offset-year="10" data-bz-retained="dyc-0598" />
             <br />
             <textarea class="flag" placeholder="" data-bz-retained="my_smart_goal"></textarea>
           </div>
@@ -642,7 +648,7 @@
       </li>
     </ul>
     <p>
-      <input type="button" class="bz-toggle-all-next" value="Done" />
+      <input type="button" data-bz-retained="path-btn-12" class="bz-toggle-all-next" value="Done" />
     </p>
   </div>
   <h4>BACKWARDS PLANNING FROM YOUR GRADUATION SMART GOALS</h4>
@@ -688,7 +694,7 @@
         How long it took you to finish college </li>
     </ul>
     <p>
-      <input type="button" class="for-checklist bz-toggle-all-next" value="Done" />
+      <input type="button" data-bz-retained="path-btn-13" class="for-checklist bz-toggle-all-next" value="Done" />
     </p>
   </div>
   <div class="bz-box answer">
@@ -761,7 +767,7 @@
          <input type="checkbox" data-bz-retained="path-143" />
         Work with mentors</li>
     </ul>
-    <input type="button" class="for-checklist bz-toggle-all-next" value="Done" />
+    <input type="button" data-bz-retained="path-btn-14" class="for-checklist bz-toggle-all-next" value="Done" />
   </div>
   <div class="bz-box answer">
     <h5 class="box-title">Answer</h5>
@@ -771,7 +777,7 @@
     <h5 class="box-title">Quick Practice</h5>
     <p>As part of your Design Your Career Project, you will create your own personal College Roadmap. You will use it to backwards plan from your graduation SMART goals &mdash; where you'll be by the time you graduate.</p>
     <p>Backwards planning means coming up with milestones. Try to sort the boxes in the following example College Roadmap, to get a better sense of how they work: (slide the cells up and down to order them correctly in each column)</p>
-    <table class="sort-to-match instant-feedback">
+    <table class="sort-to-match">
       <thead>
         <tr class="no-zebra">
           <th>&nbsp;</th>
@@ -801,7 +807,7 @@
       </tbody>
     </table>
     <br />
-    <table class="sort-to-match instant-feedback">
+    <table class="sort-to-match">
       <thead>
         <tr class="no-zebra">
           <th>&nbsp;</th>
@@ -831,19 +837,23 @@
         </tr>
       </tbody>
     </table>
+		<p>
+    	<input type="button" data-bz-retained="path-btn-14b" class="bz-toggle-all-next for-match" value="Done" />
+   	</p>
+
   </div>
   <div class="bz-box question">
     <h5 class="box-title">One last quick question about milestones</h5>
     <p>Which is more near-term:</p>
     <ul class="radio-list">
       <li class="incorrect">
-        <input type="radio" name="which-is-near-term" data-bz-retained="path-145" />
+        <input type="radio" value="goal" name="which-is-near-term" data-bz-retained="which-is-near-term" />
         Goal</li>
       <li class="correct">
-        <input type="radio" name="which-is-near-term" data-bz-retained="path-146" />
+        <input type="radio" value="milestone" name="which-is-near-term" data-bz-retained="which-is-near-term" />
         Milestone</li>
     </ul>
-    <input type="button" class="bz-toggle-all-next for-radio-list" value="Done" />
+    <input type="button" data-bz-retained="path-btn-15" class="bz-toggle-all-next for-radio-list" value="Done" />
   </div>
   <div class="bz-box answer">
     <h5 class="box-title">Answer</h5>
@@ -1054,7 +1064,7 @@
         Teachers</li>
     </ul>
     <p>
-      <input type="button" class="for-checklist bz-toggle-all-next" value="Done" />
+      <input type="button" data-bz-retained="path-btn-16" class="for-checklist bz-toggle-all-next" value="Done" />
     </p>
   </div>
   <div class="bz-box answer">
@@ -1100,7 +1110,7 @@
       </table>
     </div>
     <p>
-      <input type="button" class="bz-toggle-all-next" value="Done" />
+      <input type="button" data-bz-retained="path-btn-17" class="bz-toggle-all-next for-match" value="Done" />
     </p>
   </div>
   <h2 id="wrap-up">Wrap-up</h2>
@@ -1113,8 +1123,12 @@
       <li>And we looked at the six most important goals you should plan to achieve by graduation</li>
     </ul>
     <p>And finally, in this week's Productivity Corner, we looked at some tips for making effective stand-alone slide decks.</p>
-    <p>If there's anything you feel less than certain about, feel free to revisit the content, ask on Braven Help, or <a href="mailto:support@bebraven.org" target="_blank">contact us</a> with feedback.</p>
-    <p>See you at the next Learning Lab!</p>
+		<h3>Next Steps:</h3>
+    <ul>
+      <li>If there's anything you feel less than certain about, feel free to revisit the content, ask on <a href="https://help.bebraven.org" target="_blank">Braven Help</a>, or <a href="mailto:support@bebraven.org" target="_blank">contact us</a> with feedback.</li>
+      <li>To stay on track, complete the <strong>first part</strong> of your <span class="tbd">Design Your Career Project</span> this week. You have a head start: you've already begun working on parts 2 and 3 by completing this module!</li>
+    </ul>
+
   </div>
 </div>
 <script src="../new-ui-sandbox.js"></script>
