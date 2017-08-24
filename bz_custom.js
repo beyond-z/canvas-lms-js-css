@@ -272,7 +272,17 @@ runOnUserContent(function() {
 	
 	// Sort to match:
 		function sortToMatchSetup() {
-		var sortToMatch = document.querySelectorAll(".sort-to-match td");
+			function isValidDropTarget(event, dropping) {
+				var dragging = document.getElementById(event.dataTransfer.getData("text/id"));
+				if(!dragging)
+					return false;
+				if(dragging.getAttribute("data-column-number") == dropping.getAttribute("data-column-number"))
+					return true;
+				return false;
+			}
+
+		// skip the first column as it is a label column
+		var sortToMatch = document.querySelectorAll(".sort-to-match td:not(:first-child)");
 		for(var i = 0; i < sortToMatch.length; i++) {
 			var td = sortToMatch[i];
 
@@ -294,6 +304,7 @@ runOnUserContent(function() {
 
 			// make the tds valid drop targets
 			td.addEventListener("dragenter", function(event) {
+				if(!isValidDropTarget(event, this)) return true;
 				event.preventDefault();
 				this.className += " inside-dragging";
 			});
@@ -301,6 +312,7 @@ runOnUserContent(function() {
 				this.className = this.className.replace(" inside-dragging", "");
 			});
 			td.addEventListener("dragover", function(event) {
+				if(!isValidDropTarget(event, this)) return true;
 				event.preventDefault();
 			});
 			td.addEventListener("drop", function(event) {
@@ -324,12 +336,14 @@ runOnUserContent(function() {
 				this.className = this.className.replace(" inside-dragging", "");
 
 
+				/*
 				// delete these next few lines if you don't
 				// want instant feedback (prolly don't)
 				var parentTable = this;
 				while(parentTable.tagName != "TABLE")
 					parentTable = parentTable.parentNode;
 				sortToMatchCheck(parentTable);
+				*/
 			});
 		}
 
@@ -368,9 +382,25 @@ runOnUserContent(function() {
 					draggables[random] = draggables[draggables.length - 1];
 					draggables.length -= 1;
 				}
+
 				// then put the random stuff back in the table.
-				for(var a = 0; a < shuffled.length; a++)
+				var allInOrder = true; // in order is a legit shuffle, but we don't want it....
+				for(var a = 0; a < shuffled.length; a++) {
+					if(shuffled[a].id.replace("draggable", "droppable") == droppables[a].id) {
+						// we shuffled but randomly ended up with all in order...
+						// so we'll swap the final item so the user has to do something
+						if(allInOrder && a == shuffled.length - 2) {
+							var tmp = shuffled[a];
+							shuffled[a] = shuffled[a + 1];
+							shuffled[a + 1] = tmp;
+						}
+					} else {
+						allInOrder = false;
+					}
 					droppables[a].appendChild(shuffled[a]);
+					shuffled[a].setAttribute("data-column-number", col);
+					droppables[a].setAttribute("data-column-number", col);
+				}
 			}
 		}
 	}
