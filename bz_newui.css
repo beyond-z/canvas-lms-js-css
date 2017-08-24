@@ -63,12 +63,6 @@ th,
 	font-size: 1.2em;
 }
 
-#menu a.menu-item-no-drop:focus,
-#menu a.menu-item-no-drop:hover,
-#menu a.menu-item a:visited {
-	color: #fff;
-}
-
 .bz-module {
 	font-size: 18px;
 	line-height: 1.25;
@@ -87,6 +81,12 @@ a,
 
 a:visited {
 	color: #235877;
+}
+
+#menu a.menu-item-no-drop:focus,
+#menu a.menu-item-no-drop:hover,
+#menu .menu-item a:visited {
+	color: #fff;
 }
 
 h2,
@@ -129,7 +129,7 @@ h5,
 }
 
 .box-title {
-	margin: 0;
+	margin: 0 0 0.5em;
 	text-align: left;
 	color: #222;
 }
@@ -704,7 +704,6 @@ progress[value]::-webkit-progress-bar {
   background-color: #ee2640;
   color: white;
   font-weight: bold;
-
   position: absolute;
   bottom: 8px;
   left: 12px;
@@ -957,7 +956,9 @@ figcaption {
 }
 
 .checklist [type='checkbox'],
-.radio-list [type='radio'] {
+.radio-list [type='radio'],
+.bz-has-other [type='checkbox'],
+.bz-has-other [type='radio'] {
 	position: absolute;
 	left: 0;
 }
@@ -1345,6 +1346,20 @@ expectations-aligned-w-reasons * {
 
 .checklist-other {
 	margin: 1em 0;
+}
+
+.bz-has-other {
+	padding-left: 2em;
+	position: relative;
+}
+
+.equal-column-widths td {
+	width: 1%;
+}
+
+.auto-image-widths img {
+	width: 100%;
+	height: auto;
 }
 
 .for-range,
