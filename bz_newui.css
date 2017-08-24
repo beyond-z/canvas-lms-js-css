@@ -1029,6 +1029,7 @@ input[type='button'].add-other-field {
 
 figure {
 	margin: 30px 0;
+	text-align: center;
 }
 
 .media-duration {
@@ -1141,7 +1142,6 @@ table {
 figcaption {
 	width: 66%;
 	margin: 0.5em 17%;
-	text-align: center;
 }
 
 .bz-box textarea {
@@ -1589,10 +1589,12 @@ expectations-aligned-w-reasons * {
 .inside-dragging {
 	border: dashed 2px black;
 }
- .sort-to-match .correct, .sort-to-match:not(.no-zebra) tr.correct:nth-child(odd):not(.no-zebra) {
+ .sort-to-match.show-answers .correct, 
+ .sort-to-match.show-answers:not(.no-zebra) tr.correct:nth-child(odd):not(.no-zebra) {
  background: #22B573;
 }
- .sort-to-match .incorrect, .sort-to-match:not(.no-zebra) tr.incorrect:nth-child(odd):not(.no-zebra) {
+ .sort-to-match.show-answers .incorrect, 
+ .sort-to-match.show-answers:not(.no-zebra) tr.incorrect:nth-child(odd):not(.no-zebra) {
  background: #EB3B46;
 }
 
