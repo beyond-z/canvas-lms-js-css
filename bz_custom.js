@@ -329,15 +329,12 @@ runOnUserContent(function() {
 
 				this.className = this.className.replace(" inside-dragging", "");
 
-
-				/*
 				// delete these next few lines if you don't
 				// want instant feedback (prolly don't)
 				var parentTable = this;
 				while(parentTable.tagName != "TABLE")
 					parentTable = parentTable.parentNode;
 				sortToMatchCheck(parentTable);
-				*/
 			});
 		}
 
