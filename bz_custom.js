@@ -266,8 +266,11 @@ runOnUserContent(function() {
 	
 	// Sort to match:
 		function sortToMatchSetup() {
+			// on chrome, it doesn't allow getData in anything but the drop event
+			// so i use this helper variable instead...
+			var currentlyDragging = null;
 			function isValidDropTarget(event, dropping) {
-				var dragging = document.getElementById(event.dataTransfer.getData("text/id"));
+				var dragging = currentlyDragging;
 				if(!dragging)
 					return false;
 				if(dragging.getAttribute("data-column-number") == dropping.getAttribute("data-column-number"))
@@ -294,6 +297,7 @@ runOnUserContent(function() {
 			// make it draggable
 			wrapper.addEventListener("dragstart", function(event) {
 				event.dataTransfer.setData("text/id", this.getAttribute("id"));
+				currentlyDragging = this; // need for a chrome hack
 			});
 
 			// make the tds valid drop targets
@@ -328,6 +332,7 @@ runOnUserContent(function() {
 
 
 				this.className = this.className.replace(" inside-dragging", "");
+				currentlyDragging = null;
 
 				// delete these next few lines if you don't
 				// want instant feedback (prolly don't)
