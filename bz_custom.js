@@ -250,41 +250,11 @@ runOnUserContent(function() {
 			liParent.siblings().removeClass('show-answers');
 		}
 	});
-	
-	
-	function bzToggleInputFeedback(input){
-		var currentInput = jQuery(this);
-		console.log(currentInput.html());
-		var currentListItem = jQuery(this).parents('li'); //.addClass('show-answers');
-		console.log(currentListItem.html());
-		/* var feedback = currentListItem.find('.feedback');
-		if (currentInput.is(':checked')) {
-			feedback.slideDown();
-		} else {
-			feedback.slideUp();
-			if (currentListItem.is('.correct')) {
-				currentListItem.addClass('unchecked');
-			} else {
-				currentListItem.removeClass('show-answers');
-			}
-		}
-		*/
-	}
 		
 	// Reveal hidden content immediately following a hint button:
 	jQuery('.reveal-next').click(function(){
 		jQuery(this).parent().next().slideToggle();
 	});
-	
-	// Allow users to add a Magic Field text input for "other" answers: 
-	/*
-	jQuery('.add-other-field').val('+ Add another text field').click(function(){
-		jQuery(this).closest('.add-fields-here').append(function(){
-  		var newField = '<p><input type="text" data-bz-retained="blah" /></p>';
-	  	return newField;
-  	});
-	});
-	*/
 	
 	// Add share release checkbox where applicable:
 	jQuery('[data-bz-share-release]').after(function(){
@@ -292,21 +262,7 @@ runOnUserContent(function() {
 		return shareRelease;
 	});
 	
-	// Show answers based on what's checked:
-	/*
-	jQuery('.selective-feedback').click(function(){
-		jQuery(this).parents('.question').next('.answer').find('[data-bz-reference]').each(function(){
-			var ref = jQuery(this).attr('data-bz-reference');
-			var refCheckbox = jQuery('[data-bz-retained="'+ref+'"]');
-			if( jQuery(refCheckbox).is(':checked') ) {
-				jQuery(this).show();
-			} else {
-				jQuery(this).hide();
-			}
-		});
-	});
-	*/
-	// 
+	// Check/uncheck boxes by clicking surrounding table cell
 	jQuery(".selectable-cells td").click(function(){ 
 		jQuery(this).toggleClass('inner-checked').find('input').each(function(){
 			// toggle the input inside the cell:
@@ -455,13 +411,27 @@ runOnUserContent(function() {
 	});
 	
 	// Instant feedback when sliding range input about "how are you feeling":
-	jQuery('.instant-mood [type="range"]').change(function(){
+	jQuery('[data-bz-range-flr]').each(function() {
+		var feedback = jQuery(this);
+		var fbFlr = jQuery(this).data('bz-range-flr');
+		var fbClg = jQuery(this).data('bz-range-clg');
+		// Listen to changes in the associated input and toggle display as needed:
+		feedback.parents('tr').prev().find('input').change(function(){
+			var rangeValue = jQuery(this).val();
+			if ( fbFlr < rangeValue && rangeValue <= fbClg ) {
+				feedback.slideDown().siblings().slideUp();					
+			}
+		});
+	});
+	/*
+	jQuery('.instant-range-feedback [type="range"]').change(function(){
 		var min = jQuery(this).attr('min');
 		var max = jQuery(this).attr('max');
 		var val = jQuery(this).val();
 		var answerSpace = jQuery(this).parents('tr').next();
 		answerSpace.find('.feedback').css('opacity', 1);
 	});
+	*/
 	
 	// Load user-added magic fields if they already have input
 	/* TBD */
@@ -526,12 +496,25 @@ runOnUserContent(function() {
 	});
 	
 	// Make buttons appear differently once you've submitted:
-	jQuery('.bz-box input[type="button"]').click(function(){
+	/* jQuery('.bz-box input[type="button"]').click(function(){
 		jQuery(this).attr('data-bz-retained', 'clicked');
-	});
+	});*/
+	
+	// Show list items in onboarding module only if there's relevant bz-retained:
+	jQuery('.conditional-show-source').find('input').change(function(){
+		var magicInput = jQuery(this);
+		jQuery('.conditional-show[data-bz-retained='+magicInput.data('bz-retained')+']').each(function(){
+			if( magicInput.val() != "" ) {
+				jQuery(this).parent('li').show();
+			} else {
+				// if it's empty, hide the whole row:				
+				jQuery(this).parent('li').hide();
+			}
+		});
+	
+	}).change();
 	
 	/* END NEW UI STUFF */
-
 	
 });
 
