@@ -256,12 +256,6 @@ runOnUserContent(function() {
 		jQuery(this).parent().next().slideToggle();
 	});
 	
-	// Add share release checkbox where applicable:
-	jQuery('[data-bz-share-release]').after(function(){
-		var shareRelease = '<div class="share-release"><input type="checkbox" checked />I agree to let Braven share this with other Fellows</div>';
-		return shareRelease;
-	});
-	
 	// Check/uncheck boxes by clicking surrounding table cell
 	jQuery(".selectable-cells td").click(function(){ 
 		jQuery(this).toggleClass('inner-checked').find('input').each(function(){
