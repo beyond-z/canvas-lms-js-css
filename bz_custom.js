@@ -519,9 +519,16 @@ runOnUserContent(function() {
 		});;
 	});
 	
-	// Show list items in onboarding module only if there's relevant bz-retained:
-	jQuery('.conditional-show-source').find('input').change(function(){
-		var magicInput = jQuery(this);
+	// Show parent only if the child's bz-retained is populated:
+	jQuery('.conditional-show-source').find('input').each(function(){ 
+		// init when the page loads:
+		showIfMagicIsPopulated(jQuery(this));
+	}).change(function(){
+		// keep updating if user makes changes:
+		showIfMagicIsPopulated(jQuery(this));
+	});
+
+	function showIfMagicIsPopulated(magicInput) {
 		jQuery('.conditional-show [data-bz-retained='+magicInput.data('bz-retained')+']').each(function(){
 			if( magicInput.val() != "" ) {
 				jQuery(this).parents('.conditional-show').show();
@@ -530,8 +537,7 @@ runOnUserContent(function() {
 				jQuery(this).parents('.conditional-show').hide();
 			}
 		});
-	
-	}).change();
+	}
 	
 	/* END NEW UI STUFF */
 	
