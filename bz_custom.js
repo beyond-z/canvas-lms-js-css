@@ -484,7 +484,7 @@ runOnUserContent(function() {
 	// Automatically check the "other" box if text input or textarea is filled, uncheck if cleared:
 	jQuery('.checklist-other').bind("keyup blur", function(e) {
 		jQuery(this).siblings('[type="checkbox"], [type="radio"]').prop('checked', ( ( jQuery(this).val() ) ? true : false ) );
-	});
+	}).parent('p').addClass('bz-has-other');
 	
 	// Create a button to toggle transcripts for videos
 	jQuery('.transcript').hide().before(function(){
@@ -503,12 +503,12 @@ runOnUserContent(function() {
 	// Show list items in onboarding module only if there's relevant bz-retained:
 	jQuery('.conditional-show-source').find('input').change(function(){
 		var magicInput = jQuery(this);
-		jQuery('.conditional-show[data-bz-retained='+magicInput.data('bz-retained')+']').each(function(){
+		jQuery('.conditional-show [data-bz-retained='+magicInput.data('bz-retained')+']').each(function(){
 			if( magicInput.val() != "" ) {
-				jQuery(this).parent('li').show();
+				jQuery(this).parents('.conditional-show').show();
 			} else {
 				// if it's empty, hide the whole row:				
-				jQuery(this).parent('li').hide();
+				jQuery(this).parents('.conditional-show').hide();
 			}
 		});
 	
