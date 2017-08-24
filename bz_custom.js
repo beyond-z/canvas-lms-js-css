@@ -427,6 +427,10 @@ runOnUserContent(function() {
 		}
 	}
 
+	// Show feedback on sort-to-match questions:
+	jQuery('.for-match').click(function(){
+		jQuery(this).parents('.bz-box').find('.sort-to-match').addClass('show-answers');
+	});
 	
 	// Mix up checklists:
 	jQuery('.checklist, .radio-list').not('.dont-mix').each(function(){
@@ -449,18 +453,6 @@ runOnUserContent(function() {
 			}
 		});
 	});
-	/*
-	jQuery('.instant-range-feedback [type="range"]').change(function(){
-		var min = jQuery(this).attr('min');
-		var max = jQuery(this).attr('max');
-		var val = jQuery(this).val();
-		var answerSpace = jQuery(this).parents('tr').next();
-		answerSpace.find('.feedback').css('opacity', 1);
-	});
-	*/
-	
-	// Load user-added magic fields if they already have input
-	/* TBD */
 	
 	// Referenced sources numbering:
 	/* TBD */
@@ -520,11 +512,6 @@ runOnUserContent(function() {
 			transcript.slideToggle();
 		});;
 	});
-	
-	// Make buttons appear differently once you've submitted:
-	/* jQuery('.bz-box input[type="button"]').click(function(){
-		jQuery(this).attr('data-bz-retained', 'clicked');
-	});*/
 	
 	// Show list items in onboarding module only if there's relevant bz-retained:
 	jQuery('.conditional-show-source').find('input').change(function(){
