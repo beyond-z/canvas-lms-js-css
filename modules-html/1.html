@@ -98,9 +98,9 @@
       </li>
       <li>
         <p>
-          <input type="checkbox" data-bz-retained="onboarding-010" />
+          <input type="checkbox" data-bz-retained="onboarding-010-other" class="bz-optional-magic-field" />
           <strong>Other:</strong><br />
-          <textarea class="checklist-other"></textarea>
+          <textarea class="checklist-other bz-optional-magic-field" data-bz-retained="onboarding-010-other-text"></textarea>
         </p>
       </li>
     </ul>
@@ -159,9 +159,9 @@
       <li></li>
     </ul>
     <p>
-      <input type="checkbox" data-bz-retained="reasons-other" />
+      <input type="checkbox" data-bz-retained="reasons-other" class="bz-optional-magic-field" />
       Other:<br />
-      <textarea class="checklist-other" data-bz-retained="reasons-other-text"></textarea>
+      <textarea class="checklist-other bz-optional-magic-field" data-bz-retained="reasons-other-text"></textarea>
     </p>
     <p>
       <input class="bz-toggle-all-next selective-feedback" type="button" value="Done" />
@@ -489,9 +489,9 @@
         Communicating clearly</li>
     </ul>
     <p>
-      <input type="checkbox" data-bz-retained="onboarding-039" />
+      <input type="checkbox" data-bz-retained="onboarding-039-other" class="bz-optional-magic-field" />
       Other: <br />
-      <input class="checklist-other" type="text" data-bz-retained="onboarding-039-text" />
+      <textarea class="checklist-other bz-optional-magic-field" data-bz-retained="onboarding-039-other-text"></textarea>
     </p>
     <p>
       <input class="for-checklist bz-toggle-all-next" type="button" value="Done" />
@@ -521,19 +521,19 @@
     <ul class="instant-feedback radio-list dont-mix">
       <li>
         <p>
-          <input name="tech-savvy" type="radio" data-bz-retained="onboarding-040" />
+          <input name="tech-savvy" value="whiz" type="radio" data-bz-retained="onboarding-tech-savvy" />
           I&rsquo;m a computer whiz! Whenever my friends or family need tech troubleshooting help, they call me.</p>
         <p class="inline feedback">Great! The Braven Portal will be a cinch for you. Hopefully you can pay it forward and help your peers on the <a href="https://help.bebraven.org" target="_blank">Braven Help</a> forum if they run into any trouble.</p>
       </li>
       <li>
         <p>
-          <input name="tech-savvy" type="radio" data-bz-retained="onboarding-041" />
+          <input name="tech-savvy" value="meh" type="radio" data-bz-retained="onboarding-tech-savvy" />
           I navigate most tech. When I run into issues, I Google it and can usually figure it out.</p>
         <p class="inline feedback">We love to hear that you&rsquo;re self-reliant and try to problem solve.</p>
       </li>
       <li>
         <p>
-          <input name="tech-savvy" type="radio" data-bz-retained="onboarding-042" />
+          <input name="tech-savvy" value="nope" type="radio" data-bz-retained="onboarding-tech-savvy" />
           I struggle! Tech is just not intuitive for me. I have to ask for help a lot.</p>
         <p class="inline feedback">No worries! We&rsquo;re going to walk you through the online Portal step-by-step, and there&rsquo;s even a whole website, <a href="https://help.bebraven.org" target="_blank">Braven Help</a>, dedicated to answering your questions.</p>
       </li>
@@ -842,8 +842,8 @@
       <li><input type="checkbox" data-bz-retained="gtd-013" />Eating meals </li>
       <li><input type="checkbox" data-bz-retained="gtd-014" />Running errands/doing chores </li>
     </ul>
-    <p><input type="checkbox" data-bz-retained="gtd-015-other" />Other:
-    <textarea data-bz-retained="gtd-015-other-text"></textarea>
+    <p><input type="checkbox" data-bz-retained="gtd-015-other" class="bz-optional-magic-field" />Other:
+    <textarea class="checklist-other bz-optional-magic-field" data-bz-retained="gtd-015-other-text"></textarea>
     </p>
     <p>
     <input type="button" class="bz-toggle-all-next" value="Done" />
@@ -928,11 +928,11 @@
   	<h3 class="box-title">Quick Question</h3>
     <p>Which is the best action plan:</p>
     <ul class="radio-list instant-feedback">
-      <li class="correct"><input type="radio" name="best-action-plan" data-bz-retained="gtd-030" />One that works for you</li>
-      <li class="incorrect"><input type="radio" name="best-action-plan" data-bz-retained="gtd-031" />One that tracks daily tasks</li>
-      <li class="incorrect"><input type="radio" name="best-action-plan" data-bz-retained="gtd-032" />One that tracks weekly tasks</li>
-      <li class="incorrect"><input type="radio" name="best-action-plan" data-bz-retained="gtd-033" />One that tracks monthly tasks</li>
-      <li class="incorrect"><input type="radio" name="best-action-plan" data-bz-retained="gtd-034" />One that lists all your priorities</li>
+      <li class="correct"><input type="radio" value="right" name="best-action-plan" data-bz-retained="gtd-best-action-plan" />One that works for you</li>
+      <li class="incorrect"><input type="radio" value="no1" name="best-action-plan" data-bz-retained="gtd-best-action-plan" />One that tracks daily tasks</li>
+      <li class="incorrect"><input type="radio" value="no2" name="best-action-plan" data-bz-retained="gtd-best-action-plan" />One that tracks weekly tasks</li>
+      <li class="incorrect"><input type="radio" value="no3" name="best-action-plan" data-bz-retained="gtd-best-action-plan" />One that tracks monthly tasks</li>
+      <li class="incorrect"><input type="radio" value="no4" name="best-action-plan" data-bz-retained="gtd-best-action-plan" />One that lists all your priorities</li>
     </ul>
     <p>
 	    <input type="button" class="bz-toggle-all-next" value="Done" />
@@ -1037,10 +1037,10 @@
   	<h3 class="box-title">Quick Question</h3>
     <p>Why is it important to prioritize your time?</p>
     <ul class="radio-list">
-    	<li class="correct"><input type="radio" name="prio-reasons" data-bz-retained="gtd-054" />You will work more efficiently and spend the most time on what's most important</li>
-      <li class="incorrect"><input type="radio" name="prio-reasons" data-bz-retained="gtd-055" />You will do what's most fun and rewarding first </li>
-      <li class="incorrect"><input type="radio" name="prio-reasons" data-bz-retained="gtd-056" />You will only get through a few tasks </li>
-      <li class="incorrect"><input type="radio" name="prio-reasons" data-bz-retained="gtd-057" />You can work constantly</li>
+    	<li class="correct"><input type="radio" value="yes" name="prio-reasons" data-bz-retained="gtd-prio-reasons" />You will work more efficiently and spend the most time on what's most important</li>
+      <li class="incorrect"><input type="radio" value="no1" name="prio-reasons" data-bz-retained="gtd-prio-reasons" />You will do what's most fun and rewarding first </li>
+      <li class="incorrect"><input type="radio" value="no2" name="prio-reasons" data-bz-retained="gtd-prio-reasons" />You will only get through a few tasks </li>
+      <li class="incorrect"><input type="radio" value="no3" name="prio-reasons" data-bz-retained="gtd-prio-reasons" />You can work constantly</li>
     </ul>
     <p>
     	<input type="button" class="for-radio-list bz-toggle-all-next" value="Done" />
@@ -1071,8 +1071,8 @@
     	<li><input type="text" data-bz-retained="big-rocks-01" /></li>
       <li><input type="text" data-bz-retained="big-rocks-02" /></li>
       <li><input type="text" data-bz-retained="big-rocks-03" /></li>
-      <li><input type="text" data-bz-retained="big-rocks-04" /></li>
-      <li><input type="text" data-bz-retained="big-rocks-05" /></li>
+      <li><input type="text" data-bz-retained="big-rocks-04" class="bz-optional-magic-field" /></li>
+      <li><input type="text" data-bz-retained="big-rocks-05" class="bz-optional-magic-field" /></li>
     </ul>
     <p>
     	<input type="button" class="bz-toggle-all-next" value="Done" />
@@ -1145,13 +1145,13 @@
         </tr>
 	    	<tr>
 	        <th scope="row">Important</th>
-        	<td class="incorrect"><input type="radio" name="quad1" data-bz-retained="gtd-100" /><p class="match-heading-style">I</p></td>
-          <td class="correct"><input type="radio" name="quad1" data-bz-retained="gtd-101" /><p class="match-heading-style">II</p></td>
+        	<td class="incorrect"><input type="radio" value="q1" name="quad1" data-bz-retained="gtd-quad1" /><p class="match-heading-style">I</p></td>
+          <td class="correct"><input type="radio" value="q2" name="quad1" data-bz-retained="gtd-quad1" /><p class="match-heading-style">II</p></td>
   			</tr>
         <tr>
 	        <th scope="row">Not Important</th>
-        	<td class="incorrect"><input type="radio" name="quad1" data-bz-retained="gtd-102" /><p class="match-heading-style">III</p></td>
-          <td class="incorrect"><input type="radio" name="quad1" data-bz-retained="gtd-103" /><p class="match-heading-style">IV</p></td>
+        	<td class="incorrect"><input type="radio" value="q3" name="quad1" data-bz-retained="gtd-quad1" /><p class="match-heading-style">III</p></td>
+          <td class="incorrect"><input type="radio" value="q4" name="quad1" data-bz-retained="gtd-quad1" /><p class="match-heading-style">IV</p></td>
   			</tr>
       </tbody>  
     </table>
@@ -1165,13 +1165,13 @@
         </tr>
 	    	<tr>
 	        <th scope="row">Important</th>
-        	<td class="correct"><input type="radio" name="quad2" data-bz-retained="gtd-104" /><p class="match-heading-style">I</p></td>
-          <td class="incorrect"><input type="radio" name="quad2" data-bz-retained="gtd-105" /><p class="match-heading-style">II</p></td>
+        	<td class="correct"><input type="radio" value="q1" name="quad2" data-bz-retained="gtd-quad2" /><p class="match-heading-style">I</p></td>
+          <td class="incorrect"><input type="radio" value="q2" name="quad2" data-bz-retained="gtd-quad2" /><p class="match-heading-style">II</p></td>
   			</tr>
         <tr>
 	        <th scope="row">Not Important</th>
-        	<td class="incorrect"><input type="radio" name="quad2" data-bz-retained="gtd-106" /><p class="match-heading-style">III</p></td>
-          <td class="incorrect"><input type="radio" name="quad2" data-bz-retained="gtd-107" /><p class="match-heading-style">IV</p></td>
+        	<td class="incorrect"><input type="radio" value="q3" name="quad2" data-bz-retained="gtd-quad2" /><p class="match-heading-style">III</p></td>
+          <td class="incorrect"><input type="radio" value="q4" name="quad2" data-bz-retained="gtd-quad2" /><p class="match-heading-style">IV</p></td>
   			</tr>
       </tbody>  
     </table>
@@ -1188,8 +1188,8 @@
   	<h3 class="box-title">Reflect</h3>
     <p>Out of the 3-5 Big Rocks you wrote down earlier, which quadrant would you put them in?</p>
     <ul id="big-rocks-to-quadrants">
-    	<li>
-      	<p class="conditional-show" data-bz-retained="big-rocks-01">Big Rock 1</p>
+    	<li class="conditional-show">
+      	<p class="bz-retained-field-setup" data-bz-retained="big-rocks-01">Big Rock 1</p>
           <table class="full no-zebra centered">
             <tbody>
               <tr>
@@ -1199,19 +1199,19 @@
               </tr>
               <tr>
                 <th scope="row">Important</th>
-                <td><input type="radio" name="bigrocks1" data-bz-retained="gtd-201" /><p class="match-heading-style">I</p></td>
-                <td><input type="radio" name="bigrocks1" data-bz-retained="gtd-202" /><p class="match-heading-style">II</p></td>
+                <td><input type="radio" value="q1" name="bigrocks1" data-bz-retained="gtd-bigrocks1" /><p class="match-heading-style">I</p></td>
+                <td><input type="radio" value="q2" name="bigrocks1" data-bz-retained="gtd-bigrocks1" /><p class="match-heading-style">II</p></td>
               </tr>
               <tr>
                 <th scope="row">Not Important</th>
-                <td><input type="radio" name="bigrocks1" data-bz-retained="gtd-203" /><p class="match-heading-style">III</p></td>
-                <td><input type="radio" name="bigrocks1" data-bz-retained="gtd-204" /><p class="match-heading-style">IV</p></td>
+                <td><input type="radio" value="q3" name="bigrocks1" data-bz-retained="gtd-bigrocks1" /><p class="match-heading-style">III</p></td>
+                <td><input type="radio" value="q4" name="bigrocks1" data-bz-retained="gtd-bigrocks1" /><p class="match-heading-style">IV</p></td>
               </tr>
             </tbody>  
           </table>
       </li>
-      <li>
-      	<p class="conditional-show" data-bz-retained="big-rocks-02">Big Rock 2</p>
+      <li class="conditional-show">
+      	<p class="bz-retained-field-setup" data-bz-retained="big-rocks-02">Big Rock 2</p>
           <table class="full no-zebra centered">
             <tbody>
               <tr>
@@ -1221,19 +1221,19 @@
               </tr>
               <tr>
                 <th scope="row">Important</th>
-                <td><input type="radio" name="bigrocks2" data-bz-retained="gtd-205" /><p class="match-heading-style">I</p></td>
-                <td><input type="radio" name="bigrocks2" data-bz-retained="gtd-206" /><p class="match-heading-style">II</p></td>
+                <td><input type="radio" value="q1" name="bigrocks2" data-bz-retained="gtd-bigrocks2" /><p class="match-heading-style">I</p></td>
+                <td><input type="radio" value="q2" name="bigrocks2" data-bz-retained="gtd-bigrocks2" /><p class="match-heading-style">II</p></td>
               </tr>
               <tr>
                 <th scope="row">Not Important</th>
-                <td><input type="radio" name="bigrocks2" data-bz-retained="gtd-207" /><p class="match-heading-style">III</p></td>
-                <td><input type="radio" name="bigrocks2" data-bz-retained="gtd-208" /><p class="match-heading-style">IV</p></td>
+                <td><input type="radio" value="q3" name="bigrocks2" data-bz-retained="gtd-bigrocks2" /><p class="match-heading-style">III</p></td>
+                <td><input type="radio" value="q4" name="bigrocks2" data-bz-retained="gtd-bigrocks2" /><p class="match-heading-style">IV</p></td>
               </tr>
             </tbody>  
           </table>
       </li>
-      <li>
-      	<p class="conditional-show" data-bz-retained="big-rocks-03">Big Rock 3</p>
+      <li class="conditional-show">
+      	<p class="bz-retained-field-setup" data-bz-retained="big-rocks-03">Big Rock 3</p>
           <table class="full no-zebra centered">
             <tbody>
               <tr>
@@ -1243,19 +1243,19 @@
               </tr>
               <tr>
                 <th scope="row">Important</th>
-                <td><input type="radio" name="bigrocks3" data-bz-retained="gtd-301" /><p class="match-heading-style">I</p></td>
-                <td><input type="radio" name="bigrocks3" data-bz-retained="gtd-302" /><p class="match-heading-style">II</p></td>
+                <td><input type="radio" value="q1" name="bigrocks3" data-bz-retained="gtd-bigrocks3" /><p class="match-heading-style">I</p></td>
+                <td><input type="radio" value="q2" name="bigrocks3" data-bz-retained="gtd-bigrocks3" /><p class="match-heading-style">II</p></td>
               </tr>
               <tr>
                 <th scope="row">Not Important</th>
-                <td><input type="radio" name="bigrocks3" data-bz-retained="gtd-303" /><p class="match-heading-style">III</p></td>
-                <td><input type="radio" name="bigrocks3" data-bz-retained="gtd-304" /><p class="match-heading-style">IV</p></td>
+                <td><input type="radio" value="q3" name="bigrocks3" data-bz-retained="gtd-bigrocks3" /><p class="match-heading-style">III</p></td>
+                <td><input type="radio" value="q4" name="bigrocks3" data-bz-retained="gtd-bigrocks3" /><p class="match-heading-style">IV</p></td>
               </tr>
             </tbody>  
           </table>
       </li>
-      <li>
-      	<p class="conditional-show" data-bz-retained="big-rocks-04">Big Rock 4</p>
+      <li class="conditional-show">
+      	<p class="bz-retained-field-setup" data-bz-retained="big-rocks-04">Big Rock 4</p>
           <table class="full no-zebra centered">
             <tbody>
               <tr>
@@ -1265,19 +1265,19 @@
               </tr>
               <tr>
                 <th scope="row">Important</th>
-                <td><input type="radio" name="bigrocks4" data-bz-retained="gtd-401" /><p class="match-heading-style">I</p></td>
-                <td><input type="radio" name="bigrocks4" data-bz-retained="gtd-402" /><p class="match-heading-style">II</p></td>
+                <td><input type="radio" value="q1" class="bz-optional-magic-field" name="bigrocks4" data-bz-retained="bigrocks4" /><p class="match-heading-style">I</p></td>
+                <td><input type="radio" value="q2" class="bz-optional-magic-field" name="bigrocks4" data-bz-retained="bigrocks4" /><p class="match-heading-style">II</p></td>
               </tr>
               <tr>
                 <th scope="row">Not Important</th>
-                <td><input type="radio" name="bigrocks4" data-bz-retained="gtd-403" /><p class="match-heading-style">III</p></td>
-                <td><input type="radio" name="bigrocks4" data-bz-retained="gtd-404" /><p class="match-heading-style">IV</p></td>
+                <td><input type="radio" value="q3" class="bz-optional-magic-field" name="bigrocks4" data-bz-retained="bigrocks4" /><p class="match-heading-style">III</p></td>
+                <td><input type="radio" value="q4" class="bz-optional-magic-field" name="bigrocks4" data-bz-retained="bigrocks4" /><p class="match-heading-style">IV</p></td>
               </tr>
             </tbody>  
           </table>
       </li>
-      <li>
-      	<p class="conditional-show" data-bz-retained="big-rocks-05">Big Rock 5</p>
+      <li class="conditional-show">
+      	<p class="bz-retained-field-setup" data-bz-retained="big-rocks-05">Big Rock 5</p>
           <table class="full no-zebra centered">
             <tbody>
               <tr>
@@ -1287,13 +1287,13 @@
               </tr>
               <tr>
                 <th scope="row">Important</th>
-                <td><input type="radio" name="bigrocks5" data-bz-retained="gtd-501" /><p class="match-heading-style">I</p></td>
-                <td><input type="radio" name="bigrocks5" data-bz-retained="gtd-502" /><p class="match-heading-style">II</p></td>
+                <td><input type="radio" value="q1" class="bz-optional-magic-field" name="bigrocks5" data-bz-retained="bigrocks5" /><p class="match-heading-style">I</p></td>
+                <td><input type="radio" value="q2" class="bz-optional-magic-field" name="bigrocks5" data-bz-retained="bigrocks5" /><p class="match-heading-style">II</p></td>
               </tr>
               <tr>
                 <th scope="row">Not Important</th>
-                <td><input type="radio" name="bigrocks5" data-bz-retained="gtd-503" /><p class="match-heading-style">III</p></td>
-                <td><input type="radio" name="bigrocks5" data-bz-retained="gtd-504" /><p class="match-heading-style">IV</p></td>
+                <td><input type="radio" value="q3" class="bz-optional-magic-field" name="bigrocks5" data-bz-retained="bigrocks5" /><p class="match-heading-style">III</p></td>
+                <td><input type="radio" value="q4" class="bz-optional-magic-field" name="bigrocks5" data-bz-retained="bigrocks5" /><p class="match-heading-style">IV</p></td>
               </tr>
             </tbody>  
           </table>
@@ -1310,9 +1310,9 @@
       <li>Who else is part of the Accelerator, what their roles are, and how to communicate</li>
       <li>How to stay productive and manage your time efficiently</li>
     </ul>
-    <p>If there's anything you feel less than certain about, feel free to revisit the content, ask on <a href="https://help.bebraven.org" target="_blank">Braven Help</a>, or <a href="mailto:support@bebraven.org" target="_blank">contact us</a> with feedback.</p>
     <h3>Next Steps:</h3>
     <ul>
+    	<li>If there's anything you feel less than certain about, feel free to revisit the content, ask on <a href="https://help.bebraven.org" target="_blank">Braven Help</a>, or <a href="mailto:support@bebraven.org" target="_blank">contact us</a> with feedback.</li>
       <li>Make sure to move onto the next module, <a href="/courses/27/pages/lead-authentically" target="_self">Lead Authentically</a>, as this is the pre-work for your next Learning Lab.</li>
     </ul>
   </div>
