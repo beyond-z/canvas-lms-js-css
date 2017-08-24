@@ -851,15 +851,25 @@
   <div class="bz-box pulse">
   	<h3 class="box-title">Pulse Check</h3>
     <p>That's quite a lot on your plate! How well do you juggle all these activities and manage your time?</p>
-    <table>
-    	<tbody>
-      	<tr>
-        	<td>Not well at all</td>
-          <td><input type="range" min="1" max = "100" step="1" /></td>
+    <table class="instant-range-feedback full no-zebra">
+      <tbody>
+        <tr>
+          <td>Not well at all</td>
+          <td><input type="range" min="1" max = "100" step="1" data-bz-retained="gtd-019" /></td>
           <td>Very Well</td>
+        </tr>
+        	<td colspan="3">
+          	<div data-bz-range-flr="0" data-bz-range-clg="33" class="feedback">Time management is one of the hardest skills to master, but it's also one of the most important to be successful in the Braven Accelerator, in college, and in your career. This Productivity Corner will teach you some strategies to help you get organized!</div>
+          	<div data-bz-range-flr="33" data-bz-range-clg="67" class="feedback"> Seems like you're fairly confident in your time management skills, but that you feel like you have room to grow. This Productivity Corner will teach you some strategies to help you stay organized throughout the Braven Accelerator, in college, and in your career.</div>
+          	<div data-bz-range-flr="67" data-bz-range-clg="100" class="feedback">Awesome! Seems like you're super confident in your time management skills, which will you serve you well this semester in the Braven Accelerator, in college, and in your career. This Productivity Corner will provide you with a few more tips for your back pocket.</div>
+          </td>
+        <tr>
         </tr>
       </tbody>
     </table>
+    <p>
+    	<input type="button" class="bz-toggle-all-next" value="Done" />
+    </p>
   </div>
   <div class="bz-box question">
   	<h3 class="box-title">Quick Question</h3>
