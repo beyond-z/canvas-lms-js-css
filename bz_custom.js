@@ -460,13 +460,12 @@ runOnUserContent(function() {
 	// Automatically generate a navigable table of contents for the top level out of h2 elements, 
 	// and a h2-level section out of its nested h3 elements
 	jQuery('.bz-module').prepend(function(){
-		var mainToc = jQuery('<div class="main-toc"><p class="match-heading-style">The big picture:</p><ol class="main-toc"></ol></div>');
+		var tocBox = jQuery('<div class="main-toc"><p class="match-heading-style">The big picture:</p></div>');
+		var mainToc = jQuery('<ol></ol>');
 		var mainHasKids = false;
-		var h2counter = 0;
 		// this level will gather h2 headings into a table of contents:
 		jQuery('.bz-module h2').each(function(){
 			mainHasKids = true;
-			h2counter ++;
 			// this level generates tables of contents under each h2:
 			var innerToc = '<ol class="inner-toc">';
 			var innerHasKids = false;
@@ -488,7 +487,8 @@ runOnUserContent(function() {
 			 mainToc.append(mainListObj);
 			
 		});
-		if (mainHasKids) return mainToc;
+		tocBox.append(mainToc);
+		if (mainHasKids) return tocBox;
 	});
 
 	// Create years 
@@ -530,14 +530,12 @@ runOnUserContent(function() {
 
 	function showIfMagicIsPopulated(magicInput) {
 		jQuery('.conditional-show [data-bz-retained='+magicInput.data('bz-retained')+'], [data-bz-reference="'+magicInput.data('bz-retained')+'"]').each(function(){
-			var currentItem = jQuery(this);
-			if( magicInput.prop('checked') || ( !magicInput.is('[type="checkbox"]') && magicInput.val() != "" ) ) {
-				console.log("has something" + magicInput.prop('checked') );
-				currentItem.parents('.conditional-show').show();
+			if( magicInput.prop('checked') || ( !magicInput.is('[type="checkbox"], [type="radio"]') && magicInput.val() != "" ) ) {
+				// If it's a checkbox that's checked, or if it's any other type of field that's not empty:
+				jQuery(this).parents('.conditional-show').show();
 			} else {
-				// if it's empty, hide the whole row:				
-				console.log("empty" + currentItem.html());
-				currentItem.parents('.conditional-show').hide();
+				// if it's unckecked or empty, hide the whole row:				
+				jQuery(this).parents('.conditional-show').hide();
 			}
 		});
 	}
