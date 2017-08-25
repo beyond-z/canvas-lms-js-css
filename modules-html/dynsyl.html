@@ -1,0 +1,909 @@
+
+<!DOCTYPE html>
+<html class="scripts-not-loaded" lang="en">
+<head>
+  <meta charset="utf-8">
+  <script src="https://stagingportal.bebraven.org/javascripts/vendor/jquery-1.7.2.js"></script>
+  <title>DYNAMIC SYLLABUS DEMO</title>
+  <!--[if lte IE 9]> <meta http-equiv=refresh content="0; URL=/ie-9-is-not-supported.html" /> <![endif]-->
+  <link href="https://stagingportal.bebraven.org/dist/images/favicon-e10d657a73.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" />
+  <link href="https://stagingportal.bebraven.org/dist/images/apple-touch-icon-585e5d997d.png" rel="apple-touch-icon" />
+      <link href="https://stagingportal.bebraven.org/feeds/courses/enrollment_zGv5MuEfh3zM9WJ2kt9IVvYuBi9ByJfjBfPs6i3l.atom" rel="alternate" title="Course Atom Feed" type="application/atom+xml" />
+
+  <link href="https://stagingportal.bebraven.org/dist/brandable_css/legacy_normal_contrast/bundles/common-42a1537303.css" media="all" rel="stylesheet" />
+  
+  
+  <link href="https://stagingportal.bebraven.org/dist/brandable_css/legacy_normal_contrast/bundles/course_show-68fa322d41.css" media="all" rel="stylesheet" />
+<link href="https://stagingportal.bebraven.org/dist/brandable_css/legacy_normal_contrast/bundles/dashboard-dfad604748.css" media="all" rel="stylesheet" />
+  
+<style>
+@font-face {
+ font-family: "TradeGothicNo.20-CondBold";
+ src: url('../TradeGothicLTStd-BdCn20.otf');
+}
+</style>
+<link rel="stylesheet" type="text/css" href="../bz_newui.css">
+</head>
+<!--
+  <link href="https://s3.amazonaws.com/canvas-stag-assets/bz_newui.css?v=20170825-1715" media="all" rel="stylesheet" />  -->
+  <script>
+    window.bz_custom_css_url = "https:\/\/s3.amazonaws.com\/canvas-stag-assets\/bz_newui.css?v=20170825-1715";
+    try {
+      if(window.location.pathname != '/' && window.location.pathname.indexOf('/login') != 0 && !window.location.pathname.match(/courses\/[0-9]+$/)) {
+        var message = "";
+        message += 'last_url=' + encodeURIComponent(window.location.href) + "&";
+        message += 'last_url_title=' + encodeURIComponent(document.title);
+        var request = new XMLHttpRequest();
+        request.open("POST", "/bz/last_user_url", true);
+        request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        request.send(message);
+      }
+    } catch(e) {}
+  </script>
+
+  <script>
+    // listen for any clicks on links that have href="#" and queue them to be fired on dom ready.
+      function _earlyClick(e){
+        var cur = e.target || e.srcElement;
+        while ( cur && cur.ownerDocument ) {
+          if ( cur.getAttribute('href') == '#' ) {
+            e.preventDefault();
+            _earlyClick.clicks = _earlyClick.clicks || [];
+            _earlyClick.clicks.push(cur);
+            break;
+          }
+          cur = cur.parentNode;
+        }
+      }
+      document.addEventListener('click', _earlyClick);
+  </script>
+  <script src="https://stagingportal.bebraven.org/bz_support.js?20170824"></script>
+  <link rel="stylesheet" type="text/css" href="https://stagingportal.bebraven.org/bz_support.css?20170823" />
+  
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700,300,600,400' rel='stylesheet' type='text/css'>
+  <link href="https://stagingportal.bebraven.org/font/TradeGothicNo.20-CondBold.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body class="with-left-side course-menu-expanded with-right-side home context-course_29 student-logged-in">
+<noscript>
+  <div role="alert" class="ic-flash-static ic-flash-error">
+    <div class="ic-flash__icon" aria-hidden="true">
+      <i class="icon-warning"></i>
+    </div>
+    <h1>You need to have JavaScript enabled in order to access this site.</h1>
+  </div>
+</noscript>
+
+
+
+
+<ul role="alert" aria-live="assertive" id="flash_message_holder"></ul>
+<div role="alert" aria-live="assertive" aria-relevant="additions" id="flash_screenreader_holder" class="screenreader-only"></div>
+
+<div id="application" >
+
+    <div id="header" class="no-print ">
+      <div id="header-inner">
+        <a href="#content" id="skip_navigation_link">Skip To Content</a>
+        <a id="header-logo" href="https://stagingportal.bebraven.org/">My Dashboard</a>
+        <b id="header-logo-secondary"></b>
+        <div id="topbar" role="navigation" aria-label="User Menu">
+    <ul id="identity">
+      <li class="user_name"><a href="https://stagingportal.bebraven.org/about/1015">Brian</a></li>
+      <li class="first inbox">
+        <a href="https://stagingportal.bebraven.org/conversations?">
+          <span>Inbox</span>
+              <b class="unread-messages-count">1</b>
+        </a>
+      </li>
+      <li><a href="https://stagingportal.bebraven.org/profile/settings">Settings</a></li>
+    <li class="user_id" style="display: none;">1015</li>
+    <li class="course_id" style="display: none;">29</li>
+    <li id="current_context_code" style="display: none;">course_29</li>
+    <li class="user_long_name" style="display: none;">Brian xTestRegression2001</li>
+    <li class="logout">
+      <form accept-charset="UTF-8" action="/logout" id="identity-logout-form" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="_method" type="hidden" value="delete" /><input name="authenticity_token" type="hidden" value="TD1wQGVhRYliGhdcXW9Z+7V0kPFO9UuOcx+VQorbhT8dTkANLyU0+jdWfTkfAymt+xWknw+cCdk1VOUw7Z2yRQ==" /></div>
+        <a href="https://stagingportal.bebraven.org/logout" onclick="document.getElementById(&#39;identity-logout-form&#39;).submit(); return false">Logout</a>
+</form>    </li>
+</ul>
+
+</div>
+
+        
+          <ul role="navigation" id="menu" aria-label="Main Navigation">
+
+    <li id="courses_menu_item" class="menu-item">
+        <a href="https://stagingportal.bebraven.org/courses" class="menu-item-title">
+
+    Courses    <span class="menu-item-title-icon"></span> <i class="icon-mini-arrow-down"></i>
+  </a>
+  <div class="menu-item-drop">
+    <table cellspacing="0">
+      <tr>
+        <td class="menu-item-drop-column" id="menu_enrollments">
+  <div class="menu-item-header-container">
+    <span class="menu-item-heading">
+      My Courses
+    </span>
+    <div class="menu-item-customize">
+      <a class="customListOpen" href="https://stagingportal.bebraven.org/courses">View All or Customize (4)</a>
+    </div>
+  </div>
+  <ul class="menu-item-drop-column-list">
+    <li class="customListItem" data-id="29">
+  <a href="https://stagingportal.bebraven.org/courses/29">
+    <span class="name ellipsis" title="2017 Fall Braven Accelerator - RUN - 2017 Fall RUN">2017 Fall Braven Accelerator - RUN</span>
+      <span class="subtitle ellipsis enrollment_term menu-item-drop-float-right"></span>
+    <span class="subtitle ellipsis">Enrolled as: Student</span>
+  </a>
+</li>
+<li class="customListItem" data-id="27">
+  <a href="https://stagingportal.bebraven.org/courses/27">
+    <span class="name ellipsis" title="2017 Fall Braven Accelerator - SJSU - 2017 Fall SJSU">2017 Fall Braven Accelerator - SJSU</span>
+      <span class="subtitle ellipsis enrollment_term menu-item-drop-float-right"></span>
+    <span class="subtitle ellipsis">Enrolled as: Student</span>
+  </a>
+</li>
+<li class="customListItem" data-id="25">
+  <a href="https://stagingportal.bebraven.org/courses/25">
+    <span class="name ellipsis" title="2017 Spring Braven Accelerator - 2017 Spring">2017 Spring Braven Accelerator</span>
+      <span class="subtitle ellipsis enrollment_term menu-item-drop-float-right"></span>
+    <span class="subtitle ellipsis">Enrolled as: Student</span>
+  </a>
+</li>
+<li class="customListItem" data-id="10">
+  <a href="https://stagingportal.bebraven.org/courses/10">
+    <span class="name ellipsis" title="Testing features - Testing">Testing features</span>
+      <span class="subtitle ellipsis enrollment_term menu-item-drop-float-right"></span>
+    <span class="subtitle ellipsis">Enrolled as: Student</span>
+  </a>
+</li>
+
+  </ul>
+</td>
+
+        
+        
+      </tr>
+    </table>
+  </div>
+
+    </li>
+    <li id="grades_menu_item" class="menu-item">
+      <a href="https://stagingportal.bebraven.org/grades" class="menu-item-no-drop">
+        Grades
+      </a>
+    </li>
+    <li id="calendar_menu_item" class="menu-item">
+      <a href="https://stagingportal.bebraven.org/calendar" class="menu-item-no-drop">
+        Calendar
+      </a>
+    </li>
+    
+  </ul>
+
+      </div>
+    </div>
+
+  <div id="instructure_ajax_error_box">
+    <div style="text-align: right; background-color: #fff;"><a href="#" class="close_instructure_ajax_error_box_link">Close</a></div>
+    <iframe id="instructure_ajax_error_result" src="about:blank" style="border: 0;" title="Error"></iframe>
+  </div>
+
+  
+
+  <div id="wrapper-container" >
+    <div id="wrapper" >
+    
+          <div id="left-side" class="list-view ">
+              <h1 id="section-tabs-header">
+                2017 Fall RUN
+              </h1>
+            <nav aria-label="context" role="navigation"><ul id="section-tabs"><li class="section"><a class="home active" href="https://stagingportal.bebraven.org/courses/29">Home</a></li><li class="section"><a class="modules" href="https://stagingportal.bebraven.org/courses/29/modules">Modules</a></li><li class="section"><a aria-label="Course Assignments" class="assignments" href="https://stagingportal.bebraven.org/courses/29/assignments">Assignments</a></li><li class="section"><a aria-label="Course Grades" class="grades" href="https://stagingportal.bebraven.org/courses/29/grades">Grades</a></li></ul></nav>
+        </div>
+        <div id="main" >
+          <div id="not_right_side" >
+            <div id="content-wrapper" >
+                <nav aria-label="breadcrumbs" id="breadcrumbs" role="navigation"><ul><li class="home"><a href="https://stagingportal.bebraven.org/"><span class="ellipsible">      <i class="icon-home"
+         title="My Dashboard">
+        <span class="screenreader-only">My Dashboard</span>
+      </i>
+</span></a></li><li id="crumb_course_29"><a href="https://stagingportal.bebraven.org/courses/29"><span class="ellipsible">2017 Fall RUN</span></a></li></ul></nav>
+                
+              <div id="content" role="main" class="container-fluid">
+                <h1 class='screenreader-only'>2017 Fall Braven Accelerator - RUN</h1>
+
+
+
+
+
+<div id="course_home_content">
+
+    <div class="bz-dynamic-syllabus">
+
+  <h1></h1>
+  <div class="bz-course-intro-text"></div>
+
+  <!--
+    We need parts, which organized modules, have title, description, and task boxes.
+      - let's put the part ID on the module table.
+
+    Modules need images and intro text added.
+  -->
+
+  <div class="bz-course-part-task-box" id="bz-task-part-box">
+          <li class="todo">
+            <a class="item" href="https://stagingportal.bebraven.org/courses/29/pages/network-like-a-pro">
+              <i class="icon-document"></i>
+                <div class="todo-details">
+                <p>Complete Module Network Like a Pro</p>
+                <p>Aug 30 at  2:59am</p>
+              </div>
+            </a>
+          </li>
+          <li class="todo">
+            <a class="item" href="https://stagingportal.bebraven.org/courses/29/pages/lead-authentically">
+              <i class="icon-document"></i>
+                <div class="todo-details">
+                <p>Complete Module Lead Authentically</p>
+                <p>Sep 12 at  6pm</p>
+              </div>
+            </a>
+          </li>
+          <li class="todo">
+            <a class="item" href="https://stagingportal.bebraven.org/courses/29/pages/onboard-to-braven">
+              <i class="icon-document"></i>
+                <div class="todo-details">
+                <p>Complete Module Onboard to Braven</p>
+                <p>Sep 12 at  6pm</p>
+              </div>
+            </a>
+          </li>
+          <li class="todo">
+            <a class="item" href="https://stagingportal.bebraven.org/courses/29/pages/unlock-your-hustle">
+              <i class="icon-document"></i>
+                <div class="todo-details">
+                <p>Complete Module Unlock Your Hustle</p>
+                <p>Sep 19 at  6pm</p>
+              </div>
+            </a>
+          </li>
+          <li class="todo">
+            <a class="item" href="https://stagingportal.bebraven.org/courses/29/assignments/738">
+              <i class="icon-assignment"></i>
+                <div class="todo-details">
+                <p>Submit Submit Song of Significance</p>
+                <p>Sep 19 at  6pm</p>
+              </div>
+            </a>
+          </li>
+          <li class="todo">
+            <a class="item" href="https://stagingportal.bebraven.org/courses/29/assignments/732">
+              <i class="icon-assignment"></i>
+                <div class="todo-details">
+                <p>Submit Design Your Career Project</p>
+                <p>Oct 3 at  6pm</p>
+              </div>
+            </a>
+          </li>
+  </div>
+
+
+  <div class="bz-course-part ">
+    <h2>Design Your Career</h2>
+
+
+    <p><p class="textbox" dir="ltr">Identify your personal leadership assets, discover your career path, and share your leadership story.</p></p>
+
+
+    <div class="bz-course-part-module-box started " >
+      <div class="bz-module-image"><img src="https://stagingportal.bebraven.org/files/11359/download?download_frd=1&amp;verifier=IdbmM1ItBibkPejnyb01qb5kCuabk5f2pgTsmRtm" alt="" /></div>
+      <h3><!--1 -->Onboard to Braven</h3>
+      <div><p>Learn the who, what, when, where, why, and how of the Braven Accelerator to set yourself up for success this semester.</p></div>
+          <a class="bz-button-pick-up" href="https://stagingportal.bebraven.org/courses/29/modules/items/3824">Pick up where you left off</a>
+
+    </div>
+    <div class="bz-course-part-module-box started " >
+      <div class="bz-module-image"><img src="https://stagingportal.bebraven.org/files/11360/download?download_frd=1&amp;verifier=s4pxX26GMrpf6B80RPd0J9Z1QhbtLW0uEUBhGXxn" alt="" /></div>
+      <h3><!--2 -->Lead Authentically</h3>
+      <div><p>Discover your inner leader.</p></div>
+          <a class="bz-button-pick-up" href="https://stagingportal.bebraven.org/courses/29/modules/items/3825">Pick up where you left off</a>
+
+    </div>
+    <div class="bz-course-part-module-box  " >
+      <div class="bz-module-image"><img src="https://stagingportal.bebraven.org/files/11361/download?download_frd=1&amp;verifier=RKXRrrhnFfRgiMmiCYmjgy3ul7Syc7Thgi7f7HUL" alt="" /></div>
+      <h3><!--3 -->Unlock Your Hustle</h3>
+      <div><p>Explore&nbsp;your strengths, passions, and what you want to do.&nbsp;</p></div>
+            <a class="bz-button-pick-up" href="https://stagingportal.bebraven.org/courses/29/modules/items/3826">Get Started</a>
+    </div>
+    <div class="bz-course-part-module-box  " >
+      <div class="bz-module-image"><img src="https://stagingportal.bebraven.org/files/11362/download?download_frd=1&amp;verifier=DiivI62PEif1TEmDWuh4a1BsSqA6Yn3fY6QUmvFI" alt="" /></div>
+      <h3><!--4 -->Discover Your Career Path</h3>
+      <div><p>Set big career goals and work to achieve them.</p></div>
+            <a class="bz-button-pick-up" href="https://stagingportal.bebraven.org/courses/29/modules/items/3827">Get Started</a>
+    </div>
+  </div>
+  <div class="bz-course-part ">
+    <h2>Hustle to Career</h2>
+
+
+    <p><p class="textbox" dir="ltr">Build compelling professional artifacts and networking and interview skills to apply for and obtain career-accelerating&nbsp;opportunities.</p></p>
+
+
+    <div class="bz-course-part-module-box  " >
+      <div class="bz-module-image"><img src="https://stagingportal.bebraven.org/files/11363/download?download_frd=1&amp;verifier=jzkikDC850KK7F4SvZGNxfqecYMaZUcIpyVx6rXD" alt="" /></div>
+      <h3><!--1 -->Network Like a Pro</h3>
+      <div><p>Network online and offline because it's often who you know, not what you know.&nbsp;</p></div>
+            <a class="bz-button-pick-up" href="https://stagingportal.bebraven.org/courses/29/modules/items/3828">Get Started</a>
+    </div>
+    <div class="bz-course-part-module-box  " >
+      <div class="bz-module-image"><img src="https://stagingportal.bebraven.org/files/11364/download?download_frd=1&amp;verifier=pVrTRoxv10ZK2Vhsu0Ex0FY9nMlLOwq6iEkdmHrX" alt="" /></div>
+      <h3><!--2 -->Apply for a Job</h3>
+      <div><p>Write your resume and cover letter with professional polish.&nbsp;</p></div>
+            <a class="bz-button-pick-up" href="https://stagingportal.bebraven.org/courses/29/modules/items/3829">Get Started</a>
+    </div>
+    <div class="bz-course-part-module-box locked " >
+      <div class="bz-module-image"><img src="https://stagingportal.bebraven.org/files/11365/download?download_frd=1&amp;verifier=Y5NbkjJojQf60Ci8VRmra1NZHYNu2JnNinw6mpz8" alt="" /></div>
+      <h3><!--3 -->Hustle to Career Bootcamp</h3>
+      <div><p>Prepare to interview effectively.&nbsp;</p></div>
+        <!-- locked for non-teachers, no button needed -->
+    </div>
+    <div class="bz-course-part-module-box locked " >
+      <div class="bz-module-image"><img src="https://stagingportal.bebraven.org/files/11366/download?download_frd=1&amp;verifier=AMm9JkP8RYerRLyHGhR67iG8bLcPPekpGYErm2m4" alt="" /></div>
+      <h3><!--4 -->Ace your Interviews</h3>
+      <div><p>Make a good impression.&nbsp;</p></div>
+        <!-- locked for non-teachers, no button needed -->
+    </div>
+  </div>
+  <div class="bz-course-part ">
+    <h2>Tackle Career Challenges</h2>
+
+
+    <p><p class="textbox" dir="ltr">Apply project planning, problem-solving,&nbsp;teamwork, and presentation skills to real-world, workplace challenges.</p></p>
+
+
+    <div class="bz-course-part-module-box locked " >
+      <div class="bz-module-image"><img src="https://stagingportal.bebraven.org/files/11383/download?download_frd=1&amp;verifier=ErHKOLehWWCDYeK7FDHGJhk36B9ZTohdgjS0M8k0" alt="" /></div>
+      <h3><!--1 -->Design Thinking Sprint</h3>
+      <div><p>Use design thinking to solve complex problems.&nbsp;</p></div>
+        <!-- locked for non-teachers, no button needed -->
+    </div>
+    <div class="bz-course-part-module-box locked " >
+      <div class="bz-module-image"><img src="https://stagingportal.bebraven.org/files/11384/download?download_frd=1&amp;verifier=fqEk6wi2sPmJyAs5cI3PVygqi8RDQa4eGPkfA9hW" alt="" /></div>
+      <h3><!--2 -->Capstone Challenge: Kickoff &amp; Empathize</h3>
+      <div><p>Collaborate with your&nbsp;team.&nbsp;</p></div>
+        <!-- locked for non-teachers, no button needed -->
+    </div>
+    <div class="bz-course-part-module-box locked " >
+      <div class="bz-module-image"><img src="https://stagingportal.bebraven.org/files/11385/download?download_frd=1&amp;verifier=aZieDAndf622EbmvXYrNVTz052TkvKxtzlhbLVTR" alt="" /></div>
+      <h3><!--3 -->Capstone Challenge: Define &amp; Ideate</h3>
+      <div><p>Facilitate meetings with colleagues.&nbsp;</p></div>
+        <!-- locked for non-teachers, no button needed -->
+    </div>
+    <div class="bz-course-part-module-box locked " >
+      <div class="bz-module-image"><img src="https://stagingportal.bebraven.org/files/11386/download?download_frd=1&amp;verifier=Wlec6HjiiKPToJNJoaKgeDya2KJBqbBxYEP73fey" alt="" /></div>
+      <h3><!--4 -->Capstone Challenge: Prototype</h3>
+      <div><p>Give and get feedback to work better as a team.&nbsp;</p></div>
+        <!-- locked for non-teachers, no button needed -->
+    </div>
+    <div class="bz-course-part-module-box locked " >
+      <div class="bz-module-image"><img src="https://stagingportal.bebraven.org/files/11387/download?download_frd=1&amp;verifier=zEyVoE3urCujIHaa3b06AzhYGwLCD3ILWGWIWrmv" alt="" /></div>
+      <h3><!--5 -->Capstone Challenge: Rehearse</h3>
+      <div><p>Create and give an effective presentation.&nbsp;</p></div>
+        <!-- locked for non-teachers, no button needed -->
+    </div>
+    <div class="bz-course-part-module-box locked " >
+      <div class="bz-module-image"><img src="https://stagingportal.bebraven.org/files/11388/download?download_frd=1&amp;verifier=2yIXOpPWI8lg52UEOP8heFnPDifccpXt4W67xVkT" alt="" /></div>
+      <h3><!--6 -->Capstone Challenge Presentations</h3>
+      <div><p>Practice and get ready to present.&nbsp;</p></div>
+        <!-- locked for non-teachers, no button needed -->
+    </div>
+    <div class="bz-course-part-module-box locked " >
+      <div class="bz-module-image"><img src="https://stagingportal.bebraven.org/files/11389/download?download_frd=1&amp;verifier=aLiKsODsvqDablsTtkOGgQma0KZiGtAAlTus0gRB" alt="" /></div>
+      <h3><!--7 -->Live Your Legacy</h3>
+      <div><p>Reflect on your time in the Braven Accelerator and look to what lies ahead.&nbsp;</p></div>
+        <!-- locked for non-teachers, no button needed -->
+    </div>
+  </div>
+</div>
+
+    <script>
+      document.body.className = document.body.className.replace("with-right-side", "");
+      var oldWindowOnloadBZ = window.onload;
+      window.onload = function() {
+        var rs = document.getElementById("right-side");
+        var tpb = document.getElementById("bz-task-part-box");
+        if(rs) {
+          var taskListHtml = tpb.innerHTML;
+          tpb.innerHTML = rs.innerHTML;
+          var list = tpb.querySelector(".to-do-list");
+          list.innerHTML = taskListHtml;
+        } else
+          tpb.parentNode.removeChild(tpb);
+        // moving the buttons to the bottom of the html too so I can float it right
+        var co = tpb.querySelector(".course-options");
+        if(co) {
+          co.parentNode.removeChild(co);
+          tpb.appendChild(co);
+        }
+        if(oldWindowOnloadBZ)
+          oldWindowOnloadBZ();
+      };
+    </script>
+</div>
+<div id="wizard_box"></div>
+
+
+              </div>
+            </div>
+            <div id="right-side-wrapper" >
+              <aside id="right-side" role="complementary">
+                  <div id="course_show_secondary">
+
+      <div class="course-options">
+        
+
+          <a class="btn button-sidebar-wide" href="https://stagingportal.bebraven.org/courses/29?view=feed">
+            <i class="icon-stats"></i>
+            View Course Stream
+          </a>
+
+
+
+      </div>
+
+    
+  <h2 class="todo-list-header" tabindex="-1">To Do</h2>
+  <ul class="right-side-list to-do-list">
+      <li class="todo" style="">
+        <a
+          class="item"
+          href="https://stagingportal.bebraven.org/courses/29/assignments/732#submit"
+          data-track-category="dashboard"
+          data-track-label="todo needs submitting"
+        >
+          <i class="icon-assignment" aria-label="Assignment"></i>
+          <div class="todo-details">
+            <b>Turn in Design Your Career Project</b>
+            <p>
+                180 points
+                &bullet;
+              Oct 3 at  6pm
+            </p>
+          </div>
+        </a>
+        <div class="IgnoreButton">
+  <a class="disable_item_link disable-todo-item-link"
+     title="Ignore this assignment"
+     href="#"
+     data-api-href="https://stagingportal.bebraven.org/api/v1/users/self/todo/assignment_732/submitting?permanent=1"
+     data-flash-message=""
+  >
+    <i class="icon-x"></i>
+    <span class="screenreader-only">Ignore</span>
+  </a>
+</div>
+
+      </li>
+      <li class="todo" style="">
+        <a
+          class="item"
+          href="https://stagingportal.bebraven.org/courses/29/assignments/738#submit"
+          data-track-category="dashboard"
+          data-track-label="todo needs submitting"
+        >
+          <i class="icon-assignment" aria-label="Assignment"></i>
+          <div class="todo-details">
+            <b>Turn in Submit Song of Significance</b>
+            <p>
+                0 points
+                &bullet;
+              Sep 19 at  6pm
+            </p>
+          </div>
+        </a>
+        <div class="IgnoreButton">
+  <a class="disable_item_link disable-todo-item-link"
+     title="Ignore this assignment"
+     href="#"
+     data-api-href="https://stagingportal.bebraven.org/api/v1/users/self/todo/assignment_738/submitting?permanent=1"
+     data-flash-message=""
+  >
+    <i class="icon-x"></i>
+    <span class="screenreader-only">Ignore</span>
+  </a>
+</div>
+
+      </li>
+  </ul>
+
+    
+    
+  </div>
+        <div class="events_list coming_up">
+  <h2><a class='event-list-view-calendar icon-calendar-day standalone-icon' href='https://stagingportal.bebraven.org/calendar?include_contexts=course_29'>View Calendar</a> Upcoming Events</h2>
+  <ul class="right-side-list events">
+      <li style="" class="event">
+
+
+  <a
+    data-track-category="dashboard"
+    data-track-label="recent event"
+    href="https://stagingportal.bebraven.org/calendar?month=9&amp;year=2017"
+  >
+    <i class="icon-calendar-day" aria-label="Event"></i>
+    <div class="event-details">
+      <b>Learning Lab 1: The Journey Ahead</b>
+      <p>
+          Sep 5 at  6pm
+      </p>
+    </div>
+  </a>
+
+
+</li>
+
+      <li style="" class="event">
+
+
+  <a
+    data-track-category="dashboard"
+    data-track-label="recent event"
+    href="https://stagingportal.bebraven.org/calendar?month=9&amp;year=2017"
+  >
+    <i class="icon-calendar-day" aria-label="Event"></i>
+    <div class="event-details">
+      <b>Learning Lab 2: Lead Authentically</b>
+      <p>
+          Sep 12 at  6pm
+      </p>
+    </div>
+  </a>
+
+
+</li>
+
+      <li style="" class="event">
+
+
+  <a
+    data-track-category="dashboard"
+    data-track-label="recent event"
+    href="https://stagingportal.bebraven.org/calendar?month=9&amp;year=2017"
+  >
+    <i class="icon-calendar-day" aria-label="Event"></i>
+    <div class="event-details">
+      <b>Storytelling as Leadership Workshop</b>
+      <p>
+          Sep 16 at 10am
+      </p>
+    </div>
+  </a>
+
+
+</li>
+
+  </ul>
+</div>
+
+    <div class="events_list recent_feedback">
+  <h2> Recent Feedback</h2>
+  <ul class="right-side-list events">
+      <li style="" class="event">
+
+
+  <a
+    data-track-category="dashboard"
+    data-track-label="recent feedback"
+    class="recent_feedback_icon" href="https://stagingportal.bebraven.org/courses/29/assignments/726/submissions/1015"
+  >
+    <i class="icon-check"></i>
+    <div class="event-details">
+      <b class="recent_feedback_title">Course Participation - Lead Authentically</b>
+        <p><strong>5.88 out of 10</strong></p>
+    </div>
+    <div class="clear"></div>
+  </a>
+  <div class="clear"></div>
+
+
+</li>
+
+      <li style="" class="event">
+
+
+  <a
+    data-track-category="dashboard"
+    data-track-label="recent feedback"
+    class="recent_feedback_icon" href="https://stagingportal.bebraven.org/courses/29/assignments/729/submissions/1015"
+  >
+    <i class="icon-check"></i>
+    <div class="event-details">
+      <b class="recent_feedback_title">Course Participation - Onboard to Braven</b>
+        <p><strong>10 out of 10</strong></p>
+    </div>
+    <div class="clear"></div>
+  </a>
+  <div class="clear"></div>
+
+
+</li>
+
+  </ul>
+</div>
+
+  <div id="edit_course_home_content" style="display: none;">
+    <h2>Set Home Page Layout</h2>
+    <form accept-charset="UTF-8" action="/courses/29" data-turn-into-dialog="{&quot;height&quot;: 300, &quot;width&quot;:500,&quot;modal&quot;:true}" id="edit_course_home_content_form" method="post" style="display:none" tabindex="0" title="Choose Home Page"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="_method" type="hidden" value="put" /><input name="authenticity_token" type="hidden" value="JkQN5eFzVjvEL+Px9H9s6TId96PMUQHKPVqTNwhp+sh3Nz2oqzcnSJFjiZS2Exy/fHzDzY04Q517EeNFby/Nsg==" /></div>
+      <label for="edit_course_home_content_select">Select what you&#39;d like to display on the home page.</label>
+
+      <div class="form_group"><label class="radio"><input type="radio" name="course[default_view]" value="feed" >Course Activity Stream</label></div>
+      <div class="form_group">
+        <label class="radio"><input type="radio" name="course[default_view]" value="wiki" disabled>
+          <span class="ui-state-disabled">Pages Front Page</span></label>
+          <small>&emsp;[ <a href="https://stagingportal.bebraven.org/courses/29/pages">Front page must be set first</a> ]</small>
+      </div>
+      <div class="form_group"><label class="radio"><input type="radio" name="course[default_view]" value="dynamic_syllabus" checked>Dynamic Syllabus</label></div>
+      <div class="form_group"><label class="radio"><input type="radio" name="course[default_view]" value="modules" >Course Modules</label></div>
+      <div class="form_group"><label class="radio"><input type="radio" name="course[default_view]" value="assignments" >Assignments List</label></div>
+      <div class="form_group"><label class="radio"><input type="radio" name="course[default_view]" value="syllabus" >Syllabus</label></div>
+
+      <div class="button-container">
+        <a type="button" class="btn button-secondary dialog_closer">Cancel</a>
+        <button type="submit" class="btn btn-primary">Save</button>
+      </div>
+</form>  </div>
+
+              </aside>
+            </div>
+          </div>
+        </div>
+      
+        <footer role="contentinfo" id="footer" >
+  <a href="http://www.instructure.com" class="footer-logo ">
+    <span class="screenreader-only">
+      By Instructure
+    </span>
+  </a>
+  <span
+    id="footer-links"
+    >
+      <a href="http://instructure.com">Open Source LMS</a>
+    <a target="_blank" href="http://eepurl.com/1LSkT">User Research</a>
+      
+    
+  </span>
+</footer>
+
+    </div>
+  </div>
+
+
+
+    <div style="display:none;"><!-- Everything inside of this should always stay hidden -->
+        <div id="page_view_id">276733d7-9ece-4e5e-ab99-91d1b8af4678</div>
+    </div>
+    <div id="cant_record_dialog" style="display: none;">
+  <div>
+    In order to create video or audio recordings your computer needs to be webcam-enabled. If you don&#39;t have a webcam on your computer, you can still record audio-only messages by first installing the Google Video Chat plugin.
+  </div>
+  <div style="text-align: center; font-size: 1.5em; margin: 10px;">
+    <a href="http://www.google.com/chat/video" target="_blank" class="btn">Install the Video Plugin</a>
+  </div>
+  <div class="links" style="text-align: right; font-size: 0.8em; display: none;">
+    <a href="#" class="cant_record_link">Don&#39;t have a webcam?</a>
+  </div>
+</div>
+  <div id='aria_alerts' class='hide-text affix' role="alert" aria-live="assertive"></div>
+  <script>
+  INST = {"environment":"production","disableScribdPreviews":true,"disableCrocodocPreviews":true,"logPageViews":true,"maxVisibleEditorButtons":3,"editorButtons":[]};
+  ENV = {"ASSET_HOST":null,"active_brand_config":null,"active_brand_config_json_url":"\/dist\/brandable_css\/default\/variables-842770b4a34e5490643ed103288863de.json","url_to_what_gets_loaded_inside_the_tinymce_editor_css":"\/dist\/brandable_css\/legacy_normal_contrast\/bundles\/what_gets_loaded_inside_the_tinymce_editor-0305269978.css","current_user_id":"1015","current_user":{"id":"1015","display_name":"Brian","avatar_image_url":"https:\/\/secure.gravatar.com\/avatar\/5d3a2b4e16a06bf5ed69aa90b6eb9dc1?s=50\u0026d=https%3A%2F%2Fstagingportal.bebraven.org%2Fimages%2Fmessages%2Favatar-50.png","html_url":"https:\/\/stagingportal.bebraven.org\/about\/1015"},"current_user_roles":["user","student"],"current_user_disabled_inbox":false,"files_domain":"stagingportal.bebraven.org","DOMAIN_ROOT_ACCOUNT_ID":10000000000001,"use_new_styles":false,"k12":false,"help_link_name":"Help","use_high_contrast":false,"SETTINGS":{"open_registration":false,"eportfolios_enabled":true},"page_view_update_url":"\/page_views\/276733d7-9ece-4e5e-ab99-91d1b8af4678?page_view_token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpIjoiMjc2NzMzZDctOWVjZS00ZTVlLWFiOTktOTFkMWI4YWY0Njc4IiwidSI6MTAwMDAwMDAwMDEwMTUsImMiOiIyMDE3LTA4LTI1VDIxOjIxOjE5LjkwWiJ9.ZPbqx_nKU0hcogFoCoDT6OOdB4GhrErlS4DHIjoaszU","context_asset_string":"course_29","ping_url":"https:\/\/stagingportal.bebraven.org\/api\/v1\/courses\/29\/ping","TIMEZONE":"America\/New_York","TIMEZONE_OFFSET":-14400,"CONTEXT_TIMEZONE":"America\/New_York","LOCALE":"en","BIGEASY_LOCALE":"en_US","FULLCALENDAR_LOCALE":"en","MOMENT_LOCALE":"en","INCOMPLETE_REGISTRATION":null,"USER_EMAIL":"brian+testregression2001@bebraven.org","badge_counts":{"submissions":1},"notices":[]};
+
+    // TODO: move this out when we have a single require call
+    require = {
+      translate: true,
+      baseUrl: '/optimized',
+      paths: {
+    "common":"compiled\/bundles\/common",
+    "jqueryui":"vendor\/jqueryui",
+    "compiled\/tinymce":"compiled\/tinymce.js?v2",
+    "analytics":"plugins\/analytics",
+    "canvas_quizzes":"client_apps\/canvas_quizzes",
+    "app\/config\/environments\/production":"empty:"},
+      packages : [{"name":"ic-ajax","location":"bower\/ic-ajax\/dist\/amd"},{"name":"ic-styled","location":"bower\/ic-styled"},{"name":"ic-menu","location":"bower\/ic-menu"},{"name":"ic-tabs","location":"bower\/ic-tabs\/dist\/amd"},{"name":"ic-droppable","location":"bower\/ic-droppable\/dist\/amd"},{"name":"ic-sortable","location":"bower\/ic-sortable\/dist\/amd"},{"name":"ic-modal","location":"bower\/ic-modal\/dist\/amd"},{"name":"ic-lazy-list","location":"bower\/ic-lazy-list"},{"name":"ember-qunit","location":"bower\/ember-qunit\/dist\/amd"}],
+      shim: {
+    'bower/react-router/build/umd/ReactRouter': {
+      deps: ['react'],
+      exports: 'ReactRouter'
+    },
+    'bower/react-tray/dist/react-tray': {
+      deps: ['react']
+    },
+    'bower/react-modal/dist/react-modal': {
+      deps: ['react']
+    },
+    'bower/react-tokeninput/dist/react-tokeninput': {
+      deps: ['react'],
+    },
+    'bower/react-select-box/dist/react-select-box': {
+      deps: ['react'],
+    },
+    'bower/ember/ember': {
+      deps: ['jquery', 'handlebars'],
+      exports: 'Ember'
+    },
+    'bower/ember-data/ember-data': {
+      deps: ['ember'],
+      exports: 'DS'
+    },
+    'bower/handlebars/handlebars.runtime': {
+      exports: 'Handlebars'
+    },
+    'bower/reflux/dist/reflux.js': {
+      deps: ['react'],
+      exports: 'Reflux'
+    },
+    'vendor/FileAPI/FileAPI.min': {
+      deps: ['jquery', 'vendor/FileAPI/config'],
+      exports: 'FileAPI'
+    },
+    'fixed-data-table': {
+      deps: ['object_assign', 'react'],
+      exports: 'fixed-data-table'
+    },
+    'vendor/bootstrap-select/bootstrap-select' : {
+      deps: ['jquery'],
+      exports: '$'
+    },
+    'vendor/jquery.jcrop': {
+      deps: ['jquery'],
+      exports: '$'
+    },
+    'vendor/jquery.smartbanner': {
+      deps: ['jquery'],
+      exports: '$'
+    },
+    'vendor/md5': {
+      exports: 'CryptoJS'
+    },
+    'handlebars': {
+      deps: ['bower/handlebars/handlebars.runtime.amd'],
+      exports: 'Handlebars'
+    },
+    'vendor/i18n': {
+      exports: 'I18n'
+    },
+    'vendor/react-infinite-scroll.min' : {
+      deps: ['react'],
+      exports: 'InfiniteScroll'
+    },
+    'bower/tinymce/tinymce' : {
+      exports: 'tinymce'
+    },
+    'bower/axios/dist/axios' : {
+      exports: 'axios'
+    },
+    'bower/tinymce/themes/modern/theme' : {
+      deps: ['bower/tinymce/tinymce'],
+      exports: 'tinymce'
+    }
+  }
+,
+      map: {"canvas_quizzes":{"lodash":"underscore","d3":"vendor\/d3.v3","backbone":"vendor\/backbone","jquery\/instructure_date_and_time":"jquery.instructure_date_and_time","react":"old_unsupported_dont_use_react","react-router":"old_unsupported_dont_use_react-router"},"*":{"React":"react"}},
+      waitSeconds: 60
+    };
+</script>
+
+  
+<script src="https://stagingportal.bebraven.org/dist/optimized/compiled/bundles/common-5aa32c7580.js"></script>
+<script src="https://stagingportal.bebraven.org/dist/optimized/compiled/bundles/dashboard-e4952ac116.js"></script>
+<script src="https://stagingportal.bebraven.org/dist/optimized/compiled/bundles/legacy/courses_show-c1978c0ef0.js"></script>
+<script src="https://stagingportal.bebraven.org/dist/optimized/compiled/bundles/course-107d0f534c.js"></script>
+<script>
+//<![CDATA[
+          require(['jquery'], function () {
+            ["https:\/\/s3.amazonaws.com\/canvas-stag-assets\/bz_custom.js?v=20170821-1007"].forEach(function (src) {
+              var s = document.createElement('script');
+              s.src = src;
+              document.body.appendChild(s);
+            });
+          });
+
+//]]>
+</script>
+
+
+
+  <script>
+  // Determines if the scripts are loaded.
+  // When we get everything out of the views, and have a single top-level
+  // `require`, this becomes meaningless and will be abandoned.
+  (function() {
+    var attempts = 0;
+    var timeout = 10;
+    var check = function() {
+      attempts++;
+      var done = !window.requirejs.s.contexts._.defQueue.length
+      var giveup = attempts === 100; // 1 second
+      if (done || giveup) {
+        var className = document.documentElement.className;
+        document.documentElement.className = className.replace(/scripts-not-loaded/, '');
+        return;
+      }
+      setTimeout(check, timeout);
+    };
+
+  check();
+}).call(this);
+</script>
+
+<div id="bz-tz-warning" style="display: none;">
+  We noticed that your current timezone doesn't match your <a href="https://stagingportal.bebraven.org/profile/settings">settings</a>.
+  <br />
+  Consider changing your <a href="https://stagingportal.bebraven.org/profile/settings">settings</a> so your due dates show the right time!
+  <br />
+  <button type="button" onclick="localStorage.skipTzWarning = 'yes'; this.parentNode.style.display = 'none';">Don't tell me again</button>
+</div>
+
+<script>
+  var BZ_AuthToken = "iC3AvLlyCLcLmXgTuluvVFz9hkARQypaC6qckw+vjDPZXvDx8zZ5xF7VEnb4N98CEpyyLlAqaA1N4ezhaOm7SQ==";
+
+  if(ENV["TIMEZONE_OFFSET"] && localStorage.skipTzWarning != "yes" && ENV["current_user_id"] != 1) {
+    function showBzTzWarning() {
+      var t = document.getElementById("bz-tz-warning");
+      if(t)
+        t.style.display = "";
+    }
+
+    // JS gives minutes, Rails gives seconds, and they come from other directions
+    // so the negative and divide make them match up
+    var rails_tz = -ENV["TIMEZONE_OFFSET"] / 60;
+    var offset = new Date().getTimezoneOffset();
+    if(rails_tz != offset) {
+      var logInInfo = {};
+      if(localStorage.previouslyLoggedIn)
+        logInInfo = JSON.parse(localStorage.previouslyLoggedIn);
+      if(!logInInfo[ENV["current_user_id"]]) {
+        var ajax = new XMLHttpRequest();
+        ajax.onload = function() {
+          location.reload();
+        };
+        ajax.open("PUT", "/api/v1/users/" + ENV["current_user_id"] + ".json");
+        ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+        var data = "authenticity_token=" + encodeURIComponent("q1Sfrh2wpuXpf1omdOD8K5dn145wEdu1z6+RdIrrUTz6J6/jV/TXlrwzMEM2jIx92Qbj4DF4meKJ5OEG7a1mRg==");
+        data += "&" + encodeURIComponent("user[time_zone]");
+        var skip = false;
+        data += "=";
+        // Javascript doesn't give us enough information to select
+        // this specifically and correctly given the complexities of
+        // daylight saving and all the other time zones. So we'll just
+        // handle the two US coasts automatically, and ask the user to
+        // set it themselves if it is anything else.
+        switch(offset) {
+          case 300: // eastern standard time
+            data += "America/New_York";
+          break;
+          case 480: // pacific standard
+            data += "America/Los_Angeles";
+          break;
+          default:
+            skip = true;
+        }
+        if(!skip)
+          ajax.send(data);
+        else
+          showBzTzWarning();
+
+        logInInfo[ENV["current_user_id"]] = true;
+        localStorage.previouslyLoggedIn = JSON.stringify(logInInfo);
+      } else {
+        showBzTzWarning();
+      }
+    }
+  }
+</script>
+
+</div> <!-- #application -->
+</body>
+</html>
