@@ -89,50 +89,56 @@ a:visited {
 	color: #fff;
 }
 
-h2,
-h3,
-h4 {
+.bz-module h2,
+.bz-module h3,
+.bz-module h4 {
 	margin-top: 3em;
 }
 
-h2,
-h4,
-h6 {
+.bz-module h2,
+.bz-module h4,
+.bz-module h6 {
 	color: #EB3B46;
 }
 
-h2 {
+.bz-module h2 {
 	font-size: 40px;
 }
 
-h3 {
+.bz-module h3 {
 	font-size: 34px;
 }
 
-h4 {
+.bz-module h4 {
 	font-size: 27px;
 }
 
-h5,
+.bz-module h5,
 .box-title {
 	font-size: 24px;
 }
 
 .bz-dynamic-syllabus h3 {
 	font-size: 18px;
-	margin: 10px 0;
+	margin: 10px auto;
+}
+
+.bz-course-part-module-box  > * {
+	width: 200px;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 .bz-box h5:not(.box-title), 
-h6, 
-.inner-toc, 
-.main-toc {
+.bz-module h6, 
+.bz-module .inner-toc, 
+.bz-module .main-toc {
  font-size: 16px;
  letter-spacing: 0.1em;
 }
 
-.main-toc ol,
-.main-toc li {
+.bz-module .main-toc ol,
+.bz-module .main-toc li {
 	margin: 0.5em 0 0 10px;
 }
 
@@ -418,9 +424,14 @@ progress[value]::-webkit-progress-bar {
 #bz-help-button a:link  {
 	color: #FFF;
 }
-#bz-help-button a:hover {
+#bz-help-button a:hover,
+.bz-course-part-module-box .bz-button-pick-up:hover {
 	text-decoration: none;
 	background: #C8141F;	
+}
+
+.bz-course-part-task-box .todo-details p:nth-of-type(1) {
+	font-weight: bold;
 }
 
 #bz-tz-warning {
@@ -544,23 +555,31 @@ progress[value]::-webkit-progress-bar {
 .bz-course-part {
   border-left: solid 8px black;
   padding-left: 8px;
-  margin: 16px 0px;
+	margin: 20px 0px;
 }
 
 .bz-course-part-module-box div p {
 	font-size: 16px;
 }
 
-.bz-course-part:nth-of-type(n+1) {
-	border-left-color: #EB3B46;
+.bz-course-part > .textbox,
+.bz-course-part > h2 {
+	padding-left: 10px;
 }
 
-.bz-course-part:nth-of-type(n+2) {
+.bz-course-part:nth-child(4n+0) {
+	/* Sky */
 	border-left-color: #9AD7D7;
 }
 
-.bz-course-part:nth-of-type(n+3) {
+.bz-course-part:nth-child(4n+2) {
+	/* Gold */
 	border-left-color: #D1AB5C;
+}
+
+.bz-course-part:nth-child(4n+3) {
+	/* Red */
+	border-left-color: #EB3B46;
 }
 
 .bz-course-part.bz-part-collapsed .bz-expand-collapse-button ~ * {
@@ -573,6 +592,7 @@ progress[value]::-webkit-progress-bar {
   background-color: #EEE;
   overflow-y: auto;
   height: 200px;
+	font-family: Oswald, "Arial Narrow", sans-serif;
 }
 
 .bz-course-part-task-box .course-options {
@@ -596,7 +616,6 @@ progress[value]::-webkit-progress-bar {
   vertical-align: top;
   margin: 0px;
   padding: 8px;
-  border-right: solid 1px #ccc;
 }
 
 .student-logged-in .bz-course-part-task-box #course_show_secondary,
@@ -614,9 +633,19 @@ progress[value]::-webkit-progress-bar {
   font-size: 1rem !important;
 }
 
-.bz-course-part-task-box .events_list h2 a {
+.bz-course-part-task-box .event-list-view-calendar {
   float: right;
   font-weight: normal;
+	color: #EB3B46;
+}
+
+.event-list-view-calendar:visited {
+	color: #EB3B46;
+}
+
+.event-list-view-calendar:hover,
+.event-list-view-calendar:active {
+	color: #C8141F;
 }
 
 .bz-course-part-task-box::after {
@@ -637,7 +666,7 @@ progress[value]::-webkit-progress-bar {
 }
 
 .bz-course-part-task-box .todo {
-  margin: 0 30px 10px 0;
+  margin: 0 10px 10px 0;
   position: relative;
 }
 
@@ -657,8 +686,8 @@ progress[value]::-webkit-progress-bar {
   width: 220px;
   height: 400px;
   padding: 10px;
-  margin: 10px 20px 10px 0;
-  background-color: #EEE;
+	margin: 20px 10px 0;
+	background-color: #EEE;
   vertical-align: top;
   position: relative;
 }
@@ -694,10 +723,9 @@ progress[value]::-webkit-progress-bar {
 .bz-course-part-module-box .bz-module-image {
   display: block;
   padding: 0px;
-  margin: 0px;
-  margin-bottom: 4px;
   height: 200px;
   text-align: center;
+	margin-top: 10px;
 }
 
 .bz-course-part-module-box .bz-module-image img {
@@ -713,9 +741,9 @@ progress[value]::-webkit-progress-bar {
   color: white;
   font-weight: bold;
   position: absolute;
-  bottom: 8px;
-  left: 12px;
-  right: 12px;
+  bottom: 20px;
+  left: 10px;
+  right: 10px;
 }
 
 .bz-course-part-module-box.completed .bz-button-pick-up {
