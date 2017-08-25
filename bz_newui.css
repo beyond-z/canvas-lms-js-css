@@ -551,17 +551,17 @@ progress[value]::-webkit-progress-bar {
 	font-size: 16px;
 }
 
-.bz-course-part:nth-of-type(4n+1) {
+.bz-course-part:nth-child(4n+0) {
 	/* Sky */
 	border-left-color: #9AD7D7;
 }
 
-.bz-course-part:nth-of-type(4n+3) {
+.bz-course-part:nth-child(4n+2) {
 	/* Gold */
 	border-left-color: #D1AB5C;
 }
 
-.bz-course-part:nth-of-type(4n+4) {
+.bz-course-part:nth-child(4n+3) {
 	/* Red */
 	border-left-color: #EB3B46;
 }
