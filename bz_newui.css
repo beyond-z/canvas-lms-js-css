@@ -544,7 +544,7 @@ progress[value]::-webkit-progress-bar {
 .bz-course-part {
   border-left: solid 8px black;
   padding-left: 8px;
-  margin: 16px 0px;
+  margin: 10px 0px;
 }
 
 .bz-course-part-module-box div p {
@@ -600,7 +600,6 @@ progress[value]::-webkit-progress-bar {
   vertical-align: top;
   margin: 0px;
   padding: 8px;
-  border-right: solid 1px #ccc;
 }
 
 .student-logged-in .bz-course-part-task-box #course_show_secondary,
