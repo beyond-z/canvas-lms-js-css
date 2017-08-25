@@ -633,9 +633,19 @@ progress[value]::-webkit-progress-bar {
   font-size: 1rem !important;
 }
 
-.bz-course-part-task-box .events_list h2 a {
+.bz-course-part-task-box .event-list-view-calendar {
   float: right;
   font-weight: normal;
+	color: #EB3B46;
+}
+
+.event-list-view-calendar:visited {
+	color: #EB3B46;
+}
+
+.event-list-view-calendar:hover,
+.event-list-view-calendar:active {
+	color: #C8141F;
 }
 
 .bz-course-part-task-box::after {
@@ -653,10 +663,6 @@ progress[value]::-webkit-progress-bar {
 .bz-course-part-task-box li .event-details,
 .bz-course-part-task-box .item > * {
   display: inline;
-}
-
-.bz-course-part-task-box li {
-	
 }
 
 .bz-course-part-task-box .todo {
