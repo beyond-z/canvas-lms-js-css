@@ -519,19 +519,28 @@ runOnUserContent(function() {
 		});;
 	});
 	
-	// Show list items in onboarding module only if there's relevant bz-retained:
-	jQuery('.conditional-show-source').find('input').change(function(){
-		var magicInput = jQuery(this);
-		jQuery('.conditional-show [data-bz-retained='+magicInput.data('bz-retained')+']').each(function(){
-			if( magicInput.val() != "" ) {
-				jQuery(this).parents('.conditional-show').show();
+	// Show parent only if the child's bz-retained is populated:
+	jQuery('.conditional-show-source').find('input').each(function(){ 
+		// init when the page loads:
+		showIfMagicIsPopulated(jQuery(this));
+	}).change(function(){
+		// keep updating if user makes changes:
+		showIfMagicIsPopulated(jQuery(this));
+	});
+
+	function showIfMagicIsPopulated(magicInput) {
+		jQuery('.conditional-show [data-bz-retained='+magicInput.data('bz-retained')+'], [data-bz-reference="'+magicInput.data('bz-retained')+'"]').each(function(){
+			var currentItem = jQuery(this);
+			if( magicInput.prop('checked') || ( !magicInput.is('[type="checkbox"]') && magicInput.val() != "" ) ) {
+				console.log("has something" + magicInput.prop('checked') );
+				currentItem.parents('.conditional-show').show();
 			} else {
 				// if it's empty, hide the whole row:				
-				jQuery(this).parents('.conditional-show').hide();
+				console.log("empty" + currentItem.html());
+				currentItem.parents('.conditional-show').hide();
 			}
 		});
-	
-	}).change();
+	}
 	
 	/* END NEW UI STUFF */
 	
