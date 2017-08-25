@@ -85,7 +85,7 @@ a:visited {
 
 #menu a.menu-item-no-drop:focus,
 #menu a.menu-item-no-drop:hover,
-#menu .menu-item a:visited {
+#menu > .menu-item > a:visited {
 	color: #fff;
 }
 
@@ -123,9 +123,17 @@ h5,
 	margin: 10px 0;
 }
 
-.bz-box h5:not(.box-title), h6, .inner-toc, .main-toc {
+.bz-box h5:not(.box-title), 
+h6, 
+.inner-toc, 
+.main-toc {
  font-size: 16px;
  letter-spacing: 0.1em;
+}
+
+.main-toc ol,
+.main-toc li {
+	margin: 0.5em 0 0 10px;
 }
 
 .box-title {
@@ -846,7 +854,7 @@ html {
 }
 
 .bz-module,
-.view-box {
+.bz-view-box {
 	width: 672px;
 	position: relative;
 }
@@ -855,11 +863,11 @@ html {
 	margin: 0 auto 200px;
 }
 
-.view-box {
+.bz-view-box {
 	overflow-x: auto;
 }
 
-.bz-box .view-box {
+.bz-box .bz-view-box {
 	left: -60px;
 }
 
@@ -1017,13 +1025,15 @@ input[type='button'].add-other-field {
 .action,
 .values,
 .read,
-.video .box-title {
+.video .box-title,
+.flush .box-title {
 	padding-left: 60px;
 	background: 0px 50px no-repeat;
 	position: relative;
 }
 
-.video {
+.video,
+.flush {
 	padding-left: 0;
 }
 
@@ -1666,6 +1676,82 @@ expectations-aligned-w-reasons * {
 /* Hide the canvas display of rubrics below assignments since we're loading them dynamically into the content: */
 .student-logged-in.assignments #rubrics {
 	display: none;
+}
+
+/* Cube animation */
+.cube-anim {
+  text-align: center;
+  display: inline-block;
+  margin-top: 50px;
+  width: 350px;
+  height: 350px;
+  perspective: 1400px;
+}
+
+.cube-anim .cube {
+  position: relative;
+  width: inherit;
+  height: inherit;
+  transform-style: preserve-3d;
+  transition: transform 0.6s;
+}
+
+.cube-anim .cube-face {
+  width: inherit;
+  height: inherit;
+  padding: 10px;
+  position: absolute;
+  background: red;
+}
+
+.cube-anim .cube-face-front {
+  background: #FBFBFB;
+  transform: translate3d(0, 0, 175px);
+}
+
+.cube-anim .cube-face-back {
+  background: #FBFBFB;
+  transform: rotateY(180deg) translate3d(0, 0, 175px);
+}
+
+.cube-anim .cube-face-left {
+  background: #FBFBFB;
+  transform: rotateY(-90deg) translate3d(0, 0, 175px);
+}
+
+.cube-anim .cube-face-right {
+  background: #FBFBFB;
+  transform: rotateY(90deg) translate3d(0, 0, 175px);
+}
+
+.cube-anim .cube-face-top {
+  background: #FBFBFB;
+  transform: rotateX(90deg) translate3d(0, 0, 175px);
+}
+
+.cube-anim .cube-face-bottom {
+  background: #FBFBFB;
+  transform: rotateX(-90deg) translate3d(0, 0, 175px);
+}
+
+#cube-anim-back:checked ~ .cube-anim .cube {
+  transform: rotateY(180deg);
+}
+
+#cube-anim-left:checked ~ .cube-anim .cube {
+  transform: rotateY(90deg);
+}
+
+#cube-anim-right:checked ~ .cube-anim .cube {
+  transform: rotateY(-90deg);
+}
+
+#cube-anim-top:checked ~ .cube-anim .cube {
+  transform: rotateX(-90deg);
+}
+
+#cube-anim-bottom:checked ~ .cube-anim .cube {
+  transform: rotateX(90deg);
 }
 
 @media screen and (max-width: 700px) {

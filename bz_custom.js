@@ -460,14 +460,12 @@ runOnUserContent(function() {
 	// Automatically generate a navigable table of contents for the top level out of h2 elements, 
 	// and a h2-level section out of its nested h3 elements
 	jQuery('.bz-module').prepend(function(){
-		var mainToc = '<p class="match-heading-style">The big picture:</p><ol class="main-toc">';
+		var tocBox = jQuery('<div class="main-toc"><p class="match-heading-style">The big picture:</p></div>');
+		var mainToc = jQuery('<ol></ol>');
 		var mainHasKids = false;
-		var h2counter = 0;
 		// this level will gather h2 headings into a table of contents:
 		jQuery('.bz-module h2').each(function(){
 			mainHasKids = true;
-			h2counter ++;
-			mainToc += '<li>' + jQuery(this).text() + '</li>';
 			// this level generates tables of contents under each h2:
 			var innerToc = '<ol class="inner-toc">';
 			var innerHasKids = false;
@@ -479,10 +477,18 @@ runOnUserContent(function() {
 					innerToc += '<li>' + current.text() + '</li>';
 				}
 			});
-			innerToc += '</ol>'
-			if (innerHasKids) jQuery(this).after(innerToc);
+			var mainListObj = jQuery('<li>' + jQuery(this).text() + '</li>');
+
+			if (innerHasKids) {
+				jQuery(this).after(innerToc);
+				mainListObj.append(innerToc);
+			}
+
+			 mainToc.append(mainListObj);
+			
 		});
-		if (mainHasKids) return mainToc;
+		tocBox.append(mainToc);
+		if (mainHasKids) return tocBox;
 	});
 
 	// Create years 
@@ -513,19 +519,26 @@ runOnUserContent(function() {
 		});;
 	});
 	
-	// Show list items in onboarding module only if there's relevant bz-retained:
-	jQuery('.conditional-show-source').find('input').change(function(){
-		var magicInput = jQuery(this);
-		jQuery('.conditional-show [data-bz-retained='+magicInput.data('bz-retained')+']').each(function(){
-			if( magicInput.val() != "" ) {
+	// Show parent only if the child's bz-retained is populated:
+	jQuery('.conditional-show-source').find('input').each(function(){ 
+		// init when the page loads:
+		showIfMagicIsPopulated(jQuery(this));
+	}).change(function(){
+		// keep updating if user makes changes:
+		showIfMagicIsPopulated(jQuery(this));
+	});
+
+	function showIfMagicIsPopulated(magicInput) {
+		jQuery('.conditional-show [data-bz-retained='+magicInput.data('bz-retained')+'], [data-bz-reference="'+magicInput.data('bz-retained')+'"]').each(function(){
+			if( magicInput.prop('checked') || ( !magicInput.is('[type="checkbox"], [type="radio"]') && magicInput.val() != "" ) ) {
+				// If it's a checkbox that's checked, or if it's any other type of field that's not empty:
 				jQuery(this).parents('.conditional-show').show();
 			} else {
-				// if it's empty, hide the whole row:				
+				// if it's unckecked or empty, hide the whole row:				
 				jQuery(this).parents('.conditional-show').hide();
 			}
 		});
-	
-	}).change();
+	}
 	
 	/* END NEW UI STUFF */
 	

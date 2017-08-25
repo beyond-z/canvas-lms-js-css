@@ -96,14 +96,12 @@
           <strong>Bored.</strong> This might be a waste of time.</p>
         <p class="feedback inline">We haven&rsquo;t convinced you yet of how important onboarding is?! No worries, we still have this whole module to turn you around :)</p>
       </li>
-      <li>
-        <p>
-          <input type="checkbox" data-bz-retained="onboarding-010-other" class="bz-optional-magic-field" />
-          <strong>Other:</strong><br />
-          <textarea class="checklist-other bz-optional-magic-field" data-bz-retained="onboarding-010-other-text"></textarea>
-        </p>
-      </li>
     </ul>
+		<p>
+      <input type="checkbox" data-bz-retained="onboarding-010-other" class="bz-optional-magic-field" />
+      <strong>Other:</strong><br />
+      <textarea class="checklist-other bz-optional-magic-field" data-bz-retained="onboarding-010-other-text"></textarea>
+    </p>
     <p>
       <input class="bz-toggle-all-next" type="button" data-bz-retained="onboard-btn-2" value="Done" />
     </p>
@@ -116,7 +114,7 @@
   <div class="bz-box question">
     <h4 class="box-title">Quick question</h4>
     <p>Why did you join Braven? (check all that apply)</p>
-    <ul id="joining-reasons" class="checklist dont-mix">
+    <ul id="joining-reasons" class="checklist dont-mix conditional-show-source">
       <li>
         <input type="checkbox" data-bz-retained="reasons-001" />
         To meet new people</li>
@@ -171,7 +169,7 @@
     <h4 class="box-title">These are all valid reasons to join the Braven community!</h4>
     <p>The Braven experience starts with the Accelerator (the course you&rsquo;re in right now) and then continues through your college graduation until you secure your first <span class="bz-has-tooltip" title="a job or fellowship in your field of interest that requires the bachelor's degree you just earned, or graduate school">career-accelerating opportunity</span>.</p>
     <p>Here&rsquo;s when you&rsquo;ll get to experience the reasons you joined Braven:</p>
-    <div class="view-box">
+    <div class="bz-view-box">
       <table id="expectations-aligned-w-reasons" class="no-zebra">
         <thead>
           <tr>
@@ -184,68 +182,68 @@
           </tr>
         </thead>
         <tbody>
-          <tr data-bz-reference="reasons-001">
-            <td><p>To meet new people</p></td>
+          <tr class="conditional-show">
+            <td data-bz-reference="reasons-001"><p>To meet new people</p></td>
             <td><p>You&rsquo;ll form bonds with the other 4-6 Fellows in your cohort as you meet weekly. You&rsquo;ll also get to meet Braven Fellows across your entire chapter at events and during specific Learning Labs that require cross-cohort collaboration.</p></td>
             <td><p>The Braven student club on campus hosts events where you&rsquo;ll meet Braven Fellows in different chapters and continue to expand your network.</p></td>
           </tr>
-          <tr data-bz-reference="reasons-002">
-            <td><p>I need the credits</p></td>
+          <tr class="conditional-show">
+            <td data-bz-reference="reasons-002"><p>I need the credits</p></td>
             <td><p>Understood! Get those credits!</p></td>
             <td>&nbsp;</td>
           </tr>
-          <tr data-bz-reference="reasons-003">
-            <td><p>I want to be better prepared for the workplace</p></td>
+          <tr class="conditional-show">
+            <td data-bz-reference="reasons-003"><p>I want to be better prepared for the workplace</p></td>
             <td><p>Everything you do in the Accelerator will better prepare you for the workplace. You&rsquo;ll build your skill in the following areas, which define the potential employers hire for: [insert the Braven skills matrix?]</p></td>
             <td><p>You&rsquo;ll continue to build your skill through opportunities like working with a career-aligned Professional Mentor, attending networking events, and attending corporate-sponsored Hackathons. &nbsp;</p></td>
           </tr>
-          <tr data-bz-reference="reasons-004">
-            <td><p>I want a summer internship</p></td>
+          <tr class="conditional-show">
+            <td data-bz-reference="reasons-004"><p>I want a summer internship</p></td>
             <td><p>Part 2 of the Accelerator, Hustle to Career, will take you step by step through the process of applying for internships or other opportunities.</p></td>
             <td><p>Braven and the on-campus Braven club will host networking events that can help you meet the people you need to meet. You will also receive an opportunities newsletter that lists internship opportunities. The Facebook group is always chock full with opportunities!</p></td>
           </tr>
-          <tr data-bz-reference="reasons-005">
-            <td><p>I want to understand what today&rsquo;s employers are looking for in candidates</p></td>
+          <tr class="conditional-show">
+            <td data-bz-reference="reasons-005"><p>I want to understand what today&rsquo;s employers are looking for in candidates</p></td>
             <td><p>You&rsquo;ll be happy to know that Braven strongly focuses on the skills that make you likelier to get a job and thrive in it.</p></td>
             <td><p>Working with a Professional Mentor or attending career-specific events can help you see what's behind the curtain in your industry.</p></td>
           </tr>
-          <tr data-bz-reference="reasons-006">
-            <td><p>I want to build my confidence in workplace settings</p></td>
+          <tr class="conditional-show">
+            <td data-bz-reference="reasons-006"><p>I want to build my confidence in workplace settings</p></td>
             <td><p>The first part of the course has a strong focus on authentic leadership and building your confidence. Everything you do in the Accelerator will help you get more comfortable with workplace settings, from mock interviews to visiting local companies.</p></td>
             <td><p>Treks to local companies and networking events will help you gain more confidence in workplace settings.</p></td>
           </tr>
-          <tr data-bz-reference="reasons-007">
-            <td><p>I want a mentor</p></td>
+          <tr class="conditional-show">
+            <td data-bz-reference="reasons-007"><p>I want a mentor</p></td>
             <td><p>Our volunteer Leadership Coaches will mentor you throughout the Accelerator, and the networking skills you&rsquo;ll build through the course will help you connect with more mentors as well.</p></td>
             <td><p>You can apply to be a part of the Professional Mentor program, where you'll be paired with a mentor in your chosen career field.</p></td>
           </tr>
-          <tr data-bz-reference="reasons-008">
-            <td><p>I want to build my skills in interviewing, networking, pitching myself, resume-writing, etc.</p></td>
+          <tr class="conditional-show">
+            <td data-bz-reference="reasons-008"><p>I want to build my skills in interviewing, networking, pitching myself, resume-writing, etc.</p></td>
             <td><p>You'll get a chance to learn and practice these critical career skills, especially in Part 2 of the Accelerator. You'll love the upcoming Hustle to Career Bootcamp!</p></td>
             <td><p>You'll have the chance to attend more career skills workshops, sometimes even hosted by company partners!</p></td>
           </tr>
-          <tr data-bz-reference="reasons-009">
-            <td><p>I want to be part of a community on campus</p></td>
+          <tr class="conditional-show">
+            <td data-bz-reference="reasons-009"><p>I want to be part of a community on campus</p></td>
             <td><p>Braven Nation is strong on your campus and across the country as well! You're a part of your Braven chapter and will quickly recognize other Braven Fellows on campus. Your chapter's Facebook group is a great place to keep in touch with this community online.</p></td>
             <td><p>The Braven Post-Accelerator Club is the hub of the Braven community once you graduate from the Accelerator. Your regional Facebook group is a great place to keep in touch with this community online.</p></td>
           </tr>
-          <tr data-bz-reference="reasons-010">
-            <td><p>I want connections to employers</p></td>
+          <tr class="conditional-show">
+            <td data-bz-reference="reasons-010"><p>I want connections to employers</p></td>
             <td><p>You'll have several opportunities to network with employers throughout the Accelerator: the Capstone Challenge, informational interviews, mock interviews, networking events. Remember that your LC is a great employer connection as well!</p></td>
             <td><p>Through company-sponsored hackathons, networking events, and special internship opportunities, the Post-Accelerator will continue to connect you to employers.</p></td>
           </tr>
-          <tr data-bz-reference="reasons-011">
-            <td><p>My friend told me to join, so I did</p></td>
+          <tr class="conditional-show">
+            <td data-bz-reference="reasons-011"><p>My friend told me to join, so I did</p></td>
             <td><p>Looks like your friend had a great experience then! Awesome :)</p></td>
             <td>&nbsp;</td>
           </tr>
-          <tr data-bz-reference="reasons-012">
-            <td><p>I want to not only get a job, but be successful in that job</p></td>
+          <tr class="conditional-show">
+            <td data-bz-reference="reasons-012"><p>I want to not only get a job, but be successful in that job</p></td>
             <td><p>Many of the skills you will learn and practice in Braven, such as presenting, giving and getting feedback, and problem-solving, will help you succeed in your job.</p></td>
             <td><p>Braven and the Braven Club will host workshops that will continue to hone these skills.</p></td>
           </tr>
-          <tr data-bz-reference="reasons-013">
-            <td><p>Those Braven t-shirts are cool!</p></td>
+          <tr class="conditional-show">
+            <td data-bz-reference="reasons-013"><p>Those Braven t-shirts are cool!</p></td>
             <td><p>They are, aren't they?! You'll get yours soon enough&hellip;</p></td>
             <td>&nbsp;</td>
           </tr>
@@ -341,9 +339,48 @@
   </div>
   <h4>BRAVEN&rsquo;S CORE VALUES</h4>
   <p>People have core values (you&rsquo;ll explore your own in a few weeks). So do families, companies, and organizations. They help guide the day-to-day life and and work of these communities. Braven&rsquo;s core values are central to the work of our own community, and you&rsquo;ll see them appear again and again throughout the semester and beyond.</p>
-  <div class="bz-box video">
-    <h5 class="box-title">Watch this</h5>
-    <p class="tbd">[a short Braven core values video]</p>
+  <div class="bz-box action flush">
+    <h5 class="box-title">Explore Braven's core values</h5>
+    <p>&nbsp;</p>
+    <div class="centered full">
+	    <!-- CONTROLS -->
+      <input id="cube-anim-front" checked="checked" name="select-face" type="radio" />
+      <input id="cube-anim-left" name="select-face" type="radio" />
+      <input id="cube-anim-right" name="select-face" type="radio" />
+      <input id="cube-anim-top" name="select-face" type="radio" />
+      <input id="cube-anim-bottom" name="select-face" type="radio" />
+      <input id="cube-anim-back" name="select-face" type="radio" />
+      <div>&nbsp;</div>
+      <!-- separator -->
+      <div class="cube-anim">
+        <div class="cube">
+          <div class="cube-face cube-face-front">
+            <h6>Our Core Values</h6>
+            <p>(Click the buttons above to flip through the values)</p>
+          </div>
+          <div class="cube-face cube-face-back">
+            <h6>DEMONSTRATE DON'T DEBATE.</h6>
+            <p>We have intrinsic drive, never give up, and prove what is possible through our actions. Our goals are ambitious and measurable. Our belief in our vision is urgent and unshakeable.</p>
+          </div>
+          <div class="cube-face cube-face-left">
+            <h6>EMBRACE THE JOURNEY.</h6>
+            <p>We continually reflect and rigorously improve to reach our destination. We celebrate success, and leverage setbacks as opportunities to learn and grow. We challenge and inspire each other. Our collective memory is filled with laughter, joy and fun!</p>
+          </div>
+          <div class="cube-face cube-face-right">
+            <h6>FIND A WAY.</h6>
+            <p>Robust data and past experience guide our decisions. Being disciplined while also nimble and innovative is critical to uncovering our full potential. We greet new ideas with a sense of possibility.</p>
+          </div>
+          <div class="cube-face cube-face-top">
+            <h6>GO TOGETHER; GO FURTHER.</h6>
+            <p>Maintaining a generosity of spirit is critical as we work in partnership and seek the perspectives of others enabling us to understand the limits of our own. Our diverse community is one of our greatest assets, and we work to ensure and promote inclusive environments that foster equality of opportunity.</p>
+          </div>
+          <div class="cube-face cube-face-bottom">
+            <h6>LIVE YOUR LEGACY.</h6>
+            <p>We align our actions with our beliefs and have the courage to do what is right even when it is hardest to do so. We are transparent about our decisions and actions, and authentic in all that we do. Others paved the path for us; we must do it for others.</p>
+          </div>
+        </div><!--.cube-->
+      </div><!--.cube-anim-->
+    </div><!--.bz-view-box-->
   </div>
   <h3>WHAT&rsquo;S EXPECTED OF YOU</h3>
   <div class="bz-box question">
@@ -541,7 +578,24 @@
   </div>
   <div class="bz-box video">
     <h4 class="box-title">Take this quick tour</h4>
-    <p class="tbd">[Can we do a video tour of the important things on the Portal?! Includes Braven Help]</p>
+    <figure>
+    	<iframe src="https://player.vimeo.com/video/230998523" width="640" height="357" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+      <figcaption>
+      	<p>We have lots of custom features here you should know about.</p>
+        <p class="media-duration">3:23</p>
+      </figcaption>
+      <div class="transcript">
+     		<p>Hi Braven Fellows! I'm here to give you a whirlwind tour of the Braven Portal so that you're set up for success this semester.</p>
+        <p>The first stop on our tour is the homepage of your course, which will let you navigate to wherever you need to be. When in doubt, come back home! You can find the module you'll need to complete each week on the homepage. Just click on the red button, Pick up where you left off, to enter the module. At the top of your homepage, you'll see this box that lists your upcoming to dos, events, and any feedback your TA has given you. To Dos include all of your projects and assignments. At the very top of the homepage, you'll find a link to click on Braven Resources. Braven Resources includes links to pages with information you'll probably want to reference and return to time and time again. Not surprisingly, Braven Resources is a really good resource!</p>
+        <p>Now, let's take a left-hand turn on our tour. If you look to the left-side of your screen, you'll see the navigation bar. Right now we're home. By clicking on Modules, you'll find another way to get to each of the modules you need to complete. Assignments brings you to a list of assignments, so you always know what you're on the hook for and can easily access your projects from week to week. Grades brings you to your gradebook, where you can see how you're doing throughout the semester.</p>
+        <p>Next stop on our tour, let's take a peek inside a module, even though you're already in one! The table of contents at the top of the module lets you know what this module is about. If you're trying to figure out how much longer the module is, check out the green progress bar on the righthand side of the screen. Whenever you see a blank field, like this one, you can type your response in it. The text will save so that if you return to this module down the road, you'll still be able to see your response. To complete these sort to match games, you just need to drag and drop the cells into the correct place. You'll see your cursor turn into crossed arrows, which indicates you can pick up that cell and move it. Your course engagement score on each module is determined by how actively you participate in the module. We set it up this way, because the more deeply you engage with the content, the more you'll benefit! So for every interactive question you see along the way, by answering the question, or playing a match game, or moving a slider, or answering every kind of question you encounter, you will gain points to your overall module engagement score.</p>
+        <p>The last stop on our tour is Braven Help. If you have any questions about the Portal or Braven, just click on the little red Help button on the right side of the screen. That will bring you to a new page where you can ask a question in Braven Help. The rest of your Braven chapter, plus TAs and the Braven staff, will see your questions and have the chance to answer it. It works like Quora, if you've ever used that site. You can also click on the Questions box in the upper lefthand corner and see if your question has already been asked and answered. With everyone in the Braven community working together to answer questions on Braven Help, we can go together, go further!</p>
+        <p>Thanks for tuning into this tour of the Braven Portal. If you have any lingering questions, feel free to ask on Braven Help. Bye for now! </p>
+      </div>
+    </figure>
+    <p>
+			<input class="bz-toggle-all-next" type="button" data-bz-retained="onboard-btn-9b" value="Done" />
+    </p>
   </div>
   <h3>WHO ELSE IS JOINING YOU ON THIS JOURNEY</h3>
   <div class="bz-box question">
@@ -722,7 +776,7 @@
   </div>
   <div class="bz-box">
     <p>Want to learn more about the people &mdash; yes real humans! &mdash; who designed the Braven Accelerator? Check us out here:</p>
-    <div class="view-box">
+    <div class="bz-view-box">
       <table id="designers">
         <tbody>
           <tr>
