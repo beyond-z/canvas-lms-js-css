@@ -89,31 +89,31 @@ a:visited {
 	color: #fff;
 }
 
-h2,
-h3,
-h4 {
+.bz-module h2,
+.bz-module h3,
+.bz-module h4 {
 	margin-top: 3em;
 }
 
-h2,
-h4,
-h6 {
+.bz-module h2,
+.bz-module h4,
+.bz-module h6 {
 	color: #EB3B46;
 }
 
-h2 {
+.bz-module h2 {
 	font-size: 40px;
 }
 
-h3 {
+.bz-module h3 {
 	font-size: 34px;
 }
 
-h4 {
+.bz-module h4 {
 	font-size: 27px;
 }
 
-h5,
+.bz-module h5,
 .box-title {
 	font-size: 24px;
 }
@@ -124,15 +124,15 @@ h5,
 }
 
 .bz-box h5:not(.box-title), 
-h6, 
-.inner-toc, 
-.main-toc {
+.bz-module h6, 
+.bz-module .inner-toc, 
+.bz-module .main-toc {
  font-size: 16px;
  letter-spacing: 0.1em;
 }
 
-.main-toc ol,
-.main-toc li {
+.bz-module .main-toc ol,
+.bz-module .main-toc li {
 	margin: 0.5em 0 0 10px;
 }
 
@@ -551,16 +551,19 @@ progress[value]::-webkit-progress-bar {
 	font-size: 16px;
 }
 
-.bz-course-part:nth-of-type(n+1) {
-	border-left-color: #EB3B46;
-}
-
-.bz-course-part:nth-of-type(n+2) {
+.bz-course-part:nth-of-type(4n+1) {
+	/* Sky */
 	border-left-color: #9AD7D7;
 }
 
-.bz-course-part:nth-of-type(n+3) {
+.bz-course-part:nth-of-type(4n+3) {
+	/* Gold */
 	border-left-color: #D1AB5C;
+}
+
+.bz-course-part:nth-of-type(4n+4) {
+	/* Red */
+	border-left-color: #EB3B46;
 }
 
 .bz-course-part.bz-part-collapsed .bz-expand-collapse-button ~ * {
@@ -573,6 +576,7 @@ progress[value]::-webkit-progress-bar {
   background-color: #EEE;
   overflow-y: auto;
   height: 200px;
+	font-family: Oswald, "Arial Narrow", sans-serif;
 }
 
 .bz-course-part-task-box .course-options {
@@ -636,8 +640,12 @@ progress[value]::-webkit-progress-bar {
   display: inline;
 }
 
+.bz-course-part-task-box li {
+	
+}
+
 .bz-course-part-task-box .todo {
-  margin: 0 30px 10px 0;
+  margin: 0 10px 10px 0;
   position: relative;
 }
 
