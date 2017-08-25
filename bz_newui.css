@@ -120,7 +120,13 @@ a:visited {
 
 .bz-dynamic-syllabus h3 {
 	font-size: 18px;
-	margin: 10px 0;
+	margin: 10px auto;
+}
+
+.bz-course-part-module-box  > * {
+	width: 200px;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 .bz-box h5:not(.box-title), 
@@ -418,9 +424,14 @@ progress[value]::-webkit-progress-bar {
 #bz-help-button a:link  {
 	color: #FFF;
 }
-#bz-help-button a:hover {
+#bz-help-button a:hover,
+.bz-course-part-module-box .bz-button-pick-up:hover {
 	text-decoration: none;
 	background: #C8141F;	
+}
+
+.bz-course-part-task-box .todo-details p:nth-of-type(1) {
+	font-weight: bold;
 }
 
 #bz-tz-warning {
@@ -664,8 +675,8 @@ progress[value]::-webkit-progress-bar {
   width: 220px;
   height: 400px;
   padding: 10px;
-  margin: 10px 20px 10px 0;
-  background-color: #EEE;
+	margin: 10px;
+	background-color: #EEE;
   vertical-align: top;
   position: relative;
 }
@@ -701,10 +712,9 @@ progress[value]::-webkit-progress-bar {
 .bz-course-part-module-box .bz-module-image {
   display: block;
   padding: 0px;
-  margin: 0px;
-  margin-bottom: 4px;
   height: 200px;
   text-align: center;
+	margin-top: 10px;
 }
 
 .bz-course-part-module-box .bz-module-image img {
@@ -720,9 +730,9 @@ progress[value]::-webkit-progress-bar {
   color: white;
   font-weight: bold;
   position: absolute;
-  bottom: 8px;
-  left: 12px;
-  right: 12px;
+  bottom: 20px;
+  left: 10px;
+  right: 10px;
 }
 
 .bz-course-part-module-box.completed .bz-button-pick-up {
