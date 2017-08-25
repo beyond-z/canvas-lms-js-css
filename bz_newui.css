@@ -555,11 +555,16 @@ progress[value]::-webkit-progress-bar {
 .bz-course-part {
   border-left: solid 8px black;
   padding-left: 8px;
-  margin: 10px 0px;
+	margin: 20px 0px;
 }
 
 .bz-course-part-module-box div p {
 	font-size: 16px;
+}
+
+.bz-course-part > .textbox,
+.bz-course-part > h2 {
+	padding-left: 10px;
 }
 
 .bz-course-part:nth-child(4n+0) {
@@ -675,7 +680,7 @@ progress[value]::-webkit-progress-bar {
   width: 220px;
   height: 400px;
   padding: 10px;
-	margin: 10px;
+	margin: 20px 10px 0;
 	background-color: #EEE;
   vertical-align: top;
   position: relative;
