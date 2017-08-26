@@ -672,14 +672,15 @@ function bzAjaxLoad() {
         var rb = replaceURL.split('#');
         replaceURL = rb[0]+' #'+rb[1];
       }
-      if (replaceURL.indexOf('rubric')) {
-
-        console.log('Loading ' + replaceURL + ' into ' + jQuery(this).attr('class'));
-        el.replaceWith(jQuery('<table />').load(replaceURL, function() {
-          jQuery(this).addClass('bz-ajax-loaded-rubric bz-ajax-loaded');
-        }));
-      }
+      console.log('Loading ' + replaceURL + ' into ' + jQuery(this).attr('class'));
+      el.replaceWith(jQuery('<table />').load(replaceURL, function() {
+        jQuery(this).addClass('bz-ajax-loaded-rubric bz-ajax-loaded');
+      }));
       //jQuery('#wiki_page_show').replaceWith(jQuery('table').load('/courses/10/rubrics/9 #criterion_9_7861'));
+
+      jQuery(this).click(function(e){
+        e.preventDefault();
+      });
     }
     else if (replaceURL.indexOf('service=linked_in') >= 0){
 
@@ -700,8 +701,6 @@ function bzAjaxLoad() {
       jQuery(this).addClass('bz-ajax-loaded-linkedin bz-ajax-loaded');
     }
 
-  }).click(function(e){
-    e.preventDefault();
   });
 };
 
