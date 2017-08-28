@@ -142,414 +142,415 @@ jQuery( document ).ready(function() {
 runOnUserContent(function() {
   
   /* START NEW UI STUFF: */
-	
-	// Score a checklist question:
-	jQuery('.for-checklist').click(function(){
-		var checklist = jQuery(this).parents('.question').find('.checklist');
-		var maxScore = checklist.find('.correct').length;
-		var checklistScore = 0;
-		var falsePositives = 0;
-		checklist.children().each(function(){
-			jQuery(this).addClass('show-answers')
-			if( jQuery(this).children('input').is(':checked') ) {
-				jQuery(this).addClass('checked')
-				if ( jQuery(this).is('.correct') || jQuery(this).parents('li').is('.correct') ) {
-					checklistScore++;
-				} else {
-					falsePositives++;
-				}
-			} 
-		});
-		var finalScore = (checklistScore-falsePositives)/maxScore;
-		var feedbackClass = "";
-		var answerSpace = checklist.parents('.question').next('.answer');
-		var feedback = "You got " + checklistScore + " out of " + maxScore + " right";
-		if ( 0 < falsePositives ) {
-			feedback += ", but you also got " + falsePositives + " incorrect answer";
-			if ( 1 < falsePositives ) {
-				feedback += "s";
-			}
-		}
-		feedback += ". ";
-		if ( 1 <= finalScore ) {
-			feedback += "Perfect!";
-			feedbackClass = 'correct';
-		} else if ( 1 > finalScore && 0.75 <= finalScore ) {
-			feedback += "Very good!";
-			feedbackClass = 'correct';
-		} else if ( 0 >= finalScore ) {
-			feedback = "Oops! " + feedback;
-			feedbackClass = 'incorrect';
-		}
-		bzGiveVerboseFeedback(feedback, answerSpace, feedbackClass);
-	});	
+  
+  // Score a checklist question:
+  jQuery('.for-checklist').click(function(){
+    var checklist = jQuery(this).parents('.question').find('.checklist');
+    var maxScore = checklist.find('.correct').length;
+    var checklistScore = 0;
+    var falsePositives = 0;
+    checklist.children().each(function(){
+      jQuery(this).addClass('show-answers')
+      if( jQuery(this).children('input').is(':checked') ) {
+        jQuery(this).addClass('checked')
+        if ( jQuery(this).is('.correct') || jQuery(this).parents('li').is('.correct') ) {
+          checklistScore++;
+        } else {
+          falsePositives++;
+        }
+      } 
+    });
+    var finalScore = (checklistScore-falsePositives)/maxScore;
+    var feedbackClass = "";
+    var answerSpace = checklist.parents('.question').next('.answer');
+    var feedback = "You got " + checklistScore + " out of " + maxScore + " right";
+    if ( 0 < falsePositives ) {
+      feedback += ", but you also got " + falsePositives + " incorrect answer";
+      if ( 1 < falsePositives ) {
+        feedback += "s";
+      }
+    }
+    feedback += ". ";
+    if ( 1 <= finalScore ) {
+      feedback += "Perfect!";
+      feedbackClass = 'correct';
+    } else if ( 1 > finalScore && 0.75 <= finalScore ) {
+      feedback += "Very good!";
+      feedbackClass = 'correct';
+    } else if ( 0 >= finalScore ) {
+      feedback = "Oops! " + feedback;
+      feedbackClass = 'incorrect';
+    }
+    bzGiveVerboseFeedback(feedback, answerSpace, feedbackClass);
+  });  
 
-	// Score a radio-list question and return feedback:
-	jQuery('.for-radio-list').click(function(){
-		var list = jQuery(this).parents('.question').find('.radio-list');
-		var feedback = "";
-		var feedbackClass = "";
-		var answerSpace = list.parents('.question').next('.answer');
-		list.children().each(function(){
-			jQuery(this).addClass('show-answers');
-			if( jQuery(this).children('input').is(':checked') ) {
-				jQuery(this).addClass('checked')
-				if ( jQuery(this).is('.correct') || jQuery(this).parents('li').is('.correct') ) {
-					feedback = "Good job!";
-					feedbackClass = 'correct';
-				} else {
-					feedback = "Oops!";
-					feedbackClass = 'incorrect';
-				}
-			} 
-		});
-		bzGiveVerboseFeedback(feedback, answerSpace, feedbackClass);		
-		
-	});
+  // Score a radio-list question and return feedback:
+  jQuery('.for-radio-list').click(function(){
+    var list = jQuery(this).parents('.question').find('.radio-list');
+    var feedback = "";
+    var feedbackClass = "";
+    var answerSpace = list.parents('.question').next('.answer');
+    list.children().each(function(){
+      jQuery(this).addClass('show-answers');
+      if( jQuery(this).children('input').is(':checked') ) {
+        jQuery(this).addClass('checked')
+        if ( jQuery(this).is('.correct') || jQuery(this).parents('li').is('.correct') ) {
+          feedback = "Good job!";
+          feedbackClass = 'correct';
+        } else {
+          feedback = "Oops!";
+          feedbackClass = 'incorrect';
+        }
+      } 
+    });
+    bzGiveVerboseFeedback(feedback, answerSpace, feedbackClass);    
+    
+  });
 
-	// Display current value of a range question:
-	jQuery ('[type="range"]').change(function() {
-		var currentVal = jQuery(this).val();
-		jQuery(this).parents('.question').find('.display-value .current-value').text(currentVal);
-		jQuery(this).parents('td').siblings('.current-value').text(currentVal);
-	}).change();
+  // Display current value of a range question:
+  jQuery ('[type="range"]').change(function() {
+    var currentVal = jQuery(this).val();
+    jQuery(this).parents('.question').find('.display-value .current-value').text(currentVal);
+    jQuery(this).parents('td').siblings('.current-value').text(currentVal);
+  }).change();
 
 
-	// Score a range question:
-	jQuery ('.for-range').click(function() {
-		var range = jQuery(this).parents('.question').find('[data-bz-range-answer]');
-		var falsePositives = 0;
-		var currentVal = jQuery(range ).val();
-		var correctVal = jQuery(range ).attr('data-bz-range-answer');
-		var min = jQuery(range).attr('min');
-		var max = jQuery(range).attr('max');
-		var feedback = "";
-		var feedbackClass = "";
-		// The following calculates the relative distance between the user's choice and the correct answer, and returns a rounded down value between 0 and max score.
-		var rangeScore = max - (max * Math.abs(correctVal - currentVal) / (max - min));
-		console.log(rangeScore);
-		if ( max <= rangeScore) {
-			feedback = "Amazing! You got it exactly right!";
-			feedbackClass = 'correct';
-		} else if ( (0.95*max) <= rangeScore ) {
-			feedback = "Very close!";
-			feedbackClass = 'correct';
-		} else if ( (0.85*max) < rangeScore ) {
-			feedback = "Close!";
-			feedbackClass = '';
-		} else {
-			feedback = "Not quite.";
-			feedbackClass = 'incorrect';
-		}
-		var answerSpace = jQuery(this).parents('.question').next('.answer');
-		bzGiveVerboseFeedback(feedback, answerSpace, feedbackClass);
-	});
+  // Score a range question:
+  jQuery ('.for-range').click(function() {
+    var range = jQuery(this).parents('.question').find('[data-bz-range-answer]');
+    var falsePositives = 0;
+    var currentVal = jQuery(range ).val();
+    var correctVal = jQuery(range ).attr('data-bz-range-answer');
+    var min = jQuery(range).attr('min');
+    var max = jQuery(range).attr('max');
+    var feedback = "";
+    var feedbackClass = "";
+    // The following calculates the relative distance between the user's choice and the correct answer, and returns a rounded down value between 0 and max score.
+    var rangeScore = max - (max * Math.abs(correctVal - currentVal) / (max - min));
+    console.log(rangeScore);
+    if ( max <= rangeScore) {
+      feedback = "Amazing! You got it exactly right!";
+      feedbackClass = 'correct';
+    } else if ( (0.95*max) <= rangeScore ) {
+      feedback = "Very close!";
+      feedbackClass = 'correct';
+    } else if ( (0.85*max) < rangeScore ) {
+      feedback = "Close!";
+      feedbackClass = '';
+    } else {
+      feedback = "Not quite.";
+      feedbackClass = 'incorrect';
+    }
+    var answerSpace = jQuery(this).parents('.question').next('.answer');
+    bzGiveVerboseFeedback(feedback, answerSpace, feedbackClass);
+  });
 
-	// Show feedback in an answer following a question:
-	function bzGiveVerboseFeedback(feedback, answerSpace, feedbackClass) {
-		jQuery(answerSpace).addClass(feedbackClass).find('.box-title').text(feedback);
-	}
+  // Show feedback in an answer following a question:
+  function bzGiveVerboseFeedback(feedback, answerSpace, feedbackClass) {
+    jQuery(answerSpace).addClass(feedbackClass).find('.box-title').text(feedback);
+  }
 
   // Provide instant feedback when any input on a list is checked:
-	jQuery('.instant-feedback').find('input').change(function(){
-		var liParent = jQuery(this).parents('li, td').toggleClass('show-answers');
-		if ( jQuery(this).is('[type="radio"]') ){
-			liParent.siblings().removeClass('show-answers');
-		}
-	});
-		
-	// Reveal hidden content immediately following a hint button:
-	jQuery('.reveal-next').click(function(){
-		jQuery(this).parent().next().slideToggle();
-	});
+  jQuery('.instant-feedback').find('input').change(function(){
+    var liParent = jQuery(this).parents('li, td').toggleClass('show-answers');
+    if ( jQuery(this).is('[type="radio"]') ){
+      liParent.siblings().removeClass('show-answers');
+    }
+  });
+    
+  // Reveal hidden content immediately following a hint button:
+  jQuery('.reveal-next').click(function(){
+    jQuery(this).parent().next().slideToggle();
+  });
+  
+  // Check/uncheck boxes by clicking surrounding table cell
+	/* Disabling this for now. Interferes with magic checkboxes.
+  jQuery(".selectable-cells td").click(function(){ 
+    jQuery(this).toggleClass('inner-checked').find('input').each(function(){
+      // toggle the input inside the cell:
+      jQuery(this).prop('checked', !jQuery(this).prop('checked')); 
+    });
+  });
+  */
 	
-	// Check/uncheck boxes by clicking surrounding table cell
-	/* Disabling for now, this overrides data-bz-retained values for some reason 
-	jQuery(".selectable-cells td").click(function(){ 
-		jQuery(this).toggleClass('inner-checked').find('input').each(function(){
-			// toggle the input inside the cell:
-			jQuery(this).prop('checked', !jQuery(this).prop('checked')); 
-		});
-	});
-	 */
-	 
-	// Sort to match:
-		function sortToMatchSetup() {
-			// on chrome, it doesn't allow getData in anything but the drop event
-			// so i use this helper variable instead...
-			var currentlyDragging = null;
-			function isValidDropTarget(event, dropping) {
-				var dragging = currentlyDragging;
-				if(!dragging)
-					return false;
-				if(dragging.getAttribute("data-column-number") == dropping.getAttribute("data-column-number"))
-					return true;
-				return false;
-			}
+  // Sort to match:
+    function sortToMatchSetup() {
+      // on chrome, it doesn't allow getData in anything but the drop event
+      // so i use this helper variable instead...
+      var currentlyDragging = null;
+      function isValidDropTarget(event, dropping) {
+        var dragging = currentlyDragging;
+        if(!dragging)
+          return false;
+        if(dragging.getAttribute("data-column-number") == dropping.getAttribute("data-column-number"))
+          return true;
+        return false;
+      }
 
-		// skip the first column as it is a label column
-		var sortToMatch = document.querySelectorAll(".sort-to-match td:not(:first-child)");
-		for(var i = 0; i < sortToMatch.length; i++) {
-			var td = sortToMatch[i];
+    // skip the first column as it is a label column
+    var sortToMatch = document.querySelectorAll(".sort-to-match td:not(:first-child)");
+    for(var i = 0; i < sortToMatch.length; i++) {
+      var td = sortToMatch[i];
 
-			// wrap the contents in the draggable div so
-			// it moves rather than the table cell itself
-			var wrapper = document.createElement("div");
-			wrapper.innerHTML = td.innerHTML;
-			wrapper.id = "draggable-" + i;
-			wrapper.setAttribute("draggable", "true");
-			td.id = "droppable-" + i;
-			td.className += " droppable";
-			td.innerHTML = "";
-			td.appendChild(wrapper);
+      // wrap the contents in the draggable div so
+      // it moves rather than the table cell itself
+      var wrapper = document.createElement("div");
+      wrapper.innerHTML = td.innerHTML;
+      wrapper.id = "draggable-" + i;
+      wrapper.setAttribute("draggable", "true");
+      td.id = "droppable-" + i;
+      td.className += " droppable";
+      td.innerHTML = "";
+      td.appendChild(wrapper);
 
-			// make it draggable
-			wrapper.addEventListener("dragstart", function(event) {
-				event.dataTransfer.setData("text/id", this.getAttribute("id"));
-				currentlyDragging = this; // need for a chrome hack
-			});
+      // make it draggable
+      wrapper.addEventListener("dragstart", function(event) {
+        event.dataTransfer.setData("text/id", this.getAttribute("id"));
+        currentlyDragging = this; // need for a chrome hack
+      });
 
-			// make the tds valid drop targets
-			td.addEventListener("dragenter", function(event) {
-				if(!isValidDropTarget(event, this)) return true;
-				event.preventDefault();
-				this.className += " inside-dragging";
-			});
-			td.addEventListener("dragleave", function(event) {
-				this.className = this.className.replace(" inside-dragging", "");
-			});
-			td.addEventListener("dragover", function(event) {
-				if(!isValidDropTarget(event, this)) return true;
-				event.preventDefault();
-			});
-			td.addEventListener("drop", function(event) {
-				event.preventDefault();
-				event.stopPropagation();
+      // make the tds valid drop targets
+      td.addEventListener("dragenter", function(event) {
+        if(!isValidDropTarget(event, this)) return true;
+        event.preventDefault();
+        this.className += " inside-dragging";
+      });
+      td.addEventListener("dragleave", function(event) {
+        this.className = this.className.replace(" inside-dragging", "");
+      });
+      td.addEventListener("dragover", function(event) {
+        if(!isValidDropTarget(event, this)) return true;
+        event.preventDefault();
+      });
+      td.addEventListener("drop", function(event) {
+        event.preventDefault();
+        event.stopPropagation();
 
-				var dragging = document.getElementById(event.dataTransfer.getData("text/id"));
-				if(dragging.parentNode) {
-					// swap our existing contents for the draggable one
-					var from = dragging.parentNode;
-					dragging.parentNode.removeChild(dragging);
-					var existing = this.querySelector("[draggable]");
-					if(existing) {
-						this.removeChild(existing);
-						from.appendChild(existing);
-					}
-				}
-				this.appendChild(dragging);
+        var dragging = document.getElementById(event.dataTransfer.getData("text/id"));
+        if(dragging.parentNode) {
+          // swap our existing contents for the draggable one
+          var from = dragging.parentNode;
+          dragging.parentNode.removeChild(dragging);
+          var existing = this.querySelector("[draggable]");
+          if(existing) {
+            this.removeChild(existing);
+            from.appendChild(existing);
+          }
+        }
+        this.appendChild(dragging);
 
 
-				this.className = this.className.replace(" inside-dragging", "");
-				currentlyDragging = null;
+        this.className = this.className.replace(" inside-dragging", "");
+        currentlyDragging = null;
 
-				// delete these next few lines if you don't
-				// want instant feedback (prolly don't)
-				var parentTable = this;
-				while(parentTable.tagName != "TABLE")
-					parentTable = parentTable.parentNode;
-				sortToMatchCheck(parentTable);
-			});
-		}
+        // delete these next few lines if you don't
+        // want instant feedback (prolly don't)
+        var parentTable = this;
+        while(parentTable.tagName != "TABLE")
+          parentTable = parentTable.parentNode;
+        sortToMatchCheck(parentTable);
+      });
+    }
 
-		// and now that drag&drop is set up, shuffle the contents so the
-		// user gets to have fun sorting them back
-		var sortToMatch = document.querySelectorAll(".sort-to-match");
-		for(var i = 0; i < sortToMatch.length; i++) {
-			var table = sortToMatch[i];
-			// NOTE: this may break with colspan, so don't do that
-			var firstRow = table.querySelector("tr");
-			var columns = firstRow.children;
-			// always skipping the first column as it is likely a header
-			for(var col = 1; col < columns.length; col++) {
-				// nth-child uses 1-based indexing
-				var draggablesDom = table.querySelectorAll("td:nth-child("+(col+1)+").droppable > [draggable]");
-				var droppables = table.querySelectorAll("td:nth-child("+(col+1)+").droppable");
-				// I have to copy the node list to a regular array
-				// since modifying a node list is non-standard
-				var draggables = [];
-				for(var a = 0; a < draggablesDom.length; a++)
-					draggables.push(draggablesDom[a]);
+    // and now that drag&drop is set up, shuffle the contents so the
+    // user gets to have fun sorting them back
+    var sortToMatch = document.querySelectorAll(".sort-to-match");
+    for(var i = 0; i < sortToMatch.length; i++) {
+      var table = sortToMatch[i];
+      // NOTE: this may break with colspan, so don't do that
+      var firstRow = table.querySelector("tr");
+      var columns = firstRow.children;
+      // always skipping the first column as it is likely a header
+      for(var col = 1; col < columns.length; col++) {
+        // nth-child uses 1-based indexing
+        var draggablesDom = table.querySelectorAll("td:nth-child("+(col+1)+").droppable > [draggable]");
+        var droppables = table.querySelectorAll("td:nth-child("+(col+1)+").droppable");
+        // I have to copy the node list to a regular array
+        // since modifying a node list is non-standard
+        var draggables = [];
+        for(var a = 0; a < draggablesDom.length; a++)
+          draggables.push(draggablesDom[a]);
 
-				// then create an array which we will propagate in
-				// random order to achieve best randomness...
-				var shuffled = [];
-				shuffled.length = draggables.length;
-				var pos = 0;
-				while(draggables.length) {
-					var random = Math.floor(Math.random() * draggables.length);
-					var d = draggables[random];
-					d.parentNode.removeChild(d);
+        // then create an array which we will propagate in
+        // random order to achieve best randomness...
+        var shuffled = [];
+        shuffled.length = draggables.length;
+        var pos = 0;
+        while(draggables.length) {
+          var random = Math.floor(Math.random() * draggables.length);
+          var d = draggables[random];
+          d.parentNode.removeChild(d);
 
-					shuffled[pos] = d;
-					pos += 1;
+          shuffled[pos] = d;
+          pos += 1;
 
-					draggables[random] = draggables[draggables.length - 1];
-					draggables.length -= 1;
-				}
+          draggables[random] = draggables[draggables.length - 1];
+          draggables.length -= 1;
+        }
 
-				// then put the random stuff back in the table.
-				var allInOrder = true; // in order is a legit shuffle, but we don't want it....
-				for(var a = 0; a < shuffled.length; a++) {
-					if(shuffled[a].id.replace("draggable", "droppable") == droppables[a].id) {
-						// we shuffled but randomly ended up with all in order...
-						// so we'll swap the final item so the user has to do something
-						if(allInOrder && a == shuffled.length - 2) {
-							var tmp = shuffled[a];
-							shuffled[a] = shuffled[a + 1];
-							shuffled[a + 1] = tmp;
-						}
-					} else {
-						allInOrder = false;
-					}
-					droppables[a].appendChild(shuffled[a]);
-					shuffled[a].setAttribute("data-column-number", col);
-					droppables[a].setAttribute("data-column-number", col);
-				}
-			}
-		}
-	}
+        // then put the random stuff back in the table.
+        var allInOrder = true; // in order is a legit shuffle, but we don't want it....
+        for(var a = 0; a < shuffled.length; a++) {
+          if(shuffled[a].id.replace("draggable", "droppable") == droppables[a].id) {
+            // we shuffled but randomly ended up with all in order...
+            // so we'll swap the final item so the user has to do something
+            if(allInOrder && a == shuffled.length - 2) {
+              var tmp = shuffled[a];
+              shuffled[a] = shuffled[a + 1];
+              shuffled[a + 1] = tmp;
+            }
+          } else {
+            allInOrder = false;
+          }
+          droppables[a].appendChild(shuffled[a]);
+          shuffled[a].setAttribute("data-column-number", col);
+          droppables[a].setAttribute("data-column-number", col);
+        }
+      }
+    }
+  }
 
-	sortToMatchSetup();
+  sortToMatchSetup();
 
-	function sortToMatchCheck(sortToMatchTable) {
-		var rows = sortToMatchTable.querySelectorAll("tr");
-		for(var row = 0; row < rows.length; row++) {
-			var tr = rows[row];
-			var all = tr.querySelectorAll("[draggable]");
-			var allCorrect = true;
-			for(var a = 0; a < all.length; a++) {
-				var d = all[a];
-				// since I set the ID to be the same above with the wrapper
-				// except draggable vs droppable, a simple string replace will
-				// tell us if they are back where they are supposed to be!
-				var thisOneCorrect = (d.parentNode.id == d.id.replace("draggable", "droppable"));
+  function sortToMatchCheck(sortToMatchTable) {
+    var rows = sortToMatchTable.querySelectorAll("tr");
+    for(var row = 0; row < rows.length; row++) {
+      var tr = rows[row];
+      var all = tr.querySelectorAll("[draggable]");
+      var allCorrect = true;
+      for(var a = 0; a < all.length; a++) {
+        var d = all[a];
+        // since I set the ID to be the same above with the wrapper
+        // except draggable vs droppable, a simple string replace will
+        // tell us if they are back where they are supposed to be!
+        var thisOneCorrect = (d.parentNode.id == d.id.replace("draggable", "droppable"));
 
-				if(!thisOneCorrect) {
-					allCorrect = false;
-					break;
-				}
-			}
+        if(!thisOneCorrect) {
+          allCorrect = false;
+          break;
+        }
+      }
 
-			if(all.length)
-				tr.className = allCorrect ? "correct" : "incorrect";
-		}
-	}
+      if(all.length)
+        tr.className = allCorrect ? "correct" : "incorrect";
+    }
+  }
 
-	// Show feedback on sort-to-match questions:
-	jQuery('.for-match').click(function(){
-		jQuery(this).parents('.bz-box').find('.sort-to-match').addClass('show-answers');
-	});
-	
-	// Mix up checklists:
-	jQuery('.checklist, .radio-list').not('.dont-mix').each(function(){
-		var itemsToMix = jQuery(this).children();
-		for (var i = itemsToMix.length; i >= 0; i--) {
-			jQuery(this).append(itemsToMix[Math.random() * i | 0]);
-		}
-	});
-	
-	// Instant feedback when sliding range input about "how are you feeling":
-	jQuery('[data-bz-range-flr]').each(function() {
-		var feedback = jQuery(this);
-		var fbFlr = jQuery(this).data('bz-range-flr');
-		var fbClg = jQuery(this).data('bz-range-clg');
-		// Listen to changes in the associated input and toggle display as needed:
-		feedback.parents('tr').prev().find('input').change(function(){
-			var rangeValue = jQuery(this).val();
-			if ( fbFlr < rangeValue && rangeValue <= fbClg ) {
-				feedback.slideDown().siblings().slideUp();					
-			}
-		});
-	});
-	
-	// Referenced sources numbering:
-	/* TBD */
-	
-	// Automatically generate a navigable table of contents for the top level out of h2 elements, 
-	// and a h2-level section out of its nested h3 elements
-	jQuery('.bz-module').prepend(function(){
-		var tocBox = jQuery('<div class="main-toc"><p class="match-heading-style">The big picture:</p></div>');
-		var mainToc = jQuery('<ol></ol>');
-		var mainHasKids = false;
-		// this level will gather h2 headings into a table of contents:
-		jQuery('.bz-module h2').each(function(){
-			mainHasKids = true;
-			// this level generates tables of contents under each h2:
-			var innerToc = '<ol class="inner-toc">';
-			var innerHasKids = false;
-			var nextLevelDown = jQuery(this).nextUntil('h2');
-			nextLevelDown.each(function(){
-				var current = jQuery(this);
-				if (current.is('h3')) {
-					innerHasKids = true;
-					innerToc += '<li>' + current.text() + '</li>';
-				}
-			});
-			var mainListObj = jQuery('<li>' + jQuery(this).text() + '</li>');
+  // Show feedback on sort-to-match questions:
+  jQuery('.for-match').click(function(){
+    jQuery(this).parents('.bz-box').find('.sort-to-match').addClass('show-answers');
+  });
+  
+  // Mix up checklists:
+  jQuery('.checklist, .radio-list').not('.dont-mix').each(function(){
+    var itemsToMix = jQuery(this).children();
+    for (var i = itemsToMix.length; i >= 0; i--) {
+      jQuery(this).append(itemsToMix[Math.random() * i | 0]);
+    }
+  });
+  
+  // Instant feedback when sliding range input about "how are you feeling":
+  jQuery('[data-bz-range-flr]').each(function() {
+    var feedback = jQuery(this);
+    var fbFlr = jQuery(this).data('bz-range-flr');
+    var fbClg = jQuery(this).data('bz-range-clg');
+    // Listen to changes in the associated input and toggle display as needed:
+    feedback.parents('tr').prev().find('input').change(function(){
+      var rangeValue = jQuery(this).val();
+      if ( fbFlr < rangeValue && rangeValue <= fbClg ) {
+        feedback.slideDown().siblings().slideUp();          
+      }
+    });
+  });
+  
+  // Referenced sources numbering:
+  /* TBD */
+  
+  // Automatically generate a navigable table of contents for the top level out of h2 elements, 
+  // and a h2-level section out of its nested h3 elements
+  jQuery('.bz-module').prepend(function(){
+    var tocBox = jQuery('<div class="main-toc"><p class="match-heading-style">The big picture:</p></div>');
+    var mainToc = jQuery('<ol></ol>');
+    var mainHasKids = false;
+    // this level will gather h2 headings into a table of contents:
+    jQuery('.bz-module h2').each(function(){
+      mainHasKids = true;
+      // this level generates tables of contents under each h2:
+      var innerToc = '<ol class="inner-toc">';
+      var innerHasKids = false;
+      var nextLevelDown = jQuery(this).nextUntil('h2');
+      nextLevelDown.each(function(){
+        var current = jQuery(this);
+        if (current.is('h3')) {
+          innerHasKids = true;
+          innerToc += '<li>' + current.text() + '</li>';
+        }
+      });
+      var mainListObj = jQuery('<li>' + jQuery(this).text() + '</li>');
 
-			if (innerHasKids) {
-				jQuery(this).after(innerToc);
-				mainListObj.append(innerToc);
-			}
+      if (innerHasKids) {
+        jQuery(this).after(innerToc);
+        mainListObj.append(innerToc);
+      }
 
-			 mainToc.append(mainListObj);
-			
-		});
-		tocBox.append(mainToc);
-		if (mainHasKids) return tocBox;
-	});
+       mainToc.append(mainListObj);
+      
+    });
+    tocBox.append(mainToc);
+    if (mainHasKids) return tocBox;
+  });
 
-	// Create years 
-	jQuery('[data-bz-insert-offset-year]').each(function(){
-		var offset = +(jQuery(this).attr('data-bz-insert-offset-year'));
-		if( jQuery(this).is('input') && ( '' === jQuery(this).val() ) ){
-			jQuery(this).attr('placeholder', function(){
-				return (new Date().getFullYear()+offset);
-			});
-		} else {
-			jQuery(this).text(function(){
-				return (new Date().getFullYear()+offset);
-			});
-		}
-	});
-	
-	// Automatically check the "other" box if text input or textarea is filled, uncheck if cleared:
-	jQuery('.checklist-other').bind("keyup blur", function(e) {
-		jQuery(this).siblings('[type="checkbox"], [type="radio"]').prop('checked', ( ( jQuery(this).val() ) ? true : false ) );
-	}).parent('p').addClass('bz-has-other');
-	
-	// Create a button to toggle transcripts for videos
-	jQuery('.transcript').hide().before(function(){
-		var transcript = jQuery(this);
-		var btn = '<span class="toggle-transcript">Transcript<span>';
-		return jQuery(btn).click(function(){
-			transcript.slideToggle();
-		});;
-	});
-	
-	// Show parent only if the child's bz-retained is populated:
-	jQuery('.conditional-show-source').find('input').each(function(){ 
-		// init when the page loads:
-		showIfMagicIsPopulated(jQuery(this));
-	}).change(function(){
-		// keep updating if user makes changes:
-		showIfMagicIsPopulated(jQuery(this));
-	});
+  // Create years 
+  jQuery('[data-bz-insert-offset-year]').each(function(){
+    var offset = +(jQuery(this).attr('data-bz-insert-offset-year'));
+    if( jQuery(this).is('input') && ( '' === jQuery(this).val() ) ){
+      jQuery(this).attr('placeholder', function(){
+        return (new Date().getFullYear()+offset);
+      });
+    } else {
+      jQuery(this).text(function(){
+        return (new Date().getFullYear()+offset);
+      });
+    }
+  });
+  
+  // Automatically check the "other" box if text input or textarea is filled, uncheck if cleared:
+  jQuery('.checklist-other').bind("keyup blur", function(e) {
+    jQuery(this).siblings('[type="checkbox"], [type="radio"]').prop('checked', ( ( jQuery(this).val() ) ? true : false ) );
+  }).parent('p').addClass('bz-has-other');
+  
+  // Create a button to toggle transcripts for videos
+  jQuery('.transcript').hide().before(function(){
+    var transcript = jQuery(this);
+    var btn = '<span class="toggle-transcript">Transcript<span>';
+    return jQuery(btn).click(function(){
+      transcript.slideToggle();
+    });;
+  });
+  
+  // Show parent only if the child's bz-retained is populated:
+  jQuery('.conditional-show-source').find('input').each(function(){ 
+    // init when the page loads:
+    showIfMagicIsPopulated(jQuery(this));
+  }).change(function(){
+    // keep updating if user makes changes:
+    showIfMagicIsPopulated(jQuery(this));
+  });
 
-	function showIfMagicIsPopulated(magicInput) {
-		jQuery('.conditional-show [data-bz-retained='+magicInput.data('bz-retained')+'], [data-bz-reference="'+magicInput.data('bz-retained')+'"]').each(function(){
-			if( magicInput.prop('checked') || ( !magicInput.is('[type="checkbox"], [type="radio"]') && magicInput.val() != "" ) ) {
-				// If it's a checkbox that's checked, or if it's any other type of field that's not empty:
-				jQuery(this).parents('.conditional-show').show();
-			} else {
-				// if it's unckecked or empty, hide the whole row:				
-				jQuery(this).parents('.conditional-show').hide();
-			}
-		});
-	}
+  function showIfMagicIsPopulated(magicInput) {
+    addOnMagicFieldsLoaded(function() {
+      jQuery('.conditional-show [data-bz-retained='+magicInput.data('bz-retained')+'], [data-bz-reference="'+magicInput.data('bz-retained')+'"]').each(function(){
+        if( magicInput.prop('checked') || ( !magicInput.is('[type="checkbox"], [type="radio"]') && magicInput.val() != "" ) ) {
+          // If it's a checkbox that's checked, or if it's any other type of field that's not empty:
+          jQuery(this).parents('.conditional-show').show();
+        } else {
+          // if it's unckecked or empty, hide the whole row:        
+          jQuery(this).parents('.conditional-show').hide();
+        }
+      });
+    });
+  }
 
-	// Add "back to top" widget:
 	setupBTT();
 	function setupBTT() {
 		// Create a button to allow scrolling up in one click:
@@ -565,10 +566,9 @@ runOnUserContent(function() {
 				$('#bz-back-to-top').fadeOut();
 			}		
 		});
-		
 	}
-	
-	/* END NEW UI STUFF */
+  
+  /* END NEW UI STUFF */
   
 });
 
