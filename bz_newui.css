@@ -90,9 +90,9 @@ a:visited {
 	color: #fff;
 }
 
-.bz-module h2,
-.bz-module h3,
-.bz-module h4 {
+.bz-module .bz-module h2,
+.bz-module .bz-module h3,
+.bz-module .bz-module h4 {
 	margin-top: 3em;
 }
 
@@ -115,7 +115,7 @@ a:visited {
 }
 
 .bz-module h5,
-.box-title {
+.bz-module .box-title {
 	font-size: 24px;
 }
 
@@ -130,7 +130,7 @@ a:visited {
 	margin-right: auto;
 }
 
-.bz-box h5:not(.box-title), 
+.bz-module .bz-box h5:not(.box-title), 
 .bz-module h6, 
 .bz-module .inner-toc, 
 .bz-module .main-toc {
@@ -894,6 +894,7 @@ html {
 
 .bz-module {
 	margin: 0 auto 200px;
+	position: relative;
 }
 
 .bz-view-box {
@@ -912,7 +913,7 @@ html {
 	margin-bottom:-1px;
 }
 
-.bz-box h3 {
+.bz-module  .bz-box h3 {
 	margin-top:0;
 }
 
@@ -1101,7 +1102,7 @@ figure {
 	background-image: url('images/lms-icons-99.png');
 }
 
-.answer.correct .box-title {
+.bz-module .answer.correct .box-title {
 	color: #22B573;
 }
 
@@ -1109,7 +1110,7 @@ figure {
 	background-image: url('images/lms-icons-98.png');
 }
 
-.answer.incorrect .box-title {
+.bz-module .answer.incorrect .box-title {
 	color: #C1272D;
 }
 
@@ -1434,6 +1435,22 @@ expectations-aligned-w-reasons * {
 .auto-image-widths img {
 	width: 100%;
 	height: auto;
+}
+
+#bz-back-to-top {
+	display: none;
+	position: fixed;
+	text-align: right;
+	margin: 0 auto;
+	font-size: 14px;
+	color: #666;
+	bottom: 1em;
+	right: 1em;
+	cursor: pointer;
+}
+
+#bz-back-to-top:hover {
+	color: #EB3B46;
 }
 
 .for-range,
