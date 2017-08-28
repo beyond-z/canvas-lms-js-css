@@ -173,6 +173,9 @@ figcaption {
 
 .share-release {
 	font-size: 0.8em;
+	margin: 0.5em 0;
+	padding-bottom: 1em;
+	border-bottom: 1px solid #EEE;
 }
 
 input,
@@ -1002,7 +1005,8 @@ figcaption {
 }
 
 .share-release [type='checkbox'] {
-	position: inherit;
+	position: static;
+	height: 0.8em;
 }
 
 .radio-list {
@@ -1033,10 +1037,17 @@ input[type='button']:disabled {
 }
 
 .bz-module input[type='text'],
+.bz-module input[type='url'],
+.bz-module input[type='number'],
 .bz-module textarea {
 	background: #F6EFDF;
 	padding: 10px;
 	border: 1px solid #CCC;
+}
+
+.bz-module input[type='text'],
+.bz-module input[type='url'] {
+	min-width: 33%;
 }
 
 /*
