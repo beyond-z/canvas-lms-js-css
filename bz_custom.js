@@ -264,13 +264,15 @@ runOnUserContent(function() {
   });
   
   // Check/uncheck boxes by clicking surrounding table cell
+	/* Disabling this for now. Interferes with magic checkboxes.
   jQuery(".selectable-cells td").click(function(){ 
     jQuery(this).toggleClass('inner-checked').find('input').each(function(){
       // toggle the input inside the cell:
       jQuery(this).prop('checked', !jQuery(this).prop('checked')); 
     });
   });
-  
+  */
+	
   // Sort to match:
     function sortToMatchSetup() {
       // on chrome, it doesn't allow getData in anything but the drop event
@@ -549,6 +551,7 @@ runOnUserContent(function() {
     });
   }
 
+
 	// Add "back to top" widget:
 	setupBTT();
 	function setupBTT() {
@@ -557,6 +560,7 @@ runOnUserContent(function() {
 			jQuery('body').scrollTop(0);
 		});
 		jQuery('.bz-module').append(btt);
+
 		// Hide the button until you've scrolled down a bit:
 		$(window).scroll( function(){
 			if ( $(this).scrollTop() > 1080 ) {
@@ -565,9 +569,11 @@ runOnUserContent(function() {
 				$('#bz-back-to-top').fadeOut();
 			}		
 		});
+
 		
 	}
 	
+
   /* END NEW UI STUFF */
   
 });
