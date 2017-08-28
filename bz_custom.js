@@ -548,7 +548,26 @@ runOnUserContent(function() {
       });
     });
   }
-  
+
+	// Add "back to top" widget:
+	setupBTT();
+	function setupBTT() {
+		// Create a button to allow scrolling up in one click:
+		var btt= jQuery('<div id="bz-back-to-top" class="match-heading-style">Back to top</div>').click(function(){
+			jQuery('body').scrollTop(0);
+		});
+		jQuery('.bz-module').append(btt);
+		// Hide the button until you've scrolled down a bit:
+		$(window).scroll( function(){
+			if ( $(this).scrollTop() > 1080 ) {
+				$('#bz-back-to-top').fadeIn();
+			} else {
+				$('#bz-back-to-top').fadeOut();
+			}		
+		});
+		
+	}
+	
   /* END NEW UI STUFF */
   
 });
