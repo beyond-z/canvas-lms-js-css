@@ -7,6 +7,13 @@ css-files-to-my-account
  *
  * */
 
+/*
+  For stuff that depends on the magic field value, use:
+  addOnMagicFieldsLoaded(function() {
+    // stuff here
+  });
+*/
+
 
 /*
   Use this like document.ready to call a function when user
@@ -529,14 +536,16 @@ runOnUserContent(function() {
   });
 
   function showIfMagicIsPopulated(magicInput) {
-    jQuery('.conditional-show [data-bz-retained='+magicInput.data('bz-retained')+'], [data-bz-reference="'+magicInput.data('bz-retained')+'"]').each(function(){
-      if( magicInput.prop('checked') || ( !magicInput.is('[type="checkbox"], [type="radio"]') && magicInput.val() != "" ) ) {
-        // If it's a checkbox that's checked, or if it's any other type of field that's not empty:
-        jQuery(this).parents('.conditional-show').show();
-      } else {
-        // if it's unckecked or empty, hide the whole row:        
-        jQuery(this).parents('.conditional-show').hide();
-      }
+    addOnMagicFieldsLoaded(function() {
+      jQuery('.conditional-show [data-bz-retained='+magicInput.data('bz-retained')+'], [data-bz-reference="'+magicInput.data('bz-retained')+'"]').each(function(){
+        if( magicInput.prop('checked') || ( !magicInput.is('[type="checkbox"], [type="radio"]') && magicInput.val() != "" ) ) {
+          // If it's a checkbox that's checked, or if it's any other type of field that's not empty:
+          jQuery(this).parents('.conditional-show').show();
+        } else {
+          // if it's unckecked or empty, hide the whole row:        
+          jQuery(this).parents('.conditional-show').hide();
+        }
+      });
     });
   }
   
