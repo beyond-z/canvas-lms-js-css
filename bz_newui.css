@@ -65,7 +65,7 @@ th,
 }
 
 .bz-module,
-.assignment {
+.assignment .description {
 	font-size: 18px;
 	line-height: 1.25;
 }
@@ -1467,9 +1467,38 @@ expectations-aligned-w-reasons * {
 }
 
 /* Styling for quizzes/assignments that use magic fields to layout complex content */
-.assignment .description {
-	width: 672px;
-	margin: 2em auto;
+
+.btn, .Button--primary {
+	border: 0;
+	/*border-radius: 0;*/
+}
+.btn-primary, .Button--primary {	
+	background: #eb3b46;
+}
+.btn-primary:hover, .Button--primary:hover {
+	background: #c8141f; 	
+}
+.btn-secondary {
+	background: #9ad7d7;
+}
+
+.btn-secondary:hover {
+	background: #ebf7f7;	
+}
+
+#questions,
+.quiz-submission,
+.discussions #main {
+	background: #ebf7f7 !important;
+}
+
+.toolbarView#discussion-toolbar .headerBar {
+	background: #D7EFEF !important;
+}
+
+.question_holder .display_question .file-upload-question-holder .file-upload-box {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
 }
 
 .bz-magic-field-assignment h3,
@@ -1530,7 +1559,7 @@ expectations-aligned-w-reasons * {
 
 .bz-example {
 	border-color: #FBFBFB;
-	width: 100%;
+  width: calc(100% - 50px);
 }
 
 .bz-magic-field-assignment table.steps td,
@@ -1856,8 +1885,7 @@ expectations-aligned-w-reasons * {
 }
 
 @media screen and (max-width: 700px) {
- .bz-module,
- .assignment .description {
+ .bz-module {
 		width: 100%;
 		padding: 5px;
 	}
