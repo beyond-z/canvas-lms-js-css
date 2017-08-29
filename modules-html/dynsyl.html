@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html class="scripts-not-loaded" lang="en">
 <head>
@@ -23,40 +22,8 @@
 }
 </style>
 <link rel="stylesheet" type="text/css" href="../bz_newui.css">
-</head>
-<!--
-  <link href="https://s3.amazonaws.com/canvas-stag-assets/bz_newui.css?v=20170825-1715" media="all" rel="stylesheet" />  -->
-  <script>
-    window.bz_custom_css_url = "https:\/\/s3.amazonaws.com\/canvas-stag-assets\/bz_newui.css?v=20170825-1715";
-    try {
-      if(window.location.pathname != '/' && window.location.pathname.indexOf('/login') != 0 && !window.location.pathname.match(/courses\/[0-9]+$/)) {
-        var message = "";
-        message += 'last_url=' + encodeURIComponent(window.location.href) + "&";
-        message += 'last_url_title=' + encodeURIComponent(document.title);
-        var request = new XMLHttpRequest();
-        request.open("POST", "/bz/last_user_url", true);
-        request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        request.send(message);
-      }
-    } catch(e) {}
-  </script>
 
-  <script>
-    // listen for any clicks on links that have href="#" and queue them to be fired on dom ready.
-      function _earlyClick(e){
-        var cur = e.target || e.srcElement;
-        while ( cur && cur.ownerDocument ) {
-          if ( cur.getAttribute('href') == '#' ) {
-            e.preventDefault();
-            _earlyClick.clicks = _earlyClick.clicks || [];
-            _earlyClick.clicks.push(cur);
-            break;
-          }
-          cur = cur.parentNode;
-        }
-      }
-      document.addEventListener('click', _earlyClick);
-  </script>
+
   <script src="https://stagingportal.bebraven.org/bz_support.js?20170824"></script>
   <link rel="stylesheet" type="text/css" href="https://stagingportal.bebraven.org/bz_support.css?20170823" />
   

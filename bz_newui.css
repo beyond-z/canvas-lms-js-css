@@ -64,7 +64,8 @@ th,
 	font-size: 1.2em;
 }
 
-.bz-module {
+.bz-module,
+.assignment {
 	font-size: 18px;
 	line-height: 1.25;
 }
@@ -1178,8 +1179,8 @@ li input:not([type="button"]):not([type="radio"]):not([type="checkbox"]), li tex
 	break-inside: avoid;
 }
 
-table:not(.no-zebra) tr:nth-child(odd):not(.no-zebra), 
-.to-columns li:nth-child(odd) {
+table:not(.no-zebra) tr:nth-child(even):not(.no-zebra), 
+.to-columns li:nth-child(even) {
  background: #F6F6F6;
 }
 
@@ -1461,13 +1462,18 @@ expectations-aligned-w-reasons * {
 }
 
 /* Styling for quizzes/assignments that use magic fields to layout complex content */
+.assignment .description {
+	width: 672px;
+	margin: 2em auto;
+}
+
 .bz-magic-field-assignment h3,
 .bz-magic-field-submission h3 {
 	font-size: 30px;
 	color: #EB3B46;
-	margin-top: 30px;
-	padding-top: 10px;
-	border-top: 1px solid #999;
+	margin-top: 3em;
+	padding-top: 1em;
+	border-top: 1px solid #CCC;
 }
 
 .bz-magic-field-assignment h4,
@@ -1498,20 +1504,17 @@ expectations-aligned-w-reasons * {
 	height: 3em;
 }
 
-.bz-magic-field-assignment .bz-watch-out-box:before,
-.bz-magic-field-submission .bz-watch-out-box:before {
-	content: "Important to note";
-}
 
 .bz-magic-field-assignment table.narrow,
-.bz-magic-field-submission table.narrow,
-.bz-magic-field-assignment .bz-watch-out-box,
-.bz-magic-field-submission .bz-watch-out-box,
-.bz-magic-field-assignment .bz-helpful-tip-box,
-.bz-magic-field-submission .bz-helpful-tip-box {
-	float: none;
-	width: 60%;
+.bz-watch-out-box,
+.bz-helpful-tip-box {
+	width: 67%;
+	padding: 20px;
 	margin: 1em auto;
+}
+
+.bz-watch-out-box {
+	border: 5px solid #EB3B46;
 }
 
 .bz-magic-field-assignment table.steps td,
@@ -1617,7 +1620,8 @@ expectations-aligned-w-reasons * {
 	float: left;
 	text-align: right;
 }
- .bz-magic-field-assignment .timeline li:nth-child(even) .milestone, .bz-magic-field-submission .timeline li:nth-child(even) .milestone {
+ .bz-magic-field-assignment .timeline li:nth-child(even) .milestone, 
+ .bz-magic-field-submission .timeline li:nth-child(even) .milestone {
  float: right;
 }
 
@@ -1836,7 +1840,8 @@ expectations-aligned-w-reasons * {
 }
 
 @media screen and (max-width: 700px) {
- .bz-module {
+ .bz-module,
+ .assignment .description {
 		width: 100%;
 		padding: 5px;
 	}
