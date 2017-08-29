@@ -1052,6 +1052,11 @@ input[type='button']:disabled {
 	min-width: 33%;
 }
 
+.user_content table:not([cellpadding]) td, 
+.mceContentBody table:not([cellpadding]) td {
+	padding: 10px;
+}
+
 /*
 input[type='button'].add-other-field {
 	font-size: 16px;
@@ -1511,10 +1516,15 @@ expectations-aligned-w-reasons * {
 	width: 67%;
 	padding: 20px;
 	margin: 1em auto;
+	border: 5px solid;
 }
 
 .bz-watch-out-box {
-	border: 5px solid #EB3B46;
+	border-color: #EB3B46;
+}
+
+.bz-helpful-tip-box {
+	border-color: #9AD7D7;
 }
 
 .bz-magic-field-assignment table.steps td,
