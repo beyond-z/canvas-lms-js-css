@@ -734,7 +734,25 @@ function bzAjaxLoad() {
       jQuery(this).removeClass('bz-ajax-replace');
       jQuery(this).addClass('bz-ajax-loaded-linkedin bz-ajax-loaded');
     }
+    else if (replaceURL.indexOf('LOCAL_COURSE_ID_TOKEN')){
 
+      // This will replace the LOCAL_COURSE_ID_TOKEN added by the server for links from one
+      // page or assignment to another in things that are cloned from the Content Library
+      if (ENV["WIKI_PAGE"] || ENV["ASSIGNMENT_ID"]){
+        var course_id = ENV["COURSE_ID"];
+        this.href = replaceURL.replace(/LOCAL_COURSE_ID_TOKEN/, course_id);
+        var dataApiEndpointReplace = jQuery(this).attr('data-api-endpoint');
+        if (dataApiEndpointReplace){
+          jQuery(this).attr('data-api-endpoint', dataApiEndpointReplace.replace(/LOCAL_COURSE_ID_TOKEN/, course_id));
+        }
+        console.log('Fixed the following link to point to the local course: ' + this.href);
+      } else {
+        console.log('Fixing up Content Library links only works for pages and assignments. Returning.');
+        return;
+      }
+      jQuery(this).removeClass('bz-ajax-replace');
+      jQuery(this).addClass('bz-ajax-loaded-content-lib-link bz-ajax-loaded');
+    }
   });
 };
 
