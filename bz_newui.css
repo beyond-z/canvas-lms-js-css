@@ -1512,7 +1512,8 @@ expectations-aligned-w-reasons * {
 
 .bz-magic-field-assignment table.narrow,
 .bz-watch-out-box,
-.bz-helpful-tip-box {
+.bz-helpful-tip-box,
+.bz-example {
 	width: 67%;
 	padding: 20px;
 	margin: 1em auto;
@@ -1525,6 +1526,11 @@ expectations-aligned-w-reasons * {
 
 .bz-helpful-tip-box {
 	border-color: #9AD7D7;
+}
+
+.bz-example {
+	border-color: #FBFBFB;
+	width: 100%;
 }
 
 .bz-magic-field-assignment table.steps td,
