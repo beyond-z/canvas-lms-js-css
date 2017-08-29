@@ -49,6 +49,7 @@ nav li,
 .bz-expand-collapse-button,
 input[type="button"],
 .media-duration,
+.media-instructions,
 th,
 .match-heading-style,
 .inner-toc,
@@ -63,7 +64,8 @@ th,
 	font-size: 1.2em;
 }
 
-.bz-module {
+.bz-module,
+.assignment {
 	font-size: 18px;
 	line-height: 1.25;
 }
@@ -89,9 +91,9 @@ a:visited {
 	color: #fff;
 }
 
-.bz-module h2,
-.bz-module h3,
-.bz-module h4 {
+.bz-module .bz-module h2,
+.bz-module .bz-module h3,
+.bz-module .bz-module h4 {
 	margin-top: 3em;
 }
 
@@ -114,7 +116,7 @@ a:visited {
 }
 
 .bz-module h5,
-.box-title {
+.bz-module .box-title {
 	font-size: 24px;
 }
 
@@ -129,7 +131,7 @@ a:visited {
 	margin-right: auto;
 }
 
-.bz-box h5:not(.box-title), 
+.bz-module .bz-box h5:not(.box-title), 
 .bz-module h6, 
 .bz-module .inner-toc, 
 .bz-module .main-toc {
@@ -142,7 +144,7 @@ a:visited {
 	margin: 0.5em 0 0 10px;
 }
 
-.box-title {
+.bz-module .box-title {
 	margin: 0 0 0.5em;
 	text-align: left;
 	color: #222;
@@ -154,6 +156,7 @@ figcaption {
 }
 
 .media-duration,
+.media-instructions,
 .toggle-transcript {
 	text-transform: uppercase;
 	font-size: 14px;
@@ -171,6 +174,9 @@ figcaption {
 
 .share-release {
 	font-size: 0.8em;
+	margin: 0.5em 0;
+	padding-bottom: 1em;
+	border-bottom: 1px solid #EEE;
 }
 
 input,
@@ -889,6 +895,7 @@ html {
 
 .bz-module {
 	margin: 0 auto 200px;
+	position: relative;
 }
 
 .bz-view-box {
@@ -907,7 +914,7 @@ html {
 	margin-bottom:-1px;
 }
 
-.bz-box h3 {
+.bz-module  .bz-box h3 {
 	margin-top:0;
 }
 
@@ -1000,7 +1007,8 @@ figcaption {
 }
 
 .share-release [type='checkbox'] {
-	position: inherit;
+	position: static;
+	height: 0.8em;
 }
 
 .radio-list {
@@ -1031,10 +1039,22 @@ input[type='button']:disabled {
 }
 
 .bz-module input[type='text'],
+.bz-module input[type='url'],
+.bz-module input[type='number'],
 .bz-module textarea {
 	background: #F6EFDF;
 	padding: 10px;
 	border: 1px solid #CCC;
+}
+
+.bz-module input[type='text'],
+.bz-module input[type='url'] {
+	min-width: 33%;
+}
+
+.user_content table:not([cellpadding]) td, 
+.mceContentBody table:not([cellpadding]) td {
+	padding: 10px;
 }
 
 /*
@@ -1070,7 +1090,8 @@ figure {
 	text-align: center;
 }
 
-.media-duration {
+.media-duration,
+.media-instructions {
 	display: block;
 	margin: 10px;
 }
@@ -1087,7 +1108,7 @@ figure {
 	background-image: url('images/lms-icons-99.png');
 }
 
-.answer.correct .box-title {
+.bz-module .answer.correct .box-title {
 	color: #22B573;
 }
 
@@ -1095,7 +1116,7 @@ figure {
 	background-image: url('images/lms-icons-98.png');
 }
 
-.answer.incorrect .box-title {
+.bz-module .answer.incorrect .box-title {
 	color: #C1272D;
 }
 
@@ -1163,8 +1184,8 @@ li input:not([type="button"]):not([type="radio"]):not([type="checkbox"]), li tex
 	break-inside: avoid;
 }
 
-table:not(.no-zebra) tr:nth-child(odd):not(.no-zebra), 
-.to-columns li:nth-child(odd) {
+table:not(.no-zebra) tr:nth-child(even):not(.no-zebra), 
+.to-columns li:nth-child(even) {
  background: #F6F6F6;
 }
 
@@ -1268,6 +1289,10 @@ th {
 	overflow: hidden;
 }
 
+#goals-vs-vision img {
+	width: 100%;
+}
+
 #goals-smart {
 	table-layout: fixed;
 	width: 100%;
@@ -1275,11 +1300,24 @@ th {
 
 #goals-smart td {
 	text-align: center;
+	width: 10%;
 }
 
 #goals-smart td:first-child {
 	text-align: left;
 	font-style: italic;
+}
+
+#goals-smart th:first-child {
+	width: 50% !important;
+}
+
+.from-slideshare {
+	width: 672px;
+	height: 427px;
+	border: 1px #CCC solid;
+	margin-bottom:5px; 
+	max-width: 100%;
 }
 
 #match-smart-example tr:first-child {
@@ -1405,6 +1443,22 @@ expectations-aligned-w-reasons * {
 	height: auto;
 }
 
+#bz-back-to-top {
+	display: none;
+	position: fixed;
+	text-align: right;
+	margin: 0 auto;
+	font-size: 14px;
+	color: #666;
+	bottom: 1em;
+	right: 1em;
+	cursor: pointer;
+}
+
+#bz-back-to-top:hover {
+	color: #EB3B46;
+}
+
 .for-range,
 .for-checklist,
 .instant-feedback,
@@ -1413,13 +1467,18 @@ expectations-aligned-w-reasons * {
 }
 
 /* Styling for quizzes/assignments that use magic fields to layout complex content */
+.assignment .description {
+	width: 672px;
+	margin: 2em auto;
+}
+
 .bz-magic-field-assignment h3,
 .bz-magic-field-submission h3 {
 	font-size: 30px;
 	color: #EB3B46;
-	margin-top: 30px;
-	padding-top: 10px;
-	border-top: 1px solid #999;
+	margin-top: 3em;
+	padding-top: 1em;
+	border-top: 1px solid #CCC;
 }
 
 .bz-magic-field-assignment h4,
@@ -1450,20 +1509,28 @@ expectations-aligned-w-reasons * {
 	height: 3em;
 }
 
-.bz-magic-field-assignment .bz-watch-out-box:before,
-.bz-magic-field-submission .bz-watch-out-box:before {
-	content: "Important to note";
-}
 
 .bz-magic-field-assignment table.narrow,
-.bz-magic-field-submission table.narrow,
-.bz-magic-field-assignment .bz-watch-out-box,
-.bz-magic-field-submission .bz-watch-out-box,
-.bz-magic-field-assignment .bz-helpful-tip-box,
-.bz-magic-field-submission .bz-helpful-tip-box {
-	float: none;
-	width: 60%;
+.bz-watch-out-box,
+.bz-helpful-tip-box,
+.bz-example {
+	width: 67%;
+	padding: 20px;
 	margin: 1em auto;
+	border: 5px solid;
+}
+
+.bz-watch-out-box {
+	border-color: #EB3B46;
+}
+
+.bz-helpful-tip-box {
+	border-color: #9AD7D7;
+}
+
+.bz-example {
+	border-color: #FBFBFB;
+	width: 100%;
 }
 
 .bz-magic-field-assignment table.steps td,
@@ -1569,7 +1636,8 @@ expectations-aligned-w-reasons * {
 	float: left;
 	text-align: right;
 }
- .bz-magic-field-assignment .timeline li:nth-child(even) .milestone, .bz-magic-field-submission .timeline li:nth-child(even) .milestone {
+ .bz-magic-field-assignment .timeline li:nth-child(even) .milestone, 
+ .bz-magic-field-submission .timeline li:nth-child(even) .milestone {
  float: right;
 }
 
@@ -1788,7 +1856,8 @@ expectations-aligned-w-reasons * {
 }
 
 @media screen and (max-width: 700px) {
- .bz-module {
+ .bz-module,
+ .assignment .description {
 		width: 100%;
 		padding: 5px;
 	}

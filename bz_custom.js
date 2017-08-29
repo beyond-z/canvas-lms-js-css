@@ -7,6 +7,13 @@ css-files-to-my-account
  *
  * */
 
+/*
+  For stuff that depends on the magic field value, use:
+  addOnMagicFieldsLoaded(function() {
+    // stuff here
+  });
+*/
+
 
 /*
   Use this like document.ready to call a function when user
@@ -257,13 +264,15 @@ runOnUserContent(function() {
   });
   
   // Check/uncheck boxes by clicking surrounding table cell
+	/* Disabling this for now. Interferes with magic checkboxes.
   jQuery(".selectable-cells td").click(function(){ 
     jQuery(this).toggleClass('inner-checked').find('input').each(function(){
       // toggle the input inside the cell:
       jQuery(this).prop('checked', !jQuery(this).prop('checked')); 
     });
   });
-  
+  */
+	
   // Sort to match:
     function sortToMatchSetup() {
       // on chrome, it doesn't allow getData in anything but the drop event
@@ -529,17 +538,42 @@ runOnUserContent(function() {
   });
 
   function showIfMagicIsPopulated(magicInput) {
-    jQuery('.conditional-show [data-bz-retained='+magicInput.data('bz-retained')+'], [data-bz-reference="'+magicInput.data('bz-retained')+'"]').each(function(){
-      if( magicInput.prop('checked') || ( !magicInput.is('[type="checkbox"], [type="radio"]') && magicInput.val() != "" ) ) {
-        // If it's a checkbox that's checked, or if it's any other type of field that's not empty:
-        jQuery(this).parents('.conditional-show').show();
-      } else {
-        // if it's unckecked or empty, hide the whole row:        
-        jQuery(this).parents('.conditional-show').hide();
-      }
+    addOnMagicFieldsLoaded(function() {
+      jQuery('.conditional-show [data-bz-retained='+magicInput.data('bz-retained')+'], [data-bz-reference="'+magicInput.data('bz-retained')+'"]').each(function(){
+        if( magicInput.prop('checked') || ( !magicInput.is('[type="checkbox"], [type="radio"]') && magicInput.val() != "" ) ) {
+          // If it's a checkbox that's checked, or if it's any other type of field that's not empty:
+          jQuery(this).parents('.conditional-show').show();
+        } else {
+          // if it's unckecked or empty, hide the whole row:        
+          jQuery(this).parents('.conditional-show').hide();
+        }
+      });
     });
   }
-  
+
+
+	// Add "back to top" widget:
+	setupBTT();
+	function setupBTT() {
+		// Create a button to allow scrolling up in one click:
+		var btt= jQuery('<div id="bz-back-to-top" class="match-heading-style">Back to top</div>').click(function(){
+			jQuery('body').scrollTop(0);
+		});
+		jQuery('.bz-module').append(btt);
+
+		// Hide the button until you've scrolled down a bit:
+		$(window).scroll( function(){
+			if ( $(this).scrollTop() > 1080 ) {
+				$('#bz-back-to-top').fadeIn();
+			} else {
+				$('#bz-back-to-top').fadeOut();
+			}		
+		});
+
+		
+	}
+	
+
   /* END NEW UI STUFF */
   
 });
@@ -700,7 +734,25 @@ function bzAjaxLoad() {
       jQuery(this).removeClass('bz-ajax-replace');
       jQuery(this).addClass('bz-ajax-loaded-linkedin bz-ajax-loaded');
     }
+    else if (replaceURL.indexOf('LOCAL_COURSE_ID_TOKEN')){
 
+      // This will replace the LOCAL_COURSE_ID_TOKEN added by the server for links from one
+      // page or assignment to another in things that are cloned from the Content Library
+      if (ENV["WIKI_PAGE"] || ENV["ASSIGNMENT_ID"]){
+        var course_id = ENV["COURSE_ID"];
+        this.href = replaceURL.replace(/LOCAL_COURSE_ID_TOKEN/, course_id);
+        var dataApiEndpointReplace = jQuery(this).attr('data-api-endpoint');
+        if (dataApiEndpointReplace){
+          jQuery(this).attr('data-api-endpoint', dataApiEndpointReplace.replace(/LOCAL_COURSE_ID_TOKEN/, course_id));
+        }
+        console.log('Fixed the following link to point to the local course: ' + this.href);
+      } else {
+        console.log('Fixing up Content Library links only works for pages and assignments. Returning.');
+        return;
+      }
+      jQuery(this).removeClass('bz-ajax-replace');
+      jQuery(this).addClass('bz-ajax-loaded-content-lib-link bz-ajax-loaded');
+    }
   });
 };
 

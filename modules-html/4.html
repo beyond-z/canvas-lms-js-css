@@ -62,7 +62,7 @@
   <div class="bz-box video">
     <h3 class="box-title">Watch this</h3>
     <figure>
-      <iframe src="https://player.vimeo.com/video/229739944?color=EB3B46" width="672" height="448" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+      <iframe src="https://player.vimeo.com/video/229739944?color=EB3B46" width="672" height="448" allowfullscreen></iframe>
       <figcaption>
         <p>Braven team member Tess shares how planning her career while she was still in college has helped her personally, even when the plan had to change. <span class="media-duration">1:29</span></p>
           <div class="transcript">
@@ -254,10 +254,10 @@
   <div class="bz-box question">
     <h5 class="box-title">Did you hit the mark?</h5>
     <p>Use the checklist below to make sure your vision statement meets all the right criteria (and to fix what's missing):</p>
-    <p>
+    <div>
 	    <textarea data-bz-retained="my_vision" data-bz-share-release></textarea>
       <div class="share-release"><input type="checkbox" data-bz-retained="my_vision-share-release" checked />I agree to let Braven share this with other Fellows</div>
-    </p>
+    </div>
     <ul class="checklist">
       <li>
          <input type="checkbox" data-bz-retained="path-045" />
@@ -301,15 +301,15 @@
   <div class="bz-box question">
     <h5 class="box-title">Quick Question</h5>
     <p>Which one of these images represents a goal (rather than a vision)?</p>
-    <table id="goals-vs-vision" class="instant-feedback">
+    <table id="goals-vs-vision" class="instant-feedback equal-column-widths">
       <tr>
-        <td width="50%"><img width="100%" src="https://farm3.staticflickr.com/2798/4450623309_5a01157463_n.jpg" alt="Finish Line" /></td>
-        <td width="50%"><img width="100%" alt="Wheelchair racer Paul Nunnari celebrates victory at a 2000 Sydney Paralympics race" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/141100_-_Athletics_wheelchair_racing_Paul_Nunnari_celebrates_-_3b_-_2000_Sydney_race_photo.jpg/512px-141100_-_Athletics_wheelchair_racing_Paul_Nunnari_celebrates_-_3b_-_2000_Sydney_race_photo.jpg"/></td>
+        <td><img src="https://farm3.staticflickr.com/2798/4450623309_5a01157463_n.jpg" alt="Finish Line" /></td>
+        <td><img alt="Wheelchair racer Paul Nunnari celebrates victory at a 2000 Sydney Paralympics race" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/141100_-_Athletics_wheelchair_racing_Paul_Nunnari_celebrates_-_3b_-_2000_Sydney_race_photo.jpg/512px-141100_-_Athletics_wheelchair_racing_Paul_Nunnari_celebrates_-_3b_-_2000_Sydney_race_photo.jpg"/></td>
       </tr>
       <tr>
-        <td class="correct"><input type="radio" value="goal" class="bz-optional-magic-field" name="goalvsvision" data-bz-retained="unlock-goalvsvision" />
+        <td class="correct"><input type="radio" value="goal" name="goalvsvision" data-bz-retained="unlock-goalvsvision" />
           This one</td>
-        <td class="incorrect"><input type="radio" value="vision" class="bz-optional-magic-field" name="goalvsvision" data-bz-retained="unlock-goalvsvision" />
+        <td class="incorrect"><input type="radio" value="vision" name="goalvsvision" data-bz-retained="unlock-goalvsvision" />
           This one</td>
     </table>
     <p>
@@ -322,7 +322,7 @@
   </div>
   <div class="bz-box question">
     <h5 class="box-title">Quick Question</h5>
-    <p>How is the finish line is a SMART goal? (Sort the table cells to match)</p>
+    <p>How is the finish line a SMART goal? (Sort the table cells to match)</p>
     <table class="sort-to-match">
       <tr>
         <td><strong>Specific</strong></td>
@@ -351,17 +351,17 @@
   </div>
   <div class="bz-box question">
     <h5 class="box-title">Let's practice a bit</h5>
-    <p>Being able to determine that a given goal as SMART is good practice to get you in the habit of setting your own SMART goals.</p>
+    <p>Being able to determine that a given goal is SMART is good practice to get you in the habit of setting your own SMART goals.</p>
     <p>Look at the list of goals below and check which SMART criteria they achieve:</p>
     <table id="goals-smart" class="instant-feedback">
       <thead>
         <tr>
-          <th width="50%">Goal</th>
-          <th width="10%">S</th>
-          <th width="10%">M</th>
-          <th width="10%">A</th>
-          <th width="10%">R</th>
-          <th width="10%">T</th>
+          <th>Goal</th>
+          <th>S</th>
+          <th>M</th>
+          <th>A</th>
+          <th>R</th>
+          <th>T</th>
         </tr>
       </thead>
       <tbody>
@@ -386,7 +386,7 @@
           <td class="incorrect"> <input type="checkbox" data-bz-retained="path-070" /></td>
           <td class="correct"> <input type="checkbox" data-bz-retained="path-071" /></td>
           <td class="correct"> <input type="checkbox" data-bz-retained="path-072" /></td>
-          <td class="incorrect"> <input type="checkbox" data-bz-retained="path-073" /></td>
+          <td class="correct"> <input type="checkbox" data-bz-retained="path-073" /></td>
           <td class="incorrect"> <input type="checkbox" data-bz-retained="path-074" /></td>
         </tr>
         <tr>
@@ -430,7 +430,7 @@
           <td class="incorrect"> <input type="checkbox" data-bz-retained="path-099" /></td>
         </tr>
         <tr>
-          <td><p>Sharmilla, a high school freshman, will be a first year at the University of Chicago by Fall 2019.</p></td>
+          <td><p>Sharmilla, a high school freshman, will be a first year at the University of Chicago by Fall <span data-bz-insert-offset-year="4">2021</span>.</p></td>
           <td class="correct"> <input type="checkbox" data-bz-retained="path-100" /></td>
           <td class="correct"> <input type="checkbox" data-bz-retained="path-101" /></td>
           <td class="correct"> <input type="checkbox" data-bz-retained="path-102" /></td>
@@ -450,7 +450,7 @@
       <tr>
         <td class="fixed">Kris, a senior in college, will&hellip; </td>
         <td>complete a medical residency</td>
-        <td>by <span class="tbd" data-bz-insert-offset-year="4">2020</span></td>
+        <td>by <span class="tbd" data-bz-insert-offset-year="7">2024</span></td>
       </tr>
       <tr class="suppress-answers">
         <td class="fixed">&nbsp;</td>
@@ -526,7 +526,7 @@
   <div class="bz-box video">
     <h4 class="box-title">Watch this</h4>
     <figure>
-      <iframe src="https://player.vimeo.com/video/229757097?color=EB3B46" width="672" height="376" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+      <iframe src="https://player.vimeo.com/video/229757097?color=EB3B46" width="672" height="376" allowfullscreen></iframe>
       <figcaption>How to get to Mars by backwards planning. <span class="media-duration">2 minutes</span> </figcaption>
     </figure>
   </div>
@@ -539,7 +539,7 @@
       <li>
         <div class="milestone first">
           <div class="flag-wrapper">
-            <input type="text" placeholder="Current year" data-bz-insert-offset-year="0" data-bz-retained="dyc-0500" />
+            <input class="bz-optional-magic-field" type="text" placeholder="Current year" data-bz-insert-offset-year="0" data-bz-retained="dyc-0500" />
           </div>
         </div>
       </li>
@@ -865,7 +865,7 @@
   </blockquote>
   <div class="bz-box reflection">
     <h5 class="box-title">How are you feeling?</h5>
-    <p>Where you are now compared to where you want to be by the time you graduate?</p>
+    <p>Where are you now compared to where you want to be by the time you graduate?</p>
     <p><br>
     </p>
     <div>
@@ -883,7 +883,7 @@
           	<div data-bz-range-flr="0" data-bz-range-clg="50" class="feedback">
               <p>Many Braven Fellows are stretched very thin between school, their jobs, family, and extracurricular or community activities. Use the productivity tools from Braven to help you balance what you do and avoid falling back. You can also consult your college advisor and professors to determine ways to catch up and the resources available to you (such as tutoring).</p>
             </div>
-            <div data-bz-range-flr="51" data-bz-range-clg="100" class="feedback"></div>
+            <div data-bz-range-flr="51" data-bz-range-clg="100" class="feedback">Keep up the good work!</div>
           </td>
         </tr>
         <tr>
@@ -899,7 +899,7 @@
           	<div data-bz-range-flr="0" data-bz-range-clg="50" class="feedback">
               <p>Good thing you&rsquo;re a Braven Fellow! The next part of the Accelerator will guide you as you apply for career-accelerating opportunities (such as internships).</p>
             </div>
-            <div data-bz-range-flr="51" data-bz-range-clg="100" class="feedback"></div>
+            <div data-bz-range-flr="51" data-bz-range-clg="100" class="feedback">That's a big advantage. Use it!</div>
           </td>
         </tr>
         <tr>
@@ -915,7 +915,7 @@
           	<div data-bz-range-flr="0" data-bz-range-clg="50" class="feedback">
               <p>If you haven't done so already or recently, look at your school's clubs and other campus initiatives. If you're worried about the time commitment, you can start with a low level of participation to test the waters before ramping up your efforts.</p>
             </div>
-            <div data-bz-range-flr="51" data-bz-range-clg="100" class="feedback"></div>
+            <div data-bz-range-flr="51" data-bz-range-clg="100" class="feedback">That's great. Now consider inviting some of the other Braven Fellows to join you.</div>
           </td>
         </tr>
         <tr>
@@ -931,7 +931,7 @@
           	<div data-bz-range-flr="0" data-bz-range-clg="50" class="feedback">
               <p>If at any point you feel your major or current course of study is not a good match with your career choice, you can begin to make changes now. Talk to your school advisor and/or Leadership Coach to see how you might change your trajectory.</p>
             </div>
-            <div data-bz-range-flr="51" data-bz-range-clg="100" class="feedback"></div>
+            <div data-bz-range-flr="51" data-bz-range-clg="100" class="feedback">That's great news. Keep it up!</div>
           </td>
         </tr>
         <tr>
@@ -947,7 +947,7 @@
           	<div data-bz-range-flr="0" data-bz-range-clg="50" class="feedback">
               <p>Well, you do have your Leadership Coach, and in the coming weeks you will learn how to network, which will open up new opportunities to connect with more potential mentors.</p>
             </div>
-            <div data-bz-range-flr="51" data-bz-range-clg="100" class="feedback"></div>
+            <div data-bz-range-flr="51" data-bz-range-clg="100" class="feedback">That's good!</div>
           </td>
         </tr>
         <tr>
@@ -963,7 +963,7 @@
           	<div data-bz-range-flr="0" data-bz-range-clg="50" class="feedback">
               <p>Your Braven cohort and the broader Braven community are great opportunity to further strengthen your network of peers.</p>
             </div>
-            <div data-bz-range-flr="51" data-bz-range-clg="100" class="feedback"></div>
+            <div data-bz-range-flr="51" data-bz-range-clg="100" class="feedback">Good. Consider introducing people across those networks where it might help. For example ask yourself which of your Braven cohort mates could use an introduction to someone who is already in your network.</div>
           </td>
         </tr>
       </table>
@@ -985,46 +985,47 @@
         <tbody>
           <tr>
             <td>Good GPA (&gt;3.5)</td>
-            <td><textarea placeholder="Example: 3.2" data-bz-retained="dyc-0604"></textarea></td>
-            <td><textarea placeholder="Example: Earn a 3.5 GPA" data-bz-retained="dyc-0605"></textarea></td>
-            <td><textarea placeholder="Example: Earn a 3.7 GPA" data-bz-retained="dyc-0606"></textarea></td>
+            <td><textarea class="bz-optional-magic-field" placeholder="Example: 3.2" data-bz-retained="dyc-0604"></textarea></td>
+            <td><textarea class="bz-optional-magic-field" placeholder="Example: Earn a 3.5 GPA" data-bz-retained="dyc-0605"></textarea></td>
+            <td><textarea class="bz-optional-magic-field" placeholder="Example: Earn a 3.7 GPA" data-bz-retained="dyc-0606"></textarea></td>
           </tr>
           <tr>
             <td>Professional exposure and internships</td>
-            <td><textarea placeholder="" data-bz-retained="dyc-0610"></textarea></td>
-            <td><textarea placeholder="" data-bz-retained="dyc-0620"></textarea></td>
-            <td><textarea placeholder="" data-bz-retained="dyc-0630"></textarea></td>
+            <td><textarea class="bz-optional-magic-field" placeholder="" data-bz-retained="dyc-0610"></textarea></td>
+            <td><textarea class="bz-optional-magic-field" placeholder="" data-bz-retained="dyc-0620"></textarea></td>
+            <td><textarea class="bz-optional-magic-field" placeholder="" data-bz-retained="dyc-0630"></textarea></td>
           </tr>
           <tr>
             <td>Leadership and extracurricular activities</td>
-            <td><textarea placeholder="" data-bz-retained="dyc-0640"></textarea></td>
-            <td><textarea placeholder="" data-bz-retained="dyc-0650"></textarea></td>
-            <td><textarea placeholder="" data-bz-retained="dyc-0660"></textarea></td>
+            <td><textarea class="bz-optional-magic-field" placeholder="" data-bz-retained="dyc-0640"></textarea></td>
+            <td><textarea class="bz-optional-magic-field" placeholder="" data-bz-retained="dyc-0650"></textarea></td>
+            <td><textarea class="bz-optional-magic-field" placeholder="" data-bz-retained="dyc-0660"></textarea></td>
           </tr>
           <tr>
             <td>Rigorous classes aligned to your career focus</td>
-            <td><textarea placeholder="" data-bz-retained="dyc-0670"></textarea></td>
-            <td><textarea placeholder="" data-bz-retained="dyc-0680"></textarea></td>
-            <td><textarea placeholder="" data-bz-retained="dyc-0690"></textarea></td>
+            <td><textarea class="bz-optional-magic-field" placeholder="" data-bz-retained="dyc-0670"></textarea></td>
+            <td><textarea class="bz-optional-magic-field" placeholder="" data-bz-retained="dyc-0680"></textarea></td>
+            <td><textarea class="bz-optional-magic-field" placeholder="" data-bz-retained="dyc-0690"></textarea></td>
           </tr>
           <tr>
             <td>Adult Mentors</td>
-            <td><textarea placeholder="" data-bz-retained="dyc-0700"></textarea></td>
-            <td><textarea placeholder="" data-bz-retained="dyc-0710"></textarea></td>
-            <td><textarea placeholder="" data-bz-retained="dyc-0720"></textarea></td>
+            <td><textarea class="bz-optional-magic-field" placeholder="" data-bz-retained="dyc-0700"></textarea></td>
+            <td><textarea class="bz-optional-magic-field" placeholder="" data-bz-retained="dyc-0710"></textarea></td>
+            <td><textarea class="bz-optional-magic-field" placeholder="" data-bz-retained="dyc-0720"></textarea></td>
           </tr>
           <tr>
             <td>Peers and support networks</td>
-            <td><textarea placeholder="" data-bz-retained="dyc-0730"></textarea></td>
-            <td><textarea placeholder="" data-bz-retained="dyc-0740"></textarea></td>
-            <td><textarea placeholder="" data-bz-retained="dyc-0750"></textarea></td>
+            <td><textarea class="bz-optional-magic-field" placeholder="" data-bz-retained="dyc-0730"></textarea></td>
+            <td><textarea class="bz-optional-magic-field" placeholder="" data-bz-retained="dyc-0740"></textarea></td>
+            <td><textarea class="bz-optional-magic-field" placeholder="" data-bz-retained="dyc-0750"></textarea></td>
           </tr>
         </tbody>
       </table>
     </div>
     <p>*&nbsp;If you are graduating this semester, you can think about this a bit differently. Keep your big goal as where you want to be by the time you graduate, whereas your milestones can be your goals for the semester's midpoint.</p>
   </div>
-  <h3>PRODUCTIVITY CORNER: CREATE A STAND-ALONE DECK</h3>
+  <h2 id="productivity-corner">PRODUCTIVITY CORNER: CREATE A STAND-ALONE DECK</h2>
+ 	<p class="tip"><strong>Reminder:</strong> You'll be creating a slide deck as part of your Design Your Career project.</p>
   <div class="bz-box question">
     <h4 class="box-title">Quick Question</h4>
     <p>Which professionals commonly use <span class="bz-has-tooltip" title="Decks are presentations that use slides to communicate information; they can be made in PowerPoint, Prezi, Google Slides, Keynote, etc.">slide decks</span> in their everyday work? (check all that apply)</p>
@@ -1077,9 +1078,11 @@
     <p>&nbsp;</p>
     <p>This slide deck gives great advice for how to create a stand-alone slide deck (a bit "meta"!)</p>
     <figure>
-      <iframe src="//www.slideshare.net/slideshow/embed_code/key/3XMPSiXORS7d06" width="762" height="485" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
+      <iframe class="from-slideshare" src="//www.slideshare.net/slideshow/embed_code/key/3XMPSiXORS7d06" allowfullscreen> </iframe>
       <figcaption>Seven ideas for Effective Stand-alone Presentations by Dave Paradi.<br />
-        Embedded deck not working? Try viewing it <a href="https://www.slideshare.net/thinkoutsidetheslide/ideas-for-effective-standalone-presentations" target="_blank">here</a> instead.<span class="media-duration">57 slides / 4 minutes</span></figcaption>
+      	<span class="media-duration">57 slides / 4 minutes</span>
+        <span class="media-instructions">Embedded slideshow not working? Try viewing it <a href="https://www.slideshare.net/thinkoutsidetheslide/ideas-for-effective-standalone-presentations" target="_blank">here</a> instead.</span>
+        </figcaption>
     </figure>
   </div>
   <div class="bz-box question">
@@ -1127,7 +1130,7 @@
 		<h3>Next Steps:</h3>
     <ul>
       <li>If there's anything you feel less than certain about, feel free to revisit the content, ask on <a href="https://help.bebraven.org" target="_blank">Braven Help</a>, or <a href="mailto:support@bebraven.org" target="_blank">contact us</a> with feedback.</li>
-      <li>To stay on track, complete the <strong>first part</strong> of your <span class="tbd">Design Your Career Project</span> this week. You have a head start: you've already begun working on parts 2 and 3 by completing this module!</li>
+      <li>To stay on track, complete the <strong>first part</strong> of your <a href="/courses/1/assignments/704" target="_blank" data-api-endpoint="https://portal.bebraven.org/api/v1/courses/1/assignments/704" data-api-returntype="Assignment">Design Your Career Project</a> this week. You have a head start: you've already begun working on parts 2 and 3 by completing this module!</li>
     </ul>
 
   </div>
