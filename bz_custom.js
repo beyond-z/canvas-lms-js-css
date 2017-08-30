@@ -139,12 +139,36 @@ jQuery( document ).ready(function() {
 
 });
 
-runOnUserContent(function() {
-  
-  /* START NEW UI STUFF: */
-  
+
+// Show feedback in an answer following a question:
+function bzGiveVerboseFeedback(feedback, answerSpace, feedbackClass) {
+  jQuery(answerSpace).addClass(feedbackClass).find('.box-title').text(feedback);
+}
+
+/*
+    For the new UI stuff, if it is an on-click handler for a next button, put it
+    on this object instead of direct via event handlers. This allows me to process it
+    independently of other click activities when showing the reloaded page.
+
+    The syntax is:
+
+    'some_selector' : function() {
+      // handler
+    },
+
+    The `this` variable will be assigned for an event handler (it will be the element, NOT
+    the bzNewUiHandlers object).
+
+    Note that the selector must be a legal CSS selector according to standard and browser
+    implementation reality. So you can use like :not(xxx) but not :has (standard, but not
+    implemented), or other jquery extensions here. Basically KISS to be safe.
+
+
+    For other stuff like change events, set them up below in the bzInitializeNewUi function.
+*/
+var bzNewUiHandlers = {  
   // Score a checklist question:
-  jQuery('.for-checklist').click(function(){
+  '.for-checklist' : function(){
     var checklist = jQuery(this).parents('.question').find('.checklist');
     var maxScore = checklist.find('.correct').length;
     var checklistScore = 0;
@@ -182,10 +206,10 @@ runOnUserContent(function() {
       feedbackClass = 'incorrect';
     }
     bzGiveVerboseFeedback(feedback, answerSpace, feedbackClass);
-  });  
+  },
 
   // Score a radio-list question and return feedback:
-  jQuery('.for-radio-list').click(function(){
+  '.for-radio-list' : function(){
     var list = jQuery(this).parents('.question').find('.radio-list');
     var feedback = "";
     var feedbackClass = "";
@@ -204,19 +228,10 @@ runOnUserContent(function() {
       } 
     });
     bzGiveVerboseFeedback(feedback, answerSpace, feedbackClass);    
-    
-  });
-
-  // Display current value of a range question:
-  jQuery ('[type="range"]').change(function() {
-    var currentVal = jQuery(this).val();
-    jQuery(this).parents('.question').find('.display-value .current-value').text(currentVal);
-    jQuery(this).parents('td').siblings('.current-value').text(currentVal);
-  }).change();
-
+  },
 
   // Score a range question:
-  jQuery ('.for-range').click(function() {
+  '.for-range' : function() {
     var range = jQuery(this).parents('.question').find('[data-bz-range-answer]');
     var falsePositives = 0;
     var currentVal = jQuery(range ).val();
@@ -243,12 +258,45 @@ runOnUserContent(function() {
     }
     var answerSpace = jQuery(this).parents('.question').next('.answer');
     bzGiveVerboseFeedback(feedback, answerSpace, feedbackClass);
-  });
+  },
 
-  // Show feedback in an answer following a question:
-  function bzGiveVerboseFeedback(feedback, answerSpace, feedbackClass) {
-    jQuery(answerSpace).addClass(feedbackClass).find('.box-title').text(feedback);
-  }
+  // Show feedback on sort-to-match questions:
+  '.for-match' : function(){
+    jQuery(this).parents('.bz-box').find('.sort-to-match').addClass('show-answers');
+  },
+};
+
+function matchesSelector(element, selector) {
+    if(element.matches)
+        return element.matches(selector);
+    else {
+        var all = document.querySelectorAll(selector);
+        for(var i = 0; i < all.length; i++)
+            if(all[i] == element)
+                return true;
+        return false;
+    }
+}
+
+function triggerBzNewUiHandler(element) {
+    for(var i in bzNewUiHandlers) {
+        if(bzNewUiHandlers.hasOwnProperty(i)) {
+            if(matchesSelector(element, i)) {
+                bzNewUiHandlers[i].apply(element);
+            }
+        }
+    }
+}
+
+function bzInitializeNewUi() {
+    // FIXME
+
+  // Display current value of a range question:
+  jQuery ('[type="range"]').change(function() {
+    var currentVal = jQuery(this).val();
+    jQuery(this).parents('.question').find('.display-value .current-value').text(currentVal);
+    jQuery(this).parents('td').siblings('.current-value').text(currentVal);
+  }).change();
 
   // Provide instant feedback when any input on a list is checked:
   jQuery('.instant-feedback').find('input').change(function(){
@@ -257,7 +305,7 @@ runOnUserContent(function() {
       liParent.siblings().removeClass('show-answers');
     }
   });
-    
+
   // Reveal hidden content immediately following a hint button:
   jQuery('.reveal-next').click(function(){
     jQuery(this).parent().next().slideToggle();
@@ -272,175 +320,7 @@ runOnUserContent(function() {
     });
   });
   */
-	
-  // Sort to match:
-    function sortToMatchSetup() {
-      // on chrome, it doesn't allow getData in anything but the drop event
-      // so i use this helper variable instead...
-      var currentlyDragging = null;
-      function isValidDropTarget(event, dropping) {
-        var dragging = currentlyDragging;
-        if(!dragging)
-          return false;
-        if(dragging.getAttribute("data-column-number") == dropping.getAttribute("data-column-number"))
-          return true;
-        return false;
-      }
-
-    // skip the first column as it is a label column
-    var sortToMatch = document.querySelectorAll(".sort-to-match td:not(:first-child)");
-    for(var i = 0; i < sortToMatch.length; i++) {
-      var td = sortToMatch[i];
-
-      // wrap the contents in the draggable div so
-      // it moves rather than the table cell itself
-      var wrapper = document.createElement("div");
-      wrapper.innerHTML = td.innerHTML;
-      wrapper.id = "draggable-" + i;
-      wrapper.setAttribute("draggable", "true");
-      td.id = "droppable-" + i;
-      td.className += " droppable";
-      td.innerHTML = "";
-      td.appendChild(wrapper);
-
-      // make it draggable
-      wrapper.addEventListener("dragstart", function(event) {
-        event.dataTransfer.setData("text/id", this.getAttribute("id"));
-        currentlyDragging = this; // need for a chrome hack
-      });
-
-      // make the tds valid drop targets
-      td.addEventListener("dragenter", function(event) {
-        if(!isValidDropTarget(event, this)) return true;
-        event.preventDefault();
-        this.className += " inside-dragging";
-      });
-      td.addEventListener("dragleave", function(event) {
-        this.className = this.className.replace(" inside-dragging", "");
-      });
-      td.addEventListener("dragover", function(event) {
-        if(!isValidDropTarget(event, this)) return true;
-        event.preventDefault();
-      });
-      td.addEventListener("drop", function(event) {
-        event.preventDefault();
-        event.stopPropagation();
-
-        var dragging = document.getElementById(event.dataTransfer.getData("text/id"));
-        if(dragging.parentNode) {
-          // swap our existing contents for the draggable one
-          var from = dragging.parentNode;
-          dragging.parentNode.removeChild(dragging);
-          var existing = this.querySelector("[draggable]");
-          if(existing) {
-            this.removeChild(existing);
-            from.appendChild(existing);
-          }
-        }
-        this.appendChild(dragging);
-
-
-        this.className = this.className.replace(" inside-dragging", "");
-        currentlyDragging = null;
-
-        // delete these next few lines if you don't
-        // want instant feedback (prolly don't)
-        var parentTable = this;
-        while(parentTable.tagName != "TABLE")
-          parentTable = parentTable.parentNode;
-        sortToMatchCheck(parentTable);
-      });
-    }
-
-    // and now that drag&drop is set up, shuffle the contents so the
-    // user gets to have fun sorting them back
-    var sortToMatch = document.querySelectorAll(".sort-to-match");
-    for(var i = 0; i < sortToMatch.length; i++) {
-      var table = sortToMatch[i];
-      // NOTE: this may break with colspan, so don't do that
-      var firstRow = table.querySelector("tr");
-      var columns = firstRow.children;
-      // always skipping the first column as it is likely a header
-      for(var col = 1; col < columns.length; col++) {
-        // nth-child uses 1-based indexing
-        var draggablesDom = table.querySelectorAll("td:nth-child("+(col+1)+").droppable > [draggable]");
-        var droppables = table.querySelectorAll("td:nth-child("+(col+1)+").droppable");
-        // I have to copy the node list to a regular array
-        // since modifying a node list is non-standard
-        var draggables = [];
-        for(var a = 0; a < draggablesDom.length; a++)
-          draggables.push(draggablesDom[a]);
-
-        // then create an array which we will propagate in
-        // random order to achieve best randomness...
-        var shuffled = [];
-        shuffled.length = draggables.length;
-        var pos = 0;
-        while(draggables.length) {
-          var random = Math.floor(Math.random() * draggables.length);
-          var d = draggables[random];
-          d.parentNode.removeChild(d);
-
-          shuffled[pos] = d;
-          pos += 1;
-
-          draggables[random] = draggables[draggables.length - 1];
-          draggables.length -= 1;
-        }
-
-        // then put the random stuff back in the table.
-        var allInOrder = true; // in order is a legit shuffle, but we don't want it....
-        for(var a = 0; a < shuffled.length; a++) {
-          if(shuffled[a].id.replace("draggable", "droppable") == droppables[a].id) {
-            // we shuffled but randomly ended up with all in order...
-            // so we'll swap the final item so the user has to do something
-            if(allInOrder && a == shuffled.length - 2) {
-              var tmp = shuffled[a];
-              shuffled[a] = shuffled[a + 1];
-              shuffled[a + 1] = tmp;
-            }
-          } else {
-            allInOrder = false;
-          }
-          droppables[a].appendChild(shuffled[a]);
-          shuffled[a].setAttribute("data-column-number", col);
-          droppables[a].setAttribute("data-column-number", col);
-        }
-      }
-    }
-  }
-
-  sortToMatchSetup();
-
-  function sortToMatchCheck(sortToMatchTable) {
-    var rows = sortToMatchTable.querySelectorAll("tr");
-    for(var row = 0; row < rows.length; row++) {
-      var tr = rows[row];
-      var all = tr.querySelectorAll("[draggable]");
-      var allCorrect = true;
-      for(var a = 0; a < all.length; a++) {
-        var d = all[a];
-        // since I set the ID to be the same above with the wrapper
-        // except draggable vs droppable, a simple string replace will
-        // tell us if they are back where they are supposed to be!
-        var thisOneCorrect = (d.parentNode.id == d.id.replace("draggable", "droppable"));
-
-        if(!thisOneCorrect) {
-          allCorrect = false;
-          break;
-        }
-      }
-
-      if(all.length)
-        tr.className = allCorrect ? "correct" : "incorrect";
-    }
-  }
-
-  // Show feedback on sort-to-match questions:
-  jQuery('.for-match').click(function(){
-    jQuery(this).parents('.bz-box').find('.sort-to-match').addClass('show-answers');
-  });
-  
+ 
   // Mix up checklists:
   jQuery('.checklist, .radio-list').not('.dont-mix').each(function(){
     var itemsToMix = jQuery(this).children();
@@ -462,7 +342,15 @@ runOnUserContent(function() {
       }
     });
   });
+
+}
+
+runOnUserContent(function() {
   
+  /* START NEW UI STUFF: */
+
+  bzInitializeNewUi();
+
   // Referenced sources numbering:
   /* TBD */
   
@@ -853,6 +741,34 @@ if (!String.prototype.startsWith) {
   };
 }
 
+function collectBoxesBeforeBox(button) {
+  /*
+  	Everything up to the box containing the current button.
+  */
+
+  if(button == null)
+    return [];
+
+  var box = button;
+  while(!box.classList.contains('bz-box')) {
+    box = box.parentNode;
+  }
+
+  var after = [];
+  while(!box.classList.contains('show-content')) {
+    var next = box;
+    next = next.previousElementSibling;
+    while(next) {
+      after.push(next);
+      next = next.previousElementSibling;
+    }
+    box = box.parentNode;
+  }
+
+  return after;
+}
+
+
 // call this BEFORE the function that hides
 // bz-boxes, but after everything else is loaded!
 function createBzProgressBar() {
@@ -883,6 +799,11 @@ function createBzProgressBar() {
 
 // Logic to unlock all content that has already been unlocked on this Wiki Page and 
 // scroll to where you left off.
+
+// NOTE: this should remain near the bottom of the file; it ought to be the
+// second-to-last thing we run so everything else is already set up.
+//
+// Only thing that should be after it
 runOnUserContent(function(){
 
   var isWikiPage = (ENV && ENV["WIKI_PAGE"]);
@@ -929,7 +850,25 @@ runOnUserContent(function(){
     allBoxesWithStoppingPoints[a].setAttribute("data-box-sequence", a);
   }
 
+  // anything before this, already open, should show the feedback from
+  // last time a nd not shuffle, etc.
   var first = allBoxesWithStoppingPoints[openPosition].querySelector(".bz-toggle-all-next");
+  var listOfShowingBoxes = collectBoxesBeforeBox(first);
+  for(var i = 0; i < listOfShowingBoxes.length; i++) {
+    listOfShowingBoxes[i].className += ' has-preshowing-box';
+  }
+  addOnMagicFieldsLoaded(function() {
+    var list = listOfShowingBoxes;
+    for(var i = 0; i < list.length; i++) {
+      if(list[i].classList.contains("bz-box")) {
+          // simulate the click of old buttons in order to catch up on display
+          console.log(list[i]);
+          var button = list[i].querySelector(".bz-toggle-all-next");
+          if(button)
+            triggerBzNewUiHandler(button);
+      }
+    }
+  });
   var list = collectStuffAfterBox(first);
   for(var i = 0; i < list.length; i++) {
     $(list[i]).hide();
@@ -937,6 +876,8 @@ runOnUserContent(function(){
 
   jQuery('.bz-toggle-all-next').click(function(e){
     unhideNext(this);
+
+    triggerBzNewUiHandler(this);
 
     var pos = $(this).parents('.bz-box').attr("data-box-sequence");
     pos |= 0;
@@ -954,7 +895,182 @@ runOnUserContent(function(){
     allBoxesWithStoppingPoints[openPosition].scrollIntoView();
 });
 
+// This needs to come AFTER the show box setup so it knows what is already showing
+runOnUserContent(function() {
+  // Sort to match:
+    function sortToMatchSetup() {
+      // on chrome, it doesn't allow getData in anything but the drop event
+      // so i use this helper variable instead...
+      var currentlyDragging = null;
+      function isValidDropTarget(event, dropping) {
+        var dragging = currentlyDragging;
+        if(!dragging)
+          return false;
+        if(dragging.getAttribute("data-column-number") == dropping.getAttribute("data-column-number"))
+          return true;
+        return false;
+      }
 
+    // skip the first column as it is a label column
+    var sortToMatch = document.querySelectorAll(".sort-to-match td:not(:first-child)");
+    for(var i = 0; i < sortToMatch.length; i++) {
+      var td = sortToMatch[i];
+
+      // wrap the contents in the draggable div so
+      // it moves rather than the table cell itself
+      var wrapper = document.createElement("div");
+      wrapper.innerHTML = td.innerHTML;
+      wrapper.id = "draggable-" + i;
+      wrapper.setAttribute("draggable", "true");
+      td.id = "droppable-" + i;
+      td.className += " droppable";
+      td.innerHTML = "";
+      td.appendChild(wrapper);
+
+      // make it draggable
+      wrapper.addEventListener("dragstart", function(event) {
+        event.dataTransfer.setData("text/id", this.getAttribute("id"));
+        currentlyDragging = this; // need for a chrome hack
+      });
+
+      // make the tds valid drop targets
+      td.addEventListener("dragenter", function(event) {
+        if(!isValidDropTarget(event, this)) return true;
+        event.preventDefault();
+        this.className += " inside-dragging";
+      });
+      td.addEventListener("dragleave", function(event) {
+        this.className = this.className.replace(" inside-dragging", "");
+      });
+      td.addEventListener("dragover", function(event) {
+        if(!isValidDropTarget(event, this)) return true;
+        event.preventDefault();
+      });
+      td.addEventListener("drop", function(event) {
+        event.preventDefault();
+        event.stopPropagation();
+
+        var dragging = document.getElementById(event.dataTransfer.getData("text/id"));
+        if(dragging.parentNode) {
+          // swap our existing contents for the draggable one
+          var from = dragging.parentNode;
+          dragging.parentNode.removeChild(dragging);
+          var existing = this.querySelector("[draggable]");
+          if(existing) {
+            this.removeChild(existing);
+            from.appendChild(existing);
+          }
+        }
+        this.appendChild(dragging);
+
+
+        this.className = this.className.replace(" inside-dragging", "");
+        currentlyDragging = null;
+
+        // delete these next few lines if you don't
+        // want instant feedback (prolly don't)
+        var parentTable = this;
+        while(parentTable.tagName != "TABLE")
+          parentTable = parentTable.parentNode;
+        sortToMatchCheck(parentTable);
+      });
+    }
+
+    // and now that drag&drop is set up, shuffle the contents so the
+    // user gets to have fun sorting them back
+    var sortToMatch = document.querySelectorAll(".sort-to-match");
+    for(var i = 0; i < sortToMatch.length; i++) {
+      var table = sortToMatch[i];
+
+      var parentBox = table.parentNode;
+      while(parentBox) {
+        if(parentBox.classList.contains("bz-box"))
+            break;
+        parentBox = parentBox.parentNode;
+      }
+
+      if(parentBox && parentBox.classList.contains("has-preshowing-box"))
+        continue; // don't shuffle things that are already showing from previous loads
+
+      // NOTE: this may break with colspan, so don't do that
+      var firstRow = table.querySelector("tr");
+      var columns = firstRow.children;
+      // always skipping the first column as it is likely a header
+      for(var col = 1; col < columns.length; col++) {
+        // nth-child uses 1-based indexing
+        var draggablesDom = table.querySelectorAll("td:nth-child("+(col+1)+").droppable > [draggable]");
+        var droppables = table.querySelectorAll("td:nth-child("+(col+1)+").droppable");
+        // I have to copy the node list to a regular array
+        // since modifying a node list is non-standard
+        var draggables = [];
+        for(var a = 0; a < draggablesDom.length; a++)
+          draggables.push(draggablesDom[a]);
+
+        // then create an array which we will propagate in
+        // random order to achieve best randomness...
+        var shuffled = [];
+        shuffled.length = draggables.length;
+        var pos = 0;
+        while(draggables.length) {
+          var random = Math.floor(Math.random() * draggables.length);
+          var d = draggables[random];
+          d.parentNode.removeChild(d);
+
+          shuffled[pos] = d;
+          pos += 1;
+
+          draggables[random] = draggables[draggables.length - 1];
+          draggables.length -= 1;
+        }
+
+        // then put the random stuff back in the table.
+        var allInOrder = true; // in order is a legit shuffle, but we don't want it....
+        for(var a = 0; a < shuffled.length; a++) {
+          if(shuffled[a].id.replace("draggable", "droppable") == droppables[a].id) {
+            // we shuffled but randomly ended up with all in order...
+            // so we'll swap the final item so the user has to do something
+            if(allInOrder && a == shuffled.length - 2) {
+              var tmp = shuffled[a];
+              shuffled[a] = shuffled[a + 1];
+              shuffled[a + 1] = tmp;
+            }
+          } else {
+            allInOrder = false;
+          }
+          droppables[a].appendChild(shuffled[a]);
+          shuffled[a].setAttribute("data-column-number", col);
+          droppables[a].setAttribute("data-column-number", col);
+        }
+      }
+    }
+  }
+
+  sortToMatchSetup();
+
+  function sortToMatchCheck(sortToMatchTable) {
+    var rows = sortToMatchTable.querySelectorAll("tr");
+    for(var row = 0; row < rows.length; row++) {
+      var tr = rows[row];
+      var all = tr.querySelectorAll("[draggable]");
+      var allCorrect = true;
+      for(var a = 0; a < all.length; a++) {
+        var d = all[a];
+        // since I set the ID to be the same above with the wrapper
+        // except draggable vs droppable, a simple string replace will
+        // tell us if they are back where they are supposed to be!
+        var thisOneCorrect = (d.parentNode.id == d.id.replace("draggable", "droppable"));
+
+        if(!thisOneCorrect) {
+          allCorrect = false;
+          break;
+        }
+      }
+
+      if(all.length)
+        tr.className = allCorrect ? "correct" : "incorrect";
+    }
+  }
+});
 
 // if we ever want a url to auto update, this script will
 // do it, but the code above does a better job with explicit
