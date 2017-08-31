@@ -992,7 +992,7 @@ runOnUserContent(function() {
         var parentTable = this;
         while(parentTable.tagName != "TABLE")
           parentTable = parentTable.parentNode;
-        sortToMatchCheck(parentTable);
+        sortToMatchCheck(parentTable); // instant feedback update
       });
     }
 
@@ -1010,7 +1010,8 @@ runOnUserContent(function() {
       }
 
       if(parentBox && parentBox.classList.contains("has-preshowing-box")) {
-        sortToMatchCheck(table); // do show feedback again...
+        // sortToMatchCheck(table); // do show feedback on reload...
+        table.className += " bz-locked-table";
         continue; // ...but don't shuffle things that are already showing from previous loads
       }
 
@@ -1065,7 +1066,7 @@ runOnUserContent(function() {
         }
       }
 
-      sortToMatchCheck(table); // do show feedback again...
+      sortToMatchCheck(table); // do show feedback for initial, untouched table...
     }
   }
 
