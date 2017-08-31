@@ -300,9 +300,17 @@ function bzInitializeNewUi() {
 
   // Provide instant feedback when any input on a list is checked:
   jQuery('.instant-feedback').find('input').change(function(){
-    var liParent = jQuery(this).parents('li, td').toggleClass('show-answers');
-    if ( jQuery(this).is('[type="radio"]') ){
-      liParent.siblings().removeClass('show-answers');
+    if ( jQuery(this).is('[type="radio"]') || jQuery(this).is('[type="checkbox"]') ) {
+      if(this.checked) {
+        var liParent = jQuery(this).parents('li, td').addClass('show-answers');
+        if ( jQuery(this).is('[type="radio"]') ) {
+          liParent.siblings().removeClass('show-answers');
+        }
+      } else {
+        jQuery(this).parents('li, td').removeClass('show-answers');
+      }
+    } else {
+      var liParent = jQuery(this).parents('li, td').addClass('show-answers');
     }
   });
 
@@ -843,7 +851,7 @@ runOnUserContent(function(){
         allBoxesWithStoppingPoints.push(start[a]);
 
   if(allBoxesWithStoppingPoints.length < openPosition)
-    return; // no boxes here
+    openPosition = allBoxesWithStoppingPoints.length;
 
   for(var a = 0; a < allBoxesWithStoppingPoints.length; a++) {
     allBoxesWithStoppingPoints[a].setAttribute("id", "box-" + a);
@@ -891,6 +899,9 @@ runOnUserContent(function(){
     var pos = $(this).parents('.bz-box').attr("data-box-sequence");
     pos |= 0;
     pos += 1; // they just advanced!
+
+    if(pos < openPosition)
+        return; // no need to update if they clicked done again on a previous button; keep them at the advanced position
 
     var http = new XMLHttpRequest();
     http.open("POST", "/bz/user_retained_data", true);
@@ -998,8 +1009,10 @@ runOnUserContent(function() {
         parentBox = parentBox.parentNode;
       }
 
-      if(parentBox && parentBox.classList.contains("has-preshowing-box"))
-        continue; // don't shuffle things that are already showing from previous loads
+      if(parentBox && parentBox.classList.contains("has-preshowing-box")) {
+        sortToMatchCheck(table); // do show feedback again...
+        continue; // ...but don't shuffle things that are already showing from previous loads
+      }
 
       // NOTE: this may break with colspan, so don't do that
       var firstRow = table.querySelector("tr");
