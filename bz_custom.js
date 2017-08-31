@@ -868,12 +868,12 @@ runOnUserContent(function(){
             triggerBzNewUiHandler(button);
 
         var magic = list[i].querySelectorAll("[data-bz-retained]");
-        for(var a = 0; a < magic; a++) {
+        for(var a = 0; a < magic.length; a++) {
             // I want to run ehud's jquery handlers, but not any native
             // handlers (especially i do NOT want to run the events I set
             // which do plumbing.. and i use the native api too). this should
             // do it
-            $(a).triggerHandler("change");
+            $(magic[a]).triggerHandler("change");
         }
       }
     }
