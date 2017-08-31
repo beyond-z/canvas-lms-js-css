@@ -911,7 +911,7 @@ runOnUserContent(function(){
 
   }).parents('.bz-box').addClass('bz-has-toggle-btn');
 
-  if(openPosition < allBoxesWithStoppingPoints.length && allBoxesWithStoppingPoints.length > 0)
+  if(openPosition != 0 && openPosition < allBoxesWithStoppingPoints.length && allBoxesWithStoppingPoints.length > 0)
     allBoxesWithStoppingPoints[openPosition].scrollIntoView();
 });
 
