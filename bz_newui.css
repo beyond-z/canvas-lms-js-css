@@ -115,6 +115,14 @@ a:visited {
 	font-size: 27px;
 }
 
+.bz-module .bz-box h5:not(.box-title), 
+.bz-module h6, 
+.bz-module .inner-toc, 
+.bz-module .main-toc {
+ font-size: 16px;
+ letter-spacing: 0.1em;
+}
+
 .bz-module h5,
 .bz-module .box-title {
 	font-size: 24px;
@@ -129,14 +137,6 @@ a:visited {
 	width: 200px;
 	margin-left: auto;
 	margin-right: auto;
-}
-
-.bz-module .bz-box h5:not(.box-title), 
-.bz-module h6, 
-.bz-module .inner-toc, 
-.bz-module .main-toc {
- font-size: 16px;
- letter-spacing: 0.1em;
 }
 
 .bz-module .main-toc ol,
@@ -1184,7 +1184,7 @@ li input:not([type="button"]):not([type="radio"]):not([type="checkbox"]), li tex
 	break-inside: avoid;
 }
 
-table:not(.no-zebra) tr:nth-child(even):not(.no-zebra), 
+table:not(.no-zebra):not(.sort-to-match) tr:nth-child(even):not(.no-zebra), 
 .to-columns li:nth-child(even) {
  background: #F6F6F6;
 }
