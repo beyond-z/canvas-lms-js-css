@@ -1064,6 +1064,8 @@ runOnUserContent(function() {
           droppables[a].setAttribute("data-column-number", col);
         }
       }
+
+      sortToMatchCheck(table); // do show feedback again...
     }
   }
 
