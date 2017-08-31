@@ -300,9 +300,17 @@ function bzInitializeNewUi() {
 
   // Provide instant feedback when any input on a list is checked:
   jQuery('.instant-feedback').find('input').change(function(){
-    var liParent = jQuery(this).parents('li, td').toggleClass('show-answers');
-    if ( jQuery(this).is('[type="radio"]') ){
-      liParent.siblings().removeClass('show-answers');
+    if ( jQuery(this).is('[type="radio"]') || jQuery(this).is('[type="checkbox"]') ) {
+      if(this.checked) {
+        var liParent = jQuery(this).parents('li, td').addClass('show-answers');
+        if ( jQuery(this).is('[type="radio"]') ) {
+          liParent.siblings().removeClass('show-answers');
+        }
+      } else {
+        jQuery(this).parents('li, td').removeClass('show-answers');
+      }
+    } else {
+      var liParent = jQuery(this).parents('li, td').addClass('show-answers');
     }
   });
 
@@ -998,8 +1006,10 @@ runOnUserContent(function() {
         parentBox = parentBox.parentNode;
       }
 
-      if(parentBox && parentBox.classList.contains("has-preshowing-box"))
-        continue; // don't shuffle things that are already showing from previous loads
+      if(parentBox && parentBox.classList.contains("has-preshowing-box")) {
+        sortToMatchCheck(table); // do show feedback again...
+        continue; // ...but don't shuffle things that are already showing from previous loads
+      }
 
       // NOTE: this may break with colspan, so don't do that
       var firstRow = table.querySelector("tr");
