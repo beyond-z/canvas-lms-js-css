@@ -842,7 +842,7 @@ runOnUserContent(function(){
     if(start[a].querySelector(".bz-toggle-all-next"))
         allBoxesWithStoppingPoints.push(start[a]);
 
-  if(allBoxesWithStoppingPoints.length <= openPosition)
+  if(allBoxesWithStoppingPoints.length < openPosition)
     return; // no boxes here
 
   for(var a = 0; a < allBoxesWithStoppingPoints.length; a++) {
@@ -852,8 +852,8 @@ runOnUserContent(function(){
 
   // anything before this, already open, should show the feedback from
   // last time a nd not shuffle, etc.
-  var first = allBoxesWithStoppingPoints[openPosition].querySelector(".bz-toggle-all-next");
-  var listOfShowingBoxes = collectBoxesBeforeBox(first);
+  var first = openPosition == allBoxesWithStoppingPoints.length ? null : allBoxesWithStoppingPoints[openPosition].querySelector(".bz-toggle-all-next");
+  var listOfShowingBoxes = first == null ? allBoxesWithStoppingPoints : collectBoxesBeforeBox(first);
   for(var i = 0; i < listOfShowingBoxes.length; i++) {
     listOfShowingBoxes[i].className += ' has-preshowing-box';
   }
@@ -878,7 +878,7 @@ runOnUserContent(function(){
       }
     }
   });
-  var list = collectStuffAfterBox(first);
+  var list = first == null ? [] : collectStuffAfterBox(first);
   for(var i = 0; i < list.length; i++) {
     $(list[i]).hide();
   }
@@ -900,7 +900,7 @@ runOnUserContent(function(){
 
   }).parents('.bz-box').addClass('bz-has-toggle-btn');
 
-  if(openPosition && allBoxesWithStoppingPoints.length > 0)
+  if(openPosition < allBoxesWithStoppingPoints.length && allBoxesWithStoppingPoints.length > 0)
     allBoxesWithStoppingPoints[openPosition].scrollIntoView();
 });
 
