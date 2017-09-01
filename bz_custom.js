@@ -300,9 +300,17 @@ function bzInitializeNewUi() {
 
   // Provide instant feedback when any input on a list is checked:
   jQuery('.instant-feedback').find('input').change(function(){
-    var liParent = jQuery(this).parents('li, td').toggleClass('show-answers');
-    if ( jQuery(this).is('[type="radio"]') ){
-      liParent.siblings().removeClass('show-answers');
+    if ( jQuery(this).is('[type="radio"]') || jQuery(this).is('[type="checkbox"]') ) {
+      if(this.checked) {
+        var liParent = jQuery(this).parents('li, td').addClass('show-answers');
+        if ( jQuery(this).is('[type="radio"]') ) {
+          liParent.siblings().removeClass('show-answers');
+        }
+      } else {
+        jQuery(this).parents('li, td').removeClass('show-answers');
+      }
+    } else {
+      var liParent = jQuery(this).parents('li, td').addClass('show-answers');
     }
   });
 
@@ -842,8 +850,8 @@ runOnUserContent(function(){
     if(start[a].querySelector(".bz-toggle-all-next"))
         allBoxesWithStoppingPoints.push(start[a]);
 
-  if(allBoxesWithStoppingPoints.length <= openPosition)
-    return; // no boxes here
+  if(allBoxesWithStoppingPoints.length < openPosition)
+    openPosition = allBoxesWithStoppingPoints.length;
 
   for(var a = 0; a < allBoxesWithStoppingPoints.length; a++) {
     allBoxesWithStoppingPoints[a].setAttribute("id", "box-" + a);
@@ -852,8 +860,8 @@ runOnUserContent(function(){
 
   // anything before this, already open, should show the feedback from
   // last time a nd not shuffle, etc.
-  var first = allBoxesWithStoppingPoints[openPosition].querySelector(".bz-toggle-all-next");
-  var listOfShowingBoxes = collectBoxesBeforeBox(first);
+  var first = openPosition == allBoxesWithStoppingPoints.length ? null : allBoxesWithStoppingPoints[openPosition].querySelector(".bz-toggle-all-next");
+  var listOfShowingBoxes = first == null ? allBoxesWithStoppingPoints : collectBoxesBeforeBox(first);
   for(var i = 0; i < listOfShowingBoxes.length; i++) {
     listOfShowingBoxes[i].className += ' has-preshowing-box';
   }
@@ -866,10 +874,19 @@ runOnUserContent(function(){
           var button = list[i].querySelector(".bz-toggle-all-next");
           if(button)
             triggerBzNewUiHandler(button);
+
+        var magic = list[i].querySelectorAll("[data-bz-retained]");
+        for(var a = 0; a < magic.length; a++) {
+            // I want to run ehud's jquery handlers, but not any native
+            // handlers (especially i do NOT want to run the events I set
+            // which do plumbing.. and i use the native api too). this should
+            // do it
+            $(magic[a]).triggerHandler("change");
+        }
       }
     }
   });
-  var list = collectStuffAfterBox(first);
+  var list = first == null ? [] : collectStuffAfterBox(first);
   for(var i = 0; i < list.length; i++) {
     $(list[i]).hide();
   }
@@ -883,6 +900,9 @@ runOnUserContent(function(){
     pos |= 0;
     pos += 1; // they just advanced!
 
+    if(pos < openPosition)
+        return; // no need to update if they clicked done again on a previous button; keep them at the advanced position
+
     var http = new XMLHttpRequest();
     http.open("POST", "/bz/user_retained_data", true);
     var data = "optional=1&name="+encodeURIComponent(position_magic_field_name)+"&value=" + encodeURIComponent(pos) + "&from=" + encodeURIComponent(location.href);
@@ -891,7 +911,7 @@ runOnUserContent(function(){
 
   }).parents('.bz-box').addClass('bz-has-toggle-btn');
 
-  if(openPosition && allBoxesWithStoppingPoints.length > 0)
+  if(openPosition != 0 && openPosition < allBoxesWithStoppingPoints.length && allBoxesWithStoppingPoints.length > 0)
     allBoxesWithStoppingPoints[openPosition].scrollIntoView();
 });
 
@@ -972,7 +992,7 @@ runOnUserContent(function() {
         var parentTable = this;
         while(parentTable.tagName != "TABLE")
           parentTable = parentTable.parentNode;
-        sortToMatchCheck(parentTable);
+        sortToMatchCheck(parentTable); // instant feedback update
       });
     }
 
@@ -989,8 +1009,11 @@ runOnUserContent(function() {
         parentBox = parentBox.parentNode;
       }
 
-      if(parentBox && parentBox.classList.contains("has-preshowing-box"))
-        continue; // don't shuffle things that are already showing from previous loads
+      if(parentBox && parentBox.classList.contains("has-preshowing-box")) {
+        // sortToMatchCheck(table); // do show feedback on reload...
+        table.className += " bz-locked-table";
+        continue; // ...but don't shuffle things that are already showing from previous loads
+      }
 
       // NOTE: this may break with colspan, so don't do that
       var firstRow = table.querySelector("tr");
@@ -1042,6 +1065,8 @@ runOnUserContent(function() {
           droppables[a].setAttribute("data-column-number", col);
         }
       }
+
+      sortToMatchCheck(table); // do show feedback for initial, untouched table...
     }
   }
 
