@@ -261,6 +261,18 @@ input[data-bz-retained="clicked"] {
 	text-align: center;
 }
 
+.pages.show .show-content {
+	padding: 15px;
+}
+
+.pages.show .page-title {
+	margin: 0 auto;
+	color: #FFF;
+	background: #EB3B46;
+	padding: 3em;
+	text-align: center;
+}
+
 /* Progress bar */
 
 progress {
