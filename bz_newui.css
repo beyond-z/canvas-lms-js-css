@@ -1210,6 +1210,11 @@ table {
 	height: 378px;
 }
 
+.bz-box:not(.video):not(.flush) figure iframe {
+	width: 612px;
+	height: 344px;
+}
+
 iframe {
 	border: none;
 	outline: none;
