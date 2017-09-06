@@ -123,6 +123,10 @@ a:visited {
  letter-spacing: 0.1em;
 }
 
+.bz-module .main-toc {
+	margin: 20px 0 3em;
+}
+
 .bz-module h5,
 .bz-module .box-title {
 	font-size: 24px;
@@ -266,7 +270,7 @@ input[data-bz-retained="clicked"] {
 }
 
 .pages.show .page-title {
-	margin: 0 auto;
+	margin: 0 auto 30px;
 	color: #FFF;
 	background: #EB3B46;
 	padding: 3em;
