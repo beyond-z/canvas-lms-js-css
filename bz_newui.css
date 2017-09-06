@@ -123,6 +123,10 @@ a:visited {
  letter-spacing: 0.1em;
 }
 
+.bz-module .main-toc {
+	margin: 20px 0 3em;
+}
+
 .bz-module h5,
 .bz-module .box-title {
 	font-size: 24px;
@@ -266,7 +270,7 @@ input[data-bz-retained="clicked"] {
 }
 
 .pages.show .page-title {
-	margin: 0 auto;
+	margin: 0 auto 30px;
 	color: #FFF;
 	background: #EB3B46;
 	padding: 3em;
@@ -278,9 +282,10 @@ input[data-bz-retained="clicked"] {
 progress {
 	height: 5px;
 	/* Reset the default appearance */
-  -webkit-appearance: none;
+	-webkit-appearance: none;
 	-moz-appearence: none;
 	border: 0;
+	color: #008000;
 }
 
 progress[value]::-webkit-progress-bar {
@@ -333,6 +338,7 @@ progress[value]::-webkit-progress-bar {
 .student-logged-in .question .mce-toolbar-grp,
 .student-logged-in .question .mce-path,
 .student-logged-in .module-sequence-footer,
+.student-logged-in #footer,
 .student-logged-in .bz-module-sequence-progress-container,
 .student-logged-in #bz-module-sequence-progress-bar {
 	display: none !important;	
@@ -1210,6 +1216,11 @@ table {
 	height: 378px;
 }
 
+.bz-box:not(.video):not(.flush) figure iframe {
+	width: 612px;
+	height: 344px;
+}
+
 iframe {
 	border: none;
 	outline: none;
@@ -1455,16 +1466,25 @@ expectations-aligned-w-reasons * {
 	height: auto;
 }
 
+#wrapper {
+	background: #fff;
+}
+
 #bz-back-to-top {
-	display: none;
-	position: fixed;
-	text-align: right;
-	margin: 0 auto;
-	font-size: 14px;
-	color: #666;
-	bottom: 1em;
-	right: 1em;
-	cursor: pointer;
+    display: none;
+    position: fixed;
+    text-align: center;
+    margin: 0 auto;
+    font-size: 14px;
+    color: #666;
+    bottom: 0;
+    right: 0;
+    cursor: pointer;
+    width: 100%;
+    left: 0;
+    background: #fff;
+    padding: 10px 0;
+
 }
 
 #bz-back-to-top:hover {
