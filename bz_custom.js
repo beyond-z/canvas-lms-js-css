@@ -949,7 +949,6 @@ runOnUserContent(function() {
 
       // make it draggable
       wrapper.addEventListener("dragstart", function(event) {
-        console.log(event.target);
         event.dataTransfer.setData("text/plain", event.target.getAttribute("id"));
         currentlyDragging = this; // need for a chrome hack
       });
