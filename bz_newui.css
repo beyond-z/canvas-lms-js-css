@@ -261,6 +261,18 @@ input[data-bz-retained="clicked"] {
 	text-align: center;
 }
 
+.pages.show .show-content {
+	padding: 15px;
+}
+
+.pages.show .page-title {
+	margin: 0 auto;
+	color: #FFF;
+	background: #EB3B46;
+	padding: 3em;
+	text-align: center;
+}
+
 /* Progress bar */
 
 progress {
@@ -1193,7 +1205,7 @@ table {
 	border-collapse: collapse;
 }
 
-.bz-box.video figure iframe {
+.bz-box figure iframe {
 	width: 672px;
 	height: 378px;
 }
@@ -1729,12 +1741,10 @@ expectations-aligned-w-reasons * {
 .inside-dragging {
 	border: dashed 2px black;
 }
- .sort-to-match.show-answers .correct, 
- .sort-to-match.show-answers:not(.no-zebra) tr.correct:nth-child(odd):not(.no-zebra) {
+ .sort-to-match.show-answers:not(.bz-locked-table) .correct {
  background: #22B573;
 }
- .sort-to-match.show-answers .incorrect, 
- .sort-to-match.show-answers:not(.no-zebra) tr.incorrect:nth-child(odd):not(.no-zebra) {
+.sort-to-match.show-answers:not(.bz-locked-table) .incorrect {
  background: #EB3B46;
 }
 
