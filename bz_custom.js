@@ -949,7 +949,7 @@ runOnUserContent(function() {
 
       // make it draggable
       wrapper.addEventListener("dragstart", function(event) {
-        event.dataTransfer.setData("text/id", this.getAttribute("id"));
+        event.dataTransfer.setData("text/plain", event.target.getAttribute("id"));
         currentlyDragging = this; // need for a chrome hack
       });
 
@@ -970,7 +970,7 @@ runOnUserContent(function() {
         event.preventDefault();
         event.stopPropagation();
 
-        var dragging = document.getElementById(event.dataTransfer.getData("text/id"));
+        var dragging = document.getElementById(event.dataTransfer.getData("text/plain"));
         if(dragging.parentNode) {
           // swap our existing contents for the draggable one
           var from = dragging.parentNode;
