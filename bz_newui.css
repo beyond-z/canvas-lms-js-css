@@ -1465,18 +1465,24 @@ expectations-aligned-w-reasons * {
 	height: auto;
 }
 
+#wrapper {
+	background: #fff;
+}
+
 #bz-back-to-top {
-	display: none;
+    display: none;
     position: fixed;
-    width: 100%;
-    margin: 0 auto;
     text-align: center;
-    font-size: 16px;
+    margin: 0 auto;
+    font-size: 14px;
     color: #666;
-    bottom: 100px;
+    bottom: 0;
     right: 0;
-    left: 0;
     cursor: pointer;
+    width: 100%;
+    left: 0;
+    background: #fff;
+    padding: 10px 0;
 
 }
 
