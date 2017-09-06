@@ -282,9 +282,10 @@ input[data-bz-retained="clicked"] {
 progress {
 	height: 5px;
 	/* Reset the default appearance */
-  -webkit-appearance: none;
+	-webkit-appearance: none;
 	-moz-appearence: none;
 	border: 0;
+	color: #008000;
 }
 
 progress[value]::-webkit-progress-bar {
