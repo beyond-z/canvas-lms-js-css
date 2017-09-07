@@ -27,15 +27,13 @@ crossorigin="anonymous">
   <h2 id="what">Why is this important?</h2>
   <div class="bz-box question">
     <h3 class="box-title">Take a Guess</h3>
-    <p>You find a job posting you're excited about on LinkedIn. You apply online, submitting your resume and cover letter. What are the chances you will be selected for an in-person interview? 
-      83% 
-      52%
-      16%
-      3%
-    </p>
-
+    <p>You find a job posting you're excited about on LinkedIn. You apply online, submitting your resume and cover letter. What are the chances you will be selected for an in-person interview?</p> 
     <p>
-      <input class="for-radio bz-toggle-all-next" type="button" data-bz-retained="applying-btn-TBD" value="Done" />
+      <input type="range" class="two-thirds bz-optional-magic-field" data-bz-retained="apply-q01" min="0" max="100" step="1" data-bz-range-answer="3" />
+    </p>
+    <div class="display-value"><span class="current-value">&nbsp;</span>%</div>
+    <p>
+      <input class="for-range bz-toggle-all-next" type="button" data-bz-retained="applying-btn-01" value="Done" />
     </p>
   </div>
   <div class="bz-box answer">
@@ -44,46 +42,92 @@ crossorigin="anonymous">
   </div>
   <div class="bz-box question empathize">
     <h3 class="box-title">Put yourself in their shoes</h3>
-    <p>If you were a hiring manager responsible for selecting 3 candidates out of the 100 that applied for a specific role, what are the top things you would look for in a candidate's <span class="bz-has-tooltip" title="An application usually consists of your resume and cover letter. Some employers will require you to fill out a form or answer additional questions.">application</span>? (check all that apply)</p>
-    TBD make radio list
-    That the candidate's skills and experience fits the requirement of the job 
-    That the candidate is professional (no typos and consistent formatting)
-    Where the candidate studied abroad 
-    The classes the candidate has taken so far in college 
-    The comprehensiveness of the resume (includes all experience since the beginning fo high school)
+    <p>If you were a hiring manager responsible for selecting 3 candidates out of the 100 that applied for a specific role, what are the <strong>top things</strong> you would look for in a candidate's <span class="bz-has-tooltip" title="An application usually consists of your resume and cover letter. Some employers will require you to fill out a form or answer additional questions.">application</span>? (check all that apply)</p>
+    <ul class="checklist">
+      <li class="correct"><input type="checkbox" data-bz-retained="applying-q02-1" />That the candidate's skills and experience fits the requirement of the job</li>
+      <li class="correct"><input type="checkbox" data-bz-retained="applying-q02-2" />That the candidate is professional (no typos and consistent formatting)</li>
+      <li class="incorrect"><input type="checkbox" data-bz-retained="applying-q02-3" />Where the candidate studied abroad </li>
+      <li class="incorrect"><input type="checkbox" data-bz-retained="applying-q02-4" />The classes the candidate has taken so far in college </li>
+      <li class="incorrect"><input type="checkbox" data-bz-retained="applying-q02-5" />The comprehensiveness of the resume (includes all experience since the beginning of high school)</li>
+    </ul>
     <p>
-      <input class="for-radio bz-toggle-all-next" type="button" data-bz-retained="applying-btn-TBD" value="Done" />
+      <input class="for-checklist bz-toggle-all-next" type="button" data-bz-retained="applying-btn-02" value="Done" />
     </p>
   </div>
-  <div class="bz-box flush">
-   TBD copy from spring module. change to "the best application is..."
+  <div class="bz-box answer">
+    <h3 class="box-title">ANSWER</h3>
+    <table class="equal-column-widths">
+      <tbody>
+        <tr>
+          <td style="text-align: center; width: 50%;">
+            <p><span class="tbd">INSERT IMAGE</span></p>
+            <p class="match-heading-style">The best application IS&hellip;</p>
+            <p>a track record of your experience and achievements</p>
+          </td>
+          <td style="text-align: center; width: 50%;">
+            <p><span class="tbd">INSERT IMAGE</span></p>
+            <p class="match-heading-style">The best application is NOT&hellip;</p>
+            <p>a comprehensive record of everything you've ever done</p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
+  <blockquote><p>"Perfection is achieved not when there is nothing more to add, but when there is nothing left to take away."</p><p class="quote-source">Antoine de Saint-Exupery</p></blockquote>
   <h2 id="how">How do I do this?</h2>
   <h3>How to NAVIGATE THE JOB APPLICATION PROCESS</h3>
   <h4>Know the rules of the game</h4>
   <div class="bz-box pulse">
     <h5 class="bz-box">Pulse Check</h5>
     <p>Most job applicants do the bare minimum: they search for jobs on online job boards (i.e. LinkedIn, Indeed, Handshake) and submit their application online. Does this sound like what you've been doing to apply to opportunities (i.e. internships)?</p>
-    Yes 
-    No
-    Sometimes yes, sometimes no
-    TBD Done button
+    <ul class="radio-list">
+      <li><input type="radio" name="applying-q05-radio" data-bz-retained="applying-q05-radio" value="y" />Yes</li>
+      <li><input type="radio" name="applying-q05-radio" data-bz-retained="applying-q05-radio" value="n" />No</li>
+      <li><input type="radio" name="applying-q05-radio" data-bz-retained="applying-q05-radio" value="o" />Sometimes yes, sometimes no</li>
+    </ul>
+    <p>
+      <input class="for-radio-list bz-toggle-all-next" type="button" data-bz-retained="applying-btn-03" value="Done" />
+    </p>
   </div>
-  <p>With the help of this Braven module, you'll be armed with the <em>rules of the game</em> to successfully navigate the job application process and be in that 3% of applicants who get invited to the interview.</p>
+  <p>Whatever your strategy has been so far, with the help of this Braven module you'll be armed with the <em>rules of the game</em> to successfully navigate the job application process and be in that 3% of applicants who get invited to the interview.</p>
   <div class="bz-box question">
     <h5 class="box-title">Quick Question</h5>
     <p>Drag and drop the job application steps below into the order in which you should do them so that you're more likely to be invited for an interview.</p>
-    TBD sort-to-match
-
-    Reflect on what you want to do
-    Research online and in-person to make list of the opportunities you want to apply to
-    Set up a system to track job openings and where you are in the application process
-    Adapt your resume, cover letter, and LinkedIn profile to match the skills and experiences in the job posting 
-    Network with employees of the company you're applying to 
-    Submit your application to the employer 
-    Follow up with any contacts at the company to see if they will put in a good word for you 
-
-    TBD Done
+    <table class="sort-to-match">
+      <tbody>
+        <tr>
+          <th>1</th>
+          <td>Reflect on what you want to do</td>
+        </tr>
+        <tr>
+          <th>2</th>
+          <td>Research online and in-person to make list of the opportunities you want to apply to</td>
+        </tr>
+        <tr>
+          <th>3</th>
+          <td>Set up a system to track job openings and where you are in the application process</td>
+        </tr>
+        <tr>
+          <th>4</th>
+          <td>Adapt your resume, cover letter, and LinkedIn profile to match the skills and experiences in the job posting</td>
+        </tr>
+        <tr>
+          <th>5</th>
+          <td>Network with employees of the company you're applying to</td>
+        </tr>
+        <tr>
+          <th>6</th>
+          <td>Submit your application to the employer</td>
+        </tr>
+        <tr>
+          <th>7</th>
+          <td>Follow up with any contacts at the company to see if they will put in a good word for you</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      <input class="for-match bz-toggle-all-next" type="button" data-bz-retained="applying-btn-04" value="Done" />
+    </p>
   </div>
   <div class="bz-box answer">
     <h5 class="box-title">What this means</h5>
@@ -91,15 +135,17 @@ crossorigin="anonymous">
   </div>
   <div class="bz-box action flush">
     <p>For a more detailed look at this application process, including the steps after you get an interview, go for a spin on Braven’s Apply for a Job Gameboard! Click on a square to view more details for the step in the middle of the board:</p>
+    <div class="tbd">
     TBD INSERT INTERACTIVE BOARD
-    TBD [This should be a resource that they can take with them later]
+    [This should be a resource that they can take with them later]
+    </div>
   </div>
   <div class="bz-box video">
     <h5 class="box-title">Watch this</h5>
     <figure>
       <iframe src="https://player.vimeo.com/video/231583723" allowfullscreen></iframe>
       <figcaption>
-        Andrea Schwartz Boone has hired literally <em>thousands</em> of people and she's sharing her top nine tips.<span class="media-duration">3:17</span>
+        Andrea Schwartz-Boone has hired literally <em>thousands</em> of people and she's sharing her top nine tips.<span class="media-duration">3:17</span>
         <div class="transcript">
           <p>Hi! I’m Andrea Schwartz Boone, and I’m the Executive Director of Braven here in the Bay Area, and I’m super pumped to talk to you about the hiring process from your perspective. I’ve hired lots of people, like in the thousands, so here’s my advice:</p>
           <p>Number one: Make sure your LinkedIn profile is up to date, that you have a professional photo, that your experiences are in there, and that you have a great summary, because ultimately, that’s the first thing people are going to do when they see your name come across, is actually look you up on LinkedIn to get a sense for who you are and what you stand for professionally.</p>
