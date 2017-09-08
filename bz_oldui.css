@@ -946,6 +946,16 @@ textarea[data-bz-retained] {
 	width:100%;	
 }
 
+/*    Grades   */
+/* ----------- */
+
+.bz-gradebook-note {
+  padding: 1em;
+  margin-bottom: 1.1em;
+  background-color: #EBF7F7;
+  border: 1px solid #eee;
+}
+
 /* Help Button */
 /* ----------- */
 #bz-help-button {
