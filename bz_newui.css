@@ -1467,6 +1467,10 @@ expectations-aligned-w-reasons * {
 	position: relative;
 }
 
+.equal-column-widths {
+	table-layout: fixed
+}
+
 .equal-column-widths td {
 	width: 1%;
 }
