@@ -1006,8 +1006,9 @@ figcaption {
 }
 
 .feedback.inline {
-	padding: 3px 6px;
-	background: #EEE;
+    padding: 10px;
+    background: #EEE;
+    margin: 0.5em 0 1em;
 }
 
 .display-value {
@@ -1780,6 +1781,10 @@ expectations-aligned-w-reasons * {
 }
 .sort-to-match.show-answers:not(.bz-locked-table) .incorrect {
  background: #EB3B46;
+}
+
+.bz-locked-table {
+	color: #666;
 }
 
 /* Rubrics and assignment review: */
