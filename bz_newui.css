@@ -251,7 +251,7 @@ blockquote {
 	font-style: italic;
 }
 
-.tbd {
+body:not(.student-logged-in) .tbd {
 	background: #FF0;
 }
 
@@ -1006,8 +1006,9 @@ figcaption {
 }
 
 .feedback.inline {
-	padding: 3px 6px;
-	background: #EEE;
+    padding: 10px;
+    background: #EEE;
+    margin: 0.5em 0 1em;
 }
 
 .display-value {
@@ -1027,7 +1028,7 @@ figcaption {
 }
 
 .checklist [type='checkbox'],
-.radio-list [type='radio'],
+.radio-list:not(.multi-radios) [type='radio'],
 .bz-has-other [type='checkbox'],
 .bz-has-other [type='radio'] {
 	position: absolute;
@@ -1454,7 +1455,7 @@ table [type="range"] {
 	 width: 40%;
 }
 
-expectations-aligned-w-reasons * {
+#expectations-aligned-w-reasons * {
 	font-size: 80%;
 }
 
@@ -1503,6 +1504,44 @@ expectations-aligned-w-reasons * {
 
 #bz-back-to-top:hover {
 	color: #EB3B46;
+}
+
+.bz-resume-box * {
+    font-family: "Times New Roman", Times, serif;
+    letter-spacing: -0.2px;
+    font-size: 14px;
+    background: #FFF;
+}
+
+.bz-resume-box .resume-title {
+	text-align: center;
+	font-size: 30px;
+}
+
+.bz-resume-box .resume-contact-info {
+	text-align: center;
+}
+
+.bz-resume-box td {
+    border: 0 !important;
+}
+
+.bz-resume-box .resume-section {
+    font-size: 20px;
+    font-weight: bold;
+    font-style: italic;
+    border-bottom: 1px #000 solid !important;
+}
+
+.bz-resume-box .resume-when, 
+.bz-resume-box .resume-where {
+    font-weight: bold;
+    font-size: 14px;
+    padding-top: 5px;
+}
+
+.bz-resume-box li {
+    margin: 0 !important;
 }
 
 .for-range,
@@ -1780,6 +1819,10 @@ expectations-aligned-w-reasons * {
 }
 .sort-to-match.show-answers:not(.bz-locked-table) .incorrect {
  background: #EB3B46;
+}
+
+.bz-locked-table {
+	color: #666;
 }
 
 /* Rubrics and assignment review: */

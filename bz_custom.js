@@ -242,7 +242,7 @@ var bzNewUiHandlers = {
     var feedbackClass = "";
     // The following calculates the relative distance between the user's choice and the correct answer, and returns a rounded down value between 0 and max score.
     var rangeScore = max - (max * Math.abs(correctVal - currentVal) / (max - min));
-    console.log(rangeScore);
+    //console.log(rangeScore);
     if ( max <= rangeScore) {
       feedback = "Amazing! You got it exactly right!";
       feedbackClass = 'correct';
