@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <title>Module 6: Apply for a Job</title>
-  <script
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Module 6: Apply for a Job</title>
+<script
   src="https://code.jquery.com/jquery-3.2.1.min.js"
   integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
   crossorigin="anonymous">
@@ -14,103 +14,166 @@ integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
 crossorigin="anonymous">
 </script>
 <style>
-  @font-face {
-    font-family: "TradeGothicNo.20-CondBold";
-    src: url('../TradeGothicLTStd-BdCn20.otf');
-  }
-
+@font-face {
+ font-family: "TradeGothicNo.20-CondBold";
+ src: url('../TradeGothicLTStd-BdCn20.otf');
+}
 </style>
 <link rel="stylesheet" type="text/css" href="../bz_newui.css">
 </head>
 <body>
-  <div class="bz-module">
-    <h2 id="what">Why is this important?</h2>
-    <div class="bz-box question">
-      <h3 class="box-title">Take a Guess</h3>
-      <p>You find a job posting you're excited about on LinkedIn. You apply online, submitting your resume and cover letter. What are the chances you will be selected for an in-person interview? 
-        83% 
-        52%
-        16%
-        3%
-      </p>
-
-      <p>
-        <input class="for-radio bz-toggle-all-next" type="button" data-bz-retained="applying-btn-TBD" value="Done" />
-      </p>
-    </div>
-    <div class="bz-box answer">
-      <h3 class="box-title">Answer</h3>
-      <p>It's just 3%, and yes, that might sound like a depressing statistic. The good news is that there are tried and true steps you can follow to increase your chances of being in that 3%. Applying for a job is like a game, and once you know the rules of the game, you are more likely to succeed.</p>
-    </div>
-    <div class="bz-box question empathize">
-      <h3 class="box-title">Put yourself in their shoes</h3>
-      <p>If you were a hiring manager responsible for selecting 3 candidates out of the 100 that applied for a specific role, what are the top things you would look for in a candidate's <span class="bz-has-tooltip" title="An application usually consists of your resume and cover letter. Some employers will require you to fill out a form or answer additional questions.">application</span>? (check all that apply)</p>
-      TBD make radio list
-      That the candidate's skills and experience fits the requirement of the job 
-      That the candidate is professional (no typos and consistent formatting)
-      Where the candidate studied abroad 
-      The classes the candidate has taken so far in college 
-      The comprehensiveness of the resume (includes all experience since the beginning fo high school)
-      <p>
-        <input class="for-radio bz-toggle-all-next" type="button" data-bz-retained="applying-btn-TBD" value="Done" />
-      </p>
-    </div>
-    <div class="bz-box flush">
-     TBD copy from spring module. change to "the best application is..."
-   </div>
-   <h2 id="how">How do I do this?</h2>
-   <h3>How to NAVIGATE THE JOB APPLICATION PROCESS</h3>
-   <h4>Know the rules of the game</h4>
-   <div class="bz-box pulse">
-     <h5 class="bz-box">Pulse Check</h5>
-     <p>Most job applicants do the bare minimum: they search for jobs on online job boards (i.e. LinkedIn, Indeed, Handshake) and submit their application online. Does this sound like what you've been doing to apply to opportunities (i.e. internships)?</p>
-     Yes 
-     No
-     Sometimes yes, sometimes no
-     TBD Done button
-   </div>
-   <p>With the help of this Braven module, you'll be armed with the <em>rules of the game</em> to successfully navigate the job application process and be in that 3% of applicants who get invited to the interview.</p>
-   <div class="bz-box question">
-     <h5 class="box-title">Quick Question</h5>
-     <p>Drag and drop the job application steps below into the order in which you should do them so that you're more likely to be invited for an interview.</p>
-     TBD sort-to-match
-
-     Reflect on what you want to do
-     Research online and in-person to make list of the opportunities you want to apply to
-     Set up a system to track job openings and where you are in the application process
-     Adapt your resume, cover letter, and LinkedIn profile to match the skills and experiences in the job posting 
-     Network with employees of the company you're applying to 
-     Submit your application to the employer 
-     Follow up with any contacts at the company to see if they will put in a good word for you 
-
-     TBD Done
-   </div>
-   <div class="bz-box answer">
+<div class="bz-module">
+  <h2 id="what">Why is this important?</h2>
+  <div class="bz-box question">
+    <h3 class="box-title">Take a Guess</h3>
+    <p>You find a job posting you're excited about on LinkedIn. You apply online, submitting your resume and cover letter. What are the chances you will be selected for an in-person interview?</p>
+    <p>
+      <input class="two-thirds bz-optional-magic-field" max="100" min="0" step="1" type="range" data-bz-retained="apply4job-q01" data-bz-range-answer="3" />
+    </p>
+    <div class="display-value"><span class="current-value">&nbsp;</span>%</div>
+    <p>
+      <input class="for-range bz-toggle-all-next" type="button" value="Done" data-bz-retained="apply4job-btn-01" />
+    </p>
+  </div>
+  <div class="bz-box answer">
+    <h3 class="box-title">Answer</h3>
+    <p>It's just 3%, and yes, that might sound like a depressing statistic. The good news is that there are tried and true steps you can follow to increase your chances of being in that 3%. Applying for a job is like a game, and once you know the rules of the game, you are more likely to succeed.</p>
+  </div>
+  <div class="bz-box question empathize">
+    <h3 class="box-title">Put yourself in their shoes</h3>
+    <p>If you were a hiring manager responsible for selecting 3 candidates out of the 100 that applied for a specific role, what are the <strong>top things</strong> you would look for in a candidate's <span class="bz-has-tooltip" title="An application usually consists of your resume and cover letter. Some employers will require you to fill out a form or answer additional questions.">application</span>? (check all that apply)</p>
+    <ul class="checklist">
+      <li class="correct">
+        <input type="checkbox" data-bz-retained="apply4job-q02-1" />
+        That the candidate's skills and experience fits the requirement of the job</li>
+      <li class="correct">
+        <input type="checkbox" data-bz-retained="apply4job-q02-2" />
+        That the candidate is professional (no typos and consistent formatting)</li>
+      <li class="incorrect">
+        <input type="checkbox" data-bz-retained="apply4job-q02-3" />
+        Where the candidate studied abroad</li>
+      <li class="incorrect">
+        <input type="checkbox" data-bz-retained="apply4job-q02-4" />
+        The classes the candidate has taken so far in college</li>
+      <li class="incorrect">
+        <input type="checkbox" data-bz-retained="apply4job-q02-5" />
+        The comprehensiveness of the resume (includes all experience since the beginning of high school)</li>
+    </ul>
+    <p>
+      <input class="for-checklist bz-toggle-all-next" type="button" value="Done" data-bz-retained="apply4job-btn-02" />
+    </p>
+  </div>
+  <div class="bz-box answer">
+    <h3 class="box-title">ANSWER</h3>
+    <table class="equal-column-widths">
+      <tbody>
+        <tr>
+          <td style="text-align: center; width: 50%;"><p><img src="/courses/1/files/11539/preview" alt="bz-resume-export-for-web.png" width="300" height="225" data-api-endpoint="https://portal.bebraven.org/api/v1/courses/1/files/11539" data-api-returntype="File" /></p>
+            <p class="match-heading-style">The best application IS&hellip;</p>
+            <p>a track record of your experience and achievements</p></td>
+          <td style="text-align: center; width: 50%;"><p><img src="/courses/1/files/11540/preview" alt="bz-resume-approach-01_history.png" width="300" height="225" data-api-endpoint="https://portal.bebraven.org/api/v1/courses/1/files/11540" data-api-returntype="File" /></p>
+            <p class="match-heading-style">The best application is NOT&hellip;</p>
+            <p>a comprehensive record of everything you've ever done</p></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <blockquote>
+    <p>"Perfection is achieved not when there is nothing more to add, but when there is nothing left to take away."</p>
+    <p class="quote-source">Antoine de Saint-Exupery</p>
+  </blockquote>
+  <h2 id="how">How do I do this?</h2>
+  <h3>How to NAVIGATE THE JOB APPLICATION PROCESS</h3>
+  <h4>Know the rules of the game</h4>
+  <div class="bz-box pulse">
+    <h5 class="box-title">Pulse Check</h5>
+    <p>Most job applicants do the bare minimum: they search for jobs on online job boards (i.e. LinkedIn, Indeed, Handshake) and submit their application online. Does this sound like what you've been doing to apply to opportunities (i.e. internships)?</p>
+    <ul class="radio-list">
+      <li>
+        <input name="applying-q05-radio" type="radio" value="y" data-bz-retained="apply4job-q05-radio" />
+        Yes</li>
+      <li>
+        <input name="applying-q05-radio" type="radio" value="n" data-bz-retained="apply4job-q05-radio" />
+        No</li>
+      <li>
+        <input name="applying-q05-radio" type="radio" value="o" data-bz-retained="apply4job-q05-radio" />
+        Sometimes yes, sometimes no</li>
+    </ul>
+    <p>
+      <input class="for-radio-list bz-toggle-all-next" type="button" value="Done" data-bz-retained="apply4job-btn-03" />
+    </p>
+  </div>
+  <p>Whatever your strategy has been so far, with the help of this Braven module you'll be armed with the <em>rules of the game</em> to successfully navigate the job application process and be in that 3% of applicants who get invited to the interview.</p>
+  <div class="bz-box question">
+    <h5 class="box-title">Quick Question</h5>
+    <p>Drag and drop the job application steps below into the order in which you should do them so that you're more likely to be invited for an interview.</p>
+    <table class="sort-to-match">
+      <tbody>
+        <tr>
+          <th>1</th>
+          <td>Reflect on what you want to do</td>
+        </tr>
+        <tr>
+          <th>2</th>
+          <td>Research online and in-person to make list of the opportunities you want to apply to</td>
+        </tr>
+        <tr>
+          <th>3</th>
+          <td>Set up a system to track job openings and where you are in the application process</td>
+        </tr>
+        <tr>
+          <th>4</th>
+          <td>Adapt your resume, cover letter, and LinkedIn profile to match the skills and experiences in the job posting</td>
+        </tr>
+        <tr>
+          <th>5</th>
+          <td>Network with employees of the company you're applying to</td>
+        </tr>
+        <tr>
+          <th>6</th>
+          <td>Submit your application to the employer</td>
+        </tr>
+        <tr>
+          <th>7</th>
+          <td>Follow up with any contacts at the company to see if they will put in a good word for you</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      <input class="for-match bz-toggle-all-next" type="button" value="Done" data-bz-retained="apply4job-btn-04" />
+    </p>
+  </div>
+  <div class="bz-box answer">
     <h5 class="box-title">What this means</h5>
     <p>You'll notice from these steps that there's a lot of pre-work and follow-up you need to do on the side to make sure your application gets noticed, such as networking to get in touch with employees.</p>
   </div>
-  <div class="bz-box action flush">
-    <p>For a more detailed look at this application process, including the steps after you get an interview, go for a spin on Braven’s Apply for a Job Gameboard! Click on a square to view more details for the step in the middle of the board:</p>
-    TBD INSERT INTERACTIVE BOARD
-    TBD [This should be a resource that they can take with them later]
+  <div class="bz-box action">
+    <h5 class="box-title">Let's dive deeper</h5>
+    <p>For a more detailed look at this application process, including the steps after you get an interview, go for a spin on Braven&rsquo;s Apply for a Job Gameboard!</p>
+    <p>Download the PDF and click on a square to view more details for the step in the middle of the board:</p>
+    <p><img style="display: block; margin-left: auto; margin-right: auto;" src="/courses/1/files/11538/preview" alt="Download the gameboard" width="340" height="342" data-api-endpoint="https://portal.bebraven.org/api/v1/courses/1/files/11538" data-api-returntype="File" /></p>
+    <p>&nbsp;</p>
+    <p>When you're done looking through the game board, <em>save it somewhere handy</em> and click "Done" to continue:</p>
+    <p>
+      <input class="bz-toggle-all-next" type="button" value="Done" data-bz-retained="apply4job-btn-04x" />
+    </p>
   </div>
   <div class="bz-box video">
     <h5 class="box-title">Watch this</h5>
     <figure>
-      <iframe src="https://player.vimeo.com/video/231583723" allowfullscreen></iframe>
-      <figcaption>
-        Andrea Schwartz Boone has hired literally <em>thousands</em> of people and she's sharing her top nine tips.<span class="media-duration">3:17</span>
+      <iframe src="https://player.vimeo.com/video/231583723" width="300" height="150" allowfullscreen="allowfullscreen"></iframe>
+      <figcaption> Andrea Schwartz-Boone has hired literally <em>thousands</em> of people and she's sharing her top nine tips.<span class="media-duration">3:17</span>
         <div class="transcript">
-          <p>Hi! I’m Andrea Schwartz Boone, and I’m the Executive Director of Braven here in the Bay Area, and I’m super pumped to talk to you about the hiring process from your perspective. I’ve hired lots of people, like in the thousands, so here’s my advice:</p>
-          <p>Number one: Make sure your LinkedIn profile is up to date, that you have a professional photo, that your experiences are in there, and that you have a great summary, because ultimately, that’s the first thing people are going to do when they see your name come across, is actually look you up on LinkedIn to get a sense for who you are and what you stand for professionally.</p>
-          <p>Number two: You’re going to have to prepare your application materials. That’s typically a resume and a cover letter. You do need to tailor these for each role, and that means that based on the job you’re applying for, make sure to highlight using the bullets, the accomplishments or the work that you did that most relate to that job.</p> 
-          <p>Number three: You actually want to see if you can get a referral. You’re much more likely to get hired if you know someone who knows someone who works at this company. You might not have a referral and that’s totally fine. But if you do, you can either ask them to hop on the phone before you submit and give you advice or maybe write a quick note for them that they can send over to the contact they know at the company, so that the company knows to look out for your application. </p>
-          <p>Number four: Submit! Submit your resume and your cover letter. </p>
-          <p>Number five: The company will actually do an initial screen. They will just look at your resume and cover letter and they’re typically looking for three things: Number one, does this person have any applicable experience? Number two, do they have evidence of results in their previous roles? And number three, in the cover letter, are there spelling or grammar mistakes? They’ll also do a keyword search where they’ll see if your experience is actually applicable to the job at hand. </p>
-          <p>Number six: If that works out, you’re going to go to the phone screen. This is typically not with the hiring manager, so it’s typically with a recruiter or not the person who would actually manage you in the job. Here, they just want to get to know your story. They want to dig into your relevant experiences, get a sense of what you accomplished, what your working style is. They like to understand, what you be like to work on a team with? And they’ll also check for your communication ability.</p>
-          <p>Number seven: Typically, if this works out, you’re invited to do some exercises, which is actually completing a little project that simulates what you might be doing in the job. This often lets hiring managers get a sense of how would this person really complete this. That’s not always the case, but it’s often time included. </p>
-          <p>Number eight: After the exercises, this is when we do final interviews, which is typically with the hiring manager, who your boss would be, who your boss’s boss would be. It’s a deeper dive into is this person a strong fit within this role? Can they do the job well, but also within this organization? Are they a great team member? Will they fit in with the culture here? </p>
-          <p>Number nine: If that works out, step nine is a reference check. They’ll call up the references you gave and typically they’re just looking for, can this reference confirm the strengths we think we see? And number two, are there any flags we didn’t know about? And if the references check out, which they should - do not actually give references that will say concerning things about you &mdash; you’ll get the offer! Woohoo! </p>
+          <p>Hi! I&rsquo;m Andrea Schwartz Boone, and I&rsquo;m the Executive Director of Braven here in the Bay Area, and I&rsquo;m super pumped to talk to you about the hiring process from your perspective. I&rsquo;ve hired lots of people, like in the thousands, so here&rsquo;s my advice:</p>
+          <p>Number one: Make sure your LinkedIn profile is up to date, that you have a professional photo, that your experiences are in there, and that you have a great summary, because ultimately, that&rsquo;s the first thing people are going to do when they see your name come across, is actually look you up on LinkedIn to get a sense for who you are and what you stand for professionally.</p>
+          <p>Number two: You&rsquo;re going to have to prepare your application materials. That&rsquo;s typically a resume and a cover letter. You do need to tailor these for each role, and that means that based on the job you&rsquo;re applying for, make sure to highlight using the bullets, the accomplishments or the work that you did that most relate to that job.</p>
+          <p>Number three: You actually want to see if you can get a referral. You&rsquo;re much more likely to get hired if you know someone who knows someone who works at this company. You might not have a referral and that&rsquo;s totally fine. But if you do, you can either ask them to hop on the phone before you submit and give you advice or maybe write a quick note for them that they can send over to the contact they know at the company, so that the company knows to look out for your application.</p>
+          <p>Number four: Submit! Submit your resume and your cover letter.</p>
+          <p>Number five: The company will actually do an initial screen. They will just look at your resume and cover letter and they&rsquo;re typically looking for three things: Number one, does this person have any applicable experience? Number two, do they have evidence of results in their previous roles? And number three, in the cover letter, are there spelling or grammar mistakes? They&rsquo;ll also do a keyword search where they&rsquo;ll see if your experience is actually applicable to the job at hand.</p>
+          <p>Number six: If that works out, you&rsquo;re going to go to the phone screen. This is typically not with the hiring manager, so it&rsquo;s typically with a recruiter or not the person who would actually manage you in the job. Here, they just want to get to know your story. They want to dig into your relevant experiences, get a sense of what you accomplished, what your working style is. They like to understand, what you be like to work on a team with? And they&rsquo;ll also check for your communication ability.</p>
+          <p>Number seven: Typically, if this works out, you&rsquo;re invited to do some exercises, which is actually completing a little project that simulates what you might be doing in the job. This often lets hiring managers get a sense of how would this person really complete this. That&rsquo;s not always the case, but it&rsquo;s often time included.</p>
+          <p>Number eight: After the exercises, this is when we do final interviews, which is typically with the hiring manager, who your boss would be, who your boss&rsquo;s boss would be. It&rsquo;s a deeper dive into is this person a strong fit within this role? Can they do the job well, but also within this organization? Are they a great team member? Will they fit in with the culture here?</p>
+          <p>Number nine: If that works out, step nine is a reference check. They&rsquo;ll call up the references you gave and typically they&rsquo;re just looking for, can this reference confirm the strengths we think we see? And number two, are there any flags we didn&rsquo;t know about? And if the references check out, which they should - do not actually give references that will say concerning things about you &mdash; you&rsquo;ll get the offer! Woohoo!</p>
           <p>So those are my ten steps. Would love to chat with you more if you have any questions: andrea@bebraven.org. Good luck!</p>
         </div>
       </figcaption>
@@ -118,226 +181,866 @@ crossorigin="anonymous">
   </div>
   <h4>FIND THE RIGHT OPPORTUNITIES FOR YOU</h4>
   <div class="bz-box question">
-    Quick Question:
-    Which of these online job boards have you used or heard of? (Check all that apply) 
-
-    TBD CHECKLIST
-    My university’s career center’s job board 
-    WayUp
-    Looksharp
-    Koru Jobs Finder
-    AfterCollege
-    Jopwell
-    Idealist
-    LinkedIn
-    Internships.com
-    The Muse
-    AngelList
-    Craigslist
-    Handshake
-    Braven’s Opportunities Database 
-    Internships.com 
-
-    TBD DONE
+    <h5 class="box-title">Quick Question</h5>
+    <p>Which of these online job boards have you used or heard of? (Check all that apply)</p>
+    <ul class="checklist dont-mix">
+      <li>
+        <input type="checkbox" data-bz-retained="apply4job-q06-01" />
+        My university&rsquo;s career center&rsquo;s job board</li>
+      <li>
+        <input type="checkbox" data-bz-retained="apply4job-q06-02" />
+        WayUp</li>
+      <li>
+        <input type="checkbox" data-bz-retained="apply4job-q06-03" />
+        Looksharp</li>
+      <li>
+        <input type="checkbox" data-bz-retained="apply4job-q06-04" />
+        Koru Jobs Finder</li>
+      <li>
+        <input type="checkbox" data-bz-retained="apply4job-q06-05" />
+        AfterCollege</li>
+      <li>
+        <input type="checkbox" data-bz-retained="apply4job-q06-06" />
+        Jopwell</li>
+      <li>
+        <input type="checkbox" data-bz-retained="apply4job-q06-07" />
+        Idealist</li>
+      <li>
+        <input type="checkbox" data-bz-retained="apply4job-q06-08" />
+        LinkedIn</li>
+      <li>
+        <input type="checkbox" data-bz-retained="apply4job-q06-09" />
+        Internships.com</li>
+      <li>
+        <input type="checkbox" data-bz-retained="apply4job-q06-10" />
+        The Muse</li>
+      <li>
+        <input type="checkbox" data-bz-retained="apply4job-q06-11" />
+        AngelList</li>
+      <li>
+        <input type="checkbox" data-bz-retained="apply4job-q06-12" />
+        Craigslist</li>
+      <li>
+        <input type="checkbox" data-bz-retained="apply4job-q06-13" />
+        Handshake</li>
+      <li>
+        <input type="checkbox" data-bz-retained="apply4job-q06-14" />
+        Braven&rsquo;s Opportunities Database</li>
+      <li>
+        <input type="checkbox" data-bz-retained="apply4job-q06-15" />
+        Internships.com</li>
+    </ul>
+    <p>
+      <input class="bz-toggle-all-next" type="button" value="Done" data-bz-retained="apply4job-btn-05" />
+    </p>
   </div>
   <div class="bz-box answer">
-    Each of these online job boards can be helpful resources to you as you as you search for relevant opportunities. The databases you didn’t check off are highlighted below so you can learn more about them. 
-    <p>TBD [These would be listed in a table]</p>
-    <p><a target="_blank" href="http://www.sjsu.edu/careercenter/">San Jose State University Career Center (Links to an external site.)</a></p>
-    <p><a target="_blank" href="http://cdc.newark.rutgers.edu/">Rutgers University - Newark Career Development Center (Links to an external site.)</a></p>
-    <p><a target="_blank" href="https://www.nl.edu/studentservices/careerdevelopment/">NLU Career Center</a></p>
-    <p><a target="_blank" href="http://www.wayup.com/refer/braven">WayUp (Links to an external site.)</a>: WayUp believes all students should be able to find the perfect job or internship. Sign up for free, create a virtual profile, get notified if you're a match for jobs in your area, then apply with one click.</p>
-    <p><a target="_blank" href="https://www.looksharp.com/">Looksharp (Links to an external site.)</a>: Looksharp is the largest internship and entry-level jobs marketplace dedicated entirely to students and new grads. Discover 50,000 internships and entry-level jobs and access resources that are designed to help you get hired.</p>
-    <p><a target="_blank" href="http://we.joinkoru.com/more-than-a-resume-college">Koru Job Finder (Links to an external site.)</a>: Koru helps students find the best jobs for you, get job ready, and get hired through their immersive training program. The Koru Job Finder helps you find the best fit jobs, showcase yourself, get introduced, and hear back. </p>
-    <p><a target="_blank" href="https://www.aftercollege.com/">AfterCollege (Links to an external site.)</a>: Insider referrals are the fastest way to get into companies. Showcase yourself with an AfterCollege profile and they'll connect you directly to hiring managers and founders at 500+ great companies in their fast growing network.</p>
-    <p><a target="_blank" href="https://www.jopwell.com/">Jopwell (Links to an external site.)</a>: Jopwell connects Black, Hispanic/Latino, and Native American professionals and students to amazing companies.</p>
-    <p><a target="_blank" href="http://www.idealist.org/">Idealist (Links to an external site.)</a>: Idealist is the go-to site for those interested in finding paid and unpaid internships with non-profit organizations in your local area. </p>
-    <p><a target="_blank" href="https://www.linkedin.com/job/home?trk=nav_responsive_sub_nav_jobs">LinkedIn (Links to an external site.)</a>: You've set up your LinkedIn profile, now look for internship positions posted on LinkedIn by companies. &nbsp;</p>
-    <p><a target="_blank" href="http://www.internships.com/">Internships.com (Links to an external site.)</a>: Search the world's largest internship marketplace by career interest and location.</p>
-    <p><a target="_blank" href="https://www.themuse.com/">The Muse (Links to an external site.)</a>: Browse jobs, learn about companies, and get career advice.</p>
-    <p><a target="_blank" href="https://angel.co/">AngelList (Links to an external site.)</a>: Interested in working or interning at a startup? Browse startup opportunities on this platform. </p>
-    <p><a target="_blank" href="http://craigslist.org/search/jjj">Craigslist (Links to an external site.)</a>: Believe it or not, many companies still advertise open positions on the Craigslist jobs board.</p>
-    Last but not least, check out Braven's bi-weekly opportunities digest that comes straight into your inbox! All opportunities are stored in <a href="https://docs.google.com/spreadsheets/d/1YrxvpODXsz-ljVdMEOEAYzPACgnY6ibSta0gdv31i3I/edit#gid=0">Braven's Opportunities Database (Links to an external site.)</a>. 
-
-    TBD DONE
+    <h5 class="box-title">What to do with this list</h5>
+    Each of these online job boards can be helpful resources to you as you as you search for relevant opportunities.
+    <ul>
+      <li><a href="http://www.sjsu.edu/careercenter/" target="_blank">San Jose State University Career Center</a></li>
+      <li><a href="http://cdc.newark.rutgers.edu/" target="_blank">Rutgers University - Newark Career Development Center</a></li>
+      <li><a href="https://www.nl.edu/studentservices/careerdevelopment/" target="_blank">NLU Career Center</a></li>
+      <li><a href="http://www.wayup.com/refer/braven" target="_blank">WayUp</a>: WayUp believes all students should be able to find the perfect job or internship. Sign up for free, create a virtual profile, get notified if you're a match for jobs in your area, then apply with one click.</li>
+      <li><a href="https://www.looksharp.com/" target="_blank">Looksharp</a>: Looksharp is the largest internship and entry-level jobs marketplace dedicated entirely to students and new grads. Discover 50,000 internships and entry-level jobs and access resources that are designed to help you get hired.</li>
+      <li><a href="http://we.joinkoru.com/more-than-a-resume-college" target="_blank">Koru Job Finder</a>: Koru helps students find the best jobs for you, get job ready, and get hired through their immersive training program. The Koru Job Finder helps you find the best fit jobs, showcase yourself, get introduced, and hear back.</li>
+      <li><a href="https://www.aftercollege.com/" target="_blank">AfterCollege</a>: Insider referrals are the fastest way to get into companies. Showcase yourself with an AfterCollege profile and they'll connect you directly to hiring managers and founders at 500+ great companies in their fast growing network.</li>
+      <li><a href="https://www.jopwell.com/" target="_blank">Jopwell</a>: Jopwell connects Black, Hispanic/Latino, and Native American professionals and students to amazing companies.</li>
+      <li><a href="http://www.idealist.org/" target="_blank">Idealist</a>: Idealist is the go-to site for those interested in finding paid and unpaid internships with non-profit organizations in your local area.</li>
+      <li><a href="https://www.linkedin.com/job/home?trk=nav_responsive_sub_nav_jobs" target="_blank">LinkedIn</a>: You've set up your LinkedIn profile, now look for internship positions posted on LinkedIn by companies. &nbsp;</li>
+      <li><a href="http://www.internships.com/" target="_blank">Internships.com</a>: Search the world's largest internship marketplace by career interest and location.</li>
+      <li><a href="https://www.themuse.com/" target="_blank">The Muse</a>: Browse jobs, learn about companies, and get career advice.</li>
+      <li><a href="https://angel.co/" target="_blank">AngelList</a>: Interested in working or interning at a startup? Browse startup opportunities on this platform.</li>
+      <li><a href="http://craigslist.org/search/jjj" target="_blank">Craigslist</a>: Believe it or not, many companies still advertise open positions on the Craigslist jobs board.</li>
+      <li>Last but not least, check out Braven's bi-weekly opportunities digest that comes straight into your inbox! All opportunities are stored in <a href="https://docs.google.com/spreadsheets/d/1YrxvpODXsz-ljVdMEOEAYzPACgnY6ibSta0gdv31i3I/edit#gid=0">Braven's Opportunities Database</a></li>
+    </ul>
+    <p>
+      <input class="bz-toggle-all-next" type="button" value="Done" data-bz-retained="apply4job-btn-06" />
+    </p>
   </div>
-  <p>Remember, just applying to an opportunity you found on one of these sites isn’t enough to get you an interview. However, online databases are great for searching for relevant job descriptions and determining if you are a good fit for the position and if they are a good fit for you.</p>
-  <div class="question">
-  <h5 class="box-title">Quick Question:</h5>
+  <p>Remember, just applying to an opportunity you found on one of these sites isn&rsquo;t enough to get you an interview. However, online databases are great for searching for relevant job descriptions and determining if you are a good fit for the position and if they are a good fit for you.</p>
+  <div class="bz-box question">
+    <h5 class="box-title">Quick Question:</h5>
     <p>From looking at a job posting, how will you know if an opportunity is a good fit for you? (Check all that apply)</p>
     <ul class="checklist">
-      <li class="correct">It’s entry-level </li>
-      <li class="correct">It offers training and professional development opportunities </li>
-      <li class="correct">It’s a paid opportunity </li>
-      <li class="correct">I have 5 out of the 8 skills it lists as required </li>
-      <li class="correct">It’s in the career field I want to go into </li>
-      <li class="correct">It will help you develop transferrable hard and soft skills (i.e. Excel, communication) </li>
-      <li class="correct">It allows you to learn from and collaborate with a team </li>
-      <li class="incorrect">It requires you to work on your own 100% of the time </li>
-      <li class="incorrect">I have 2 out of the 8 skills it lists as required</li>
-      <li class="incorrect">It requires 5 years of prior work experience in the field </li>
-      <li class="incorrect">It’s a an unpaid summer internship</li>
+      <li class="correct">
+        <input type="checkbox" data-bz-retained="apply4job-q-08-1" />
+        It&rsquo;s entry-level</li>
+      <li class="correct">
+        <input type="checkbox" data-bz-retained="apply4job-q-08-2" />
+        It offers training and professional development opportunities</li>
+      <li class="correct">
+        <input type="checkbox" data-bz-retained="apply4job-q-08-3" />
+        It&rsquo;s a paid opportunity</li>
+      <li class="correct">
+        <input type="checkbox" data-bz-retained="apply4job-q-08-4" />
+        I have 5 out of the 8 skills it lists as required</li>
+      <li class="correct">
+        <input type="checkbox" data-bz-retained="apply4job-q-08-5" />
+        It&rsquo;s in the career field I want to go into</li>
+      <li class="correct">
+        <input type="checkbox" data-bz-retained="apply4job-q-08-6" />
+        It will help you develop transferrable hard and soft skills (i.e. Excel, communication)</li>
+      <li class="correct">
+        <input type="checkbox" data-bz-retained="apply4job-q-08-7" />
+        It allows you to learn from and collaborate with a team</li>
+      <li class="incorrect">
+        <input type="checkbox" data-bz-retained="apply4job-q-08-8" />
+        It requires you to work on your own 100% of the time</li>
+      <li class="incorrect">
+        <input type="checkbox" data-bz-retained="apply4job-q-08-9" />
+        I have 2 out of the 8 skills it lists as required</li>
+      <li class="incorrect">
+        <input type="checkbox" data-bz-retained="apply4job-q-08-a" />
+        It requires 5 years of prior work experience in the field</li>
+      <li class="incorrect">
+        <input type="checkbox" data-bz-retained="apply4job-q-08-b" />
+        It&rsquo;s a an unpaid summer internship</li>
     </ul>
-    TBD DONE
+    <p>
+      <input class="bz-toggle-all-next for-checklist" type="button" value="Done" data-bz-retained="apply4job-btn-07" />
+    </p>
   </div>
   <div class="bz-box answer">
     <h5 class="box-title">Answer</h5>
-    <p>You’ll know an opportunity is right for you if:</p>
+    <p>You&rsquo;ll know an opportunity is right for you if:</p>
     <ol>
-      <li>It’s career-accelerating</li>
+      <li>It&rsquo;s career-accelerating</li>
       <li>You believe you can do the job</li>
     </ol>
+    <p>Let's look at what these two criteria mean:</p>
+  </div>
+  <h5>A Career-accelerating job</h5>
+  <div class="bz-box action">
+    <p>Braven worked with consultants to create this Career-Accelerating Scorecard. When you find an opportunity online you&rsquo;re excited about, put it to the test to determine whether it will actually help you attain your career goals. A score above 20 is considered career-accelerating!</p>
+    <p>&nbsp;</p>
+    <p><a class=" instructure_file_link" title="Download the scorecard PDF here" href="/courses/1/files/11416/download?wrap=1" target="_blank" data-api-endpoint="https://portal.bebraven.org/api/v1/courses/1/files/11416" data-api-returntype="File"><img style="display: block; margin-left: auto; margin-right: auto;" src="/courses/1/files/11545/preview" alt="Download the scorecard" width="336" height="261" data-api-endpoint="https://portal.bebraven.org/api/v1/courses/1/files/11545" data-api-returntype="File" /></a></p>
+  </div>
+  <h5>A job you believe you can do</h5>
+  <div class="bz-box reflection">
+    <h6 class="box-title">Think Back</h6>
+    <p>Think back to an opportunity you decided not to apply for. Why didn&rsquo;t you apply?</p>
+    <ul class="checklist">
+      <li>
+        <input type="checkbox" data-bz-retained="apply4job-q-09-1" />
+        I didn&rsquo;t think they would hire me since I didn&rsquo;t meet the qualifications and I didn&rsquo;t want to waste my time and energy.</li>
+      <li>
+        <input type="checkbox" data-bz-retained="apply4job-q-09-2" />
+        I was being respectful of the time and preferences of the person reviewing applications - they had already made clear who they were looking for.</li>
+      <li>
+        <input type="checkbox" data-bz-retained="apply4job-q-09-3" />
+        I didn&rsquo;t think they would hire me since I didn&rsquo;t meet the qualifications and I didn&rsquo;t want to put myself out there if I was likely to fail.</li>
+      <li>
+        <input type="checkbox" data-bz-retained="apply4job-q-09-4" />
+        I didn&rsquo;t think I could do the job well.</li>
+      <li>
+        <input type="checkbox" data-bz-retained="apply4job-q-09-5" />
+        I was following the guidelines about who should apply.</li>
+    </ul>
+    <p>
+      <input class="bz-toggle-all-next" type="button" value="Done" data-bz-retained="apply4job-btn-08" />
+    </p>
+  </div>
+  <div class="bz-box answer">
+    <h6 class="box-title">You're not alone</h6>
+    <p>The Harvard Business Review posed the same question to a thousand people<a class="ref-source" href="https://hbr.org/2014/08/why-women-dont-apply-for-jobs-unless-theyre-100-qualified" target="_blank">1</a>, and this is how they answered:</p>
+    <p><img class="full" src="/courses/1/files/11546/preview" alt="Chart from the linked HBR article showing the five most common reasons people didn't apply." data-api-endpoint="https://portal.bebraven.org/api/v1/courses/1/files/11546" data-api-returntype="File" /></p>
+    <p>As you can see, the majority of people chose not to apply because they felt they didn&rsquo;t meet the qualifications. But when hiring managers create a job description, <em>it is more of a wishlist</em> than a list of requirements. They&rsquo;re not necessarily expecting they&rsquo;ll find a candidate who meets every single qualification they list. Take it from this career coach:</p>
+    <blockquote>
+      <p>&ldquo;The requirements listed in job descriptions are guidelines, not hard and fast rules. You don&rsquo;t have to satisfy every requirement or meet every qualification listed.</p>
+      <p>If your skills are transferable and you are in the ballpark with the number of years of experience the company&rsquo;s looking for, apply. Applying gives you the opportunity to be considered.&rdquo;</p>
+      <p class="quote-source">Avery Blank</p>
+    </blockquote>
+  </div>
+  <blockquote>If the role excites you and you can make a case for why you should get the position, apply!</blockquote>
+  <h3>HOW TO DEVELOP A STAND-OUT RESUME</h3>
+  <div class="bz-box question">
+    <h5 class="box-title">Quick Question</h5>
+    <p>On average, how long do recruiters spend reviewing the resume of each applicant?</p>
+    <ul class="radio-list dont-mix">
+      <li class="incorrect">
+        <input name="applying-q10-radio" type="radio" value="12m" data-bz-retained="apply4job-q10-radio" />
+        12 minutes</li>
+      <li class="incorrect">
+        <input name="applying-q10-radio" type="radio" value="3m" data-bz-retained="apply4job-q10-radio" />
+        3 minutes</li>
+      <li class="incorrect">
+        <input name="applying-q10-radio" type="radio" value="60s" data-bz-retained="apply4job-q10-radio" />
+        60 seconds</li>
+      <li class="correct">
+        <input name="applying-q10-radio" type="radio" value="6s" data-bz-retained="apply4job-q10-radio" />
+        6 seconds</li>
+    </ul>
+    <p>
+      <input class="bz-toggle-all-next for-radio-list" type="button" value="Done" data-bz-retained="apply4job-btn-09" />
+    </p>
+  </div>
+  <div class="bz-box answer">
+    <h4 class="box-title">Answer</h4>
+    <p><strong>6 seconds.</strong> Let that sink in.</p>
+    <p>One of the reasons the average is so short is that many resumes are rejected after a single glance, usually because they are hard to read.</p>
+    <p>Once you get past the first impression filter, the story you tell through your resume's content will really make or break whether your application survives the deep dive.</p>
+  </div>
+  <h4>BUILDING BLOCKS OF A GOOD RESUME</h4>
+  <div class="bz-box question">
+    <h5 class="box-title">Quick Question</h5>
+    <p>Here are the sections of a resume. Which order should you list them on your resume? Drag and drop.</p>
+    <table class="sort-to-match">
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>Education</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>Experience</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>Leadership and Activities</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>Honors</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>Skills &amp; Interests</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      <input class="bz-toggle-all-next for-match" type="button" value="Done" data-bz-retained="apply4job-btn-10" />
+    </p>
+  </div>
+  <div class="bz-box answer">
+    <h5 class="box-title">ANSWER</h5>
+    <p>Because you&rsquo;re in college, you always want to start with your education experience.</p>
+    <p>Once you get further in your career, you can move your education section to the bottom and start with your work experience, since that will become more relevant than your college years.</p>
+  </div>
+  <div class="bz-box tip">
+    <h5 class="box-title">Does one size fit all?</h5>
+    <p>Engineering, science, and research applicants often include specialized sections to showcase their skills and academic experience <em>before</em> work experience, such as Technical Skills, Projects, Relevant Coursework, or Research.</p>
+    <p>Check out engineering exemplar resumes in the <a href="/courses/1/pages/resume-and-cover-letter-bank" target="_blank" data-api-endpoint="https://portal.bebraven.org/api/v1/courses/1/pages/resume-and-cover-letter-bank" data-api-returntype="Page">Braven Resume and Cover Letter Bank</a> to get a sense of what to include in your resume.</p>
+  </div>
+  <div class="bz-box read">
+    <h5 class="box-title">Check out this sample</h5>
+    <p>Take a look at the following resume, and try to spot what's included in each section.</p>
+    <div class="bz-example">
+      <div class="bz-resume-box">
+        <p class="resume-title">Joe Anonymous</p>
+        <p class="resume-contact-info">JoeAnonymous@gmail.com | ( 202 ) &nbsp;555 - 1234 | Washington D. C.</p>
+        <p>&nbsp;</p>
+        <table>
+          <tbody>
+            <tr>
+              <td class="resume-section" colspan="2">EDUCATION</td>
+            </tr>
+            <tr>
+              <td colspan="2"><p class="resume-where">The George Washington University &mdash; Elliott School of International Affairs</p>
+                <p>Major: International Affairs, GPA 3.5, Minor: Communications, Anticipated Graduation: May 2009<br />
+                  Phi Beta Kappa Honors Society<br />
+                  Relevant Coursework: Communications in Crisis Moments, Global Social Media Strategies, Corporate Branding</p></td>
+            </tr>
+            <tr>
+              <td class="resume-section" colspan="2">EXPERIENCE</td>
+            </tr>
+            <tr>
+              <td><p class="resume-where">Levick Strategic Communications (Washington, DC)</p></td>
+              <td><p class="resume-when">September 2007-December 2007</p></td>
+            </tr>
+            <tr>
+              <td colspan="2"><ul>
+                  <li>Pitched stories and interview opportunities to reporters and trade publications</li>
+                  <li>Monitored news and media developments for potential client commentary opportunities</li>
+                  <li>Conducted background research for the creation of public relations plans</li>
+                  <li>Assisted in press coverage management of client events</li>
+                  <li>Contacted and communicated with reporters at the New York Times, Washington Post, and the Associated Press</li>
+                  <li>Used Internet tools such as Nexis, Cision Media Source, Factiva, and Google News to research reporter information and media trends</li>
+                </ul></td>
+            </tr>
+            <tr>
+              <td><p class="resume-where">Millennium Challenge Corporation (Washington, DC)</p></td>
+              <td><p class="resume-when">June 2007-September 2007</p></td>
+            </tr>
+            <tr>
+              <td colspan="2"><p class="resume-role">Department of Congressional and Public Affairs</p>
+                <ul>
+                  <li>Provided extensive research for the testimonies of the Deputy CEO in front of the House subcommittees of <em>Africa and Global Health</em> and <em>Asia, the Pacific, and the Global Environment</em></li>
+                  <li>Attended and drafted summaries of relevant congressional hearings</li>
+                  <li>Developed daily press clippings for entire agency</li>
+                  <li>Assisted in the organization of public outreach events and compact signings with Mozambique and Lesotho</li>
+                  <li>Developed Press Kits for public outreach events</li>
+                </ul></td>
+            </tr>
+            <tr>
+              <td class="resume-section" colspan="2">LEADERSHIP &amp; ACTIVITIES</td>
+            </tr>
+            <tr>
+              <td><p class="resume-where">Pi Kappa Alpha Fraternity (Washington, DC)</p></td>
+              <td><p class="resume-when">November 2007-Present</p></td>
+            </tr>
+            <tr>
+              <td colspan="2"><p class="resume-role">President</p>
+                <ul>
+                  <li>Chief Executive Officer of internationally recognized, award winning 100+ member organization</li>
+                  <li>Manage and prioritize $88,000 annual budget</li>
+                  <li>Formulate and implement strategic operational and public relations plans</li>
+                  <li>Lead and oversee bi-weekly chapter and executive board meetings</li>
+                  <li>Act as chief liaison to administration officials</li>
+                  <li>Responsible for all official communication with international headquarters</li>
+                  <li>Attend and participate in bi-annual national leadership conventions for Fraternity Executives</li>
+                </ul></td>
+            </tr>
+            <tr>
+              <td><p class="resume-where">Community Building Community (Washington, DC)</p></td>
+              <td><p class="resume-when">March 2008-September 2008</p></td>
+            </tr>
+            <tr>
+              <td colspan="2"><p class="resume-role">Group Leader</p>
+                <ul>
+                  <li>Organize week-long community service program for 10-12 incoming students</li>
+                  <li>Strengthen peer leadership skills through university administered trainings</li>
+                  <li>Coordinate and communicate with Washington D.C. philanthropic contacts</li>
+                </ul></td>
+            </tr>
+            <tr>
+              <td><p class="resume-where">GWU Men&rsquo;s Varsity Water Polo (Washington, DC)</p></td>
+              <td><p class="resume-when">August 2005-April 2007</p></td>
+            </tr>
+            <tr>
+              <td colspan="2"><ul>
+                  <li>Represented George Washington University in NCAA competitions</li>
+                  <li>Participated in year-round practices and constant travel on weekends</li>
+                  <li>Participated in intensive two-week summer training program logging 100+ hours</li>
+                </ul></td>
+            </tr>
+            <tr>
+              <td class="resume-section" colspan="2">INTERESTS, SKILLS, &amp; HONORS</td>
+            </tr>
+            <tr>
+              <td>Omicron Delta Kappa Leadership Fraternity</td>
+              <td>April 2008</td>
+            </tr>
+            <tr>
+              <td>Southern States Communication Association Honors Conference</td>
+              <td>March 2007</td>
+            </tr>
+            <tr>
+              <td>George Washington University Dean&rsquo;s List</td>
+              <td>February 2006</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
-    <h5>It’s career-accelerating</h5>
-    <div class="bz-box action">
-      <p>Braven worked with consultants to create this Career-Accelerating Scorecard. When you find an opportunity online you’re excited about, put it to the test to determine whether it will actually help you attain your career goals. A score above 20 is considered career-accelerating!</p>
-      TBD SCORECARD
+    <p>&nbsp;</p>
+    <p>Did Joe include everything he's supposed to in each section? Will you know what to include when you write your resume? <a  class="" title="" href="/courses/1/pages/resume-writing-checklist"  data-api-endpoint="https://portal.bebraven.org/api/v1/courses/1/pages/resume-writing-checklist" data-api-returntype="Page">Check out this useful Resume Writing Checklist</a> and keep it handy (it's a accessible through <a href="/courses/1/pages/braven-resources" target="_blank" data-api-endpoint="https://portal.bebraven.org/api/v1/courses/1/pages/braven-resources" data-api-returntype="Page">Braven Resources</a>).</p>
+    <p>
+      <input class="bz-toggle-all-next" type="button" value="Done" data-bz-retained="apply4job-btn-14z" />
+    </p>
+  </div>
+  <div class="bz-box question">
+    <h5 class="box-title">Quick Question</h5>
+    <p>Looking at this resume above, what should you keep in mind when formatting a resume? (check all that apply)</p>
+    <ul class="checklist">
+      <li class="correct">
+        <input type="checkbox" data-bz-retained="apply4job-formatting-01" />
+        Fill one page</li>
+      <li class="correct">
+        <input type="checkbox" data-bz-retained="apply4job-formatting-02" />
+        Easy to read and spot information</li>
+      <li class="correct">
+        <input type="checkbox" data-bz-retained="apply4job-formatting-03" />
+        Consistent formatting</li>
+      <li class="correct">
+        <input type="checkbox" data-bz-retained="apply4job-formatting-04" />
+        Clear section headings</li>
+      <li class="correct">
+        <input type="checkbox" data-bz-retained="apply4job-formatting-05" />
+        Header that includes name, email, phone number, and address</li>
+      <li class="correct">
+        <input type="checkbox" data-bz-retained="apply4job-formatting-06" />
+        No spelling or grammatical errors</li>
+      <li class="incorrect">
+        <input type="checkbox" data-bz-retained="apply4job-formatting-07" />
+        Two pages at most</li>
+      <li class="incorrect">
+        <input type="checkbox" data-bz-retained="apply4job-formatting-08" />
+        Lots of white space</li>
+      <li class="incorrect">
+        <input type="checkbox" data-bz-retained="apply4job-formatting-09" />
+        All the same font size</li>
+      <li class="incorrect">
+        <input type="checkbox" data-bz-retained="apply4job-formatting-10" />
+        All bolded</li>
+    </ul>
+    <p class="tbd">[added to Fellows&rsquo; takeaway checklist]</p>
+    <p>
+      <input class="bz-toggle-all-next for-checklist" type="button" value="Done" data-bz-retained="apply4job-btn-15" />
+    </p>
+  </div>
+  <div class="bz-box flush">
+    <h5 class="box-title">Let's go deeper</h5>
+    <p>
+      <iframe src="https://join.bebraven.org/assignments/resume?task=3" width="652" height="869"></iframe>
+    </p>
+    <p>
+      <iframe src="https://join.bebraven.org/assignments/resume?task=6" width="652" height="1855"></iframe>
+    </p>
+    <p>
+      <iframe src="https://join.bebraven.org/assignments/resume?task=7" width="652" height="3172"></iframe>
+    </p>
+    <p>
+      <iframe src="https://join.bebraven.org/assignments/resume?task=8" width="652" height="2200"></iframe>
+    </p>
+    <p>
+      <iframe src="https://join.bebraven.org/assignments/resume?task=9" width="652" height="1656"></iframe>
+    </p>
+  </div>
+  <div class="bz-box question">
+    <h5 class="box-title">Quick question</h5>
+    <p>So, who has the strongest resume of the bunch?</p>
+    <ul class="radio-list">
+      <li class="incorrect">
+        <input name="apply-resume-strongest" type="radio" value="Louis" data-bz-retained="apply4job-resume-strongest" />
+        Louis</li>
+      <li class="incorrect">
+        <input name="apply-resume-strongest" type="radio" value="Eric" data-bz-retained="apply4job-resume-strongest" />
+        Eric</li>
+      <li class="correct">
+        <input name="apply-resume-strongest" type="radio" value="Amanda" data-bz-retained="apply4job-resume-strongest" />
+        Amanda</li>
+    </ul>
+    <p>
+      <input class="bz-toggle-all-next for-radio-list" type="button" value="Done" data-bz-retained="apply4job-btn-40" />
+    </p>
+  </div>
+  <div class="bz-box answer">
+    <h5 class="box-title">Answer</h5>
+    <p>That&rsquo;s right, based on Amanda&rsquo;s resume, she&rsquo;s the most likely to receive an invitation to interview.</p>
+  </div>
+  <div class="bz-box question">
+    <h5 class="box-title">Quick question</h5>
+    <p>Jerrod is writing bullet points in his resume under his experience of serving as the Online Sports Editor for his college newspaper. Which of these bullets is the strongest?</p>
+    <ul class="radio-list instant-feedback">
+      <li class="correct">
+        <input name="apply-bullets" type="radio" value="option1" data-bz-retained="apply4job-bullets" />
+        Increased the online views of sports news articles by 50%
+        <p class="feedback inline">Yes! He uses an action verb and shows the quantifiable outcome of his efforts (50%). Sounds impressive!</p>
+      </li>
+      <li class="incorrect">
+        <input name="apply-bullets" type="radio" value="option2" data-bz-retained="apply4job-bullets" />
+        Was the Online Sports Editor for two years
+        <p class="feedback inline">He doesn&rsquo;t start with an action verb. Also, he can include the dates of his involvement above where he begins writing bullets of his accomplishments.</p>
+      </li>
+      <li class="incorrect">
+        <input name="apply-bullets" type="radio" value="option3" data-bz-retained="apply4job-bullets" />
+        Reading articles that sports contributors send me
+        <p class="feedback inline">Instead of &ldquo;Reading,&rdquo; he should use the present or past tense &ldquo;Read.&rdquo; He shouldn&rsquo;t use the first person, &ldquo;me,&rdquo; and this bullet could be stronger if he included a quantitative achievement such as &ldquo;Read and edited ten contributors&rsquo; articles a week.&rdquo;</p>
+      </li>
+      <li class="incorrect">
+        <input name="apply-bullets" type="radio" value="option4" data-bz-retained="apply4job-bullets" />
+        Coordinated the publication of the online sports section
+        <p class="feedback inline">This point could be more specific so we really understand his achievements: Who did he coordinate? Did he manage anyone? How often did he do this?</p>
+      </li>
+    </ul>
+    <p>
+      <input class="bz-toggle-all-next for-radio-list" type="button" value="Done" data-bz-retained="apply4job-btn-41" />
+    </p>
+  </div>
+  <h4>Your Turn</h4>
+  <div class="bz-box action">
+    <h5 class="box-title">Take a real step now</h5>
+    <p>You&rsquo;re now ready to create your own resume! Do this now since you need to bring your draft of your resume to your upcoming <strong>Learning Lab</strong> to receive feedback from your cohort. It&rsquo;s also a necessary component of your <a href="/courses/1/assignments/705" target="_blank" data-api-endpoint="https://portal.bebraven.org/api/v1/courses/1/assignments/705" data-api-returntype="Assignment">Hustle to Career Project</a>.</p>
+    <p>Begin by jotting down your accomplishments &mdash; even if it's just a bullet list. You don't have to start from scratch. We recommend that you start off using these templates below.</p>
+    <p>Remember, the closer your resume is to a finished product the more helpful the feedback you receive will be.</p>
+  </div>
+  <div class="bz-box key">
+    <h5 class="box-title">Resources to get you started</h5>
+    <h6>Top Braven Resources</h6>
+    <ol class="dont-mix tbd">
+      <li><a class="tbd">Resume Template</a> from Teach for America<a class="tbd ref-source">2</a></li>
+      <li><a class="tbd">Braven Resume &amp; Cover Letter Bank</a></li>
+      <li><a class="tbd">Braven Resources on written communication</a>&nbsp;to help brush up on your grammar and writing skills</li>
+    </ol>
+    <br />
+    <p>The following websites can help you create a resume, but be sure to include all the necessary parts of your resume, regardless of what the service suggests:</p>
+    <ul>
+      <li><a href="http://standardresume.co/" target="_blank" rel="noreferrer">standardresume.co</a></li>
+      <li><a href="http://ineedaresu.me/" target="_blank" rel="noreferrer">ineedaresu.me</a></li>
+      <li><a href="http://creddle.io/" target="_blank" rel="noreferrer">creddle.io</a></li>
+      <li><a href="http://cakeresume.com/" target="_blank" rel="noreferrer">cakeresume.com</a></li>
+      <li><a href="http://represent.io/" target="_blank" rel="noreferrer">represent.io</a></li>
+      <li><a href="http://www.visualcv.com/resume-samples" target="_blank" rel="noreferrer">visualcv.com/resume-samples</a></li>
+    </ul>
+    <p>
+      <input class="bz-toggle-all-next" type="button" value="Done" data-bz-retained="apply4job-btn-42" />
+    </p>
+  </div>
+  <div class="bz-box tip">
+    <h5 class="box-title">Should you include Braven on your resume?</h5>
+    <p>Highlighting your experience in The Braven Accelerator can help set your resume apart from the rest, and show potential employers the skills you built, the experiences you&rsquo;ve been exposed to, and your commitment to self-development. Here's some guidance:</p>
+    <ul>
+      <li>List Braven as "The Braven Accelerator"</li>
+      <li>Your position is "Fellow"</li>
+      <li>Include a few bullets that describe the skills you&rsquo;ve gained and the accomplishments you&rsquo;ve achieved thus far. Some ideas are:
+        <ul>
+          <li>Selected as a member of Braven based on leadership ability and potential.</li>
+          <li>Developed skills critical to success in the 21st century workforce such as operating and managing, effective communications, and problem solving.</li>
+          <li>Explored my leadership strengths and personal passions and grew into a strong worker and member of a team.</li>
+        </ul>
+      </li>
+    </ul>
+    <p>
+      <input class="bz-toggle-all-next" type="button" value="Done" data-bz-retained="apply4job-btn-43" />
+    </p>
+  </div>
+  <div class="bz-box action">
+    <h5 class="box-title">Get help from a robot</h5>
+    <p>Many companies use an Applicant Tracking System (ATS) to weed out <strong>up to half the resumes</strong> before a real human even looks at them. Will your resume pass these robots' test?</p>
+    <p>Go to <a href="https://www.jobscan.co" target="_blank">jobscan.co</a> and upload your resume and the job description of an opportunity you want to apply to. How&rsquo;d you do? What do you need to change in your resume to get past the tracking system?</p>
+    <textarea data-bz-retained="apply4job-jobscan-feedback"></textarea>
+    <p>
+      <input class="bz-toggle-all-next" type="button" value="Done" data-bz-retained="apply4job-btn-45" />
+    </p>
+  </div>
+  <h4>REVISING YOUR RESUME</h4>
+  <p>Your resume is a living document. Not only will you keep improving it over time, but you will adapt it for each opportunity you apply to, highlighting different skills and experiences that fit the job description.</p>
+  <div class="bz-box video">
+    <h5 class="box-title">Watch this</h5>
+    <figure>
+      <iframe src="https://player.vimeo.com/video/179479383" width="300" height="150" allowfullscreen="allowfullscreen"></iframe>
+      <figcaption>Carlos, a former Braven Fellow, explains here how revising his resume helped him secure a career-accelerating summer internship<span class="media-duration">2 minutes</span>
+        <div class="transcript">
+          <p>Hello everyone, my name is Carlos. I am a Braven alum interning at Dropbox. So in this video, I&rsquo;m going to talk about how important it is to get your resume revised.</p>
+          <p>So a little background about my resume. Before Braven, I thought I had a very good resume. I thought my resume was concise. I thought it clearly explained my skills, and it gave the hiring manager or recruiter a good idea of who I was. But I came to find out once I met my Braven Leadership Coach that my resume was not as good as I thought it was. She explained to me how important it is to have your resume revised constantly. It was a very slow and tedious, but a very rewarding process. My resume got revised 6-10 times.</p>
+          <p>The thing about a resume is that it can never be totally perfect, but there are clear steps to take in order to have a resume that is concise and clear and it allows you to put the best foot forward. Because let&rsquo;s be honest: every time we apply to something we always want to get an email back with good news regarding a phone screening or an on-site interview. It allows us to move along in the process. The first step is to have a good resume. It was very hard for me to understand that. But my leadership coach allowed me to get a clear understanding that not every resume is going to be interpreted the same way, but there are steps you can take in order to get a resume that will get understood the way you want it to consistently. That&rsquo;s the thing about a resume: it needs to be consistently understood by everyone, whether it&rsquo;s a manger or a recruiter.</p>
+        </div>
+      </figcaption>
+    </figure>
+    <p>
+      <input class="bz-toggle-all-next" type="button" value="Done" data-bz-retained="apply4job-btn-47" />
+    </p>
+  </div>
+  <div class="bz-box question">
+    <h5 class="box-title">Quick Question</h5>
+    <p>Who can help you revise and proofread your resume? (check all that apply)</p>
+    <ul class="checklist">
+      <li class="correct">
+        <input type="checkbox" data-bz-retained="apply4job-q50-1" />
+        Your Leadership Coach</li>
+      <li class="correct">
+        <input type="checkbox" data-bz-retained="apply4job-q50-2" />
+        Other Braven Fellows</li>
+      <li class="correct">
+        <input type="checkbox" data-bz-retained="apply4job-q50-3" />
+        Your TA</li>
+      <li class="correct">
+        <input type="checkbox" data-bz-retained="apply4job-q50-4" />
+        Your university&rsquo;s career services office</li>
+      <li class="correct">
+        <input type="checkbox" data-bz-retained="apply4job-q50-5" />
+        A mentor</li>
+      <li class="correct">
+        <input type="checkbox" data-bz-retained="apply4job-q50-6" />
+        Your university&rsquo;s writing center</li>
+      <li class="correct">
+        <input type="checkbox" data-bz-retained="apply4job-q50-7" />
+        A family member</li>
+      <li class="correct">
+        <input type="checkbox" data-bz-retained="apply4job-q50-8" />
+        A friend</li>
+      <li class="correct">
+        <input type="checkbox" data-bz-retained="apply4job-q50-9" />
+        A professor</li>
+    </ul>
+    <p>
+      <input class="bz-optional-magic-field" type="checkbox" data-bz-retained="apply4job-q50-other" />
+      <strong>Other:</strong><br />
+      <textarea class="checklist-other bz-optional-magic-field" data-bz-retained="apply4job-q50-other-text"></textarea>
+    </p>
+    <p>
+      <input class="bz-toggle-all-next for-checklist" type="button" value="Done" data-bz-retained="apply4job-btn-50" />
+    </p>
+  </div>
+  <div class="bz-box answer">
+    <h5 class="box-title">You have what it takes</h5>
+    <p>Looks like you have a network of supporters who can help ensure you&rsquo;re putting your best foot forward with your resume. Take advantage!</p>
+  </div>
+  <h3>HOW TO MASTER THE ART OF THE COVER LETTER</h3>
+  <div class="bz-box question">
+    <h4 class="box-title">Quick Question</h4>
+    <p>Why does your job application need a cover letter in addition to the resume?</p>
+    <ul class="radio-list">
+      <li class="correct">
+        <input name="apply4job-q51-radio" type="radio" value="option1" data-bz-retained="apply4job-q51-radio" />
+        To tell a story that your resume can&rsquo;t that would convince the hiring manager that you are perfect for the role</li>
+      <li class="incorrect">
+        <input name="apply4job-q51-radio" type="radio" value="option2" data-bz-retained="apply4job-q51-radio" />
+        To inform the hiring manager of who is sending the resume</li>
+      <li class="incorrect">
+        <input name="apply4job-q51-radio" type="radio" value="option3" data-bz-retained="apply4job-q51-radio" />
+        To repeat what you said in your resume</li>
+      <li class="incorrect">
+        <input name="apply4job-q51-radio" type="radio" value="option4" data-bz-retained="apply4job-q51-radio" />
+        To list all the experience that didn&rsquo;t fit in your resume</li>
+    </ul>
+    <p>
+      <input class="bz-toggle-all-next for-radio-list" type="button" value="Done" data-bz-retained="apply4job-btn-51" />
+    </p>
+  </div>
+  <div class="bz-box answer">
+    <h5 class="box-title">Where Cover Letters Make a Difference</h5>
+    <p>The beauty of a cover letter is that you can craft a compelling story of who you are that the restrictive format of a resume just doesn&rsquo;t allow.</p>
+    <p>You can highlight personality traits, strengths, soft skills (e.g. eagerness to learn new things, ability to work independently), why you&rsquo;re insanely likeable, why you&rsquo;re going to fit in, why you&rsquo;re going to perform incredibly well, and why your experience and skills are relevant to the role you&rsquo;re applying for.</p>
+  </div>
+  <div class="bz-box question">
+    <h4 class="box-title">Quick Question</h4>
+    <p>What percentage of candidates who submit a cover letter with their application tailor it to the job they&rsquo;re applying for (not a generic cover letter)?</p>
+    <p>
+      <input class="two-thirds bz-optional-magic-field" max="100" min="0" step="1" type="range" data-bz-retained="apply4job-q52" data-bz-range-answer="10" />
+    </p>
+    <div class="display-value"><span class="current-value">&nbsp;</span>%</div>
+    <p>
+      <input class="for-range bz-toggle-all-next" type="button" value="Done" data-bz-retained="apply4job-btn-52" />
+    </p>
+  </div>
+  <div class="bz-box answer">
+    <h4 class="box-title">Answer</h4>
+    <p>Only 10% take the time to customize their cover letter, missing out on an important opportunity to persuade a potential employer.</p>
+    <p>Don't miss out! Be in that 10% by writing a cover letter for the specific role you want.</p>
+  </div>
+  <h4>WHAT TO INCLUDE IN YOUR COVER LETTER</h4>
+  <div class="bz-box question">
+    <h5 class="box-title">Quick Question</h5>
+    <p>Take a look at this exemplar cover letter.</p>
+    <div class="bz-example">
+      <p>1111 East 1st Street<br />
+        Philadelphia, PA 19000</p>
+      <p>May 1, 2011</p>
+      <p>Ms. Jane Jones<br />
+        Non-Profit Organization<br />
+        100 10thStreet<br />
+        Somewhere, FL 34000</p>
+      <p>Dear Ms. Jones:</p>
+      <p>I am writing to express my interest in Non-Profit Organization&rsquo;s Special Outreach Program. As a senior at the University of Pennsylvania studying history, I was drawn to the Special Outreach Program for its unique approach to social change and by the opportunity to work directly witha non-profit organization while acquiring a better understanding of effective leadership in a socially responsible career.</p>
+      <p>In both my academic endeavors as well as my extracurricular activities I have learned to tackle complex problems and reach sound solutions both as an individual decision maker and as a team member. As the head manager of a student-run enterprise at Penn, I have honed my ability to assess a situation or conflict as it arises, decide on a course of action, and evaluate its success in the long term. Whether it is finding opportunities for growth through advertising campaigns or streamlining an inefficient system of assistant managerial tasks, I have pushed myself to find new ideas to manage the daily challenges of overseeing a business. Likewise, my experience on the democratically-run Executive Board of the &ldquo;Talking About It&rdquo; series has taught me an invaluable lesson in teamwork. With no formal hierarchy on the Board, I have learned to impart my own suggestions while taking into consideration the advice and counsel of my peers.</p>
+      <p>My own experience in the nonprofit sector has provided me with an understanding ofthe specific challenges the field presents, such as funding, strategy implementation, and longevity. Through my internship at Changing Lives for Good, a small nonprofit in Washington DC, I was not only able to address some of these challenges head-on by researching non-federal grant opportunities and preparing applications, but also was introduced to the process of program development. As someone who has been exposed to some of the challenges nonprofits seek help in solving, I am very excited by the opportunity to take an active role in working to identify root causes of systemic problems and learn new skills to develop positive and lasting change.</p>
+      <p>Ultimately, I see this position as an ideal way to gain a better understanding of the most effective ways of creating sustainable solutions to the critical problems social impact organizations face while improving my own leadership and problem-solving skills. Thank you for taking the time to consider my application. I look forward to hearing from you.</p>
+      <p>Sincerely,</p>
+      <p>Alex DeLarge</p>
     </div>
-    <h5>You believe you can do the job</h5>
-    <div class="bz-box reflection">
-      <h6 class="box-title">Think Back</h6>
-      <p>Think back to an opportunity you decided not to apply for. Why didn’t you apply?</p>
-      TBD CHECKLIST
-      I didn’t think they would hire me since I didn’t meet the qualifications and I didn’t want to waste my time and energy. 
-      I was being respectful of the time and preferences of the person reviewing applications - they had already made clear who they were looking for. 
-      I didn’t think they would hire me since I didn’t meet the qualifications and I didn’t want to put myself out there if I was likely to fail. 
-      I didn’t think I could do the job well. 
-      I was following the guidelines about who should apply.
-      TBD DONE
-    </div>
-    <div class="bz-box answer">
-      <h6 class="box-title">You're not alone</h6>
-      <p>The Harvard Business Review posed the same question to a thousand people, and this is how they answered:</p>
-      TBD INSERT
-      <p><a href="Read more about the discrepancies between how women and men decide to apply to jobs." target="_blank">Source</a></p>
-      <p>As you can see, the majority of people chose not to apply because they didn’t meet the qualifications. But when hiring managers create a job description, it is more of a wishlist than a list of requirements, meaning they’re not expecting they’ll find a candidate who meets every single qualification they list. Take it from this career coach:</p>
-      TBD IMAGE
-      <blockquote>“The requirements listed in job descriptions are guidelines, not hard and fast rules. You don’t have to satisfy every requirement or meet every qualification listed. If your skills are transferable and you are in the ballpark with the number of years of experience the company’s looking for, apply. Applying gives you the opportunity to be considered.” <p class="quote-source">Avery Blank</p></blockquote>
-    </div>
-    <blockquote>If the role excites you and you can make a case for why you should get the position, apply!</blockquote>
-    <h3>DEVELOP A STAND-OUT RESUME</h3>
-    <div class="bz-box question">
-    Quick Question
-    On average, how long do recruiters spend reviewing the resume of each applicant? 
-    12 minutes 
-    3 minutes 
-    60 seconds 
-    6 seconds 
-
-    DONE
-    </div>
-    <div class="bz-box answer">
-      <h4 class="box-title">Answer</h4>
-      <p>6 seconds. That's it.</p>
-      <p>That's almost no time at all. To get your resume past this initial screen, there are some formatting and content conventions you need to follow. Once you get past the first impression, the content of your resume and the story it tells will make or break whether your application survives the deep dive. </p>
-    </div>
-    <h4>BUILDING BLOCKS OF A GOOD RESUME</h4>
-    <div class="bz-box question">
-      TBD Quick Question
-      <p>Here are the sections of a resume. Which order should you list them on your resume? Drag and drop.</p> 
-      TBD SORT TO MATCH
-      Education
-      Experience
-      Leadership and Activities
-      Honors 
-      Skills &amp; Interests 
-
-
-      TBD DONE
-    </div>
-    <div class="bz-box answer">
-      <p>Because you’re in college, you always want to start with your education experience. Once you get further in your career, you can move your education section to the bottom and start with your work experience, since that will become more relevant than your college years.</p>
-    </div>
-
-    <div class="bz-box tip">
-      <h5 class="box-title">Does one size fit all?</h5>
-      <p>Engineering, science, and research applicants often include specialized sections to showcase their skills and academic experience <em>before</em> work experience, such as Technical Skills, Projects, Relevant Coursework, or Research.</p>
-      <p>Check out engineering exemplar resumes later in the module to get a sense of what to include in your resume.</p>
-    </div>
-    <div>
-    <div class="bz-box read">
-      <h5 class="box-title">Check out this sample</h5>
-      <p>Take a look at this resume. Click each section for a checklist of what to include in that part of your resume.</p>
-      <table>
-        TBD JOE ANONYMOUS
-
-        EDUCATION
-        University name 
-        Major and minor (if applicable) 
-        GPA (if 3.0 or higher)
-        Anticipated graduation date
-        Honors society (if applicable)
-        Relevant coursework (that applies directly to the opportunity)
-        High school education (only if you’re a first-year) 
-        EXPERIENCE
-        Internships 
-        Work experience 
-        School projects 
-        Role title 
-        Bulleted action statements anchored by action verbs (e.g. monitored, pitched) 
-        Dates of involvement
-        Location of involvement (city, state)
-        Listed chronologically, with most recent experience at the top 
-        LEADERSHIP &amp; ACTIVITIES
-        Activities and club involvement 
-        Leadership roles 
-        Bulleted action statements anchored by action verbs (e.g. monitored, pitched) 
-        Dates of involvement
-        Location of involvement (city, state)
-        Listed chronologically, with most recent experience at the top 
-        HONORS
-        Awards
-        Dates of awards 
-        INTERESTS &amp; SKILLS
-        Interests: What do you spend your free time doing?
-        Skills (e.g. Conversational Spanish, Excel, HTML)
-        [The comprehensive checklist is something the Fellow takes with them]
-
-      </table>
-      TBD DONE
-    </div>
-    <div class="bz-box question">
-      <h5 class="question">Quick Question</h5>
-      <p>Looking at this resume above, what should you keep in mind when formatting a resume? (check all that apply)</p>
-      
-      <ul class="checklist"><li class="correct"><input type="checkbox" data-bz-retained="apply-formatting-01" />Fill one page </li>
-        <li class="correct"><input type="checkbox" data-bz-retained="apply-formatting-02" />Easy to read and spot information </li>
-        <li class="correct"><input type="checkbox" data-bz-retained="apply-formatting-03" />Consistent formatting </li>
-        <li class="correct"><input type="checkbox" data-bz-retained="apply-formatting-04" />Clear section headings </li>
-        <li class="correct"><input type="checkbox" data-bz-retained="apply-formatting-05" />Header that includes name, email, phone number, and address </li>
-        <li class="correct"><input type="checkbox" data-bz-retained="apply-formatting-06" />No spelling or grammatical errors </li>
-        <li class="incorrect"><input type="checkbox" data-bz-retained="apply-formatting-07" />Two pages at most </li>
-        <li class="incorrect"><input type="checkbox" data-bz-retained="apply-formatting-08" />Lots of white space </li>
-        <li class="incorrect"><input type="checkbox" data-bz-retained="apply-formatting-09" />All the same font size </li>
-        <li class="incorrect"><input type="checkbox" data-bz-retained="apply-formatting-10" />All bolded </li>
-      </ul>
-      
-      [added to Fellows’ takeaway checklist]
-      TBD DONE
-
-    </div>
-    TBD INTERACTIVE RESUME EMBED
-    RESUME DEEP DIVE 
-    [Use some adaptation of interactive resume module parts 3, 5, 6, 7, 8, 9]
-    Quick question
-    So, who has the strongest resume of the bunch? 
-    Louis
-    Eric
-    Amanda
-
-    That’s right, based on Amanda’s resume, she’s the most likely to receive an invitation to interview. 
-    Quick Question
-    Jerrod is writing bullet points in his resume under his experience of serving as the Online Sports Editor for his college newspaper. Which of these bullets is the strongest?
-    Increased the online views of sports news articles by 50% 
-    Yes! He uses an action verb and shows the quantifiable outcome of his efforts (50%). Sounds impressive!  
-    Was the Online Sports Editor for two years 
-    He doesn’t start with an action verb. Also, he can include the dates of his involvement above where he begins writing bullets of his accomplishments. 
-    Reading articles that sports contributors send me 
-    Instead of “Reading,” he should use the present or past tense “Read.” He shouldn’t use the first person, “me,” and this bullet could be stronger if he included a quantitative achievement such as “Read and edited ten contributors’ articles a week.” 
-      Coordinated the publication of the online sports section 
-    This point could be more specific so we really understand his achievements: Who did he coordinate? Did he manage anyone? How often did he do this? 
-
-
+    <p>Now, categorize the following points according to the &ldquo;Do&rsquo;s&rdquo; and &ldquo;Don&rsquo;ts&rdquo; of cover letter writing:</p>
+    <table class="no-zebra instant-feedback multi-radio">
+      <thead>
+        <tr>
+          <th>&nbsp;</th>
+          <th>Do&nbsp;&nbsp;</th>
+          <th>Don't</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Fit on one page (3-5 paragraphs)</td>
+          <td class="correct"><input name="apply4job-q54-01" type="radio" value="do" data-bz-retained="apply4job-q54-01" /></td>
+          <td class="incorrect"><input name="apply4job-q54-01" type="radio" value="dont" data-bz-retained="apply4job-q54-01" /></td>
+        </tr>
+        <tr>
+          <td>Address to &ldquo;To whom it may concern:&rdquo;</td>
+          <td class="incorrect"><input name="apply4job-q54-02" type="radio" value="do" data-bz-retained="apply4job-q54-02" /></td>
+          <td class="correct"><input name="apply4job-q54-02" type="radio" value="dont" data-bz-retained="apply4job-q54-02" /></td>
+        </tr>
+        <tr>
+          <td>Use a professional-looking font at ~12 point size</td>
+          <td class="correct"><input name="apply4job-q54-03" type="radio" value="do" data-bz-retained="apply4job-q54-03" /></td>
+          <td class="incorrect"><input name="apply4job-q54-03" type="radio" value="dont" data-bz-retained="apply4job-q54-03" /></td>
+        </tr>
+        <tr>
+          <td>Include a header with contact information</td>
+          <td class="correct"><input name="apply4job-q54-04" type="radio" value="do" data-bz-retained="apply4job-q54-04" /></td>
+          <td class="incorrect"><input name="apply4job-q54-04" type="radio" value="dont" data-bz-retained="apply4job-q54-04" /></td>
+        </tr>
+        <tr>
+          <td>Include salary requirements</td>
+          <td class="incorrect"><input name="apply4job-q54-05" type="radio" value="do" data-bz-retained="apply4job-q54-05" /></td>
+          <td class="correct"><input name="apply4job-q54-05" type="radio" value="dont" data-bz-retained="apply4job-q54-05" /></td>
+        </tr>
+        <tr>
+          <td>Proof read so it's free of typos</td>
+          <td class="correct"><input name="apply4job-q54-06" type="radio" value="do" data-bz-retained="apply4job-q54-06" /></td>
+          <td class="incorrect"><input name="apply4job-q54-06" type="radio" value="dont" data-bz-retained="apply4job-q54-06" /></td>
+        </tr>
+        <tr>
+          <td>Include a long list of positive attributes about yourself</td>
+          <td class="incorrect"><input name="apply4job-q54-07" type="radio" value="do" data-bz-retained="apply4job-q54-07" /></td>
+          <td class="correct"><input name="apply4job-q54-07" type="radio" value="dont" data-bz-retained="apply4job-q54-07" /></td>
+        </tr>
+        <tr>
+          <td>Explain what you will bring to the employer</td>
+          <td class="correct"><input name="apply4job-q54-08" type="radio" value="do" data-bz-retained="apply4job-q54-08" /></td>
+          <td class="incorrect"><input name="apply4job-q54-08" type="radio" value="dont" data-bz-retained="apply4job-q54-08" /></td>
+        </tr>
+        <tr>
+          <td>Write formally</td>
+          <td class="incorrect"><input name="apply4job-q54-09" type="radio" value="do" data-bz-retained="apply4job-q54-09" /></td>
+          <td class="correct"><input name="apply4job-q54-09" type="radio" value="dont" data-bz-retained="apply4job-q54-09" /></td>
+        </tr>
+        <tr>
+          <td>Begin most sentences with &ldquo;I&rdquo;</td>
+          <td class="incorrect"><input name="apply4job-q54-10" type="radio" value="do" data-bz-retained="apply4job-q54-10" /></td>
+          <td class="correct"><input name="apply4job-q54-10" type="radio" value="dont" data-bz-retained="apply4job-q54-10" /></td>
+        </tr>
+        <tr>
+          <td>Only talk about experience that directly relates to the role</td>
+          <td class="correct"><input name="apply4job-q54-11" type="radio" value="do" data-bz-retained="apply4job-q54-11" /></td>
+          <td class="incorrect"><input name="apply4job-q54-11" type="radio" value="dont" data-bz-retained="apply4job-q54-11" /></td>
+        </tr>
+        <tr>
+          <td>Provide proof of your skills through examples and numbers to back them up</td>
+          <td class="correct"><input name="apply4job-q54-12" type="radio" value="do" data-bz-retained="apply4job-q54-12" /></td>
+          <td class="incorrect"><input name="apply4job-q54-12" type="radio" value="dont" data-bz-retained="apply4job-q54-12" /></td>
+        </tr>
+        <tr>
+          <td>Begin with a strong, interesting hook</td>
+          <td class="correct"><input name="apply4job-q54-13" type="radio" value="do" data-bz-retained="apply4job-q54-13" /></td>
+          <td class="incorrect"><input name="apply4job-q54-13" type="radio" value="dont" data-bz-retained="apply4job-q54-13" /></td>
+        </tr>
+        <tr>
+          <td>Portray your excitement through exclamation points</td>
+          <td class="incorrect"><input name="apply4job-q54-14" type="radio" value="do" data-bz-retained="apply4job-q54-14" /></td>
+          <td class="correct"><input name="apply4job-q54-14" type="radio" value="dont" data-bz-retained="apply4job-q54-14" /></td>
+        </tr>
+        <tr>
+          <td>Repeat information from your resume</td>
+          <td class="incorrect"><input name="apply4job-q54-15" type="radio" value="do" data-bz-retained="apply4job-q54-15" /></td>
+          <td class="correct"><input name="apply4job-q54-15" type="radio" value="dont" data-bz-retained="apply4job-q54-15" /></td>
+        </tr>
+        <tr>
+          <td>Mention the role in the first paragraph</td>
+          <td class="correct"><input name="apply4job-q54-16" type="radio" value="do" data-bz-retained="apply4job-q54-16" /></td>
+          <td class="incorrect"><input name="apply4job-q54-16" type="radio" value="dont" data-bz-retained="apply4job-q54-16" /></td>
+        </tr>
+        <tr>
+          <td>Thank the reader</td>
+          <td class="correct"><input name="apply4job-q54-17" type="radio" value="do" data-bz-retained="apply4job-q54-17" /></td>
+          <td class="incorrect"><input name="apply4job-q54-17" type="radio" value="dont" data-bz-retained="apply4job-q54-17" /></td>
+        </tr>
+        <tr>
+          <td>Include slang terms</td>
+          <td class="incorrect"><input name="apply4job-q54-18" type="radio" value="do" data-bz-retained="apply4job-q54-18" /></td>
+          <td class="correct"><input name="apply4job-q54-18" type="radio" value="dont" data-bz-retained="apply4job-q54-18" /></td>
+        </tr>
+        <tr>
+          <td>Include language from the job description</td>
+          <td class="correct"><input name="apply4job-q54-19" type="radio" value="do" data-bz-retained="apply4job-q54-19" /></td>
+          <td class="incorrect"><input name="apply4job-q54-19" type="radio" value="dont" data-bz-retained="apply4job-q54-19" /></td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      <input class="bz-toggle-all-next" type="button" value="Done" data-bz-retained="apply4job-btn-54" />
+    </p>
+  </div>
+  <div class="bz-box action">
+    <h4 class="box-title">Revise a cover letter</h4>
+    <p>Now that you know what to include and what to avoid in a cover letter, help Catelyn revise her cover letter:</p>
+    <p class="tbd">TBD INSERT LETTER come up with interaction</p>
+  </div>
+  <h4>YOUR TURN</h4>
+  <div class="bz-box action">
+    <h5 class="box-title">You're now ready to write your own cover letter</h5>
+    <p>You&rsquo;ll be required to submit a cover letter tailored to an opportunity you&rsquo;re applying to as part of your <a href="/courses/1/assignments/705" target="_blank" data-api-endpoint="https://portal.bebraven.org/api/v1/courses/1/assignments/705" data-api-returntype="Assignment">Hustle to Career Project</a>.</p>
+    <p>You&rsquo;ll also need to bring it to the Hustle to Career Bootcamp Learning Lab (not this week, but next week) to get feedback from your peers.</p>
+  </div>
+  <div class="bz-box key">
+    <h5 class="box-title">RESOURCE</h5>
+    <p>Take a look at other Braven Fellows&rsquo; exemplar cover letters in the Resume &amp; <a href="/courses/1/pages/resume-and-cover-letter-bank" target="_blank" data-api-endpoint="https://portal.bebraven.org/api/v1/courses/1/pages/resume-and-cover-letter-bank" data-api-returntype="Page">Cover Letter Bank</a>.</p>
+    <p class="tbd">TBD ACTION ITEM TO MAKE SURE THEY'VE SEEN IT</p>
+  </div>
+  <div>
+    <p>Your professional written polish is just as important in your cover letter as it is in your resume. Earlier in this module, you said these people could help you revise and proofread your resume:</p>
+    <ul>
+      <li class="conditional-show"><span data-bz-reference="apply4job-q50-1">Your Leadership Coach</span></li>
+      <li class="conditional-show"><span data-bz-reference="apply4job-q50-2">Other Braven Fellows</span></li>
+      <li class="conditional-show"><span data-bz-reference="apply4job-q50-3">Your TA</span></li>
+      <li class="conditional-show"><span data-bz-reference="apply4job-q50-4">Your university&rsquo;s career services office</span></li>
+      <li class="conditional-show"><span data-bz-reference="apply4job-q50-5">A mentor</span></li>
+      <li class="conditional-show"><span data-bz-reference="apply4job-q50-6">Your university&rsquo;s writing center</span></li>
+      <li class="conditional-show"><span data-bz-reference="apply4job-q50-7">A family member</span></li>
+      <li class="conditional-show"><span data-bz-reference="apply4job-q50-8">A friend</span></li>
+      <li class="conditional-show"><span data-bz-reference="apply4job-q50-9">A professor</span></li>
+    </ul>
+    <p>Do you think they would take a look at your cover letters too?</p>
+    <p><strong>You betcha!</strong></p>
+  </div>
+  <blockquote>
+    <p>Don't ever be afraid to leverage people in your network for support and advice.</p>
+    <p>In fact, it's one of the best ways to keep your network strong.</p>
+  </blockquote>
+  <h2 id="productivity-corner">PRODUCTIVITY CORNER: STAYING ORGANIZED WHEN APPLYING FOR JOBS</h2>
+  <p>Applying for a job or internship can be a numbers game, so you&rsquo;re going to need to juggle a ton of different applications. Choosing an organization system will make your life easier! Here are some suggestions, but as always, do what works for you.</p>
+  <h3>CREATE A SPREADSHEET THAT TRACKS YOUR JOB APPLICATION INFO AND PROGRESS</h3>
+  <div>
+    <p>You&rsquo;ll be less likely to drop the ball on an application if you&rsquo;re keeping track of them all in one place, like in a spreadsheet like this one:</p>
+    <p class="tbd">TBD INSERT SCREENSHOT</p>
+  </div>
+  <div class="bz-box question">
+    <h4 class="box-title">Quick Question</h4>
+    <p>What&rsquo;s the purpose of having 1st and 2nd degree LinkedIn connections listed in your tracker? (drag and drop)</p>
+    <table class="sort-to-match">
+      <tbody>
+        <tr>
+          <td>1st Degree Connections</td>
+          <td>Contact these people to see if they will connect you with their contacts at the company for an informational interview.</td>
+        </tr>
+        <tr>
+          <td>2nd Degree Connections</td>
+          <td>Contact these people for informational interviews.</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      <input class="bz-toggle-all-next for-match" type="button" value="Done" data-bz-retained="applying-btn-60" />
+    </p>
+  </div>
+  <blockquote>Always be networking! It&rsquo;s a critical part of the job application process.</blockquote>
+  <h3>KEEP ALL VERSIONS OF YOUR RESUME AND COVER LETTER</h3>
+  <p>Each application you send will be tailored to the opportunity you&rsquo;re applying for. But that doesn&rsquo;t mean you need to start each resume and cover letter from scratch.</p>
+  <div class="bz-box action">
+    <h4 class="box-title">Set up your system now</h4>
+    <ol class="checklist">
+      <li>
+        <input type="checkbox" data-bz-retained="apply4job-q61-1" />
+        Save a master resume as a Word or Google doc that includes <em>all</em> of your experience in it. It might be longer than a page, and that&rsquo;s fine, because <strong>you&rsquo;ll never send your master resume out</strong> in an application.</li>
+      <li>
+        <input type="checkbox" data-bz-retained="apply4job-q61-2" />
+        When applying for an opportunity, cut and paste relevant opportunities from the master resume into the version of your resume for that application. <strong>Save all those versions in one place</strong> and name the files in a way that helps you keep track.</li>
+      <li>
+        <input type="checkbox" data-bz-retained="apply4job-q61-3" />
+        Likewise, move all your cover letters all to one place and cut and paste relevant sections into any new cover letter you&rsquo;re working on. Just remember to always proofread carefully so that you <strong>don&rsquo;t end up using the wrong company or person name</strong>!</li>
+    </ol>
+    <p>Your resume folder on your computer or cloud storage might look like this:</p>
+    <p class="tbd">TBD INSERT SCREENSHOT</p>
+    <p>
+      <input class="bz-toggle-all-next" type="button" value="Done" data-bz-retained="applying-btn-65" />
+    </p>
+  </div>
+  <h2 id="wrap-up">Wrap-up</h2>
+  <div>
+    <p>In this module we&hellip;</p>
+    <ul>
+      <li>Talked about how job applications are critical but very competitive (only 3% get an interview)</li>
+      <li>Explored the "rules of the game" of job hunting so you'll have a good idea how to play it</li>
+      <li>Got you started on developing a stand-out resume and cover letter</li>
+      <li>And finally, in this week's Productivity Corner, we looked at how to set up your file system to manage resumes and cover letters efficiently</li>
+    </ul>
+    <h3>Next Steps:</h3>
+    <ul>
+      <li>If there's anything you feel less than certain about, feel free to revisit the content, ask on <a href="https://help.bebraven.org" target="_blank">Braven Help</a>, or <a href="mailto:support@bebraven.org" target="_blank">contact us</a> with feedback.</li>
+      <li>To be prepared for Learning Lab this week, draft your resume and cover letter (Parts 2 and 3 of the <a href="/courses/1/assignments/705" target="_blank" data-api-endpoint="https://portal.bebraven.org/api/v1/courses/1/assignments/705" data-api-returntype="Assignment">Hustle to Career Project</a>). Bring a printed copy (or several) of your resume to Learning Lab so that your cohort can give you feedback.</li>
+    </ul>
+  </div>
 </div>
 <script src="../new-ui-sandbox.js"></script>
 <progress max="100" id="bz-progress-bar" value="14"></progress>
