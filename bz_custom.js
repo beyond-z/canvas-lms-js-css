@@ -591,6 +591,7 @@ function bzLocalNavUI() {
 
 /* Ajax Load dynamic content, like rubric criterion (bypassing sanitizer) and LinkedIn API URLs */
 function bzAjaxLoad() {
+  var containsMagicRubrics = false;
   jQuery('.bz-ajax-replace').each(function(e){
     var el = jQuery(this);
     var replaceURL = jQuery(this).attr('href');
@@ -602,9 +603,43 @@ function bzAjaxLoad() {
         var rb = replaceURL.split('#');
         replaceURL = rb[0]+' #'+rb[1];
       }
+
+      var magicFieldName= jQuery(this).attr('data-bz-retained');
+      var isOptionalMagicField = jQuery(this).hasClass('bz-optional-magic-field');
+      if (magicFieldName){
+        console.log('Found magic field = '+magicFieldName+' for inline rubric:' + replaceURL);
+        containsMagicRubrics = true;
+      }
+
       console.log('Loading ' + replaceURL + ' into ' + jQuery(this).attr('class'));
       el.replaceWith(jQuery('<table />').load(replaceURL, function() {
-        jQuery(this).addClass('bz-ajax-loaded-rubric bz-ajax-loaded');
+        var tableEl = jQuery(this);
+        tableEl.addClass('bz-ajax-loaded-rubric bz-ajax-loaded');
+        if (magicFieldName){
+          // insert hidden <input> element that we'll setup as a magic field and change
+          // the value when the table cells are clicked
+          // Preserve the magic field name. After all the inline rubrics are added
+          // we trigger the magic field setup to wireup the save() of the selected value.
+          var classes = "bz-table-click-data";
+          if (isOptionalMagicField){
+            classes += ' bz-optional-magic-field';
+          }
+          var inputEl = tableEl.append('<input type="hidden" class="'+classes+'" value="" data-bz-retained="'+magicFieldName+'"/>');
+          var ratingsTable = jQuery(this).find('.ratings');
+          if (ratingsTable){
+            ratingsTable.on('click', 'td', function(){
+              var ratingsCell = jQuery(this);
+              var selectedvalue = ratingsCell.attr('id');
+              //console.log('Setting data-bz-retained-value = ' + selectedvalue);
+              //tableEl.attr('data-bz-retained-value', selectedvalue);
+              console.log('Setting input value to: ' + selectedvalue);
+              inputEl.val(selectedvalue);
+            });
+            tableEl.addClass('bz-clickable-rubric');
+          } else {
+             console.log('failed finding <table class="ratings"/> for magic rubric: ' + magicFieldName);
+          }
+        }
       }));
       //jQuery('#wiki_page_show').replaceWith(jQuery('table').load('/courses/10/rubrics/9 #criterion_9_7861'));
 
@@ -650,6 +685,11 @@ function bzAjaxLoad() {
       jQuery(this).addClass('bz-ajax-loaded-content-lib-link bz-ajax-loaded');
     }
   });
+
+  if (containsMagicRubrics){
+    console.log('Running bzRetainedInfoSetup() to setup magic fields on inline rubrics');
+    bzRetainedInfoSetup();
+  }
 };
 
 // the Canvas built in thing strips scripts out of the editor, but
