@@ -591,6 +591,8 @@ function bzLocalNavUI() {
 
 /* Ajax Load dynamic content, like rubric criterion (bypassing sanitizer) and LinkedIn API URLs */
 function bzAjaxLoad() {
+  var magicFieldNames = [];
+  var magicFieldElements = [];
   jQuery('.bz-ajax-replace').each(function(e){
     var el = jQuery(this);
     var replaceURL = jQuery(this).attr('href');
@@ -618,7 +620,9 @@ function bzAjaxLoad() {
         if (isOptionalMagicField){
           classes += ' bz-optional-magic-field';
         }
-        el.after('<input type="hidden" id='+magicFieldName+' class="'+classes+'" value="" data-bz-retained="'+magicFieldName+'" />');
+        var hiddenInputEl = $('<input type="hidden" id='+magicFieldName+' class="'+classes+'" value="" data-bz-retained="'+magicFieldName+'" />').insertAfter(el);
+        magicFieldNames.push(magicFieldName);
+        magicFieldElements.push(hiddenInputEl);
       }
 
       console.log('Loading ' + replaceURL + ' into ' + jQuery(this).attr('class'));
@@ -630,7 +634,6 @@ function bzAjaxLoad() {
         var data = "name=" + encodeURIComponent(magicFieldName) + "&value=" + encodeURIComponent(selectedvalue) + "&type=hidden";
         if (isOptionalMagicField)
           data += "&optional=true";
-        console.log('saving data = '+data);
         http.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         http.send(data);
       };
@@ -653,12 +656,14 @@ function bzAjaxLoad() {
               </table>
             </td>
           </tr></tbody></table>
-          **/
+          */
           var ratingsTable = jQuery(this).find('.ratings');
           if (ratingsTable){
             tableEl.addClass('bz-clickable-rubric');
             ratingsTable.on('click', 'td', function(){
               var ratingsCell = jQuery(this);
+              ratingsTable.find('td').removeClass('selected');
+              ratingsCell.addClass('selected');
               var selectedvalue = ratingsCell.attr('id');
               var inputEl = jQuery('#'+magicFieldName);
               //console.log('Setting input value to: ' + selectedvalue + ' for input element: ' + inputEl.attr('id'));
@@ -715,6 +720,37 @@ function bzAjaxLoad() {
       jQuery(this).addClass('bz-ajax-loaded-content-lib-link bz-ajax-loaded');
     }
   });
+
+  // Initial load of the existing set names
+  var http = new XMLHttpRequest();
+  http.onload = function() {
+    // substring is to cut off json p stuff if we go back to GET, unneeded with POST though
+    var json = http.responseText; //.substring(9)
+    var obj = JSON.parse(json);
+
+    for(var i = 0; i < magicFieldNames.length; i++) {
+      var name = magicFieldNames[i];
+      var el = magicFieldElements[i];
+      var value = obj[name];
+      //console.log('Setting magic field, name = ' + name + ', value = ' + value);
+      el.val(value);
+      $('td#' + value).addClass('selected');
+    }
+  };
+
+  var data = "";
+  for(var i = 0; i < magicFieldNames.length; i++) {
+    if(data.length)
+      data += "&";
+    data += "names[]=" + encodeURIComponent(magicFieldNames[i]);
+  }
+
+  // I would LIKE to use get on this, but since the name list can be arbitrarily long
+  // and I don't want to risk hitting a browser/server limit of url length, I am going to
+  // POST just in case
+  http.open("POST", "/bz/user_retained_data_batch", true);
+  http.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+  http.send(data);
 };
 
 // the Canvas built in thing strips scripts out of the editor, but
