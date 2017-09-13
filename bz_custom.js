@@ -647,17 +647,6 @@ function bzAjaxLoad() {
 
       console.log('Loading ' + replaceURL + ' into ' + jQuery(this).attr('class'));
 
-      // Function to save the selected value in the rubric to a magic field.
-      var save = function(magicFieldName, selectedvalue) {
-        var http = new XMLHttpRequest();
-        http.open("POST", "/bz/user_retained_data", true);
-        var data = "name=" + encodeURIComponent(magicFieldName) + "&value=" + encodeURIComponent(selectedvalue) + "&type=hidden";
-        if (isOptionalMagicField)
-          data += "&optional=true";
-        http.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        http.send(data);
-      };
- 
       el.replaceWith(jQuery('<table />').load(replaceURL, function() {
         var tableEl = jQuery(this);
         tableEl.addClass('bz-ajax-loaded-rubric bz-ajax-loaded');
@@ -688,8 +677,9 @@ function bzAjaxLoad() {
               var inputEl = jQuery('#'+magicFieldName);
               //console.log('Setting input value to: ' + selectedvalue + ' for input element: ' + inputEl.attr('id'));
               inputEl.val(selectedvalue);
-              // Tried triggering the change event, but still not picked up by magic field logic in bz_support.js, so just save it directly here.
-              save(magicFieldName, selectedvalue);
+              // Tried triggering the change event to let the normal magic field logic in bz_support.js run, 
+              // but it wasn't working so just save it directly here.
+              BZ_SaveMagicField(magicFieldName, selectedvalue, isOptionalMagicField, "hidden");
            });
           } else {
              console.log('Error: Failed finding <table class="ratings"/> for magic rubric: ' + magicFieldName);
@@ -751,34 +741,16 @@ function bzAjaxLoad() {
     }
   });
 
-  // Initial load of the existing set names
-  var http = new XMLHttpRequest();
-  http.onload = function() {
-    // substring is to cut off json p stuff if we go back to GET, unneeded with POST though
-    var json = http.responseText; //.substring(9)
-    magicFieldValues = JSON.parse(json);
+  BZ_LoadMagicFields(magicFieldNames, function(retrievedFieldValues) {
     console.log("Retreived list of existing magic values for inline rubrics");
     isMagicFieldValuesRetreived = true;
+    magicFieldValues = retrievedFieldValues;
     if (!existingMagicValuesLoaded && magicRubricTablesLoadedCount >= magicFieldNames.length){ 
       // Race condition b/n this function firing and the callback to load the inline rubric <table>s,
       // so both have to try to load the values if the other has run
       loadExistingMagicValues(); 
     }
-  };
-
-  var data = "";
-  for(var i = 0; i < magicFieldNames.length; i++) {
-    if(data.length)
-      data += "&";
-    data += "names[]=" + encodeURIComponent(magicFieldNames[i]);
-  }
-
-  // I would LIKE to use get on this, but since the name list can be arbitrarily long
-  // and I don't want to risk hitting a browser/server limit of url length, I am going to
-  // POST just in case
-  http.open("POST", "/bz/user_retained_data_batch", true);
-  http.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-  http.send(data);
+  });
 };
 
 // the Canvas built in thing strips scripts out of the editor, but
