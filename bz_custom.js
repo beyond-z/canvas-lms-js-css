@@ -592,7 +592,27 @@ function bzLocalNavUI() {
 /* Ajax Load dynamic content, like rubric criterion (bypassing sanitizer) and LinkedIn API URLs */
 function bzAjaxLoad() {
   var magicFieldNames = [];
+  var magicFieldValues = {}; // Will be set to return value of JSON.parse('{"key1":"value1","key2":"value2"}')
+  var isMagicFieldValuesRetreived = false;
+  var existingMagicValuesLoaded = false;
   var magicFieldElements = [];
+  var magicRubricTablesLoadedCount = 0;
+  console.log("bzAjaxLoad() begin");
+ 
+  // Processes the magic field values loaded.  Needs to happen after we finish creating the inline rubrics
+  var loadExistingMagicValues = function(){
+    existingMagicValuesLoaded = true; // Note: we still have a small window where this function could be called twice. Not a big deal if it does happen once in a blue moon.
+    console.log("loadExistingMagicValues into rubrics");
+    for(var i = 0; i < magicFieldNames.length; i++) {
+      var name = magicFieldNames[i];
+      var el = magicFieldElements[i];
+      var value = magicFieldValues[name];
+      //console.log('Setting magic field, name = ' + name + ', value = ' + value);
+      el.val(value);
+      $('td#' + value).addClass('selected');
+    }
+  };
+
   jQuery('.bz-ajax-replace').each(function(e){
     var el = jQuery(this);
     var replaceURL = jQuery(this).attr('href');
@@ -674,6 +694,16 @@ function bzAjaxLoad() {
           } else {
              console.log('Error: Failed finding <table class="ratings"/> for magic rubric: ' + magicFieldName);
           }
+          magicRubricTablesLoadedCount += 1;
+          if (magicRubricTablesLoadedCount >= magicFieldNames.length)
+          {
+            console.log("Finished loading all magic inline rubric tables");
+            if (!existingMagicValuesLoaded && isMagicFieldValuesRetreived){
+              // Race condition b/n these callbacks loading the inline rubric <table>s,
+              // and the existing values being retrieved, so both have to try to load the values if the other has run
+              loadExistingMagicValues();
+            }
+          }
         }
       }));
       //jQuery('#wiki_page_show').replaceWith(jQuery('table').load('/courses/10/rubrics/9 #criterion_9_7861'));
@@ -726,15 +756,13 @@ function bzAjaxLoad() {
   http.onload = function() {
     // substring is to cut off json p stuff if we go back to GET, unneeded with POST though
     var json = http.responseText; //.substring(9)
-    var obj = JSON.parse(json);
-
-    for(var i = 0; i < magicFieldNames.length; i++) {
-      var name = magicFieldNames[i];
-      var el = magicFieldElements[i];
-      var value = obj[name];
-      //console.log('Setting magic field, name = ' + name + ', value = ' + value);
-      el.val(value);
-      $('td#' + value).addClass('selected');
+    magicFieldValues = JSON.parse(json);
+    console.log("Retreived list of existing magic values for inline rubrics");
+    isMagicFieldValuesRetreived = true;
+    if (!existingMagicValuesLoaded && magicRubricTablesLoadedCount >= magicFieldNames.length){ 
+      // Race condition b/n this function firing and the callback to load the inline rubric <table>s,
+      // so both have to try to load the values if the other has run
+      loadExistingMagicValues(); 
     }
   };
 
