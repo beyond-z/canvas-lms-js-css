@@ -608,8 +608,10 @@ function bzAjaxLoad() {
       var el = magicFieldElements[i];
       var value = magicFieldValues[name];
       //console.log('Setting magic field, name = ' + name + ', value = ' + value);
-      el.val(value);
-      $('td#' + value).addClass('selected');
+      if (value){ // Happens on first load where no value is set yet
+        el.val(value);
+        $('td#' + value).addClass('selected');
+      }
     }
   };
 
