@@ -1839,10 +1839,6 @@ table [type="range"] {
 	border: 0;
 }
 
-.bz-ajax-loaded-rubric .container {
-	width: 100%;
-}
-
 .bz-ajax-loaded-rubric .learning_outcome_flag,
 .bz-ajax-loaded-rubric .links,
 .bz-ajax-loaded-rubric .points_form,
@@ -1888,6 +1884,11 @@ table [type="range"] {
 
 .bz-ajax-loaded-rubric .rating:hover {
 	background: #EDDCBE;
+}
+
+/* Clickable inline rubrics created using magic fields */
+.bz-ajax-loaded-rubric.bz-clickable-rubric td.rating.selected {
+  background: #B08833;
 }
 
 /* Hide the canvas display of rubrics below assignments since we're loading them dynamically into the content: */
