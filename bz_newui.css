@@ -1878,6 +1878,10 @@ table [type="range"] {
 	padding: 5px 0;
 }
 
+.bz-clickable-rubric .rating {
+	cursor: pointer;
+}
+
 .bz-ajax-loaded-rubric tr:hover {
 	background: #F6EFDF;
 }
@@ -1888,7 +1892,21 @@ table [type="range"] {
 
 /* Clickable inline rubrics created using magic fields */
 .bz-ajax-loaded-rubric.bz-clickable-rubric td.rating.selected {
-  background: #B08833;
+  background: #9AD7D7;
+}
+
+.bz-ajax-loaded-rubric.bz-clickable-rubric:hover td.rating.selected {
+  background: #D1AB5C;
+}
+
+/* Tweak rubric display when presented inside a module so it doesn't overflow */
+.bz-module .bz-ajax-loaded-rubric {
+	font-size: 0.85em;
+}
+
+.bz-module .bz-ajax-loaded-rubric .ratings {
+	table-layout: fixed;
+	width: 100%;
 }
 
 /* Hide the canvas display of rubrics below assignments since we're loading them dynamically into the content: */
