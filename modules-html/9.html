@@ -2,9 +2,320 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Untitled Document</title>
+<title>Module 9 Design Thinking Sprint</title>
+<script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous">
+</script>
+<script
+src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+crossorigin="anonymous">
+</script>
+<style>
+@font-face {
+ font-family: "TradeGothicNo.20-CondBold";
+ src: url('../TradeGothicLTStd-BdCn20.otf');
+}
+</style>
+<link rel="stylesheet" type="text/css" href="../bz_newui.css">
 </head>
-
 <body>
+<div class="bz-module">
+    <h2 id="why">Why is this important?</h2>
+    <div class="bz-box question">
+        <h3 class="box-title">Quick Question</h3>
+        <p>It’s your first month on the job and you are confronted with a big, hairy problem to solve. You feel that this is your time to shine (or fail). Which of the following is true? (check all that apply)</p>
+        <ul class="checklist instant-feedback">
+            <li class="correct"><input type="checkbox" data-bz-retained="dts-q01-1" />You're more likely to identify the best solution and act on it by not leaving things up to chance.</li>
+            <li class="correct"><input type="checkbox" data-bz-retained="dts-q01-2" />Using a systemic approach will lead to solutions that are less subjective and less impacted by biases or perceptions.</li>
+            <li class="correct"><input type="checkbox" data-bz-retained="dts-q01-3" />You will find it easier to present your solution to the rest of the team if it's backed by a clear rationale.</li>
+            <li class="incorrect"><input type="checkbox" data-bz-retained="dts-q01-4" />You will have to rely on luck to figure things out.</li>
+            <li class="incorrect"><input type="checkbox" data-bz-retained="dts-q01-5" />You will use process of elimination and try all sorts of things that don’t work.</li>
+        </ul>
+        <p>
+          <input class="bz-toggle-all-next for-checklist" type="button" value="Done" data-bz-retained="dts-btn-01" />
+        </p>
+      </div>
+      <div class="bz-box video">
+        <h3 class="box-title">Watch this</h3>
+        <div class="tbd">[Video testimonial of a Braven team member talking about trying to solve a problem without a framework and then how much easier it got when using a systemic approach]</div>
+        <p>
+          <input class="bz-toggle-all-next" type="button" value="Done" data-bz-retained="dts-btn-02" />
+        </p>    
+    </div>
+    <div class="bz-box question empathize">
+        <h3 class="box-title">See it from their perspective</h3>
+        <p>You’re interviewing a candidate for a role at your company. You want to know how he approaches problems, because problem-solving is a daily, if not constant task at your workplace. You present the candidate with a typical problem you encounter at your company, and ask how he would approach it. What do you hope to hear?</p>
+        <ul class="radio-list instant-feedback">
+            <li class="correct"><input type="radio" data-bz-retained="dts-q-03-r" name="dts-q-03-r" value="1" />A description of the logical, step-by-step framework he would follow to solve the problem <p class="feedback inline">Correct! You want to see how he wraps his head around problems and that he approaches them systematically.</p></li>
+            <li class="incorrect"><input type="radio" data-bz-retained="dts-q-03-r" name="dts-q-03-r" value="2" />He won’t sleep until he solves the problem <p class="feedback inline">You want to know that he will work smart, not just work hard. Being well-rested is important for solving problems well!</p></li>
+            <li class="incorrect"><input type="radio" data-bz-retained="dts-q-03-r" name="dts-q-03-r" value="3" />He will ask the appropriate person at the company for help <p class="feedback inline">You want to know how he would try to solve the problem before asking for help. Asking for help isn’t a bad thing, but if he’s always reliant on others to solve problems for him, he won’t be an asset to the team.</p></li>
+            <li class="incorrect"><input type="radio" data-bz-retained="dts-q-03-r" name="dts-q-03-r" value="4" />A list of all the possible solutions <p class="feedback inline">This might make you think he jumps to conclusions without any process, which could mean he a) will make a lot of mistakes, and b) will waste a lot of time until he finds the right solution (if he ever does).</p></li>
+        </ul>
+        <p>
+          <input class="bz-toggle-all-next" type="button" value="Done" data-bz-retained="dts-btn-03" />
+        </p>
+    </div>
+    <div class="bz-box pulse">
+        <h3 class="box-title tbd">How are you feeling about this?</h3>
+        <ul class="radio-list instant-feedback">
+            <li><input type="radio" data-bz-retained="dts-q-04-r" name="dts-q-04-r" value="1" />I won’t use design thinking in my career. Why learn about it now?</li>
+            <li><input type="radio" data-bz-retained="dts-q-04-r" name="dts-q-04-r" value="1" />Problem solving comes naturally to me. </li>
+            <li><input type="radio" data-bz-retained="dts-q-04-r" name="dts-q-04-r" value="1" />I’ve already mastered another framework of problem-solving (i.e. Scientific Method)</li>
+        </ul>
+        <p>
+          <input class="bz-toggle-all-next" type="button" value="Done" data-bz-retained="dts-btn-04" />
+        </p>
+    </div>
+    <blockquote>
+      "My mum was a quintessential businesswoman. She taught me problem-solving. She can solve any problem.""
+      <p class="quote-source">Obiageli Ezekwesili, co-founder of Transparency International</p>
+    </blockquote>
+    <h2 id="how">How do I do this?</h2>
+    <h3>How do I solve problems effectively?</h3>
+    <div class="bz-box question">
+      <h4 class="box-title">Quick Question</h4>
+      <p>What are the traits of effective problem-solvers? (check all that apply)</p>
+      <ul class="checklist instant-feedback">
+        <li class="correct"><input type="checkbox" data-bz-retained="dts-q05-1" />A solutions-oriented mindset <p class="feedback inline">Effective problem-solvers believe there is a solution for almost every problem and they believe in their capacity to create positive change. They believe in their own ability to find solutions. </p></li>
+        <li class="correct"><input type="checkbox" data-bz-retained="dts-q05-2" />Positive attitude <p class="feedback inline">Effective problem-solvers value optimism and not giving up. They embrace a sense of possibility and curiosity when confronted with problems. They celebrate the journey and value the learning process which can sometimes involve being wrong or making mistakes. Their sense of self-worth isn't dependent on the solutions they land on. </p></li>
+        <li class="correct"><input type="checkbox" data-bz-retained="dts-q05-3" />Critical thinking skills <p class="feedback inline">Problem-solving draws on critical thinking and your ability to use knowledge, facts, and data to effectively solve problems. This does not mean you need to have immediate answers but it does mean you have methods to think on your feet, assess problems, and find solutions.</p> </li>
+        <li class="correct"><input type="checkbox" data-bz-retained="dts-q05-4" />Creativity <p class="feedback inline">Problem-solving relied on creative thinking and your ability to find innovative solutions.</p> </li>
+        <li class="correct"><input type="checkbox" data-bz-retained="dts-q05-5" />Adaptability <p class="feedback inline">Effective problem-solvers are flexible in their approach to finding a solution. They embrace the iterative process: They solicit input, act on feedback, consider new information and ultimately land on a better solution that way. They can also change their approach based on the type of situation they are faced with.</p></li>
+        <li class="incorrect"><input type="checkbox" data-bz-retained="dts-q05-6" />Self-sufficiency <p class="feedback inline">While problem-solving will require autonomy, it cannot be done all alone. Seeking feedback and other voices along the way will result in a better solution.</p></li>
+        <li class="incorrect"><input type="checkbox" data-bz-retained="dts-q05-7" />Sticking to one framework <p class="feedback inline">Effective problem-solvers leverage a variety of techniques to define problems and identify solutions.</p> </li>
+        <li class="incorrect"><input type="checkbox" data-bz-retained="dts-q05-8" />Having all the answers<p class="feedback inline">No one has all the answers, and keeping an open mind during the process of defining and solving a problem is likely to generate better solutions.</p></li>
+      </ul>
+      <p>
+        <input class="bz-toggle-all-next" type="button" value="Done" data-bz-retained="dts-btn-05" />
+      </p>
+    </div>
+    <div class="bz-box reflection">
+      <h4 class="box-title"></h4>
+      <p>
+        <input class="bz-toggle-all-next" type="button" value="Done" data-bz-retained="dts-btn-06" />
+      </p>     
+    </div>
+    <div class="bz-box video">
+      <h4 class="box-title">Watch this</h4>
+      <p>
+        <input class="bz-toggle-all-next" type="button" value="Done" data-bz-retained="dts-btn-07" />
+      </p>     
+    </div>
+    <div class="bz-box question">
+      <h4 class="box-title">Quick Question</h4>
+      <p>
+        <input class="bz-toggle-all-next" type="button" value="Done" data-bz-retained="dts-btn-08" />
+      </p>     
+    </div>
+    <h3>How do I use the Design Thinking framework?</h3>
+    <div class="bz-box question">
+      <h4 class="box-title">Quick Question</h4>
+      <p>
+        <input class="bz-toggle-all-next" type="button" value="Done" data-bz-retained="dts-btn-08" />
+      </p>     
+    </div>
+    <div class="bz-box answer">
+      <h4 class="box-title">Answer</h4>
+      <p>
+        <input class="bz-toggle-all-next" type="button" value="Done" data-bz-retained="dts-btn-08" />
+      </p>     
+    </div>
+    <div class="bz-box video">
+      <h4 class="box-title">Watch this</h4>
+      <p>
+        <input class="bz-toggle-all-next" type="button" value="Done" data-bz-retained="dts-btn-07" />
+      </p>     
+    </div>
+    <blockquote>
+      "What we, as design thinkers have is this creative confidence that, when given a difficult problem, we have a methodology that enables us to come up with a solution that nobody has before." 
+      <p class="quote-source">David Kelly, founder of IDEO</p>
+    </blockquote>
+    <div class="bz-box question">
+      <h4 class="box-title">Quick Question</h4>
+      <p>
+        <input class="bz-toggle-all-next" type="button" value="Done" data-bz-retained="dts-btn-08" />
+      </p>     
+    </div>
+    <h4>Empathize</h4>
+    <div class="bz-box question">
+      <h5 class="box-title">Quick Question</h5>
+      <p>
+        <input class="bz-toggle-all-next" type="button" value="Done" data-bz-retained="dts-btn-08" />
+      </p>     
+    </div>
+    <div class="bz-box answer">
+      <h5 class="box-title">Answer</h5>
+      <p>
+        <input class="bz-toggle-all-next" type="button" value="Done" data-bz-retained="dts-btn-08" />
+      </p>     
+    </div>
+    <div class="bz-box action">
+      <h5 class="box-title">Let's practice a bit</h5>
+      <p>
+        <input class="bz-toggle-all-next" type="button" value="Done" data-bz-retained="dts-btn-08" />
+      </p>     
+    </div>
+    <div class="bz-box action">
+      <h5 class="box-title">Now let's try out a helpful tool: the empathy map</h5>
+      <p>
+        <input class="bz-toggle-all-next" type="button" value="Done" data-bz-retained="dts-btn-08" />
+      </p>     
+    </div>
+    <div class="bz-box question">
+      <h5 class="box-title">Quick Question</h5>
+      <p>
+        <input class="bz-toggle-all-next" type="button" value="Done" data-bz-retained="dts-btn-08" />
+      </p>     
+    </div>
+    <div class="bz-box question">
+      <h5 class="box-title">Quick Question</h5>
+      <p>
+        <input class="bz-toggle-all-next" type="button" value="Done" data-bz-retained="dts-btn-08" />
+      </p>     
+    </div>
+    <div class="bz-box key">
+      <h5 class="box-title">How to ask questions that give you insights</h5>
+      <p>
+        <input class="bz-toggle-all-next" type="button" value="Done" data-bz-retained="dts-btn-08" />
+      </p>     
+    </div>
+    <blockquote>
+      "If I were given one hour to save the planet, I would spend 59 minutes defining the problem and one minute resolving it."
+      <p class="quote-source">Albert Einstein</p>
+    </blockquote>
+    <h4>Define</h4>
+    <div class="bz-box question">
+      <h5 class="box-title">Quick Question</h5>
+      <p>
+        <input class="bz-toggle-all-next" type="button" value="Done" data-bz-retained="dts-btn-08" />
+      </p>     
+    </div>
+    <div class="bz-box key">
+      <h5 class="box-title">The problem statement template</h5>
+      <p>
+        <input class="bz-toggle-all-next" type="button" value="Done" data-bz-retained="dts-btn-08" />
+      </p>     
+    </div>
+    <div class="bz-box question">
+      <h5 class="box-title">Quick Question</h5>
+      <p>
+        <input class="bz-toggle-all-next" type="button" value="Done" data-bz-retained="dts-btn-08" />
+      </p>     
+    </div>
+    <div class="bz-box question">
+      <h5 class="box-title">Quick Question</h5>
+      <p>
+        <input class="bz-toggle-all-next" type="button" value="Done" data-bz-retained="dts-btn-08" />
+      </p>     
+    </div>
+    <div class="bz-box answer">
+      <h5 class="box-title">This is an important distinction</h5>
+      <p>
+        <input class="bz-toggle-all-next" type="button" value="Done" data-bz-retained="dts-btn-08" />
+      </p>     
+    </div>
+    <div class="bz-box question">
+      <h5 class="box-title">Quick Question</h5>
+      <p>
+        <input class="bz-toggle-all-next" type="button" value="Done" data-bz-retained="dts-btn-08" />
+      </p>     
+    </div>
+    <div class="bz-box action">
+      <h5 class="box-title">Let's practice formulating a good problem statement</h5>
+      <p>
+        <input class="bz-toggle-all-next" type="button" value="Done" data-bz-retained="dts-btn-08" />
+      </p>     
+    </div>
+    <div class="bz-box key">
+      <h5 class="box-title">"How might we" questions</h5>
+      <p>
+        <input class="bz-toggle-all-next" type="button" value="Done" data-bz-retained="dts-btn-08" />
+      </p>     
+    </div>
+    <div class="bz-box question">
+      <h5 class="box-title">Quick Question</h5>
+      <p>
+        <input class="bz-toggle-all-next" type="button" value="Done" data-bz-retained="dts-btn-08" />
+      </p>     
+    </div>
+    <h4>Ideate</h4>
+    <div class="bz-box video">
+      <h4 class="box-title">Watch this</h4>
+      <p>
+        <input class="bz-toggle-all-next" type="button" value="Done" data-bz-retained="dts-btn-07" />
+      </p>     
+    </div>
+    <div class="bz-box question">
+      <h5 class="box-title">Quick Question</h5>
+      <p>
+        <input class="bz-toggle-all-next" type="button" value="Done" data-bz-retained="dts-btn-08" />
+      </p>     
+    </div>
+    <div class="bz-box key">
+      <h5 class="box-title">How to brainstorm like a pro</h5>
+      <p>
+        <input class="bz-toggle-all-next" type="button" value="Done" data-bz-retained="dts-btn-08" />
+      </p>     
+    </div>
+    <div class="bz-box action">
+      <h5 class="box-title">Let's practice a bit of brainstorming</h5>
+      <p>
+        <input class="bz-toggle-all-next" type="button" value="Done" data-bz-retained="dts-btn-08" />
+      </p>     
+    </div>
+    <div class="bz-box question">
+      <h5 class="box-title">Quick Question</h5>
+      <p>
+        <input class="bz-toggle-all-next" type="button" value="Done" data-bz-retained="dts-btn-08" />
+      </p>     
+    </div>
+    <div class="bz-box answer">
+      <h5 class="box-title">Answer</h5>
+      <p>
+        <input class="bz-toggle-all-next" type="button" value="Done" data-bz-retained="dts-btn-08" />
+      </p>     
+    </div>
+    <h4>Prototype</h4>
+    <div class="bz-box question">
+      <h5 class="box-title">Quick Question</h5>
+      <p>
+        <input class="bz-toggle-all-next" type="button" value="Done" data-bz-retained="dts-btn-08" />
+      </p>     
+    </div>
+    <blockquote>By creating early prototypes and putting them in the hands of users, designers can spot problems early. This means they won't be putting resources into fully building and polishing something that might not even fit the users' needs.</blockquote>
+    <div class="bz-box action">
+      <h5 class="box-title">How to prototype</h5>
+      <p>
+        <input class="bz-toggle-all-next" type="button" value="Done" data-bz-retained="dts-btn-08" />
+      </p>     
+    </div>
+    <div class="answer">
+      <h5 class="box-title">Some possible prototypes</h5>
+      <p>
+        <input class="bz-toggle-all-next" type="button" value="Done" data-bz-retained="dts-btn-08" />
+      </p>
+    </div>
+
+    <blockquote>Prototype as if you know you're right, and test as if you know you're wrong.</blockquote>
+
+
+
+    <h2 id="wrap-up">Wrap-up</h2>
+    <div>
+        <p>In this module we looked at some winning strategies for interviewing in person and by phone/video:</p>
+        <ul>
+            <li></li>
+        </ul>
+        <h3>Next Steps:</h3>
+        <ul>
+            <li></li>
+        </ul>
+    </div>
+</div>
+<script src="../new-ui-sandbox.js"></script>
+<progress max="100" id="bz-progress-bar" value="14"></progress>
 </body>
 </html>
