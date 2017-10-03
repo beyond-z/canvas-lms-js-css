@@ -23,46 +23,75 @@ crossorigin="anonymous">
 </head>
 <body>
 <?php 
-$GLOBALS['namespace']='cskickoff';
+//$ns = 'csk';
+require('functions.php');
+
+
 ?>
 <div class="bz-module">
   <h2 id="why">Why is this important?</h2>
-  <?php openbox('question','This is the intro'); ?>
+  <?php openbox('question','Why do employers look to hire good team players?'); ?>
     <?php
     $items = array(
-      array('correctness' => 'correct', 'content' => 'Using a <span class="bz-has-tooltip" title="Methodical, using a plan">systemic</span> approach will lead to solutions that are less subjective and less impacted by biases or perceptions.'),
-      array('correctness' => 'correct', 'content' => 'You will find it easier to present your solution to the rest of the team if it is backed by a clear rationale.'),
-      array('correctness' => 'incorrect', 'content' => 'You will have to rely on luck to figure things out.'),
-      array('correctness' => 'incorrect', 'content' => 'You will use process of elimination and try all sorts of things that don&rsquo;t work.')
-    );
-    ?>
-    <?php makecrlist($items, 'checklist'); ?>
-  <?php closebox(); ?>
-  <?php openbox(); ?>
-    <?php $items = array(
-      array(
-        'correctness' => 'correct', 
-        'content' => 'A description of the logical, step-by-step framework he would follow to solve the problem', 
-        'feedback' => 'Correct! You want to see how he wraps his head around problems and that he approaches them systematically.'
-      ),
-      array(
-        'correctness' => 'incorrect', 
-        'content' => 'He won&rsquo;t sleep until he solves the problem', 
-        'feedback' => 'You want to know that he will work smart, not just work hard. Being well-rested is important for solving problems well!'
-      ), 
-      array(
-        'correctness' => 'incorrect', 
-        'content' => 'He will ask the appropriate person at the company for help', 
-        'feedback' => 'You want to know how he would try to solve the problem before asking for help. Asking for help isn&rsquo;t a bad thing, but if he&rsquo;s always reliant on others to solve problems for him, he won&rsquo;t be an asset to the team.'
-      ), 
-      array(
-        'correctness' => 'incorrect', 
-        'content' => 'A list of all the possible solutions', 
-        'feedback' => 'This might make you think he jumps to conclusions without any process, which could mean he a) will make a lot of mistakes, and b) will waste a lot of time until he finds the right solution (if he ever does).'
-      ) 
+      array('correctness' => 'correct', 'content' => 'Because a team&rsquo;s dynamics are more important to the success of a project than the talents of the individuals who make it up'),
+      array('correctness' => 'incorrect', 'content' => 'Because having that competitive edge means you&rsquo;ll be successful no matter what role you’re in'),
+      array('correctness' => 'incorrect', 'content' => 'Because there is no “I” in “team”'),
+      array('correctness' => 'incorrect', 'content' => 'Because good team players are generally more persistent, motivated, and reliable')
     );
     ?>
     <?php makecrlist($items, 'radio-list'); ?>
+  <?php closebox(); ?>
+  <?php openbox('answer','A group of Google&rsquo;s <span class="bz-has-tooltip" title="Similar to Human Resources (HR)">People Operations</span> employees spent two years interviewing more than 200 Googlers across more than 180 teams to find out what distinguishes the most successful teams at Google, and their main finding was just that: a team&rsquo;s dynamics are more important to the success of a project than the talents of the individuals who make it up.'); ?>
+  </div>
+  <blockquote>
+    "Never doubt that a small group of thoughtful, committed citizens can change the world; indeed, it's the only thing that ever has."<p class="quote-source">Margaret Mead</p>
+  </blockquote>
+  <h2 id="how">How do I do this?</h2>
+  <h3>How do I build an effective team?</h3>
+  <h4>Traits of effective teams</h4>
+  <?php $$GLOBALS['hlevel'] = 5; ?>
+  <?php openbox('question', 'That same Google study found that effective teams share five main characteristics. Select the 5 from this list:'); ?>
+    <?php 
+    $items = array(
+      array(
+        'correctness' => 'correct',
+        'content' => 'Teams establish psychological safety'
+      ),
+      array(
+        'correctness' => 'correct',
+        'content' => 'Team members commit to being dependable '
+      ),
+      array(
+        'correctness' => 'correct',
+        'content' => 'Teams establish structure and clarity '
+      ),
+      array(
+        'correctness' => 'correct',
+        'content' => 'Teams must have a clear purpose '
+      ),
+      array(
+        'correctness' => 'correct',
+        'content' => 'Team members communicate frequently '
+      ),
+      array(
+        'correctness' => 'incorrect',
+        'content' => 'Team members commit to doing the same tasks '
+      ),
+      array(
+        'correctness' => 'incorrect',
+        'content' => 'Team members are good friends outside of work '
+      ),
+      array(
+        'correctness' => 'incorrect',
+        'content' => 'Team members all work out of the same office '
+      ),
+      array(
+        'correctness' => 'incorrect',
+        'content' => 'Teams are made up of the company&rsquo;s most talented individual contributors '
+      ),
+    );
+
+    makecrlist($items) ?>
   <?php closebox();?>
   <h2 id="wrap-up">Wrap-up</h2>
   <div>
