@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Module 9 Design Thinking Sprint</title>
+<title>Module 10 Capstone Kickoff</title>
 <script
   src="https://code.jquery.com/jquery-3.2.1.min.js"
   integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
@@ -22,22 +22,136 @@ crossorigin="anonymous">
 <link rel="stylesheet" type="text/css" href="../bz_newui.css">
 </head>
 <body>
+<?php 
+$module='cskickoff';
+$hlevel=2; 
+$boxcounter = 1;
+$for;
+?>
 <div class="bz-module">
     <h2 id="why">Why is this important?</h2>
-    <div class="bz-box question">
-        <h3 class="box-title">Quick Question</h3>
-        <p>It's your first month on the job and you are confronted with a big, hairy problem to solve. You feel that this is your time to shine (or fail). Which of the following is true? (check all that apply)</p>
-        <ul class="checklist instant-feedback">
-            <li class="correct"><input type="checkbox" data-bz-retained="dts-q01-1" />You're more likely to identify the best solution and act on it by not leaving things up to chance.</li>
-            <li class="correct"><input type="checkbox" data-bz-retained="dts-q01-2" />Using a <span class="bz-has-tooltip" title="Methodical, using a plan">systemic</span> approach will lead to solutions that are less subjective and less impacted by biases or perceptions.</li>
-            <li class="correct"><input type="checkbox" data-bz-retained="dts-q01-3" />You will find it easier to present your solution to the rest of the team if it's backed by a clear rationale.</li>
-            <li class="incorrect"><input type="checkbox" data-bz-retained="dts-q01-4" />You will have to rely on luck to figure things out.</li>
-            <li class="incorrect"><input type="checkbox" data-bz-retained="dts-q01-5" />You will use process of elimination and try all sorts of things that don't work.</li>
+    <?php function openbox($btype = 'question', $bintro = '', $btitle) {
+      /* Typical $type and $title values: */
+      if (!$btitle) switch ($btype) {
+        case 'question':
+          $btitle = 'Quick Question';
+          break;
+        case 'answer':
+          $btitle = 'Answer';break;
+        case 'video':
+          $btitle = 'Watch This';
+          break;
+        case 'read':
+          $btitle = 'Story Time';
+          break;
+        case 'reflection':
+          $btitle = 'Get to know yourself';
+          break;
+        case 'action':
+          $btitle = 'Take a real step right now';
+          break;
+        case 'pulse':
+          $btitle = 'Pulse Check';
+          break;
+        default: 
+          $btitle = '';
+      }
+      
+      echo '<div class="bz-box '.$btype.'">';
+      echo '  <h'.$GLOBALS['hlevel'].' class="box-title">'.$btitle.'</h3>';
+      echo '  <p>'.$bintro.'</p>';
+      $GLOBALS['for'] = '';
+    }
+
+    function closebox() {
+      echo '  <p><input class="bz-toggle-all-next '.$GLOBALS['for'].'" type="button" value="Done" data-bz-retained="'.$GLOBALS['module'].'-btn-'.$GLOBALS['boxcounter'].'" /></p>';
+      $GLOBALS['for'] = '';
+      $GLOBALS['boxcounter']++;
+      echo '</div>';
+    }
+
+    function makecrlist($items, $type, $instant = 'instant-feedback') {
+      $inputtype = ($type == 'checklist') ? 'checkbox' : 'radio';
+      if ( null == $instant ) {
+        $GLOBALS['for'] = 'for-'.$type;
+      }
+      echo '<ul class="' . $type . ' ' . $instant . '">';
+
+      foreach ($items as $key => $item) {
+        if ($item['feedback']) {
+          $item['feedback'] = '<p class="feedback inline">'.$item['feedback'].'</p>';
+        }
+        $itemname = $GLOBALS['module'].'-q'.$GLOBALS['boxcounter'];
+        $itemname = ( 'checklist' == $type ) ? $itemname.'-'.$key : $itemname;
+        echo  '<li class="'
+              . $item['correctness']
+              .'""><input type="'.$inputtype
+              .'" data-bz-retained="'.$itemname.'" name="'.$itemname
+              .'" value="option'.$key.'" />'
+              .$item['content']
+              .$item['feedback']
+              .'</li>';
+      }
+      echo '</ul>';
+    }
+    ?>
+
+    <?php 
+    openbox('question','This is the intro'); 
+    $items = array(
+      array('correctness' => 'correct', 'content' => 'Using a <span class="bz-has-tooltip" title="Methodical, using a plan">systemic</span> approach will lead to solutions that are less subjective and less impacted by biases or perceptions.'),
+      array('correctness' => 'correct', 'content' => 'You will find it easier to present your solution to the rest of the team if it is backed by a clear rationale.'),
+      array('correctness' => 'incorrect', 'content' => 'You will have to rely on luck to figure things out.'),
+      array('correctness' => 'incorrect', 'content' => 'You will use process of elimination and try all sorts of things that don&rsquo;t work.')
+    );
+    makecrlist($items, 'checklist');       
+    closebox(); 
+    ?>
+      <hr />
+      <?php openbox();?>
+
+        <ul class="radio-list instant-feedback">
+            <li class="correct"><input type="radio" data-bz-retained="dts-q-03-r" name="dts-q-03-r" value="1" />A description of the logical, step-by-step framework he would follow to solve the problem <p class="feedback inline">Correct! You want to see how he wraps his head around problems and that he approaches them systematically.</p></li>
+            <li class="incorrect"><input type="radio" data-bz-retained="dts-q-03-r" name="dts-q-03-r" value="2" />He won't sleep until he solves the problem <p class="feedback inline">You want to know that he will work smart, not just work hard. Being well-rested is important for solving problems well!</p></li>
+            <li class="incorrect"><input type="radio" data-bz-retained="dts-q-03-r" name="dts-q-03-r" value="3" />He will ask the appropriate person at the company for help <p class="feedback inline">You want to know how he would try to solve the problem before asking for help. Asking for help isn't a bad thing, but if he's always reliant on others to solve problems for him, he won't be an asset to the team.</p></li>
+            <li class="incorrect"><input type="radio" data-bz-retained="dts-q-03-r" name="dts-q-03-r" value="4" />A list of all the possible solutions <p class="feedback inline">This might make you think he jumps to conclusions without any process, which could mean he a) will make a lot of mistakes, and b) will waste a lot of time until he finds the right solution (if he ever does).</p></li>
         </ul>
-        <p>
-          <input class="bz-toggle-all-next for-checklist" type="button" value="Done" data-bz-retained="dts-btn-01" />
-        </p>
-      </div>
+
+        <?php $items = array(
+          array(
+            'correctness' => 'correct', 
+            'content' => 'A description of the logical, step-by-step framework he would follow to solve the problem', 
+            'feedback' => 'Correct! You want to see how he wraps his head around problems and that he approaches them systematically.'
+          ),
+          array(
+            'correctness' => 'incorrect', 
+            'content' => 'He won&rsquo;t sleep until he solves the problem', 
+            'feedback' => 'You want to know that he will work smart, not just work hard. Being well-rested is important for solving problems well!'
+          ), 
+          array(
+            'correctness' => 'incorrect', 
+            'content' => 'He will ask the appropriate person at the company for help', 
+            'feedback' => 'You want to know how he would try to solve the problem before asking for help. Asking for help isn&rsquo;t a bad thing, but if he&rsquo;s always reliant on others to solve problems for him, he won&rsquo;t be an asset to the team.'
+          ), 
+          array(
+            'correctness' => 'incorrect', 
+            'content' => 'A list of all the possible solutions', 
+            'feedback' => 'This might make you think he jumps to conclusions without any process, which could mean he a) will make a lot of mistakes, and b) will waste a lot of time until he finds the right solution (if he ever does).'
+          ) 
+        );
+        ?>
+        <?php makecrlist($items, 'radio-list'); ?>
+        <?php closebox();?>
+
+      <hr />
+      <hr />
+      <hr />
+      <hr />
+      <hr />
+      <hr />
+      <hr />
+      <hr />
+      <hr />
       <div class="bz-box video">
         <h3 class="box-title">Watch this</h3>
         <div class="tbd">[Video testimonial of a Braven team member talking about trying to solve a problem without a framework and then how much easier it got when using a systemic approach]</div>
