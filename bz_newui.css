@@ -969,7 +969,8 @@ figcaption {
 	padding: 0.3em 0.5em !important;
 }
 
-.checklist {
+.checklist,
+.radio-list {
 	list-style:none outside;
 	padding-left: 0;
 	margin-left: 0;
@@ -1191,6 +1192,10 @@ li input:not([type="button"]):not([type="radio"]):not([type="checkbox"]), li tex
 	height: auto;
 	margin: 2em 17%;
 	text-align: center;
+}
+
+.shrink {
+	font-size: 0.8em;
 }
 
 .to-columns {

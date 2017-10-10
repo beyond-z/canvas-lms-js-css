@@ -95,12 +95,12 @@ function bz_make_id($hold = null) {
     ),
   );
 */
-function bz_make_cr_list($items, $type = 'checklist', $instant = 'instant-feedback') {
+function bz_make_cr_list($items, $type = 'checklist', $instant = 'instant-feedback', $addlclasses = '') {
   $inputtype = ($type == 'checklist') ? 'checkbox' : 'radio';
     if ( null == $instant ) {
       $GLOBALS['for'] = 'for-'.$type;
     }
-  echo '<ul class="' . $type . ' ' . $instant . '">';
+  echo '<ul class="' . $type . ' ' . $instant . ' ' . $addlclasses . '">';
 
   foreach ($items as $key => $item) {
     if ($item['feedback']) {
