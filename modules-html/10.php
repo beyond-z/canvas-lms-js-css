@@ -29,8 +29,9 @@ require('functions.php');
 
 ?>
 <div class="bz-module">
-  <h2 id="why">Why is this important?</h2>
-  <?php openbox('question','Why do employers look to hire good team players?'); ?>
+  <p>This module focuses on team working skills, ahead of your team project kick off in the upcoming Learning Lab.</p>
+  <h2 id="why">Why are team working skills important?</h2>
+  <?php bz_open_box('question','Why do employers look to hire good team players?'); ?>
     <?php
     $items = array(
       array('correctness' => 'correct', 'content' => 'Because a team&rsquo;s dynamics are more important to the success of a project than the talents of the individuals who make it up'),
@@ -39,9 +40,9 @@ require('functions.php');
       array('correctness' => 'incorrect', 'content' => 'Because good team players are generally more persistent, motivated, and reliable')
     );
     ?>
-    <?php makecrlist($items, 'radio-list'); ?>
-  <?php closebox(); ?>
-  <?php openbox('answer','A group of Google&rsquo;s <span class="bz-has-tooltip" title="Similar to Human Resources (HR)">People Operations</span> employees spent two years interviewing more than 200 Googlers across more than 180 teams to find out what distinguishes the most successful teams at Google, and their main finding was just that: a team&rsquo;s dynamics are more important to the success of a project than the talents of the individuals who make it up.'); ?>
+    <?php bz_make_cr_list($items, 'radio-list'); ?>
+  <?php bz_close_box(); ?>
+  <?php bz_open_box('answer','A group of Google&rsquo;s <span class="bz-has-tooltip" title="Similar to Human Resources (HR)">People Operations</span> employees spent two years interviewing more than 200 Googlers across more than 180 teams to find out what distinguishes the most successful teams at Google, and their main finding was just that: a team&rsquo;s dynamics are more important to the success of a project than the talents of the individuals who make it up.'); ?>
   </div>
   <blockquote>
     "Never doubt that a small group of thoughtful, committed citizens can change the world; indeed, it's the only thing that ever has."<p class="quote-source">Margaret Mead</p>
@@ -50,7 +51,7 @@ require('functions.php');
   <h3>How do I build an effective team?</h3>
   <h4>Traits of effective teams</h4>
   <?php $$GLOBALS['hlevel'] = 5; ?>
-  <?php openbox('question', 'That same Google study found that effective teams share five main characteristics. Select the 5 from this list:'); ?>
+  <?php bz_open_box('question', 'That same Google study found that effective teams share five main characteristics. Select the 5 from this list:'); ?>
     <?php 
     $items = array(
       array(
@@ -91,9 +92,9 @@ require('functions.php');
       ),
     );
 
-    makecrlist($items) ?>
-  <?php closebox();?>
-  <?php openbox('answer', 'Let&rsquo;s take a closer look at these five elements:');?>
+    bz_make_cr_list($items) ?>
+  <?php bz_close_box();?>
+  <?php bz_open_box('answer', 'Let&rsquo;s take a closer look at these five elements:');?>
     <p class="tbd">REPLACE IMAGES WITH CONTENT LIBRARY BASED ONES</p>
     <table>
       <tbody>
@@ -135,8 +136,8 @@ require('functions.php');
         </tr>
       </tbody>
     </table>
-  <?php closebox();?>
-  <?php openbox('reflection', 'Think about your own cohort as a team. You’ve been working as a team all semester, and you’re about to begin an intense project, the Capstone Challenge, as a team. Rate your cohort on the five effective team characteristics: (1=poor, 5=excellent)');?>
+  <?php bz_close_box();?>
+  <?php bz_open_box('reflection', 'Think about your own cohort as a team. You’ve been working as a team all semester, and you’re about to begin an intense project, the Capstone Challenge, as a team. Rate your cohort on the five effective team characteristics: (1=poor, 5=excellent)');?>
     <?php 
       $items = array(
         'Your cohort feels safe',
@@ -146,12 +147,12 @@ require('functions.php');
         'Your cohort members communicate frequently ',
       );
     ?>
-    <?php makemultiradios($items); ?>
-  <?php closebox();?>
-  <?php openbox('answer','You may have ranked your cohort low on some of these characteristics, and that’s okay. Embrace the journey! Teamwork is hard stuff. You will have the time in the upcoming Learning Lab to set expectations and define leadership roles to work effectively as a team throughout the Capstone Challenge. And you will have the space to reflect on your cohort’s teamwork during weekly Retrospectives with the purpose of always improving', 'What does this mean?'); ?>
-  <?php closebox(false);?>
+    <?php bz_make_multi_radios($items); ?>
+  <?php bz_close_box();?>
+  <?php bz_open_box('answer','You may have ranked your cohort low on some of these characteristics, and that’s okay. Embrace the journey! Teamwork is hard stuff. You will have the time in the upcoming Learning Lab to set expectations and define leadership roles to work effectively as a team throughout the Capstone Challenge. And you will have the space to reflect on your cohort’s teamwork during weekly Retrospectives with the purpose of always improving', 'What does this mean?'); ?>
+  <?php bz_close_box(false);?>
   <h4>Troubelshooting</h4>
-  <?php openbox('story');?>
+  <?php bz_open_box('read');?>
     <div class="bz-example">
       <p>The team was working on a project to launch a new website for the company. This team had been working together for quite some time and felt psychologically safe with one another. The team came up with a project plan, and everyone was following through on their assigned tasks. </p>
       <p>On website launch day, the team realized the site had some bugs making it not work properly. Someone had dropped the ball on making sure the website had been tested. Everyone started to feel nervous about the implications of this error. </p>
@@ -173,10 +174,10 @@ require('functions.php');
     );
     
     ?>
-    <?php makecrlist($items, 'radio-list');?>
-  <?php closebox();?>
+    <?php bz_make_cr_list($items, 'radio-list');?>
+  <?php bz_close_box();?>
   <blockquote>Even the most effective teams have conflicts. It’s how you deal with those challenges that reveals the strength of the team.</blockquote>
-  <?php openbox('question', 'Every team goes through the stages of group development. Each of the four phases are necessary and inevitable in order for the team to grow, to face up to challenges, to tackle problems, to find solutions, to plan work, and to deliver results. Read the descriptions of each of the stages (they’re currently not in the correct order), and match the names to the stages.'); ?>
+  <?php bz_open_box('question', 'Every team goes through the stages of group development. Each of the four phases are necessary and inevitable in order for the team to grow, to face up to challenges, to tackle problems, to find solutions, to plan work, and to deliver results. Read the descriptions of each of the stages (they’re currently not in the correct order), and match the names to the stages.'); ?>
     <table class="sort-to-match">
       <?php $GLOBALS['for'] = 'for-match'; ?>
       <tr>
@@ -196,8 +197,8 @@ require('functions.php');
         <td><p>NORMING</p></td>
       </tr>
     </table>
-  <?php closebox();?>
-  <?php openbox('question', 'There are five common team dysfunctions that often get in the way of “rowing together.” Match each team pitfall to what it causes in the team dynamic.'); ?>
+  <?php bz_close_box();?>
+  <?php bz_open_box('question', 'There are five common team dysfunctions that often get in the way of “rowing together.” Match each team pitfall to what it causes in the team dynamic.'); ?>
     <table class="sort-to-match">
       <?php $GLOBALS['for'] = 'for-match'; ?>
       <tr>
@@ -225,8 +226,8 @@ require('functions.php');
         <td><p>Seeking status and ego: put individual recognition above the goals of the team </p></td>
       </tr>
     </table>
-  <?php closebox(); ?>
-  <?php openbox('answer', 'Counter to conventional wisdom, the causes of dysfunction are both identifiable and curable. The following cards explain how to combat each dysfunction.', 'Fear not!'); ?>
+  <?php bz_close_box(); ?>
+  <?php bz_open_box('answer', 'Counter to conventional wisdom, the causes of dysfunction are both identifiable and curable. The following cards explain how to combat each dysfunction.', 'Fear not!'); ?>
   <p class="tbd">Add flip interaction or change intro</p>
     <table class="dont-mix">
       <tr>
@@ -331,9 +332,9 @@ require('functions.php');
         </td>
       </tr>
     </table>
-  <?php closebox(); ?>
+  <?php bz_close_box(); ?>
   <?php 
-  openbox('question','What should you <strong>avoid</strong> when working as a team?'); 
+  bz_open_box('question','What should you <strong>avoid</strong> when working as a team?'); 
     $items = array(
       array(
         'correctness' => 'correct',
@@ -356,16 +357,16 @@ require('functions.php');
         'feedback' => ''
       ),
     );
-    makecrlist($items, 'radio-list');
+    bz_make_cr_list($items, 'radio-list');
 
-  closebox();?>
+  bz_close_box();?>
   <?php 
-  openbox('reflection','Describe a team you worked on where it felt dysfunctional. What wasn’t working? What was the end result? What are some ways you could have changed the dynamic?');?>
-    <p><?php maketextarea();?></p>
-  <?php closebox(); ?>
+  bz_open_box('reflection','Describe a team you worked on where it felt dysfunctional. What wasn’t working? What was the end result? What are some ways you could have changed the dynamic?');?>
+    <p><?php bz_make_textarea();?></p>
+  <?php bz_close_box(); ?>
   <h3>How do I identify my strengths as a teammate?</h3>
   <?php $$GLOBALS['hlevel'] = 4; ?>
-  <?php openbox('pulse', 'What are some common obstacles you personally encounter when working in a team? (Check all that apply)');
+  <?php bz_open_box('pulse', 'What are some common obstacles you personally encounter when working in a team? (Check all that apply)');
     $items = array(
       array('content' => 'You pick up the slack when other teammates drop the ball (and you feel resentful!) '),
       array('content' => 'You believe you work better autonomously and get frustrated when others slow you down'),
@@ -374,14 +375,14 @@ require('functions.php');
       array('content' => 'You know you take up too much floor time'),
       array('content' => 'You have a hard time backing down or compromising '),
     ); 
-  makecrlist($items); ?>
-  <p><?php maketextarea(array('other'=>true)); ?></p>
-  <?php closebox();?>
+  bz_make_cr_list($items); ?>
+  <p><?php bz_make_textarea(array('other'=>true)); ?></p>
+  <?php bz_close_box();?>
   <?php 
-  openbox('answer', '<p>We’re constantly learning to be better teammates, and that starts with knowing yourself - your challenges and your strengths when it comes to teamwork - really well.</p><p>One framework (there are many) for identifying your strengths as a teammate is the Leadership Compass. It comes from a Native American Indian-based practice called the Four-Fold Way, in which the four directions are described as warrior (north), healer (south), teacher (west), and visionary (east).</p>', 'Yep, we’re all familiar with these archetypes!');
-  closebox(false);
+  bz_open_box('answer', 'We’re constantly learning to be better teammates, and that starts with knowing yourself - your challenges and your strengths when it comes to teamwork - really well.</p><p>One framework (there are many) for identifying your strengths as a teammate is the Leadership Compass. It comes from a Native American Indian-based practice called the Four-Fold Way, in which the four directions are described as warrior (north), healer (south), teacher (west), and visionary (east).', 'Yep, we’re all familiar with these archetypes!');
+  bz_close_box(false);
   ?>
-  <?php openbox('question', 'Match the compass direction with its description:'); ?>
+  <?php bz_open_box('question', 'Match the compass direction with its description:'); ?>
     <table class="sort-to-match">
       <?php $GLOBALS['for'] = 'for-match'; ?>
       <tbody>
@@ -399,30 +400,169 @@ require('functions.php');
         </tr>  
       </tbody>
     </table>
-  <?php closebox();?>
-  <?php openbox('answer','All directions on the leadership compass have profound strengths and potential weaknesses, and every person is seen as capable of growing in each direction. However, many leaders exemplify one compass direction more strongly than others.','There is more than one way to lead');
-  closebox(false);
+  <?php bz_close_box();?>
+  <?php bz_open_box('answer','All directions on the leadership compass have profound strengths and potential weaknesses, and every person is seen as capable of growing in each direction. However, many leaders exemplify one compass direction more strongly than others.','There is more than one way to lead');
+  bz_close_box(false);
   ?>
-  <?php openbox('question', 'Match the person with his or her primary compass direction.');?>
-  <?php 
-  /*
-  $items=array(
-    '<h6>MARISSA MAYER</h6><p>Marissa Mayer is an American business executive and computer scientist, who was most recently the CEO of Yahoo!. In 2014, Mayer was named to Forbes 40 under 40 list, and was ranked the 16th most-powerful businesswoman in the world. Mayer has been credited with changing Yahoo!&rsquo;s maternity leave policy, acquisition of Tumblr and the Chinese e-commerce company the Alibaba Group, and institution of a new performance review system.</p>',
-    '<h6>MARTIN LUTHER KING JR.</h6><p>Martin Luther King Jr. was a minister and social activist who led the Civil Rights Movement in the Uniter States from the mid-1950s until his death by assassination in 1968. His leadership was fundamental to that movement’s success in ending the legal segregation of African Americans in the South and other parts of the United States.</p>',
-    '<h6>SONIA SOTOMAYOR</h6><p>Sonia Sotomayor is an Associate Justice of the Supreme Court of the United States, serving since August 2009. She has the distinction of being its first justice of Hispanic heritage, only its third female justice, and is one of the youngest justices on the Supreme Court. Sotomayor has made notable court opinions and articles on racial discrimination, strip searches, the environment, and 2nd amendment rights.</p>',
-    '<h6>STEVE JOBS</h6><p>Steve Jobs was an American information technology entrepreneur and inventor. He was the co-founder, chairman, and CEO of Apple Inc. He was also the primary investor and CEO of Pixar Studios. Steve Jobs has been credited as the pioneer of the personal computer revolution and the creation of wildly popular devices such as the iPod and iPhone. Jobs died of cancer in 2011.</p>',
-  );
-  $cats = array('NORTH' => '','WEST' => '','EAST' => '','SOUTH' => '',);
+  <?php bz_open_box('question', 'Match the person with his or her primary compass direction.');?>
 
-  makemultiradios($items, $cats)
-  */
-  ?>
- 
-
-
-
-
+  <table class="multi-radios instant-feedback">
+    <thead>
+      <tr>
+        <th>&nbsp;</th>
+        <th>NORTH</th>
+        <th>WEST</th>
+        <th>EAST</th>
+        <th>SOUTH</th>
+      </tr>
+      <tr>
+        <td>
+          <h6>SONIA SOTOMAYOR</h6>
+          <p>Sonia Sotomayor is an Associate Justice of the Supreme Court of the United States, serving since August 2009. She has the distinction of being its first justice of Hispanic heritage, only its third female justice, and is one of the youngest justices on the Supreme Court. Sotomayor has made notable court opinions and articles on racial discrimination, strip searches, the environment, and 2nd amendment rights.</p>
+        </td>
+        <td class="incorrect">
+          <input type="radio" data-bz-retained="<?php $$GLOBALS['innercounter']++; echo bz_make_id();?>" name="<?php echo bz_make_id('hold');?>" value="NORTH">
+        </td>
+        <td class="correct">
+          <input type="radio" data-bz-retained="<?php echo bz_make_id('hold');?>" name="<?php echo bz_make_id('hold');?>" value="WEST">
+        </td>
+        <td class="incorrect">
+          <input type="radio" data-bz-retained="<?php echo bz_make_id('hold');?>" name="<?php echo bz_make_id('hold');?>" value="EAST">
+        </td>
+        <td class="incorrect">
+          <input type="radio" data-bz-retained="<?php echo bz_make_id('hold');?>" name="<?php echo bz_make_id('hold');?>" value="SOUTH">
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <h6>MARISSA MAYER</h6>
+          <p>Marissa Mayer is an American business executive and computer scientist, who was most recently the CEO of Yahoo!. In 2014, Mayer was named to Forbes 40 under 40 list, and was ranked the 16th most-powerful businesswoman in the world. Mayer has been credited with changing Yahoo!’s maternity leave policy, acquisition of Tumblr and the Chinese e-commerce company the Alibaba Group, and institution of a new performance review system.</p>
+        </td>
+        <td class="correct">
+          <input type="radio" data-bz-retained="<?php $$GLOBALS['innercounter']++; echo bz_make_id();?>" name="<?php echo bz_make_id('hold');?>" value="NORTH">
+        </td>
+        <td class="incorrect">
+          <input type="radio" data-bz-retained="<?php echo bz_make_id('hold');?>" name="<?php echo bz_make_id('hold');?>" value="WEST">
+        </td>
+        <td class="incorrect">
+          <input type="radio" data-bz-retained="<?php echo bz_make_id('hold');?>" name="<?php echo bz_make_id('hold');?>" value="EAST">
+        </td>
+        <td class="incorrect">
+          <input type="radio" data-bz-retained="<?php echo bz_make_id('hold');?>" name="<?php echo bz_make_id('hold');?>" value="SOUTH">
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <h6>MARTIN LUTHER KING JR.</h6>
+          <p>Martin Luther King Jr. was a minister and social activist who led the Civil Rights Movement in the Uniter States from the mid-1950s until his death by assassination in 1968. His leadership was fundamental to that movement’s success in ending the legal segregation of African Americans in the South and other parts of the United States.</p>
+        </td>
+        <td class="incorrect">
+          <input type="radio" data-bz-retained="<?php $$GLOBALS['innercounter']++; echo bz_make_id();?>" name="<?php echo bz_make_id('hold');?>" value="NORTH">
+        </td>
+        <td class="incorrect">
+          <input type="radio" data-bz-retained="<?php echo bz_make_id('hold');?>" name="<?php echo bz_make_id('hold');?>" value="WEST">
+        </td>
+        <td class="incorrect">
+          <input type="radio" data-bz-retained="<?php echo bz_make_id('hold');?>" name="<?php echo bz_make_id('hold');?>" value="EAST">
+        </td>
+        <td class="correct">
+          <input type="radio" data-bz-retained="<?php echo bz_make_id('hold');?>" name="<?php echo bz_make_id('hold');?>" value="SOUTH">
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <h6>STEVE JOBS</h6>
+          <p>Steve Jobs was an American information technology entrepreneur and inventor. He was the co-founder, chairman, and CEO of Apple Inc. He was also the primary investor and CEO of Pixar Studios. Steve Jobs has been credited as the pioneer of the personal computer revolution and the creation of wildly popular devices such as the iPod and iPhone. Jobs died of cancer in 2011.</p>
+        </td>
+        <td class="incorrect">
+          <input type="radio" data-bz-retained="<?php $$GLOBALS['innercounter']++; echo bz_make_id();?>" name="<?php echo bz_make_id('hold');?>" value="NORTH">
+        </td>
+        <td class="incorrect">
+          <input type="radio" data-bz-retained="<?php echo bz_make_id('hold');?>" name="<?php echo bz_make_id('hold');?>" value="WEST">
+        </td>
+        <td class="correct">
+          <input type="radio" data-bz-retained="<?php echo bz_make_id('hold');?>" name="<?php echo bz_make_id('hold');?>" value="EAST">
+        </td>
+        <td class="incorrect">
+          <input type="radio" data-bz-retained="<?php echo bz_make_id('hold');?>" name="<?php echo bz_make_id('hold');?>" value="SOUTH">
+        </td>
+      </tr>
+    </thead>
   </table>
+  <?php 
+  $$GLOBALS['for'] = 'match';
+  bz_close_box();
+  ?>
+  <?php bz_open_box('answer'); ?>
+  <h6>MARISSA MAYER</h6>
+  <p><strong>North.</strong> Marissa Mayer exemplifies a leader who is assertive, directive, and decisive. Not all of her management decisions have been popular, but there's a reason that she is the only person to have been featured in all three of Fortune Magazine's annual lists during the same year: Businessperson of the Year (No. 10), Most Powerful Women (at No. 8), and 40 Under 40 (No. 1) at the same time.</p>
+  <h6>MARTIN LUTHER KING JR.</h6>
+  <p><strong>South.</strong> Martin Luther King Jr. exemplifies a leader who is values-driven and a relationship-builder, who takes into account the voices, experiences, and perspectives of others and acts in service of them. He tapped into the emotional and moral compass of a generation to promote nonviolent tactics to achieve civil rights. He was awarded the Nobel Peace Prize in 1964.</p>
+  <h6>SONIA SOTOMAYOR</h6>
+  <p><strong>West.</strong> Sonia Sotomayor exemplifies a leader who lives by inquiry, is detail-oriented, and makes reliable and thorough decisions, and is willing to ask the tough questions. Sotomayor has earned a reputation as a “sharp and fearless jurist" who has been known to take into account aspects of her identity, including her gender and personal experience, into her decisions.</p>
+  <h6>STEVE JOBS</h6>
+  <p><strong>East.</strong> Steve Jobs was called a "modern-day Leonardo da Vinci" by some pundits, who praised his ability to think outside the box, set a creative vision for the future, and transform entire industries with his inventions. Jobs was a master in designing from the perspective of his users and creating adaptive solutions to real-world problems that they faced.</p>
+  <?php bz_close_box(); ?>
+  <?php 
+  bz_open_box('question', 'Why might it be helpful to know where you personally land on the Leadership Compass? (check all that apply)');
+    $items = array(
+      array(
+        'correctness' => 'correct',
+        'content' => 'To share it with others on your team and understand how each person works',
+        'feedback' => ''
+      ),
+      array(
+        'correctness' => 'correct',
+        'content' => 'To articulate why you work the way you do and identify skills that you can contribute to your cohort',
+        'feedback' => ''
+      ),
+      array(
+        'correctness' => 'correct',
+        'content' => 'To develop an understanding of how your work style might affect the team',
+        'feedback' => ''
+      ),
+      array(
+        'correctness' => 'correct',
+        'content' => 'To build skill in all four directions to enhance personal and team performance ',
+        'feedback' => ''
+      ),
+      array(
+        'correctness' => 'incorrect',
+        'content' => 'So you can write it on your resume',
+        'feedback' => ''
+      ),
+      array(
+        'correctness' => 'incorrect',
+        'content' => 'To justify to your teammates why you’re not following through on tasks',
+        'feedback' => ''
+      ),
+      array(
+        'correctness' => 'incorrect',
+        'content' => 'To keep building skill in your primary direction and ignore the other directions ',
+        'feedback' => ''
+      ),
+    );
+    bz_make_cr_list($items);
+  bz_close_box();
+  ?>
+  <?php 
+  bz_open_box('reflection', 'So which compass direction are you? Take the following quiz to find out. Check off each characteristic that applies to you.');
+
+
+  bz_close_box();
+  bz_open_box('answer','','Your results');
+
+  bz_close_box();
+  ?>
+  <?php 
+  bz_open_box('reflection', 'Do these directions fall in line with what you expected? Why or why not?');
+    bz_make_textarea();
+    ?>
+    <p>What do these directions make you think about how you will work with your cohort on the Capstone Challenge?</p>
+    <?php
+    bz_make_textarea();
+  bz_close_box();
+  ?>
   <h2 id="wrap-up">Wrap-up</h2>
   <div>
     <p>In this module we looked at </p>

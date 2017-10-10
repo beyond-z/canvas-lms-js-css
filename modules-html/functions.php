@@ -20,31 +20,32 @@ try {
 
 /* Generate opening tag and intro for a bz-box */
 /* ============================================*/
-function openbox($btype = 'question', $bintro = '', $btitle) {
+function bz_open_box($btype = 'question', $bintro = '', $btitle) {
   // Default titles per $type: 
   if (!$btitle) switch ($btype) {
     case 'question':
-    $btitle = 'Quick Question';
-    break;
+      $btitle = 'Quick Question';
+      break;
     case 'answer':
-    $btitle = 'Answer';break;
+      $btitle = 'Answer';
+      break;
     case 'video':
-    $btitle = 'Watch This';
-    break;
+      $btitle = 'Watch This';
+      break;
     case 'read':
-    $btitle = 'Story Time';
-    break;
+      $btitle = 'Story Time';
+      break;
     case 'reflection':
-    $btitle = 'Get to know yourself';
-    break;
+      $btitle = 'Get to know yourself';
+      break;
     case 'action':
-    $btitle = 'Take a real step right now';
-    break;
+      $btitle = 'Take a real step right now';
+      break;
     case 'pulse':
-    $btitle = 'Pulse Check';
-    break;
+      $btitle = 'Pulse Check';
+      break;
     default: 
-    $btitle = '';
+      $btitle = '&nbsp;';
   }
 
 	// Open the box:
@@ -52,7 +53,7 @@ function openbox($btype = 'question', $bintro = '', $btitle) {
   echo '  <h'.$GLOBALS['hlevel'].' class="box-title">'.$btitle.'</h'.$GLOBALS['hlevel'].'>';
   echo '  <p>'.$bintro.'</p>';
   // Reset "for-" for "done" button interactivity:
-	/*  (e.g. "for-checklist" may be set by makecrlist(), 
+	/*  (e.g. "for-checklist" may be set by bz_make_cr_list(), 
       but we don't want previous box's interaction to apply here )  */
   $GLOBALS['for'] = '';
   // Reset inner box counter used for numbering multiple fields in one box:
@@ -62,13 +63,24 @@ function openbox($btype = 'question', $bintro = '', $btitle) {
 /* Generate Done button and closing tag for a bz-box */
 /* ==================================================*/
 
-function closebox($addbutton = true) {
+function bz_close_box($addbutton = true) {
 	// Generate a "done" button:
   if ($addbutton) echo '  <p><input class="bz-toggle-all-next '.$GLOBALS['for'].'" type="button" value="Done" data-bz-retained="'.$GLOBALS['namespace'].'-btn-'.$GLOBALS['boxcounter'].'" /></p>';
 	// Increment box counter for naming data-bz-retained fields etc.:
   $GLOBALS['boxcounter']++;
+  $GLOBALS['innercounter'] = 0;
 	// Close the div:
   echo '</div>';
+}
+
+/* Generate a sequential ID for a field */
+/* ==================================== */
+function bz_make_id($hold = null) {
+  // Increment, unless we don't want to (e.g. for radios that share a name)
+  if(!$hold) 
+    $GLOBALS['innercounter']++;
+  $itemname = $GLOBALS['namespace'].'-q'.$GLOBALS['boxcounter'].'-'.$GLOBALS['innercounter'];
+  return $itemname;
 }
 
 /* Generate a checklist or radio-list */
@@ -83,8 +95,7 @@ function closebox($addbutton = true) {
     ),
   );
 */
-
-function makecrlist($items, $type = 'checklist', $instant = 'instant-feedback') {
+function bz_make_cr_list($items, $type = 'checklist', $instant = 'instant-feedback') {
   $inputtype = ($type == 'checklist') ? 'checkbox' : 'radio';
     if ( null == $instant ) {
       $GLOBALS['for'] = 'for-'.$type;
@@ -95,9 +106,7 @@ function makecrlist($items, $type = 'checklist', $instant = 'instant-feedback') 
     if ($item['feedback']) {
       $item['feedback'] = '<p class="feedback inline">'.$item['feedback'].'</p>';
     }
-    $GLOBALS['innercounter']++;
-    $itemname = $GLOBALS['namespace'].'-q'.$GLOBALS['boxcounter'].'-'.$GLOBALS['innercounter'];
-    $itemname = ( 'checklist' == $type ) ? $itemname.'-'.$key : $itemname;
+    $itemname = ( 'checklist' == $type ) ? bz_make_id() : bz_make_id('hold');
     echo  '<li class="'
     . $item['correctness']
     .'"><input type="'.$inputtype
@@ -110,15 +119,14 @@ function makecrlist($items, $type = 'checklist', $instant = 'instant-feedback') 
   echo '</ul>';
 }
 
-function maketextarea($args){
+function bz_make_textarea($args){
   /*
   $args = array (
     'optional' => false,
     'other' => false,
   );
   */
-  $GLOBALS['innercounter']++;
-  $itemname = $GLOBALS['namespace'].'-q'.$GLOBALS['boxcounter'].'-'.$GLOBALS['innercounter'];
+  $itemname = bz_make_id();
   $optionalclass = ($args['optional']) ? ' bz-optional-magic-field ' : '';
   $otherclass = ($args['other']) ? ' checklist-other ' : '';
   if ($args['other']) {
@@ -129,9 +137,8 @@ function maketextarea($args){
 }
 
 
-function makemultiradios($items, $cats = array(1 => 'Poor',2 => 'Below average',3 => 'Averge',4 => 'Above average',5 => 'Excellent',), $instant = 'instant-feedback' ) {
-  $GLOBALS['innercounter']++;
-  $itemname = $GLOBALS['namespace'].'-q'.$GLOBALS['boxcounter'].'-'.$GLOBALS['innercounter'];
+function bz_make_multi_radios($items, $cats = array(1 => 'Poor',2 => 'Below average',3 => 'Averge',4 => 'Above average',5 => 'Excellent',), $instant = 'instant-feedback' ) {
+  $itemname = bz_make_id();
   echo '<table class="multi-radios '.$instant.'">';
   echo '  <thead>';
   echo '    <tr><th>&nbsp;</th>';
