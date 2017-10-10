@@ -264,6 +264,39 @@ var bzNewUiHandlers = {
   '.for-match' : function(){
     jQuery(this).parents('.bz-box').find('.sort-to-match').addClass('show-answers');
   },
+
+    // Generate self-evaluation results list:
+  '.for-eval' : function(){
+    var eval = [];
+    var results = "<ul>";
+    // collect all checked inputs' values into an array:
+    jQuery(this).parents('.bz-box').find('input:checked').each(function(){
+      eval.push(jQuery(this).val());
+    });
+    // Now let's sort and count what we've collected:
+    eval.sort();
+    var current = null;
+    var count = 0;
+    for (var i = 0; i < eval.length; i++) {
+        if (eval[i] != current) {
+            if (count > 0) {
+                results+= '<li>'+ current + ': ' + count + '</li>';
+            }
+            current = eval[i];
+            count = 1;
+        } else {
+            count++;
+        }
+    }
+    //finish last iteration:
+    if (count > 0) {
+      results+= '<li>'+ current + ': ' + count + '</li>';
+    }
+    //close the list:
+    results+= '</ul>';
+    jQuery(this).parents('.bz-box').next().children('.box-title').after(results);
+  },
+
 };
 
 function matchesSelector(element, selector) {
