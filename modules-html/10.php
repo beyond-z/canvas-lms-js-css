@@ -798,6 +798,7 @@ require('functions.php');
       </tr>
     </tbody>
   </table>
+  <?php $GLOBALS['for'] = 'for-match';
   <?php bz_close_box(); ?>
   <?php bz_open_box('action', 'To ensure you&rsquo;ve thought about all the tasks necessary to complete a milestone, ask yourself if there’s anything you need to do to complete that task. For example, to draft content for a new website, you might need to start with an outline or a vision for the site.', 'Work backward to move forward');
   bz_close_box(false);
