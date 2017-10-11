@@ -988,6 +988,7 @@ figcaption {
 .show-answers.correct {
 	color: #22B573;
 }
+
  tr:not(.suppress-answers) td.show-answers.correct {
  background: #22B573;
  color: #FFF;
@@ -1820,10 +1821,12 @@ table [type="range"] {
 	border: dashed 2px black;
 }
  .sort-to-match.show-answers:not(.bz-locked-table) .correct {
- background: #22B573;
+	background: #22B573;
+	color: #000;
 }
 .sort-to-match.show-answers:not(.bz-locked-table) .incorrect {
- background: #EB3B46;
+	background: #EB3B46;
+	color: #000
 }
 
 .bz-locked-table {
