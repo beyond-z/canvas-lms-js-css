@@ -969,7 +969,8 @@ figcaption {
 	padding: 0.3em 0.5em !important;
 }
 
-.checklist {
+.checklist,
+.radio-list {
 	list-style:none outside;
 	padding-left: 0;
 	margin-left: 0;
@@ -987,6 +988,7 @@ figcaption {
 .show-answers.correct {
 	color: #22B573;
 }
+
  tr:not(.suppress-answers) td.show-answers.correct {
  background: #22B573;
  color: #FFF;
@@ -1191,6 +1193,10 @@ li input:not([type="button"]):not([type="radio"]):not([type="checkbox"]), li tex
 	height: auto;
 	margin: 2em 17%;
 	text-align: center;
+}
+
+.shrink {
+	font-size: 0.8em;
 }
 
 .to-columns {
@@ -1815,10 +1821,15 @@ table [type="range"] {
 	border: dashed 2px black;
 }
  .sort-to-match.show-answers:not(.bz-locked-table) .correct {
- background: #22B573;
+	background: #22B573;
 }
 .sort-to-match.show-answers:not(.bz-locked-table) .incorrect {
- background: #EB3B46;
+	background: #EB3B46;
+}
+
+.sort-to-match.show-answers:not(.bz-locked-table) .correct h6,
+.sort-to-match.show-answers:not(.bz-locked-table) .incorrect h6 {
+ 	color: #FFF;
 }
 
 .bz-locked-table {
