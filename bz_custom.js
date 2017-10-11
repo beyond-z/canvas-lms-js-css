@@ -299,6 +299,29 @@ var bzNewUiHandlers = {
 
 };
 
+function shuffleChildren(element) {
+  var children = Array.prototype.slice.call(element.children);
+  var shuffled = [];
+  shuffled.length = children.length;
+  var pos = 0;
+  while(children.length) {
+    var random = Math.floor(Math.random() * children.length);
+    var d = children[random];
+    d.parentNode.removeChild(d);
+
+    shuffled[pos] = d;
+    pos += 1;
+
+    children[random] = children[children.length - 1];
+    children.length -= 1;
+  }
+
+  for(var i = 0; i < shuffled.length; i++)
+    element.appendChild(shuffled[i]);
+
+  return element;
+}
+
 function matchesSelector(element, selector) {
     if(element.matches)
         return element.matches(selector);
@@ -364,10 +387,7 @@ function bzInitializeNewUi() {
  
   // Mix up checklists:
   jQuery('.checklist, .radio-list').not('.dont-mix').each(function(){
-    var itemsToMix = jQuery(this).children();
-    for (var i = itemsToMix.length; i >= 0; i--) {
-      jQuery(this).append(itemsToMix[Math.random() * i | 0]);
-    }
+    shuffleChildren(this);
   });
   
   // Instant feedback when sliding range input about "how are you feeling":
