@@ -1822,11 +1822,14 @@ table [type="range"] {
 }
  .sort-to-match.show-answers:not(.bz-locked-table) .correct {
 	background: #22B573;
-	color: #000;
 }
 .sort-to-match.show-answers:not(.bz-locked-table) .incorrect {
 	background: #EB3B46;
-	color: #000
+}
+
+.sort-to-match.show-answers:not(.bz-locked-table) .correct h6,
+.sort-to-match.show-answers:not(.bz-locked-table) .incorrect h6 {
+ 	color: #FFF;
 }
 
 .bz-locked-table {
