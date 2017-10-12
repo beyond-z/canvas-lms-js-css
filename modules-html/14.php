@@ -23,7 +23,7 @@ crossorigin="anonymous">
 </head>
 <body>
 <?php 
-$ns = 'csk';
+$ns = 'cspr';
 require('functions.php');
 
 

@@ -158,4 +158,27 @@ function bz_make_multi_radios($items, $cats = array(1 => 'Poor',2 => 'Below aver
   echo '  </thead>';
   echo '</table>';
 }
+
+
+function bz_make_youtube($youtubeid, $duration, $caption, $transcript, $instructions) {
+  ?>
+    <figure>
+      <iframe src="https://www.youtube.com/embed/<?php echo $youtubeid; ?>?rel=0" allowfullscreen="allowfullscreen"></iframe>
+      <figcaption><?php echo $caption; ?><span class="media-duration"><?php echo $duration; ?></span>
+        <?php if($instructions) { ?>
+          <div class="media-instructions">
+            <?php echo $instructions; ?>
+          </div>
+        <?php } ?>
+        <?php if($transcript) { ?>
+          <div class="transcript">
+            <?php echo $transcript; ?>
+          </div>
+        <?php } ?>
+      </figcaption>
+    </figure>
+  <?php 
+}
+
+
 ?>

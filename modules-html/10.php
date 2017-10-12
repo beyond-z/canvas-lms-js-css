@@ -673,7 +673,7 @@ require('functions.php');
         <td>
           <div class="feedback" data-bz-range-flr="0" data-bz-range-clg="2">That's a little too low</div>
           <div class="feedback" data-bz-range-flr="2" data-bz-range-clg="3">That's right! <strong>Three</strong> is the magic number.</div>
-          <div class="feedback" data-bz-range-flr="4" data-bz-range-clg="5">That's a little too high</div>
+          <div class="feedback" data-bz-range-flr="3" data-bz-range-clg="5">That's a little too high</div>
         </td>
       </tr>
     </tbody>
