@@ -242,11 +242,11 @@ function bz_embed_video($source, $videoid, $duration, $caption, $transcript, $in
 function bz_make_match_table($items, $headings, $addlclasses){
   echo '<table class="sort-to-match '. $addlclasses .'">';
     if (!empty($headings)) {
-      echo '<thead>';
+      echo '<thead><tr>';
       foreach ($headings as $heading) {
         echo '<th>'.$heading.'</th>';
       }
-      echo '</thead>';
+      echo '</tr></thead>';
     }
     echo '<tbody>';
     foreach ($items as $item) {
@@ -258,6 +258,7 @@ function bz_make_match_table($items, $headings, $addlclasses){
     }
     echo '</tbody>';
   echo '</table>';
+  $GLOBALS['for'] = 'for-match';
 }
 
 ?>
