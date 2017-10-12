@@ -96,6 +96,7 @@ function bz_make_id($hold = null) {
   );
 */
 function bz_make_cr_list($items, $type = 'checklist', $instant = 'instant-feedback', $addlclasses = '') {
+  $GLOBALS['innercounter']++;
   $inputtype = ($type == 'checklist') ? 'checkbox' : 'radio';
     if ( null == $instant ) {
       $GLOBALS['for'] = 'for-'.$type;
@@ -120,6 +121,7 @@ function bz_make_cr_list($items, $type = 'checklist', $instant = 'instant-feedba
 }
 
 function bz_make_textarea($args){
+  $GLOBALS['innercounter']++;
   /*
   $args = array (
     'optional' => false,
@@ -138,6 +140,7 @@ function bz_make_textarea($args){
 
 
 function bz_make_multi_radios($items, $cats = array(1 => 'Poor',2 => 'Below average',3 => 'Averge',4 => 'Above average',5 => 'Excellent',), $instant = 'instant-feedback' ) {
+  $GLOBALS['innercounter']++;
   $itemname = bz_make_id();
   echo '<table class="multi-radios '.$instant.'">';
   echo '  <thead>';
@@ -157,6 +160,45 @@ function bz_make_multi_radios($items, $cats = array(1 => 'Poor',2 => 'Below aver
   }
   echo '  </thead>';
   echo '</table>';
+}
+
+function bz_make_instant_range_table($items){
+  $GLOBALS['innercounter']++;
+  ?>
+  <table class="no-zebra instant-range-feedback" style="table-layout: fixed;">
+    <tbody>
+
+      <?php
+      foreach($items as $key => $item) {
+        ?>
+          <tr>
+            <td style="font-size: 0.8em; text-align: center; width: 58%;">&nbsp;</td>
+            <td style="font-size: 0.8em; text-align: center; width: 7%;">n/a</td>
+            <td style="font-size: 0.8em; text-align: center; width: 7%;">1</td>
+            <td style="font-size: 0.8em; text-align: center; width: 7%;">2</td>
+            <td style="font-size: 0.8em; text-align: center; width: 7%;">3</td>
+            <td style="font-size: 0.8em; text-align: center; width: 7%;">4</td>
+            <td style="font-size: 0.8em; text-align: center; width: 7%;">5</td>
+          </tr>
+          <tr class="inputs-row">
+            <td><?php echo $item[0];?></td>
+            <td colspan="6">
+              <input max="5" min="0" step="1" type="range" value="0" data-bz-retained="<?php $GLOBALS['innercounter']++; echo bz_make_id(); ?>" />
+              <div class="display-value"><span class="current-value">&nbsp;</span></div>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="7">
+              <div class="feedback" data-bz-range-flr="0" data-bz-range-clg="3"><p><?php echo $item[1];?></p></div>
+              <div class="feedback" data-bz-range-flr="3" data-bz-range-clg="5"></div>
+            </td>
+          </tr>
+        <?php 
+      } ?>
+
+    </tbody>
+  </table>
+  <?php
 }
 
 

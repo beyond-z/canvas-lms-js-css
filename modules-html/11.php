@@ -88,47 +88,14 @@
     array('You hold people accountable and point out when norms are not being upheld.','While everyone has the responsibility to uphold norms and point out when norms are being violated, you have a special responsibility as the facilitator to be the norms enforcer. You may want to refresh on team norms at the beginning of your meeting so they’re fresh in the participants’ minds. Call out norms violations respectfully and in service of achieving your meeting goals. '),
   );?>
 
-  <table class="no-zebra instant-range-feedback" style="table-layout: fixed;">
-    <thead>
-      <tr>
-        <th style="width: 50%">&nbsp;</th>
-        <th style="width: 10%">1</th>
-        <th style="width: 10%">2</th>
-        <th style="width: 10%">3</th>
-        <th style="width: 10%">4</th>
-        <th style="width: 10%">5</th>
-      </tr>
-    </thead>
-    <tbody>
-
-      <?php
-      foreach($items as $key => $item) {
-        ?>
-          <tr class="inputs-row">
-            <td><?php echo $item[0];?></td>
-            <td colspan="5">
-              <input max="5" min="1" step="1" type="range" data-bz-retained="<?php $GLOBALS['innercounter']++; echo bz_make_id(); ?>" />
-              <div class="display-value"><span class="current-value">&nbsp;</span></div>
-            </td>
-          </tr>
-          <tr>
-            <td colspan="6">
-              <div class="feedback" data-bz-range-flr="1" data-bz-range-clg="3"><p><?php echo $item[1];?></p></div>
-              <div class="feedback" data-bz-range-flr="3" data-bz-range-clg="5"></div>
-            </td>
-          </tr>
-        <?php 
-      } ?>
-
-    </tbody>
-  </table>
+  <?php bz_make_instant_range_table($items);?>
 
   <?php bz_close_box(); ?>
     <?php $GLOBALS['hlevel'] = 4; ?>
-  <h3>How do I prepare and agenda?</h3>
+  <h3>How do I prepare an agenda?</h3>
   <?php bz_open_box('question', 'Take a look at this sample agenda:'); ?>
   <div class="bz-example full">
-    <table>
+    <table class="no-zebra">
       <tr>
         <th>Time and Location:</th>
         <td>Rutgers-Newark, Conklin Hall, Room 319, 6:00-8:00pm</td>
@@ -263,7 +230,11 @@
   <table class="equal-column-widths">
     <tr>
       <td><img src="/courses/1/files/12708/preview" alt="meeting agenda template example 1" style="width:100%; height: auto;"/></td>
+    </tr>
+    <tr>
       <td><img src="/courses/1/files/12709/preview" alt="meeting agenda template example 2" style="width:100%; height: auto;"/></td>
+    </tr>
+    <tr>
       <td><img src="/courses/1/files/12710/preview" alt="meeting agenda template example 3" style="width:100%; height: auto;"/></td>
     </tr>
   </table>
@@ -272,13 +243,13 @@
   <?php bz_close_box(); ?>
 
 
-  <?php bz_open_box('question', 'True or False? You should share your agenda with your team in advance of the meeting.', 'Final quick question');
+  <?php bz_open_box('question', 'Should share your agenda with your team in advance of the meeting?', 'Final quick question');
 
   $items = array(
     array('correctness' => 'correct', 'content' => 'Yes'),
-    array('correctness' => 'correct', 'content' => 'No'),
+    array('correctness' => 'incorrect', 'content' => 'No'),
   );
-  bz_make_cr_list($items, 'radio-list');
+  bz_make_cr_list($items, 'radio-list', null);
   bz_close_box();
   bz_open_box('answer', null);?>
   <p>Sharing the agenda in advance will help your team review and plan before they arrive so that they can be fully engaged participants.</p>
@@ -328,7 +299,7 @@
       </tr>
     </table>
     
-    
+    <p>&nbsp;<br /></p>
     <h3>Objectives and suggested methods:</h3>
     <table>
       <thead><tr><th>Activity</th><th>Objectives</th><th>Suggested Methods</th></tr></thead>
@@ -363,8 +334,8 @@
           <td>Create a problem statement that identifies the user, the user’s need, and a surprising insight about the user’s need.</td>
           <td>
             <ol>
-              <li><a class=" instructure_file_link" title="Click to download PDF" href="/courses/1/files/12711/download?wrap=1">Story-Share-and-Capture-Method.pdf</a></li>
-              <li><a class=" instructure_file_link" title="Click to download PDF" href="/courses/1/files/12712/download?wrap=1">saturate-and-group.pdf</a></li>
+              <li><a class=" instructure_file_link" title="Click to download PDF" href="/courses/1/files/12711/download?wrap=1">Story Share and Capture method</a></li>
+              <li><a class=" instructure_file_link" title="Click to download PDF" href="/courses/1/files/12712/download?wrap=1">Saturate and Group method</a></li>
             </ol>
           </td>
         </tr>
