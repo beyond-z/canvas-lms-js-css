@@ -176,7 +176,13 @@ require('functions.php');
     <?php bz_make_cr_list($items, 'radio-list');?>
   <?php bz_close_box();?>
   <blockquote>Even the most effective teams have conflicts. It’s how you deal with those challenges that reveals the strength of the team.</blockquote>
-  <?php bz_open_box('question', 'Every team goes through the stages of group development: forming &rArr; storming &rArr; norming &rArr; performing. Each of the four phases are necessary and inevitable in order for the team to grow, to face up to challenges, to tackle problems, to find solutions, to plan work, and to deliver results. Read the descriptions of each of the stages (they’re currently not in the correct order), and match the names to the stages.'); ?>
+  <?php bz_open_box('question', null); ?>
+  <p>Every team goes through the stages of group development:</p>
+    <div class="bz-example" style="text-align: center;">
+      <img src="/courses/1/files/12713/preview" alt="A chart showing the four phases of group development: Forming, Storming, Norming, and Performing. " style="width:100%; height:auto;" data-api-endpoint="/api/v1/courses/1/files/12713" data-api-returntype="File">
+    </div>
+    <p>Each of the four phases are necessary and inevitable in order for the team to grow, to face up to challenges, to tackle problems, to find solutions, to plan work, and to deliver results.</p>
+    <p>Read the descriptions of each of the stages (they’re currently not in the correct order), and match the names to the stages:</p>
     <table class="sort-to-match">
       <?php $GLOBALS['for'] = 'for-match'; ?>
       <tr>
@@ -430,6 +436,13 @@ require('functions.php');
         </td>
       </tr>
       <tr>
+        <th>&nbsp;</th>
+        <th>NORTH</th>
+        <th>WEST</th>
+        <th>EAST</th>
+        <th>SOUTH</th>
+      </tr>
+      <tr>
         <td>
           <h6>MARISSA MAYER</h6>
           <p>Marissa Mayer is an American business executive and computer scientist, who was most recently the CEO of Yahoo!. In 2014, Mayer was named to Forbes 40 under 40 list, and was ranked the 16th most-powerful businesswoman in the world. Mayer has been credited with changing Yahoo!’s maternity leave policy, acquisition of Tumblr and the Chinese e-commerce company the Alibaba Group, and institution of a new performance review system.</p>
@@ -448,6 +461,13 @@ require('functions.php');
         </td>
       </tr>
       <tr>
+        <th>&nbsp;</th>
+        <th>NORTH</th>
+        <th>WEST</th>
+        <th>EAST</th>
+        <th>SOUTH</th>
+      </tr>
+      <tr>
         <td>
           <h6>MARTIN LUTHER KING JR.</h6>
           <p>Martin Luther King Jr. was a minister and social activist who led the Civil Rights Movement in the Uniter States from the mid-1950s until his death by assassination in 1968. His leadership was fundamental to that movement’s success in ending the legal segregation of African Americans in the South and other parts of the United States.</p>
@@ -464,6 +484,13 @@ require('functions.php');
         <td class="correct">
           <input type="radio" data-bz-retained="<?php echo bz_make_id('hold');?>" name="<?php echo bz_make_id('hold');?>" value="SOUTH">
         </td>
+      </tr>
+      <tr>
+        <th>&nbsp;</th>
+        <th>NORTH</th>
+        <th>WEST</th>
+        <th>EAST</th>
+        <th>SOUTH</th>
       </tr>
       <tr>
         <td>
@@ -607,8 +634,8 @@ require('functions.php');
   <div class="bz-box">
     <p>In the third part of the Accelerator, <em>Tackle Career Challenges</em>, which you’re in right now, you will complete two big projects:</p>
     <ol>
-      <li>A group challenge &mdash; <a href="#">the Capstone Challenge</a></li>
-      <li>An individual project &mdash; <a href="#">Tackle Career Challenges</a></li>
+      <li>A group challenge &mdash; <a href="/courses/1/assignments/684" target="_blank">the Capstone Challenge</a></li>
+      <li>An individual project &mdash; <a href="/courses/1/assignments/711" target="_blank">Tackle Career Challenges</a></li>
     </ol>
     <p>Read each project description and rubric by clicking the links above, internalize them, and mark down any questions you have so you’re ready to jump in with your cohort during Learning Lab.</p>
   </div>
@@ -673,7 +700,7 @@ require('functions.php');
         <td>
           <div class="feedback" data-bz-range-flr="0" data-bz-range-clg="2">That's a little too low</div>
           <div class="feedback" data-bz-range-flr="2" data-bz-range-clg="3">That's right! <strong>Three</strong> is the magic number.</div>
-          <div class="feedback" data-bz-range-flr="4" data-bz-range-clg="5">That's a little too high</div>
+          <div class="feedback" data-bz-range-flr="3" data-bz-range-clg="5">That's a little too high</div>
         </td>
       </tr>
     </tbody>
@@ -803,7 +830,7 @@ require('functions.php');
   <?php bz_open_box('action', 'To ensure you&rsquo;ve thought about all the tasks necessary to complete a milestone, ask yourself if there’s anything you need to do to complete that task. For example, to draft content for a new website, you might need to start with an outline or a vision for the site.', 'Work backward to move forward');
   bz_close_box(false);
   ?>
-  <?php bz_open_box('key', 'Feel free to use this Google Spreadsheets template for your cohort’s project plan in the Capstone Challenge and/or your project plan in Part 3 of the Tackle Career Challenges Project (link). You can also feel free to use other formats for project planning, such as an online tool like Asana.', 'Helpful resource');
+  <?php bz_open_box('key', 'Feel free to use this <a href="https://docs.google.com/spreadsheets/d/1PM7v79pt7IVwdDo9jfUvNtukV7HBioAUlxfl1hsXwOs/edit#gid=0" target="_blank">Google Spreadsheets template</a> for your cohort’s project plan in the Capstone Challenge and/or your project plan in <a href="/courses/1/assignments/711#part3" target="_blank">Part 3 of the Tackle Career Challenges Project</a>. You can also feel free to use other formats for project planning, such as an online tool like <a href="https://asana.com" target="_blank">Asana</a>.', 'Helpful resource');
   bz_close_box(false); ?>
   <blockquote>Use your project plan as a map to navigate your project: check it often to how much ground you've already covered, what lies ahead, what you may have missed, and whether a course adjustment is needed.</blockquote>
   <h2 id="wrap-up">Wrap-up</h2>
