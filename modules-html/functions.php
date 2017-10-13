@@ -151,10 +151,12 @@ function bz_make_multi_radios($items, $cats = array(1 => 'Poor',2 => 'Below aver
       }
   echo '    </tr>';
   foreach ($items as $key => $item) {
+    $itemcontent = (is_array($item)) ? $item['content'] : $item;
     echo '<tr>';
-    echo '<td>'.$item.'</td>';
+    echo '<td>'.$itemcontent.'</td>';
     foreach ($cats as $catkey => $cat) {
-      echo '<td><input type="radio" data-bz-retained="'.$itemname.'-'.$key.'" name="'.$itemname.'-'.$key.'" value="'.$catkey.'" /></td>';
+      $answerclass = ($catkey == $item['answer']) ? ' class="correct"' : ' class="incorrect"';
+      echo '<td'.$answerclass.'><input type="radio" data-bz-retained="'.$itemname.'-'.$key.'" name="'.$itemname.'-'.$key.'" value="'.$catkey.'" /></td>';
     }
     echo '</tr>';
   }
@@ -201,11 +203,26 @@ function bz_make_instant_range_table($items){
   <?php
 }
 
+function bz_embed_video($source, $videoid, $duration, $caption, $transcript, $instructions) {
+  $src;
+  switch ($source) {
+    case 'youtube':
+    case 'yt':
+      $src = 'https://www.youtube.com/embed/';
+      $videoid = $videoid . '?rel=0';
+      break;
+    case 'vimeo':
+    case 'vm':
+      $src = 'https://player.vimeo.com/video/';
+      break;
+    default:
+      $src = $source;
+      break;
+  }
 
-function bz_make_youtube($youtubeid, $duration, $caption, $transcript, $instructions) {
   ?>
     <figure>
-      <iframe src="https://www.youtube.com/embed/<?php echo $youtubeid; ?>?rel=0" allowfullscreen="allowfullscreen"></iframe>
+      <iframe src="<?php echo $src . $videoid; ?>" allowfullscreen="allowfullscreen"></iframe>
       <figcaption><?php echo $caption; ?><span class="media-duration"><?php echo $duration; ?></span>
         <?php if($instructions) { ?>
           <div class="media-instructions">
@@ -222,5 +239,26 @@ function bz_make_youtube($youtubeid, $duration, $caption, $transcript, $instruct
   <?php 
 }
 
+function bz_make_match_table($items, $headings, $addlclasses){
+  echo '<table class="sort-to-match '. $addlclasses .'">';
+    if (!empty($headings)) {
+      echo '<thead><tr>';
+      foreach ($headings as $heading) {
+        echo '<th>'.$heading.'</th>';
+      }
+      echo '</tr></thead>';
+    }
+    echo '<tbody>';
+    foreach ($items as $item) {
+      echo '<tr>';
+      foreach ($item as $cell) {
+        echo '<td>'.$cell.'</td>';
+      }
+      echo '</tr>';
+    }
+    echo '</tbody>';
+  echo '</table>';
+  $GLOBALS['for'] = 'for-match';
+}
 
 ?>
