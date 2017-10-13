@@ -188,7 +188,7 @@ crossorigin="anonymous">
       bz_make_match_table($items);
     bz_close_box();
     //
-    bz_open_box('key','Here are some other mindset traps people often get into when giving feedback. Hover to reveal how to turn these traps into growth mindsets.','More strategies:'); ?>
+    bz_open_box('key','Here are some other mindset traps people often get into when giving feedback.','More strategies:'); ?>
       <table>
         <thead>
           <tr>
@@ -294,7 +294,7 @@ crossorigin="anonymous">
       <p>Use the <i>When you did X, I felt Y</i> framework and plan out what you would say to Darren:</p>
       <?php
       bz_make_textarea();
-    bz_close_box(false); 
+    bz_close_box(); 
   //
     bz_open_box('answer', null, 'A possible way to give Darren feedback:');?>
       <div class="bz-example">
