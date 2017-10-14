@@ -255,6 +255,20 @@
   <p>Sharing the agenda in advance will help your team review and plan before they arrive so that they can be fully engaged participants.</p>
   <p>In order to successfully facilitate Learning Lab during the Capstone Challenge, and as part of your Tackle Career Challenges Project, you’ll have to create a meeting agenda. If you’re facilitating next week, it’s a good idea to do that now!</p>
   <?php bz_close_box(false);?>
+  <blockquote>The number of meetings I&rsquo;ve been in &mdash; people would be shocked. But that&rsquo;s how you gain experience, how you can gain knowledge, being in meetings and participating. You learn and grow.<p class="quote-source">Tiger Woods, professional golfer</p></blockquote>
+  <h2 id="wrap-up">Wrap-up</h2>
+  <div>
+    <p>In this module we looked at how to effectively facilitate meetings, since you'll be having meetings to work on your project and, naturally, in almost any job in the future.</p>
+    <p>We asked you to self-evaluate your facilitation skills and looked at some tips based on where you need to grow (we suggest you scroll up and revisit those as soon as you're done here).</p>
+    <p>We also looked at some meeting agendas (and if you're facilitating this week, you get to practice using the one below).</p>
+    <h3>Next Steps:</h3>
+    <ol>
+      <li>Complete Tackle Career Challenges Project, Part 1: Empathy-Based Research</li>
+      <li>Conduct empathy-based research for the Capstone Challenge (interview 3+ users)</li>
+      <li>Make sure your team's Project Manager has finalized the project plan and shared it with the rest of your cohort</li>
+      <li>Check out the agenda for your upcoming Learning Lab (below)</li>
+    </ol>
+  </div>
   <h2>SO, YOU’RE FACILITATING<br />LEARNING LAB THIS WEEK&hellip;</h2>
   <?php $GLOBALS['hlevel'] = 3; ?>
   <?php bz_open_box('action', 'If you’re the Project Manager or the Lead Researcher, you’re facilitating sections of Learning Lab this week. Your objectives and suggested methods for reaching them are listed below. Be sure to come prepared with an agenda to facilitate Learning Lab.');
@@ -356,20 +370,7 @@
         </tr>
       </tbody>
     </table>
-  <?php bz_close_box(); ?>
-  <blockquote>The number of meetings I&rsquo;ve been in &mdash; people would be shocked. But that&rsquo;s how you gain experience, how you can gain knowledge, being in meetings and participating. You learn and grow.<p class="quote-source">Tiger Woods, professional golfer</p></blockquote>
-  <h2 id="wrap-up">Wrap-up</h2>
-  <div>
-    <p>In this module we looked at how to effectively facilitate meetings, since you'll be having meetings to work on your project and, naturally, in almost any job in the future.</p>
-    <p>We asked you to self-evaluate your facilitation skills and looked at some tips based on where you need to grow (we suggest you scroll up and revisit those as soon as you're done here).</p>
-    <p>We also looked at some meeting agendas (and hopefully already practiced creating one if you're facilitating this week).</p>
-    <h3>Next Steps:</h3>
-    <ol>
-      <li>Complete Tackle Career Challenges Project, Part 1: Empathy-Based Research</li>
-      <li>Conduct empathy-based research for the Capstone Challenge (interview 3+ users)</li>
-      <li>Make sure your team's Project Manager has finalized the project plan and shared it with the rest of your cohort</li>
-    </ol>
-  </div>
+  <?php bz_close_box(false); ?>
 </div>
 <script src="../new-ui-sandbox.js"></script>
 <progress max="100" id="bz-progress-bar" value="14"></progress>

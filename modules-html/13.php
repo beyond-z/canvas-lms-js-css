@@ -145,8 +145,8 @@ require('functions.php');
         <tr>
           <td><img src="/courses/1/files/12723/preview" alt="" style="width:150px; height:auto;"  /></td>
           <td>
-            <h6>8. USE THEIR AUTHENTIC VOICE</h6>
-            <p><?php  echo $z8 = 'This one can be hard to do, but when you let go of perfection and let people hear your authentic voice, when you can <em>be you</em> in a presentation, you will have found yourself as a presenter and become significantly more effective.';?></p>
+            <h6>8. USE THEIR AUTHENTIC "VOICE"</h6>
+            <p><?php  echo $z8 = 'This one can be hard to do, but when you let go of perfection and let people see and hear your authentic self, when you can <em>be you</em> in a presentation, you will have found yourself as a presenter and become significantly more effective.';?></p>
           </td>
         </tr>
       </tbody>
@@ -162,7 +162,7 @@ require('functions.php');
       array('You use compelling data in your presentations',),
       array('You empathize with the audience',),
       array('You exude confidence ',),
-      array('You present with your authentic voice ',),
+      array('You present with your authentic "voice" ',),
     );
     bz_make_instant_range_table($items);
   bz_close_box();
@@ -496,7 +496,7 @@ require('functions.php');
     bz_make_simple_checklist($rights, $wrongs);
   bz_close_box();
   //
-  bz_open_box('question', 'Similar to body language, you must let your voice communicate confidence. What does this sound like? (check all that apply, click DONE to see how you did)');
+  bz_open_box('question', 'Similar to body language, you must let your tone of voice communicate confidence. What does this sound like? (check all that apply, click DONE to see how you did)');
     $items = array(
       array(
         'correctness'=>'correct',
@@ -590,19 +590,298 @@ require('functions.php');
     bz_make_simple_checklist($items);
   bz_close_box();
   ?>
-
-
-
   <h3>PRACTICE</h3>
     <div class="full">
       <img src="/courses/1/files/127<?php echo $imgcounter++; ?>/preview" alt="" style="width: 25%; height: auto; float: right; margin: 0 0 2em 2em;" />
       <p><?php echo $z7;?></p>
     </div>
-  <h3>USE YOUR AUTHENTIC VOICE</h3>
+  <?php
+  bz_open_box('read');
+  ?>
+    <div class="bz-example">
+      <p>Stephen Curry is arguably the purest, greatest shooter to ever play basketball. His mission is to constantly find ways to make himself better. Among other things, he fires up to 1,000 shots before practice.</p>
+      <img style="width:95%; margin: 1em auto;" src="/courses/1/files/12724/preview" alt="Image of Stephen Curry playing basketball" />
+      <p>Here’s what he has to say:</p>
+      <blockquote>“You have to rely on the fact that you put the work in to create the muscle memory and then trust that it will kick in. The reason you practice and work on it so much is so that during the game your instincts take over to a point where it feels weird if you don't do it the right way.”</blockquote>
+    </div>
+    <p>How can you apply Stephen Curry’s advice to presenting?</p>
+    <?php
+      $items = array(
+        'Practice a ton before your presentation so that it feels like second nature under pressure ',
+        'Run through your presentation at least one thousand times ',
+        'Work out your muscles beforehand so that you’re ready ',
+        'Show up early on your presentation day and begin practicing ',
+      );
+      bz_make_radio_list($items);
+    bz_close_box();
+    //
+    bz_open_box('reflection','Thinking about your Capstone Presentation, what are ways you could practice so that it feels like a no-brainer? (check all that apply)','What would you do?');
+      $items = array(
+        'Rehearse with your cohort outside of Learning Lab ',
+        'Record video of yourself practicing and reflect on it ',
+        'Rehearse in front of your LC ',
+        'Rehearse in front of friends or family ',
+        'Rehearse in front of your stuffed animals ',
+        'Practice saying your part really fast, then really slow, then just right ',
+        'Record audio of your cohort’s presentation and then listen to it over and over while commuting ',
+      );
+      bz_make_simple_checklist($items);
+    bz_close_box();
+    ?>
+  <blockquote>Practice makes perfect!</blockquote>
+  <h3>USE YOUR AUTHENTIC "VOICE"</h3>
     <div class="full">
       <img src="/courses/1/files/127<?php echo $imgcounter++; ?>/preview" alt="" style="width: 25%; height: auto; float: right; margin: 0 0 2em 2em;" />
     <p><?php echo $z8;?></p>
     </div>
+    <?php
+    bz_open_box('reflection');
+    ?>
+    
+    <p>Presenting as your authentic self can be difficult, especially when presenting doesn’t come naturally to you (you’re not alone &mdash; that describes the vast majority of people!).</p>
+    <p>What gets in the way of using your authentic "voice" when presenting? (check all that apply)</p>
+    
+    <?php
+    bz_make_cr_list(array(
+      array(
+        'content'=>'Feeling like you have to stay on script',
+        'feedback'=>'You will find it easier to let go of the script if you prepare and practice enough. You can also jot down keywords that will help you remember what you need to cover. Remember: your audience doesn&rsquo;t know the script so they won&rsquo;t mind if you go off-script!',
+      ),
+      array(
+        'content'=>'Feeling like you are giving a performance',
+        'feedback'=>'Try to think of it as a conversation rather than a one-way talk. You have just been given a few minutes to make your argument, but then the conversation continues as soon as you&rsquo;re done.',
+      ),
+      array(
+        'content'=>'Feeling like you need to fit other people&rsquo;s idea of what a presenter looks and sounds like',
+        'feedback'=>'You&rsquo;ll give your best performance in a role that suits you best, and that role is simply <em class="replace-with-user-name">you</em>. If you&rsquo;ve ever watched The Voice, you&rsquo;ve seen coaches like Rihanna encourage contestants like Korin Bukowski to "lean into her weird side" and be herself instead of holding back, which led to her best performance yet on the show. Sure, you can&rsquo;t be too weird in a professional setting, but lean into who you are and see yourself as your greatest strength rather than a weakness.',
+      ),
+    ));
+  bz_close_box();
+  //
+  bz_open_box('question','You just finished a rockstar presentation. You feel a big sense of relief wash over you. But it’s time for questions from the audience (Q&A). Someone asks you a question, and you realize you have no idea how to answer it. What could you do? (check all that apply)');
+    $rights = array(
+      'Say "That&rsquo;s a great question, I haven&rsquo;nt really looked into that yet."',
+      'Briefly explain why this wasn’t an aspect you focused your research on',
+      'Stay calm',
+      'Try to honestly answer as best you can, and then immediately ask "Does that answer your question?"',
+      'Say you prioritized different topics, but that finding the answer to this question would be a great next step',
+      'Pause and allow yourself a moment to think',
+    );
+    $wrongs = array(
+      'Freeze like a deer in the headlights',
+      'Fake an answer on the fly',
+      'Answer a different question ',
+      'Gulp and walk out',
+    );
+    bz_make_simple_checklist($rights,$wrongs);
+  bz_close_box();
+  //
+  bz_open_box('key', 'Practicing Q&A sessions beforehand and knowing your material will help ensure that the real thing is a breeze. Here are a few other tips:','One more thing about Q&A Sessions');
+  ?>
+    <ul>
+      <li>If you're not sure you heard the question or understood it, offer to rephrase it. For example: "Let me make sure I understand the question. You're asking if...." If you still don't understand, ask for an example: "I'd love an example of what you mean to better understand your question..."</li>
+      <li>If you are asked more than one question at a time, answer each one at a time. For example: "I heard three questions there. Let me start with the first question...."</li>
+      <li>Ask the person if you've answered his/her question. "Have I answered your question?"</li>
+      <li>Interact using names. For example, "Thank you for your question, Ms. Lucas..."</li>
+      <li>If presenting as a team, determine who will answer what kinds of questions, to avoid stepping over each other in real time, and to ensure not just one person answers all the questions. However, try to keep it to one response per question (or two at the most), as it becomes frustrating for the audience when everyone on your team chimes in.</li>
+      <li>Respect your audience by keeping it short and simple. If someone seems to be "attacking" you, disagree respectfully: "That's an interesting point. I've thought about that too but reached a different conclusion..." or "Thank you for that thought. I have a different view of this..."</li>
+    </ul>
+  <?php
+  bz_close_box();
+  ?>
+  <h3>CREATE A COMPELLING PRESENTATION DECK</h3>
+  <?php
+  bz_open_box('watch');
+    bz_embed_video('yt','Iwpi1Lm6dFo','20 minutes &mdash; likely twenty of the most rewarding minutes you&rsquo;ll ever spend on an online video', 'Author of Death by Powerpoint David J. Phillips models a great presentation as he delivers his top tips for top-notch effective slide decks',null,'Auto-generated captions available');
+  bz_close_box();
+  //
+  bz_open_box('question','How many concepts or messages at most should you deliver per slide?','Let&rsquo;s recap');
+    $items = array(
+      array(
+        'content'=>'One',
+        'correctness'=>'correct',
+        'feedback'=>'This helps people focus and retain what you say.'
+      ),
+      array(
+        'content'=>'Three',
+        'correctness'=>'incorrect',
+        'feedback'=>'Three is a magic number but having more than one idea per slide dilutes the attention and foucs of your audience, making the presentation less effective.',
+      ),
+      array(
+        'content'=>'Six',
+        'correctness'=>'incorrect',
+        'feedback'=>'You might be confusing concepts/messages with visual elements such as headings, images, etc.',
+      ),
+      array(
+        'content'=>'As many as possible',
+        'correctness'=>'incorrect',
+        'feedback'=>'Are you okay with confusing and distracting your audience just for the sake of keeping the slide count down?',
+      ),
+    );
+    bz_make_radio_list($items, false);
+  bz_close_box();
+  //
+  bz_open_box('answer');
+  bz_close_box(false);
+  //
+  bz_open_box('question','Why is it better to use light text over a dark background?','Let&rsquo;s try another one')
+  ?>
+    <?php 
+    $items = array(
+      array(
+        'content'=>'Because it grabs less attention.',
+        'feedback'=>'Yes! Your slides are just there to help illustrate what you say, but the rest of the time you want people to be looking at you, and that is hard to do when there is a big bright screen behind you, grabbing their attention!',
+        'correctness'=>'correct',
+      ),
+      array(
+        'content'=>'Because high contrast helps people focus on the presentation',
+        'feedback'=>'That is the opposite of what you want to do. The slides are there to support the speaker, not to take over!',
+        'correctness'=>'incorrect',
+      ),
+    );
+    bz_make_radio_list($items, false);
+    ?>
+  <?php
+  bz_close_box();
+  //
+  bz_open_box('answer', 'Did you get it right? How about this one: how many objects (e.g. headings, bullet points, images) <strong>at most</strong> should there be on a slide to make it effective?','One more');
+    bz_make_radio_list(array(
+      'Six',
+      'One',
+      'Three',
+      'Nine',
+      'As many as possible',
+    ));
+  bz_close_box();
+  //
+  bz_open_box('answer', 'Six is the most your audience can <em>see</em> without having to process things by counting. Not having to process the slide helps them relax and concentrate on what you are saying.');
+  bz_close_box();
+  //
+  bz_open_box('question', 'Your manager asked you to prepare a slide deck for her. Which of these design strategies do you apply to the deck?');
+    $items = array(
+      array(
+        'content'=>'It depends',
+        'correctness'=>'correct',
+        'feedback'=>'If your manager is giving an oral presentation then these strategies could make her shine. But if the deck is meant for sending out as a stand-alone product many of these strategies are actaully counter-productive (for example: using pithy bullets instead of full sentences on the slides won&rsquo;t make sense to the reader)',
+      ),
+      array(
+        'content'=>'All of them!',
+        'correctness'=>'incorrect',
+        'feedback'=>'You don&rsquo;t know whether this is for her to present orally or to send out as a stand-alone (self-guided) deck.',
+      ),
+      array(
+        'content'=>'All of them, but only if she says she needs a printed copy',
+        'correctness'=>'incorrect',
+        'feedback'=>'Printing lots of single-message slides using a white-on-black design will be terribly wasteful',
+      ),
+    );
+    bz_make_radio_list($items, false);
+  bz_close_box();
+  //
+  bz_open_box('answer','You will meet many people in your career who still try in vain to create a single slide deck for both oral presentations and stand-alone written decks they send to people. Don&rsquo;t be one of them!');
+  bz_close_box();
+  ?>
+  <blockquote>When you present in-person you want the audience to focus on you, the presenter, <em>not</em> on the slide deck which is only there to illustrate key concepts and help the audience follow you along.</blockquote>
+  <h2 id="wrap-up">Wrap-up</h2>
+  <div>
+    <p>In this module we looked at two important career skills: giving effective oral presentations and preparing great slide decks to support those.</p>
+    <p>We shared dozens of success secrets on how to apply these best practices:</p>
+      <ul>
+        <li>Focus</li>
+        <li>Organize</li>
+        <li>Be selective</li>
+        <li>Empathize</li>
+        <li>Exude confidence</li>
+        <li>Tell a story</li>
+        <li>Practice</li>
+        <li>Use your authentic "voice"</li>
+        <li>Create a compelling presentation deck</li>
+      </ul>
+    <p>While all the advice above is valuable, if there's one thing that will be determine your overall success in presenting it's simply how much practice and feedback you get.</p>
+    <p>The upcoming Capstone presentation should give plenty of opportunity to rehearse and up your game, but you should consider treating every presentation you make as a chance to improve on one or more of these fronts.</p>
+    <h3>Next Steps:</h3>
+    <ol>
+      <li>To be prepared for Learning Lab this week, make sure your cohort has completed your prototypes, tested your prototypes with at least <strong>ten</strong> users, and refined your prototypes based on their feedback.</li>
+      <li>You will be rehearsing your Capstone Presentation during Learning Lab, so make sure your team has a draft of the presentation (deck and talking points) ready to rehearse.</li>
+      <li>On your own, continue working on the <a href="/courses/1/assignments/711">Tackle Career Challenges</a> project. You can complete Part 1: Prototype & Test and continue to work on Parts 2 and 3.</li>
+      <li>Check out the agenda for your upcoming Learning Lab (below).</li>
+    </ol>
+  </div>
+  <h2>SO, YOU’RE FACILITATING<br />LEARNING LAB THIS WEEK&hellip;</h2>
+  <?php $GLOBALS['hlevel'] = 3; ?>
+  <?php bz_open_box('action');?>
+  <p>If you’re the <em>Project Manager</em>, <em>Lead Oral Presenter</em>, or <em>Lead Deck Designer</em>, you’re facilitating sections of Learning Lab this week. Your objectives and suggested methods for reaching those objectives are listed below. Come prepared with an agenda to facilitate Learning Lab.</p>
+  <h3>HIGH-LEVEL AGENDA</h3>
+  
+  <table class="full">
+    <tr>
+      <th>TIME</th>
+      <th>ACTIVITY</th>
+      <th>FACILITATOR</th>
+    </tr>
+    <tr>
+      <td>20 mins</td>
+      <td>Opening</td>
+      <td>LC</td>
+    </tr>
+    <tr>
+      <td>10 mins</td>
+      <td>Review Presentation Rubrics</td>
+      <td>LC</td>
+    </tr>
+    <tr>
+      <td>10 mins</td>
+      <td>Build Prototypes</td>
+      <td>Lead Prototyper</td>
+    </tr>
+    <tr>
+      <td>60 mins</td>
+      <td>Rehearse Capstone Challenge Presentation</td>
+      <td>Lead Prototyper</td>
+    </tr>
+    <tr>
+      <td>20 mins</td>
+      <td>Closing</td>
+      <td>LC</td>
+    </tr>
+  </table>
+  
+  <p>&nbsp;<br /></p>
+  <h3>Objectives and suggested methods:</h3>
+  <table>
+    <thead><tr><th>Activity</th><th>Objectives</th><th>Suggested Methods</th></tr></thead>
+    <tbody>
+      <tr>
+        <th>Project Plan Check-In</th>
+        <td>Update the project plan to ensure the cohort is on track in the Capstone Challenge. </td>
+        <td>
+          <ol>
+            <li>Go through each task that is due with owners and update the Project Plan in real time.</li>
+            <li>If any Fellow has fallen behind, lead a discussion about why and what can be done moving forward.</li>
+          </ol>
+        </td>
+      </tr>
+      <tr>
+        <th>Rehearse Capstone Challenge Presentation</th>
+        <td>
+          <ol>
+            <li>Run through the entire presentation at least two times.</li>
+            <li>Receive feedback on both the oral presentation and presentation deck.</li>
+            <li>Make changes or determine which improvements need to be made to the oral presentation and presentation deck.</li>
+            <li>Practice answering questions you might receive from the judges.</li>
+          </ol>
+        </td>
+        <td>
+          <ol>
+            <li>Rehearse </li>
+            <li>The LC acts as a judge and provides feedback </li>
+          </ol>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <?php 
+  bz_close_box(false); ?>
 </div>
 <script src="../new-ui-sandbox.js"></script>
 <progress max="100" id="bz-progress-bar" value="14"></progress>
