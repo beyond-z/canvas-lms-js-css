@@ -171,7 +171,7 @@ require('functions.php');
     <div class="full">
       <img src="/courses/1/files/127<?php echo $imgcounter = 16; $imgcounter++; ?>/preview" alt="" style="width: 25%; height: auto; float: right; margin: 0 0 2em 2em;" />
       <p><?php echo $z1;?></p>
-    </div>
+    </div><div style="clear:both;">&nbsp;</div>
     <?php
     bz_open_box('question', 'Jared is presenting about the project he’s been working on in a team meeting. He starts explaining all the moving parts of the project and the results he’s seen, but he starts to see blank stares on his teammates’ faces. They seem lost and confused. How can he regain everyone’s focus and keep them engaged?');
 
@@ -212,7 +212,7 @@ require('functions.php');
     <div class="full">
       <img src="/courses/1/files/127<?php echo $imgcounter++; ?>/preview" alt="" style="width: 25%; height: auto; float: right; margin: 0 0 2em 2em;" />
       <p><?php echo $z2;?></p>
-    </div>
+    </div><div style="clear:both;">&nbsp;</div>
   <h4>BEGINNING</h4>
     <?php 
     bz_open_box('question', 'How long is the average human’s attention span before they lose focus?');
@@ -361,7 +361,7 @@ require('functions.php');
     <div class="full">
       <img src="/courses/1/files/127<?php echo $imgcounter++; ?>/preview" alt="" style="width: 25%; height: auto; float: right; margin: 0 0 2em 2em;" />
       <p><?php echo $z3;?></p>
-    </div>
+    </div><div style="clear:both;">&nbsp;</div>
     <?php
     bz_open_box('question', 'Chas created this high-level outline for his presentation:');
     ?>
@@ -418,7 +418,7 @@ require('functions.php');
     <div class="full">
       <img src="/courses/1/files/127<?php echo $imgcounter++; ?>/preview" alt="" style="width: 25%; height: auto; float: right; margin: 0 0 2em 2em;" />
       <p><?php echo $z4;?></p>
-    </div>
+    </div><div style="clear:both;">&nbsp;</div>
   <?php
   bz_open_box('question', 'Which of these phrases would you want to hear in a presentation?');
     bz_make_radio_list(array(
@@ -477,7 +477,7 @@ require('functions.php');
     <div class="full">
       <img src="/courses/1/files/127<?php echo $imgcounter++; ?>/preview" alt="" style="width: 25%; height: auto; float: right; margin: 0 0 2em 2em;" />
       <p><?php echo $z5;?></p>
-    </div>
+    </div><div style="clear:both;">&nbsp;</div>
   <?php
   bz_open_box('question', 'What are some effective ways to communicate confidence through your body language? (check all that apply)');
     $rights = array(
@@ -539,7 +539,7 @@ require('functions.php');
     <div class="full">
       <img src="/courses/1/files/127<?php echo $imgcounter++; ?>/preview" alt="" style="width: 25%; height: auto; float: right; margin: 0 0 2em 2em;" />
       <p><?php echo $z6;?></p>
-    </div>
+    </div><div style="clear:both;">&nbsp;</div>
   <?php
   bz_open_box('question','Which way of presenting this information is more engaging?');
   ?>
@@ -594,7 +594,7 @@ require('functions.php');
     <div class="full">
       <img src="/courses/1/files/127<?php echo $imgcounter++; ?>/preview" alt="" style="width: 25%; height: auto; float: right; margin: 0 0 2em 2em;" />
       <p><?php echo $z7;?></p>
-    </div>
+    </div><div style="clear:both;">&nbsp;</div>
   <?php
   bz_open_box('read');
   ?>
@@ -633,7 +633,7 @@ require('functions.php');
     <div class="full">
       <img src="/courses/1/files/127<?php echo $imgcounter++; ?>/preview" alt="" style="width: 25%; height: auto; float: right; margin: 0 0 2em 2em;" />
     <p><?php echo $z8;?></p>
-    </div>
+    </div><div style="clear:both;">&nbsp;</div>
     <?php
     bz_open_box('reflection');
     ?>
