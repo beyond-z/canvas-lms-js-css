@@ -121,10 +121,21 @@ function bz_make_cr_list($items, $type = 'checklist', $instant = 'instant-feedba
 }
 
 function bz_make_radio_list($items, $instant = 'instant-feedback', $addlclasses = '') {
+  
+  // TODO: refactor this one along with make_cr_list
   // for more complex input (with feedback etc.) use the more complex function:
   if (is_array($items[0])) {
+    // this helps process simple lists so i don't have to set these values manually:
+    if(!$items[0]['correctness']) {
+      foreach ($items as $item) {
+        $item['correctness'] = 'incorrect';
+      }
+      // the first value on the list will be set as the correct one:
+      $items[0]['correctness'] = 'correct';
+    }
     bz_make_cr_list($items, 'radio-list', $instant, $addlclasses);
   } else {
+    // for a simple list that needs no feedback etc.:
     $GLOBALS['innercounter']++;
     if ( null == $instant ) {
       $GLOBALS['for'] = 'for-radio-list';
@@ -144,6 +155,36 @@ function bz_make_radio_list($items, $instant = 'instant-feedback', $addlclasses 
     }
     echo '</ul>';
   }
+}
+
+function bz_make_simple_checklist($rights,$wrongs) {
+  $items = array();
+  if ($wrongs) {
+    // if there are two lists: add indicators to the lists and merge them into $items:
+    foreach ($rights as $key => $item) {
+      $push = array(
+        'content' => $item,
+        'correctness' => 'correct',
+      );
+      array_push($items, $push);
+    }
+    foreach ($wrongs as $key => $item) {
+      $push = array(
+        'content' => $item,
+        'correctness' => 'incorrect',
+      );
+      array_push($items, $push);
+    } 
+  } else {
+    // if only one list: just make that the list of items.
+    foreach ($rights as $key => $item) {
+      $push = array(
+        'content' => $item,
+      );
+    array_push($items, $push);
+    }
+  }
+  bz_make_cr_list($items);
 }
 
 function bz_make_textarea($args){

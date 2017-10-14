@@ -110,8 +110,8 @@ require('functions.php');
         <tr>
           <td><img src="/courses/1/files/12718/preview" alt="" style="width:150px; height:auto;" /></td>
           <td>
-            <h6>3. THINK CRITICALLY</h6>
-            <p><?php  echo $z3 = 'Effective presenters use their tools and techniques purposefully. They decide which stories, data, and visuals best support their case.';?></p>
+            <h6>3. BE SELECTIVE</h6>
+            <p><?php  echo $z3 = 'Effective presenters use their tools and techniques purposefully. They decide which stories, data, and visuals best support their case, and they leave everything else out.';?></p>
           </td>
         </tr>
         <tr>
@@ -125,7 +125,7 @@ require('functions.php');
           <td><img src="/courses/1/files/12720/preview" alt="" style="width:150px; height:auto;" /></td>
           <td>
             <h6>5.&nbsp;EXUDE CONFIDENCE</h6>
-            <p><?php  echo $z5 = 'Confidence goes a long way in presentations and if you&rsquo;re lucky, you naturally have lots of it. But if you&rsquo;re like most of us, you need to believe that you can do it; and with practice <em>you can</em>. The most confident presenters don&rsquo;t crumble over mistakes and are able to adapt as they go. They communicate confidence not only with their words but with their body language.';?></p>
+            <p><?php  echo $z5 = 'Confidence goes a long way in presentations and if you&rsquo;re lucky, you naturally have lots of it. But if you&rsquo;re like most of us, you need to believe that you can do it; and with practice <em>you can</em>! Focus on body language and voice, since those are the top two cues your audience picks up on as signs of confidence.';?></p>
           </td>
         </tr>
         <tr>
@@ -213,6 +213,7 @@ require('functions.php');
       <img src="/courses/1/files/127<?php echo $imgcounter++; ?>/preview" alt="" style="width: 25%; height: auto; float: right; margin: 0 0 2em 2em;" />
       <p><?php echo $z2;?></p>
     </div>
+  <h4>BEGINNING</h4>
     <?php 
     bz_open_box('question', 'How long is the average human’s attention span before they lose focus?');
       bz_make_range(8,0,60,$step = 1, $unit = ' seconds');
@@ -245,12 +246,9 @@ require('functions.php');
       ));
     bz_close_box();
     //
-    bz_open_box('answer','You don’t have to include these elements in this order, but they’re all important to include to engage the audience.');
+    bz_open_box('answer','You don’t have to include these elements in this order, but they’re all important to include to engage the audience. Here is some more detail:');
       ?>
       <h6>INCLUDE A HOOK</h6>
-      <?php
-      bz_open_box('key',null,'Here are some possible hooks:?');
-      ?>
       <ul>
         <li>A picture that speaks a thousand words</li>
         <li>A quote, poem, or rhyme</li>
@@ -270,35 +268,331 @@ require('functions.php');
     bz_close_box();
     //
     bz_open_box('question','What could Jeana have said to engage the audience even more?');
-      bz_make_radio_list(array(
-        '“If we implement this plan, you will be saving 20% or more on your utility bill by 2020.”',
-        '“Let me give my co-presenters a chance to introduce themselves.”',
-        '“El Niño is a band of warm ocean water that develops in the Pacific Ocean.” ',
-        '“We need to change now. Who’s with me?”',
-      ));
-
+      $items = array(
+        array('correctness'=>'correct','content'=>'“If we implement this plan, you will be saving 20% or more on your utility bill by 2020.”','feedback'=>'Yes, this point makes clear why this presentation matters for this audience.',),
+        array('correctness'=>'incorrect','content'=>'“Let me give my co-presenters a chance to introduce themselves.”','feedback'=>'',),
+        array('correctness'=>'incorrect','content'=>'“El Niño is a band of warm ocean water that develops in the Pacific Ocean.” ','feedback'=>'',),
+        array('correctness'=>'incorrect','content'=>'“We need to change now. Who’s with me?”','feedback'=>'',),
+      );
+      bz_make_cr_list($items, 'radio-list');
+    bz_close_box();
     ?>
+  <h4>Middle</h4>
+    <?php
+    bz_open_box('question','What are some of the most common pitfalls of the middle of presentations? (check all that apply)');
+      $items = array(
+        array(
+          'correctness'=>'correct',
+          'content'=>'Wandering off on a tangent',
+          'feedback'=>'Stay focused on what you want your audience to remember and what you need to accomplish. ',
+        ),
+        array(
+          'correctness'=>'correct',
+          'content'=>'Awkward transitions between parts',
+          'feedback'=>'For your presentation to flow smoothly, you will need transitions to connect all pieces. Some examples:<br />
+            A transition from beginning to middle: "Over the next few minutes, I will present a plan that penalizes over-usage and incentivizes and rewards conservation. Let&rsquo;s start with the penalties."<br />
+            A transition from one topic in the middle to the next: "Now that we&rsquo;ve discussed penalties for over-usage, let&rsquo;s talk about how we can incentivize and reward those who conserve."',
+        ),
+        array(
+          'correctness'=>'correct',
+          'content'=>'Trying to cram in every piece of information ',
+          'feedback'=>'Assume you have less time than you think. Make smart decisions about what is most important to include.',
+        ),
+        array(
+          'correctness'=>'incorrect',
+          'content'=>'Staying too focused on one topic ',
+          'feedback'=>'This is a good thing! ',
+        ),
+        array(
+          'correctness'=>'incorrect',
+          'content'=>'Creating an outline',
+          'feedback'=>'This is helpful! ',
+        ),
+      );
+      bz_make_cr_list($items);
+    bz_close_box();
+    //
+    bz_open_box('answer','Speaking of outlines, they’re a really helpful way to keep the middle of your presentation focused and organized. Ask yourself, what are your main points/sections and what is the supporting evidence or information that would reinforce those points?');
+    bz_close_box();
+    ?>
+  <h4>END</h4>
+    <?php
+    bz_open_box('question','Here are some ways that Jeana could have ended her presentation on water conservation. Match the ending with the strategy:');
 
-  <h3>THINK CRITICALLY</h3>
+      $items = array(
+        array(
+          '&ldquo;In summary [...] Please take a moment now to sign the petition that&rsquo;s being passed around the room.&rdquo;',
+          'Call to action',
+        ),
+        array(
+          '&ldquo;In summary [...] If we stay true to this plan, then we won&rsquo;t have to take more drastic measures in the future.&rdquo;',
+          'Quick summary',
+        ),
+        array(
+          '&ldquo;We all want to be here for a long time. We all want our children to be here for a long time. This is one way we can make this possible.&rdquo;',
+          'Inspiring takeaway',
+        ),
+        array(
+          '&ldquo;There are a few questions that we still need to answer. For example, how do we distinguish wasteful usage from unintentional usage due to things like pipe damage? [...]&rdquo; ',
+          'Leave the audience with some questions that still need to be answered',
+        ),
+        array(
+          '&ldquo;We also considered alternative solutions like commoditizing tap water and prohibiting certain uses of water but [...]&rdquo;',
+          'Name other possibilities considered and build confidence in this proposal',
+        ),
+        array(
+          '&ldquo;That concludes our presentation. [Repeat main take-away.] Thank you.&rdquo;' ,
+          'Thank the audience' ,
+        ),
+        array(
+          '&ldquo;Let’s open it up for questions from the audience.”',
+          'Q&A (questions & answers)',
+        ),
+        array(
+          '&ldquo;If you take away anything from this presentation, please remember three things [...]”',
+          '1-3 key points',
+        ),
+      );
+      bz_make_match_table($items, array('Ending', 'Strategy'));
+    bz_close_box();
+    ?>
+  <blockquote>Use one or more of these closing strategies to leave the audience with a clear sense of purpose and your key messages.</blockquote>
+  <h3>BE SELECTIVE</h3>
     <div class="full">
       <img src="/courses/1/files/127<?php echo $imgcounter++; ?>/preview" alt="" style="width: 25%; height: auto; float: right; margin: 0 0 2em 2em;" />
       <p><?php echo $z3;?></p>
     </div>
+    <?php
+    bz_open_box('question', 'Chas created this high-level outline for his presentation:');
+    ?>
+      <div class="bz-example">
+        <p><strong>Beginning</strong></p>
+        <ul>
+          <li>Hook: Octopus getting out of tank in aquarium on its own </li>
+          <li>Introduction: Name, etc. </li>
+          <li>Purpose: Audience members become octopus activists </li>
+        </ul>
+        <p><strong>Middle</strong></p>
+        <ul>
+          <li>Octopuses can evade predators well </li>
+          <li>Octopuses are very intelligent and feel pain  </li>
+          <li>Octopuses are being fished at an alarming rate </li>
+          <li>What activist groups are doing about the problem </li>
+        </ul>
+        <p><strong>End</strong></p>
+        <ul>
+          <li>Summary of how to get involved</li>
+          <li>Thank you</li>
+        </ul>
+        <p><strong>Q&A</strong></p>
+      </div>
+      <p>What could he take out?</p>
+    <?php
+    $items = array(
+      array(
+        'correctness'=>'correct',
+        'content'=>'Octopuses can evade predators well ',
+        'feedback'=>'While interesting, this point might not convince the audience members to become octopus activists. ',
+      ),
+      array(
+        'correctness'=>'incorrect',
+        'content'=>'Octopuses are very intelligent and feel pain',
+        'feedback'=>'This point could make the audience feel an empathic connection to octopuses and want to become activists. ',
+      ),
+      array(
+        'correctness'=>'incorrect',
+        'content'=>'Summary of how to get involved',
+        'feedback'=>'This point will help audience members identify clear action steps about how to get involved.',
+      ),
+      array(
+        'correctness'=>'incorrect',
+        'content'=>'Hook: Octopus getting out of tank in aquarium on its own ',
+        'feedback'=>'This hook is an interesting fact that shows how intelligent octopuses are, which can capture the audience’s interest.  ',
+      ),
+    );
+    bz_make_radio_list($items);
+  bz_close_box();
+  ?>
+  <blockquote>Always ask yourself: is this bit of content the most effective one I can use to help me achieve the purpose of my presentation?</blockquote>
   <h3>EMPATHIZE</h3>
     <div class="full">
       <img src="/courses/1/files/127<?php echo $imgcounter++; ?>/preview" alt="" style="width: 25%; height: auto; float: right; margin: 0 0 2em 2em;" />
       <p><?php echo $z4;?></p>
     </div>
+  <?php
+  bz_open_box('question', 'Which of these phrases would you want to hear in a presentation?');
+    bz_make_radio_list(array(
+      'I’m an expert in this field',
+      'Our team did the most research',
+      'Our client list is extensive ',
+      'Let’s explore the benefits of this strategy together ',
+    ));
+  bz_close_box();
+  //
+  bz_open_box('answer');?>
+    <p>When you talk at an audience or just talk about how great you are, you’re not empathizing with your audience, and you will lose them quickly. In order for your presentation to go well, you need to be aware of your audience. And the more you know about your audience, the easier it will be to connect and engage.</p> 
+    <p>Some questions to ask yourself about your audience:</p>
+    <ul>
+      <li>Who will be in your audience and how will you connect to them? How might they relate to what you have to say?</li>
+      <li>What might get in the way of them engaging openly with your presentation? What might shut them off? </li>
+      <li>What are they interested in? </li>
+      <li>What are they afraid of? </li>
+      <li>During the presentation, how is my audience doing?</li>
+    </ul>
+  <?php
+  bz_close_box(false);
+  //
+  bz_open_box('question','Match each cue from the audience with what it might mean about how they’re feeling and what can be done moving forward in the presentation. ');
+    $items = array(
+      array(
+        'Looking at their phones',
+        'They’re bored. Re-engage them with an interesting hook, audience participation, or reframe the purpose for being here today.  ',
+      ),
+      array(
+        'Laughter and clapping',
+        'They’re amused and interested. Keep doing what you’re doing! ',
+      ),
+      array(
+        'Raised hands ',
+        'They’re curious or confused. Take a mental note and decide when it’s the right time to answer their questions. ',
+      ),
+      array(
+        'Slouched with arms crossed',
+        'They’re thinking, so what? This is a waste of my time. They may be frustrated. Re-engage them with an interesting hook or reframe the purpose for being here today.  ',
+      ),
+      array(
+        'Eyes wide, mouth open ',
+        'They’re surprised or shocked. This means they’re interested. Keep doing what you’re doing! ',
+      ),
+      array(
+        'Nodding',
+        'They understand you. You’re connecting with the audience and they’re encouraging you to go on. ',
+      ),
+    );
+    bz_make_match_table($items);
+  bz_close_box();
+  ?>
+  <blockquote>&ldquo;The stars may be on stage,<br />but the audience is king.&rdquo;<p class="quote-source">Show business saying</p></blockquote>
   <h3>EXUDE CONFIDENCE</h3>
     <div class="full">
       <img src="/courses/1/files/127<?php echo $imgcounter++; ?>/preview" alt="" style="width: 25%; height: auto; float: right; margin: 0 0 2em 2em;" />
       <p><?php echo $z5;?></p>
     </div>
+  <?php
+  bz_open_box('question', 'What are some effective ways to communicate confidence through your body language? (check all that apply)');
+    $rights = array(
+      'Stand up straight',
+      'Face the audience ',
+      'Make eye contact with different audience members ',
+      'Use natural hand gestures ',
+    );
+    $wrongs = array(
+      'Face the presentation screen',
+      'Keep your hands in your pockets ',
+      'Make eye contact with one audience member ',
+      'Use big hand gestures ',
+      'Slouch ',
+    );
+    bz_make_simple_checklist($rights, $wrongs);
+  bz_close_box();
+  //
+  bz_open_box('question', 'Similar to body language, you must let your voice communicate confidence. What does this sound like? (check all that apply, click DONE to see how you did)');
+    $items = array(
+      array(
+        'correctness'=>'correct',
+        'content'=>'Speak loudly and clearly ',
+        'feedback'=>'Make sure the people at the back of the room can hear you (but don’t shout!) ',
+      ),
+      array(
+        'correctness'=>'correct',
+        'content'=>'Speak as you do naturally',
+        'feedback'=>'Sounding natural (rather than overly formal and <span class="bz-has-tooltip" title="Without variation, like a robot.">monotone</span>) and will make it easier to follow you along, as long as you keep the other advice here in mind!',
+      ),
+      array(
+        'correctness'=>'correct',
+        'content'=>'Say “We should do this” rather than “I think maybe we should do this”',
+        'feedback'=>'Being more direct sounds more confident ',
+      ),
+      array(
+        'correctness'=>'incorrect',
+        'content'=>'Speak quickly',
+        'feedback'=>'Don’t speak slowly either, but speak at a pace your audience seems to easily follow',
+      ),
+      array(
+        'correctness'=>'incorrect',
+        'content'=>'Speak with fillers (e.g. “um, like”)',
+        'feedback'=>'Practice, practice, practice (including videoing yourself) to try to avoid this distracting “verbal graffiti.” ',
+      ),
+      array(
+        'correctness'=>'incorrect',
+        'content'=>'End sentences like you’re asking a question ',
+        'feedback'=>'This makes it sound like you’re unsure of what you’re talking about? And it can also be, like, distracting?',
+      ),
+    );
+    bz_make_cr_list($items,'checklist',false);
+  bz_close_box();
+  //
+  bz_open_box('answer','You might feel self-conscious for a while as you practice some of these strategies, but with some practice they will become second-nature by the time you make your Capstone presentation (we know it&rsquo;s possible because we&rsquo;ve seen many past Fellows achieve this).');
+  bz_close_box();
+  ?>
   <h3>TELL A STORY</h3>
     <div class="full">
       <img src="/courses/1/files/127<?php echo $imgcounter++; ?>/preview" alt="" style="width: 25%; height: auto; float: right; margin: 0 0 2em 2em;" />
       <p><?php echo $z6;?></p>
     </div>
+  <?php
+  bz_open_box('question','Which way of presenting this information is more engaging?');
+  ?>
+    <table class="instant-feedback equal-column-widths">
+      <tbody>
+        <tr>
+          <td>
+            <div class="bz-example">
+              <p>Lucy always wanted to become a pilot, but she failed the math section of the exam. When her son graduated high school, she decided to take it again, and again she didn't pass. But she was determined to become a pilot, and she asked her son to teach her math, so every night after dinner, he taught her everything he knew. The next time she took the exam, she passed. Finally, she got a pilot license and got a job in crop dusting. On the job, she found herself needing to use her math to calculate the airplane's fuel consumption and to plan the most efficient course to cover the all the fields she was sparying in the shortest time. She could do the math so quickly, other pilots came to her for help and she became known for her excellent math skills. What Lucy thought was her weakness turned out to be a great strength!</p>
+            </div>
+          </td>
+          <td><p>With practice and persistence, you can turn your weakness into a strength!</p></td>
+        </tr>
+        <tr>
+          <?php $GLOBALS['innercounter']++; ?>
+          <td class="correct"><input name="<?php bz_make_id();?>" type="radio" value="0" data-bz-retained="<?php bz_make_id('hold');?>" />
+            This one</td>
+          <td class="incorrect"><input name="<?php bz_make_id('hold');?>" type="radio" value="" data-bz-retained="<?php bz_make_id('hold');?>" />
+            This one</td>
+        </tr>
+      </tbody>
+    </table>
+  <?php
+  bz_close_box();
+  //
+  bz_open_box('answer',null,'People think in stories');
+  ?>
+    <p>When people hear a story, the deeper parts of the brain where memory and emotion work together are activated, and meaningful connections are made to other memories your audience already has. Your audience will feel more engaged as you speak, and remember more once you're done.</p>
+  <?php 
+  bz_close_box();
+  //
+  bz_open_box('video', 'Here are eight engaging storytelling techniques you can use in presentations, with video examples of each one.');
+  bz_close_box();
+
+  echo '<div class="tbd">TBD</div>';
+
+  bz_open_box('reflection', 'Think about your Capstone Challenge presentation. Which of these storytelling techniques would work in your presentation? (check all that apply)', 'What would work for you?');
+    $items = array (
+      'Monomyth',
+      'The mountain',
+      'Nested loops',
+      'Sparklines',
+      'In media res',
+      'Converging ideas',
+      'False start',
+      'Petal structure ',
+    );
+    bz_make_simple_checklist($items);
+  bz_close_box();
+  ?>
+
+
+
   <h3>PRACTICE</h3>
     <div class="full">
       <img src="/courses/1/files/127<?php echo $imgcounter++; ?>/preview" alt="" style="width: 25%; height: auto; float: right; margin: 0 0 2em 2em;" />
