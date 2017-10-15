@@ -555,9 +555,9 @@ require('functions.php');
         </tr>
         <tr>
           <?php $GLOBALS['innercounter']++; ?>
-          <td class="correct"><input name="<?php bz_make_id();?>" type="radio" value="0" data-bz-retained="<?php bz_make_id('hold');?>" />
+          <td class="correct"><input name="<?php echo bz_make_id();?>" type="radio" value="0" data-bz-retained="<?php echo bz_make_id('hold');?>" />
             This one</td>
-          <td class="incorrect"><input name="<?php bz_make_id('hold');?>" type="radio" value="" data-bz-retained="<?php bz_make_id('hold');?>" />
+          <td class="incorrect"><input name="<?php echo bz_make_id('hold');?>" type="radio" value="" data-bz-retained="<?php echo bz_make_id('hold');?>" />
             This one</td>
         </tr>
       </tbody>
