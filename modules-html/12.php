@@ -689,94 +689,6 @@ crossorigin="anonymous">
     //
     bz_open_box('answer','You won’t always agree with the feedback you receive, and that’s okay. It’s ultimately up to you to decide which feedback helps you improve.');
     bz_close_box(); ?>
-  <h2>SO, YOU’RE FACILITATING<br />LEARNING LAB THIS WEEK&hellip;</h2>
-  <?php $GLOBALS['hlevel'] = 3; ?>
-  <?php bz_open_box('action');?>
-  <p>If you’re the Project Manager or the Lead Prototyper, you’re facilitating sections of Learning Lab this week. Your objectives and suggested methods for reaching those objectives are listed below. Come prepared with an agenda to facilitate Learning Lab.</p>
-    <h3>HIGH-LEVEL AGENDA</h3>
-    
-    <table class="full">
-      <tr>
-        <th>TIME</th>
-        <th>ACTIVITY</th>
-        <th>FACILITATOR</th>
-      </tr>
-      <tr>
-        <td>20 mins</td>
-        <td>Opening</td>
-        <td>LC</td>
-      </tr>
-      <tr>
-        <td>10 mins</td>
-        <td>Project Plan Check-In</td>
-        <td>Project Manager </td>
-      </tr>
-      <tr>
-        <td>45 mins</td>
-        <td>Build Prototypes</td>
-        <td>Lead Prototyper</td>
-      </tr>
-      <tr>
-        <td>15 mins</td>
-        <td>Plan to Test</td>
-        <td>Lead Prototyper</td>
-      </tr>
-      <tr>
-        <td>20 mins</td>
-        <td>Team Check-In</td>
-        <td>LC</td>
-      </tr>
-      <tr>
-        <td>20 mins</td>
-        <td>Closing</td>
-        <td>LC</td>
-      </tr>
-    </table>
-    
-    <p>&nbsp;<br /></p>
-    <h3>Objectives and suggested methods:</h3>
-    <table>
-      <thead><tr><th>Activity</th><th>Objectives</th><th>Suggested Methods</th></tr></thead>
-      <tbody>
-        <tr>
-          <th>Project Plan Check-In</th>
-          <td>Update the project plan to ensure the cohort is on track in the Capstone Challenge. </td>
-          <td>
-            <ol>
-              <li>Go through each task that is due with owners and update the Project Plan in real time.</li>
-              <li>If any Fellow has fallen behind, lead a discussion about why and what can be done moving forward.</li>
-            </ol>
-          </td>
-        </tr>
-        <tr>
-          <th>Build prototypes</th>
-          <td>
-            Build 1-3 prototypes that can be tested by users. Prototypes must be in physical or digital form.
-          </td>
-          <td>
-            Productive prototype-building work session 
-          </td>
-        </tr>
-        <tr>
-          <th>Plan to Test</th>
-          <td>
-            <ol>
-              <li>Determine how you will test your prototypes and who you will test your prototypes with.</li>
-              <li>Assign owners for reaching out to users and scheduling testing sessions.</li>
-              <li>Determine how you will keep the cohort informed of user feedback for refining prototypes.</li>
-            </ol>
-          </td>
-          <td>
-            <ol>
-              <li>Brainstorm</li>
-              <li>Assign tasks </li>
-            </ol>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <?php 
-    bz_close_box(); ?>
     <h2 id="wrap-up">Wrap-up</h2>
     <div>
       <p>In this module we looked at getting and giving feedback, which are two of the most important skills you'll need to learn and grow in any job (and life in general).</p>
@@ -786,8 +698,99 @@ crossorigin="anonymous">
       <ol>
         <li>Make sure you begin building prototypes with your cohort to stay on track in the <a href="/courses/1/assignments/684">Capstone Challenge</a>.</li>
         <li>For the <a href="/courses/1/assignments/711">Tackle Career Challenges</a> Project, complete <i>Part 1: Define the Problem</i> and get started on Parts 2 and 3.</li>
+        <li>Check out the agenda for your upcoming Learning Lab (below)</li>
       </ol>
     </div>
+
+    <h2>SO, YOU’RE FACILITATING<br />LEARNING LAB THIS WEEK&hellip;</h2>
+    <?php $GLOBALS['hlevel'] = 3; ?>
+    <?php bz_open_box('action');?>
+    <p>If you’re the Project Manager or the Lead Prototyper, you’re facilitating sections of Learning Lab this week. Your objectives and suggested methods for reaching those objectives are listed below. Come prepared with an agenda to facilitate Learning Lab.</p>
+      <h3>HIGH-LEVEL AGENDA</h3>
+      
+      <table class="full">
+        <tr>
+          <th>TIME</th>
+          <th>ACTIVITY</th>
+          <th>FACILITATOR</th>
+        </tr>
+        <tr>
+          <td>20 mins</td>
+          <td>Opening</td>
+          <td>LC</td>
+        </tr>
+        <tr>
+          <td>10 mins</td>
+          <td>Project Plan Check-In</td>
+          <td>Project Manager </td>
+        </tr>
+        <tr>
+          <td>45 mins</td>
+          <td>Build Prototypes</td>
+          <td>Lead Prototyper</td>
+        </tr>
+        <tr>
+          <td>15 mins</td>
+          <td>Plan to Test</td>
+          <td>Lead Prototyper</td>
+        </tr>
+        <tr>
+          <td>20 mins</td>
+          <td>Team Check-In</td>
+          <td>LC</td>
+        </tr>
+        <tr>
+          <td>20 mins</td>
+          <td>Closing</td>
+          <td>LC</td>
+        </tr>
+      </table>
+      
+      <p>&nbsp;<br /></p>
+      <h3>Objectives and suggested methods:</h3>
+      <table>
+        <thead><tr><th>Activity</th><th>Objectives</th><th>Suggested Methods</th></tr></thead>
+        <tbody>
+          <tr>
+            <th>Project Plan Check-In</th>
+            <td>Update the project plan to ensure the cohort is on track in the Capstone Challenge. </td>
+            <td>
+              <ol>
+                <li>Go through each task that is due with owners and update the Project Plan in real time.</li>
+                <li>If any Fellow has fallen behind, lead a discussion about why and what can be done moving forward.</li>
+              </ol>
+            </td>
+          </tr>
+          <tr>
+            <th>Build prototypes</th>
+            <td>
+              Build 1-3 prototypes that can be tested by users. Prototypes must be in physical or digital form.
+            </td>
+            <td>
+              Productive prototype-building work session 
+            </td>
+          </tr>
+          <tr>
+            <th>Plan to Test</th>
+            <td>
+              <ol>
+                <li>Determine how you will test your prototypes and who you will test your prototypes with.</li>
+                <li>Assign owners for reaching out to users and scheduling testing sessions.</li>
+                <li>Determine how you will keep the cohort informed of user feedback for refining prototypes.</li>
+              </ol>
+            </td>
+            <td>
+              <ol>
+                <li>Brainstorm</li>
+                <li>Assign tasks </li>
+              </ol>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    <?php 
+    bz_close_box(false); ?>
+
   </div>
   <script src="../new-ui-sandbox.js"></script>
   <progress max="100" id="bz-progress-bar" value="14"></progress>
