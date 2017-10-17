@@ -68,7 +68,8 @@
     bz_make_textarea(array ('optional' => true, 'other' => true,));
     bz_close_box();
     //
-
+    bz_open_box('answer',null,'Don&rsquo;t be that Fellow! Read on to get all you need to prepare.');
+    bz_close_box();
   ?>
   <blockquote><p>You should never go to a meeting or make a telephone call without a clear idea of what you are trying to achieve.</p><p class="quote-source">Steve Jobs, founder of Apple</p></blockquote>
   <h2 id="how">How do I facilitate meetings?</h2>
@@ -100,7 +101,7 @@
     <table class="no-zebra">
       <tr>
         <th>Time and Location:</th>
-        <td>Rutgers-Newark, Conklin Hall, Room 319, 6:00-8:00pm</td>
+        <td>DePalma Hall, Room 319, 6:00-8:00pm</td>
       </tr>
     <tr>
       <th>Attendees:</th>
@@ -218,7 +219,7 @@
     <li><strong>Add flex time</strong> to the end of your agenda. If one agenda item ends up running over, you’ll have the ability to adapt as needed.</li>
   </ol>
   <?php bz_close_box(); ?>
-  <?php bz_open_box('question', 'Looking back at the sample agenda, what do you notice is included in the talking points for the Identify roles agenda item? (Check all that apply)'); 
+  <?php bz_open_box('question', 'Looking back at the sample agenda, what do you notice is included in the talking points for the <em>Identify roles</em> agenda item? (Check all that apply)'); 
     $items = array(
       array('correctness' => 'correct', 'content' => 'Voicing the objective of that agenda item', ),
       array('correctness' => 'correct', 'content' => 'Explaining the purpose behind the objective and the methods you chose ', ),
@@ -265,13 +266,13 @@
     <p>We also looked at some meeting agendas (and if you're facilitating this week, you get to practice using the one below).</p>
     <h3>Next Steps:</h3>
     <ol>
-      <li>Complete Tackle Career Challenges Project, Part 1: Empathy-Based Research</li>
+      <li>Complete <a href="/courses/1/assignments/711">Tackle Career Challenges Project</a>, Part 1: Empathy-Based Research</li>
       <li>Conduct empathy-based research for the Capstone Challenge (interview 3+ users)</li>
       <li>Make sure your team's Project Manager has finalized the project plan and shared it with the rest of your cohort</li>
       <li>Check out the agenda for your upcoming Learning Lab (below). Even if you're not facilitating, read through this section so you know what to expect in Learning Lab.</li>
     </ol>
   </div>
-  <h2>SO, YOU’RE FACILITATING<br />LEARNING LAB THIS WEEK&hellip;</h2>
+  <h2>SO, YOU’RE FACILITATING <br />LEARNING LAB THIS WEEK&hellip;</h2>
   <?php $GLOBALS['hlevel'] = 3; ?>
   <?php bz_open_box('action', 'If you’re the Project Manager or the Lead Researcher, you’re facilitating sections of Learning Lab this week. Your objectives and suggested methods for reaching them are listed below. Be sure to come prepared with an agenda to facilitate Learning Lab.');
   ?>
