@@ -246,7 +246,7 @@
   <?php bz_close_box(); ?>
 
 
-  <?php bz_open_box('question', 'Should you share your agenda with your team in advance of the meeting?', 'Final quick question');
+  <?php bz_open_box('question', 'Should you share your agenda with your team in advance of the meeting?');
 
   $items = array(
     array('correctness' => 'correct', 'content' => 'Yes'),
@@ -254,10 +254,70 @@
   );
   bz_make_cr_list($items, 'radio-list', null);
   bz_close_box();
+  //
   bz_open_box('answer', null);?>
   <p>Sharing the agenda in advance will help your team review and plan before they arrive so that they can be fully engaged participants.</p>
   <p>In order to successfully facilitate Learning Lab during the Capstone Challenge, and as part of your Tackle Career Challenges Project, you’ll have to create a meeting agenda. If you’re facilitating next week, it’s a good idea to do that now!</p>
-  <?php bz_close_box(false);?>
+  <?php bz_close_box(false);
+  //
+  bz_open_box();
+  ?>
+    <p>It's 15 minutes into the meeting, and you realize your team members are losing interest. You've been explaining the reason for the meeting and your opinion on how to solve the problems your team needs to solve. What's the best way to re-engage your teammates?</p>
+    <?php
+    $items = array(
+      array(
+        'correctness'=>'correct',
+        'content'=>'Take a step back and let the other members of the group carry the discussion. ',
+        'feedback'=>'Correct! What&rsquo;s the point of a meeting if one person is doing all the problem-solving? Take a step back and ask your teammates what they think.', 
+      ),
+      array(
+        'correctness'=>'incorrect',
+        'content'=>'Move the group towards taking ownership of action steps coming out of the meeting.',
+        'feedback'=>'This is a critical step in a successful meeting, but talking about next steps should happen at the end of the meeting, not the beginning.',
+      ),
+      array(
+        'correctness'=>'incorrect',
+        'content'=>'Hold people accountable and point out when norms are not being upheld. ',
+        'feedback'=>'It doesn&rsquo;t seem like any norms are being violated in this situation. Take a look at your own actions first to see if there&rsquo;s anything you can do as a facilitator to re-engage the group.',
+      ),
+      array(
+        'correctness'=>'incorrect',
+        'content'=>'Clarify the expected outcomes or objectives of the meeting and stay focused on them. ',
+        'feedback'=>'You&rsquo;ve already spent a good deal of time laying out the context for the meeting. Time to move onto asking your teammates what they think!',
+      ),
+      );
+    bz_make_cr_list($items,'radio-list');
+  bz_close_box();
+  //
+  bz_open_box('question',null,'Last question!');
+  ?>
+  <p>One team member starts talking about the cool trick her dog did over the weekend, and you feel the discussion veering off into videos of animals doing funny things. What should you do?</p>
+    <?php
+    $items = array(
+      array(
+        'correctness'=>'correct',
+      'content'=>'Clarify the expected outcomes or objectives of the meeting and stay focused on them. ',
+      'feedback'=>'Correct! You can say something like, "It seems like you&rsquo;re losing focus, and we only have 15 minutes left. Let&rsquo;s get back to discussing the problem at hand." ',
+      ),
+      array(
+        'correctness'=>'incorrect',
+      'content'=>'Energize the group because their energy is low. ',
+      'feedback'=>'Seems like they have the energy to talk about animal videos! Work to channel their energy to the topics at hand. ',
+      ),
+      array(
+        'correctness'=>'incorrect',
+      'content'=>'Manage participation, ensuring everyone&rsquo;s voice is heard. ',
+      'feedback'=>'While one person may be taking over the conversation here, you&rsquo;ll need to refocus the conversation on the issue at hand before diagnosing if some people are participating too much or too little. ',
+      ),
+      array(
+        'correctness'=>'incorrect',
+      'content'=>'Take a step back and let the other members of the group carry the discussion. ',
+      'feedback'=>'In this situation, you need to reign in the group to focus rather than take a step back. ',
+      ),
+    );
+    bz_make_cr_list($items,'radio-list');
+  bz_close_box();
+  ?>
   <blockquote>The number of meetings I&rsquo;ve been in &mdash; people would be shocked. But that&rsquo;s how you gain experience, how you can gain knowledge, being in meetings and participating. You learn and grow.<p class="quote-source">Tiger Woods, professional golfer</p></blockquote>
   <h2 id="wrap-up">Wrap-up</h2>
   <div>
