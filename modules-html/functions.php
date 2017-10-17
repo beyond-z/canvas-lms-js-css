@@ -98,9 +98,9 @@ function bz_make_id($hold = null) {
 function bz_make_cr_list($items, $type = 'checklist', $instant = 'instant-feedback', $addlclasses = '') {
   $GLOBALS['innercounter']++;
   $inputtype = ($type == 'checklist') ? 'checkbox' : 'radio';
-    if ( null == $instant ) {
-      $GLOBALS['for'] = 'for-'.$type;
-    }
+  if ( null == $instant ) {
+    $GLOBALS['for'] = 'for-'.$type;
+  }
   echo '<ul class="' . $type . ' ' . $instant . ' ' . $addlclasses . '">';
 
   foreach ($items as $key => $item) {
@@ -120,6 +120,73 @@ function bz_make_cr_list($items, $type = 'checklist', $instant = 'instant-feedba
   echo '</ul>';
 }
 
+function bz_make_radio_list($items, $instant = 'instant-feedback', $addlclasses = '') {
+  
+  // TODO: refactor this one along with make_cr_list
+  // for more complex input (with feedback etc.) use the more complex function:
+  if (is_array($items[0])) {
+    // this helps process simple lists so i don't have to set these values manually:
+    if(!$items[0]['correctness']) {
+      foreach ($items as $item) {
+        $item['correctness'] = 'incorrect';
+      }
+      // the first value on the list will be set as the correct one:
+      $items[0]['correctness'] = 'correct';
+    }
+    bz_make_cr_list($items, 'radio-list', $instant, $addlclasses);
+  } else {
+    // for a simple list that needs no feedback etc.:
+    $GLOBALS['innercounter']++;
+    if ( null == $instant ) {
+      $GLOBALS['for'] = 'for-radio-list';
+    }
+    echo '<ul class="radio-list ' . $instant . ' ' . $addlclasses . '">';
+
+    foreach ($items as $key => $item) {
+      $itemname = bz_make_id('hold');
+      $correctness = (0 < $key) ? 'incorrect' : 'correct';
+      echo  '<li class="'
+      .$correctness
+      .'"><input type="radio'
+      .'" data-bz-retained="'.$itemname.'" name="'.$itemname
+      .'" value="option'.$key.'" />'
+      .$item
+      .'</li>';
+    }
+    echo '</ul>';
+  }
+}
+
+function bz_make_simple_checklist($rights,$wrongs) {
+  $items = array();
+  if ($wrongs) {
+    // if there are two lists: add indicators to the lists and merge them into $items:
+    foreach ($rights as $key => $item) {
+      $push = array(
+        'content' => $item,
+        'correctness' => 'correct',
+      );
+      array_push($items, $push);
+    }
+    foreach ($wrongs as $key => $item) {
+      $push = array(
+        'content' => $item,
+        'correctness' => 'incorrect',
+      );
+      array_push($items, $push);
+    } 
+  } else {
+    // if only one list: just make that the list of items.
+    foreach ($rights as $key => $item) {
+      $push = array(
+        'content' => $item,
+      );
+    array_push($items, $push);
+    }
+  }
+  bz_make_cr_list($items);
+}
+
 function bz_make_textarea($args){
   $GLOBALS['innercounter']++;
   /*
@@ -130,7 +197,7 @@ function bz_make_textarea($args){
   */
   $itemname = bz_make_id();
   $optionalclass = ($args['optional']) ? ' bz-optional-magic-field ' : '';
-  $otherclass = ($args['other']) ? ' checklist-other ' : '';
+  $otherclass = ($args['other']) ? ' checklist-other bz-optional-magic-field ' : '';
   if ($args['other']) {
     echo '<input class="bz-optional-magic-field" type="checkbox" data-bz-retained="'.$itemname.'-other" />';
     echo '  <strong>Other:</strong><br />';
@@ -151,10 +218,12 @@ function bz_make_multi_radios($items, $cats = array(1 => 'Poor',2 => 'Below aver
       }
   echo '    </tr>';
   foreach ($items as $key => $item) {
+    $itemcontent = (is_array($item)) ? $item['content'] : $item;
     echo '<tr>';
-    echo '<td>'.$item.'</td>';
+    echo '<td>'.$itemcontent.'</td>';
     foreach ($cats as $catkey => $cat) {
-      echo '<td><input type="radio" data-bz-retained="'.$itemname.'-'.$key.'" name="'.$itemname.'-'.$key.'" value="'.$catkey.'" /></td>';
+      $answerclass = ($catkey == $item['answer']) ? ' class="correct"' : ' class="incorrect"';
+      echo '<td'.$answerclass.'><input type="radio" data-bz-retained="'.$itemname.'-'.$key.'" name="'.$itemname.'-'.$key.'" value="'.$catkey.'" /></td>';
     }
     echo '</tr>';
   }
@@ -187,25 +256,41 @@ function bz_make_instant_range_table($items){
               <div class="display-value"><span class="current-value">&nbsp;</span></div>
             </td>
           </tr>
+        <?php if($item[1]) { ?>
           <tr>
             <td colspan="7">
               <div class="feedback" data-bz-range-flr="0" data-bz-range-clg="3"><p><?php echo $item[1];?></p></div>
-              <div class="feedback" data-bz-range-flr="3" data-bz-range-clg="5"></div>
+              <div class="feedback" data-bz-range-flr="3" data-bz-range-clg="5"><p><?php echo $item[2];?></p></div>
             </td>
           </tr>
-        <?php 
-      } ?>
+        <?php } //end if($item[1])
+      } // end foreach ?>
 
     </tbody>
   </table>
   <?php
 }
 
+function bz_embed_video($source, $videoid, $duration, $caption, $transcript, $instructions) {
+  $src;
+  switch ($source) {
+    case 'youtube':
+    case 'yt':
+      $src = 'https://www.youtube.com/embed/';
+      $videoid = $videoid . '?rel=0';
+      break;
+    case 'vimeo':
+    case 'vm':
+      $src = 'https://player.vimeo.com/video/';
+      break;
+    default:
+      $src = $source;
+      break;
+  }
 
-function bz_make_youtube($youtubeid, $duration, $caption, $transcript, $instructions) {
   ?>
     <figure>
-      <iframe src="https://www.youtube.com/embed/<?php echo $youtubeid; ?>?rel=0" allowfullscreen="allowfullscreen"></iframe>
+      <iframe src="<?php echo $src . $videoid; ?>" allowfullscreen="allowfullscreen"></iframe>
       <figcaption><?php echo $caption; ?><span class="media-duration"><?php echo $duration; ?></span>
         <?php if($instructions) { ?>
           <div class="media-instructions">
@@ -222,5 +307,56 @@ function bz_make_youtube($youtubeid, $duration, $caption, $transcript, $instruct
   <?php 
 }
 
+function bz_make_match_table($items, $headings, $addlclasses){
+  echo '<table class="sort-to-match '. $addlclasses .'">';
+    if (!empty($headings)) {
+      echo '<thead><tr>';
+      foreach ($headings as $heading) {
+        echo '<th>'.$heading.'</th>';
+      }
+      echo '</tr></thead>';
+    }
+    echo '<tbody>';
+    foreach ($items as $item) {
+      echo '<tr>';
+      foreach ($item as $cell) {
+        echo '<td>'.$cell.'</td>';
+      }
+      echo '</tr>';
+    }
+    echo '</tbody>';
+  echo '</table>';
+  $GLOBALS['for'] = 'for-match';
+}
+
+function bz_make_range($answer,$min = 0,$max = 100,$step = 1, $unit = '%') {
+  $GLOBALS['innercounter']++;
+  $GLOBALS['for'] = 'for-range';
+  echo '<p>';
+  echo '<input class="two-thirds bz-optional-magic-field" '
+    .'max="'.$max.'" '
+    .'min="'.$min.'" '
+    .'step="'.$step.'" '
+    .'type="range" data-bz-range-answer="'.$answer.'" '
+    .'data-bz-retained="'.bz_make_id().'" />';
+  echo '</p>';
+  echo '<div class="display-value"><span class="current-value">&nbsp;</span>'.$unit.'</div>';
+}
+
+function bz_make_inputs_for_self_eval_rubrics(){
+  $GLOBALS['innercounter']++; 
+  $magicid = bz_make_id();
+  $scores = array(
+    10,
+    8,
+    6,
+    0,
+  );
+  echo '<tr>';
+  for ($i = 0; $i <= 3; $i++) {
+    echo '<td style="text-align:center;"><input type="radio" value="'.$scores[$i].'" data-bz-retained="'.$magicid.'" name="'.$magicid.'" /></td>';
+  }
+  echo '</tr>';
+}
 
 ?>

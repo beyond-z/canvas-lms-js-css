@@ -267,22 +267,22 @@ var bzNewUiHandlers = {
 
     // Generate self-evaluation results list:
   '.for-eval' : function(){
-    var eval = [];
+    var evalarray = [];
     var results = "<ul>";
     // collect all checked inputs' values into an array:
     jQuery(this).parents('.bz-box').find('input:checked').each(function(){
-      eval.push(jQuery(this).val());
+      evalarray.push(jQuery(this).val());
     });
     // Now let's sort and count what we've collected:
-    eval.sort();
+    evalarray.sort();
     var current = null;
     var count = 0;
-    for (var i = 0; i < eval.length; i++) {
-        if (eval[i] != current) {
+    for (var i = 0; i < evalarray.length; i++) {
+        if (evalarray[i] != current) {
             if (count > 0) {
                 results+= '<li>'+ current + ': ' + count + '</li>';
             }
-            current = eval[i];
+            current = evalarray[i];
             count = 1;
         } else {
             count++;
@@ -296,6 +296,20 @@ var bzNewUiHandlers = {
     results+= '</ul>';
     jQuery(this).parents('.bz-box').next().children('.box-title').after(results);
   },
+
+  '.for-eval-sum' : function(){
+    var results = 0;
+    // sum all checked inputs' values
+    jQuery(this).parents('.bz-box').find('input:checked').each(function(){
+      results+= Number(jQuery(this).val());
+    });
+    // calculate max assuming 10 is high score per rubric criterion:
+    var max = 10 * jQuery(this).parents('.bz-box').find('.criterion').length;
+    // return results
+    jQuery(this).parents('.bz-box').next().find('.bz-show-eval-sum').text(String(results));
+    jQuery(this).parents('.bz-box').next().find('.bz-show-eval-max').text(String(max));
+  },
+
 
 };
 
@@ -415,8 +429,8 @@ runOnUserContent(function() {
   // Referenced sources numbering:
   /* TBD */
   
-  // Automatically generate a navigable table of contents for the top level out of h2 elements, 
-  // and a h2-level section out of its nested h3 elements
+  // Automatically generate a table of contents (TOC) for the top level out of h2 elements, 
+  // and a h2-level TOC out of its nested h3 elements
   jQuery('.bz-module').prepend(function(){
     var tocBox = jQuery('<div class="main-toc"><p class="match-heading-style">The big picture:</p></div>');
     var mainToc = jQuery('<ol></ol>');
@@ -427,6 +441,10 @@ runOnUserContent(function() {
       // this level generates tables of contents under each h2:
       var innerToc = '<ol class="inner-toc">';
       var innerHasKids = false;
+      var isWrapUp = false;
+      if ( jQuery(this).is('#wrap-up') ) {
+        isWrapUp = true;
+      }
       var nextLevelDown = jQuery(this).nextUntil('h2');
       nextLevelDown.each(function(){
         var current = jQuery(this);
@@ -437,7 +455,7 @@ runOnUserContent(function() {
       });
       var mainListObj = jQuery('<li>' + jQuery(this).text() + '</li>');
 
-      if (innerHasKids) {
+      if (innerHasKids && !isWrapUp) {
         jQuery(this).after(innerToc);
         mainListObj.append(innerToc);
       }
@@ -506,7 +524,7 @@ runOnUserContent(function() {
 	function setupBTT() {
 		// Create a button to allow scrolling up in one click:
 		var btt= jQuery('<div id="bz-back-to-top" class="match-heading-style">Back to top</div>').click(function(){
-			jQuery('body').scrollTop(0);
+			jQuery(window).scrollTop(0);
 		});
 		jQuery('.bz-module').append(btt);
 
@@ -973,6 +991,10 @@ runOnUserContent(function(){
   for(var a = 0; a < start.length; a++)
     if(start[a].querySelector(".bz-toggle-all-next"))
         allBoxesWithStoppingPoints.push(start[a]);
+
+  // no boxes on page, nothing else to do (old content or edit page perhaps)
+  if(allBoxesWithStoppingPoints.length == 0)
+    return;
 
   if(allBoxesWithStoppingPoints.length < openPosition)
     openPosition = allBoxesWithStoppingPoints.length;

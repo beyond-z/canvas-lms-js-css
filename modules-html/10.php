@@ -25,12 +25,10 @@ crossorigin="anonymous">
 <?php 
 $ns = 'csk';
 require('functions.php');
-
-
 ?>
 <div class="bz-module">
-  <p>This module focuses on team working skills, ahead of your team project kick off in the upcoming Learning Lab.</p>
-  <h2 id="why">Why are team working skills important?</h2>
+  <p>This module focuses on teamwork skills, ahead of your team project kick off in the upcoming Learning Lab.</p>
+  <h2 id="why">Why are teamwork skills important?</h2>
   <?php bz_open_box('question','Why do employers look to hire good team players?'); ?>
     <?php
     $items = array(
@@ -139,14 +137,14 @@ require('functions.php');
   <?php bz_open_box('reflection', 'Think about your own cohort as a team. You’ve been working as a team all semester, and you’re about to begin an intense project, the Capstone Challenge, as a team. Rate your cohort on the five effective team characteristics: (1=poor, 5=excellent)');?>
     <?php 
       $items = array(
-        'Your cohort feels safe',
-        'Your cohort members are dependable',
-        'Your cohort has an established structure',
-        'Your cohort has a clear purpose and believes what you’re doing matters',
-        'Your cohort members communicate frequently ',
+        array('Your cohort feels safe',),
+        array('Your cohort members are dependable',),
+        array('Your cohort has an established structure',),
+        array('Your cohort has a clear purpose and believes what you’re doing matters',),
+        array('Your cohort members communicate frequently ',),
       );
     ?>
-    <?php bz_make_multi_radios($items); ?>
+    <?php bz_make_instant_range_table($items); ?>
   <?php bz_close_box();?>
   <?php bz_open_box('answer','You may have ranked your cohort low on some of these characteristics, and that’s okay. Embrace the journey! Teamwork is hard stuff. You will have the time in the upcoming Learning Lab to set expectations and define leadership roles to work effectively as a team throughout the Capstone Challenge. And you will have the space to reflect on your cohort’s teamwork during weekly Retrospectives with the purpose of always improving', 'What does this mean?'); ?>
   <?php bz_close_box(false);?>
@@ -408,7 +406,7 @@ require('functions.php');
   ?>
   <?php bz_open_box('question', 'Match the person with his or her primary compass direction.');?>
 
-  <table class="multi-radios instant-feedback">
+  <table class="multi-radios">
     <thead>
       <tr>
         <th>&nbsp;</th>
@@ -513,18 +511,26 @@ require('functions.php');
     </thead>
   </table>
   <?php 
-  $GLOBALS['for'] = 'match';
+  $GLOBALS['for'] = 'for-radio-list';
   bz_close_box();
   ?>
   <?php bz_open_box('answer'); ?>
+  <img src="/courses/1/files/12737/preview" style="float: right; width:150px; margin: 0 0 2em 2em;" alt="Marissa Mayer" />
   <h6>MARISSA MAYER</h6>
   <p><strong>North.</strong> Marissa Mayer exemplifies a leader who is assertive, directive, and decisive. Not all of her management decisions have been popular, but there's a reason that she is the only person to have been featured in all three of Fortune Magazine's annual lists during the same year: Businessperson of the Year (No. 10), Most Powerful Women (at No. 8), and 40 Under 40 (No. 1) at the same time.</p>
+  <div style="clear:both;">&nbsp;</div>
+  <img src="/courses/1/files/12738/preview" style="float: right; width:150px; margin: 0 0 2em 2em;" alt="Martin Luther King, Jr." />
   <h6>MARTIN LUTHER KING JR.</h6>
   <p><strong>South.</strong> Martin Luther King Jr. exemplifies a leader who is values-driven and a relationship-builder, who takes into account the voices, experiences, and perspectives of others and acts in service of them. He tapped into the emotional and moral compass of a generation to promote nonviolent tactics to achieve civil rights. He was awarded the Nobel Peace Prize in 1964.</p>
+  <div style="clear:both;">&nbsp;</div>
+  <img src="/courses/1/files/12739/preview" style="float: right; width:150px; margin: 0 0 2em 2em;" alt="Sonia Sotomayor" />
   <h6>SONIA SOTOMAYOR</h6>
   <p><strong>West.</strong> Sonia Sotomayor exemplifies a leader who lives by inquiry, is detail-oriented, and makes reliable and thorough decisions, and is willing to ask the tough questions. Sotomayor has earned a reputation as a “sharp and fearless jurist" who has been known to take into account aspects of her identity, including her gender and personal experience, into her decisions.</p>
+  <div style="clear:both;">&nbsp;</div>
+  <img src="/courses/1/files/12740/preview" style="float: right; width:150px; margin: 0 0 2em 2em;" alt="Steve Jobs" />
   <h6>STEVE JOBS</h6>
   <p><strong>East.</strong> Steve Jobs was called a "modern-day Leonardo da Vinci" by some pundits, who praised his ability to think outside the box, set a creative vision for the future, and transform entire industries with his inventions. Jobs was a master in designing from the perspective of his users and creating adaptive solutions to real-world problems that they faced.</p>
+  <div style="clear:both;">&nbsp;</div>
   <?php bz_close_box(); ?>
   <?php 
   bz_open_box('question', 'Why might it be helpful to know where you personally land on the Leadership Compass? (check all that apply)');
@@ -651,8 +657,8 @@ require('functions.php');
   );
   $GLOBALS['innercounter']++;
   bz_make_cr_list($items, 'radio-list');
-
   ?>
+  <p style="clear:both;">&nbsp;<br /></p>
   <p><strong>Which of the Capstone Challenge leadership roles appeals to you? (check all that apply)</strong></p>
   <?php
   $items = array(
@@ -665,6 +671,7 @@ require('functions.php');
   $GLOBALS['innercounter']++;
   bz_make_cr_list($items);
   ?>
+  <p style="clear:both;">&nbsp;<br /></p>
   <p><strong>In the past, what is true of the most successful cohorts during the Capstone Challenge?</strong></p>
   <?php
   $items = array(
@@ -676,6 +683,7 @@ require('functions.php');
   $GLOBALS['innercounter']++;
   bz_make_cr_list($items, 'radio-list');
   ?>
+  <p style="clear:both;">&nbsp;<br /></p>
   <p><strong>Which part of the Tackle Career Challenges project goes hand in hand with your group work on the Capstone Challenge?</strong></p>
   <?php 
   $items = array(
@@ -687,17 +695,19 @@ require('functions.php');
   $GLOBALS['innercounter']++;
   bz_make_cr_list($items, 'radio-list', 'instant-feedback', 'dont-mix');
   ?>
+  <p style="clear:both;">&nbsp;<br /></p>
   <p><strong>How many users will you personally need to interview outside of Learning Lab?</strong></p>
   <table class="no-zebra instant-range-feedback">
     <tbody>
       <tr class="inputs-row">
         <td>
-          <input max="5" min="1" step="1" type="range" data-bz-retained="<?php echo bz_make_id(); ?>" />
+          <input max="5" min="0" step="1" value="0" type="range" data-bz-retained="<?php echo bz_make_id(); ?>" />
           <div class="display-value"><span class="current-value">&nbsp;</span> users</div>
         </td>
       </tr>
       <tr>
         <td>
+          <div class="feedback" data-bz-range-flr="-1" data-bz-range-clg="0">No users? Seriously?</div>
           <div class="feedback" data-bz-range-flr="0" data-bz-range-clg="2">That's a little too low</div>
           <div class="feedback" data-bz-range-flr="2" data-bz-range-clg="3">That's right! <strong>Three</strong> is the magic number.</div>
           <div class="feedback" data-bz-range-flr="3" data-bz-range-clg="5">That's a little too high</div>
@@ -722,7 +732,7 @@ require('functions.php');
   ?>
   <?php bz_open_box('question', 'Take a look at this piece of a Capstone project plan:'); ?>
   <div class="bz-view-box">
-    <table class="shrink">
+    <table class="shrink no-zebra">
       <thead>
         <tr>
           <th>Milestone</th>
@@ -759,6 +769,7 @@ require('functions.php');
       </tbody>
     </table>
   </div>
+  <p style="clear:both;">&nbsp;<br /></p>
   <p>Now match each piece of a project plan with its description:</p>
   <table class="sort-to-match">
       <?php $GLOBALS['for'] = 'for-match'; ?>
@@ -825,7 +836,7 @@ require('functions.php');
       </tr>
     </tbody>
   </table>
-  <?php $GLOBALS['for'] = 'for-match';
+  <?php $GLOBALS['for'] = 'for-match'; ?>
   <?php bz_close_box(); ?>
   <?php bz_open_box('action', 'To ensure you&rsquo;ve thought about all the tasks necessary to complete a milestone, ask yourself if there’s anything you need to do to complete that task. For example, to draft content for a new website, you might need to start with an outline or a vision for the site.', 'Work backward to move forward');
   bz_close_box(false);
@@ -835,7 +846,7 @@ require('functions.php');
   <blockquote>Use your project plan as a map to navigate your project: check it often to how much ground you've already covered, what lies ahead, what you may have missed, and whether a course adjustment is needed.</blockquote>
   <h2 id="wrap-up">Wrap-up</h2>
   <div>
-    <p>In this module we looked at why team work skills matter for your career success:</p>
+    <p>In this module we looked at why teamwork skills matter for your career success:</p>
     <ul>
       <li>You will most likely work in teams no matter what job you have </li>
       <li>Employers hire for good teammates </li>
