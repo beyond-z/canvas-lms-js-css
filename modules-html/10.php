@@ -27,8 +27,8 @@ $ns = 'csk';
 require('functions.php');
 ?>
 <div class="bz-module">
-  <p>This module focuses on team working skills, ahead of your team project kick off in the upcoming Learning Lab.</p>
-  <h2 id="why">Why are team working skills important?</h2>
+  <p>This module focuses on teamwork skills, ahead of your team project kick off in the upcoming Learning Lab.</p>
+  <h2 id="why">Why are teamwork skills important?</h2>
   <?php bz_open_box('question','Why do employers look to hire good team players?'); ?>
     <?php
     $items = array(
@@ -846,7 +846,7 @@ require('functions.php');
   <blockquote>Use your project plan as a map to navigate your project: check it often to how much ground you've already covered, what lies ahead, what you may have missed, and whether a course adjustment is needed.</blockquote>
   <h2 id="wrap-up">Wrap-up</h2>
   <div>
-    <p>In this module we looked at why team work skills matter for your career success:</p>
+    <p>In this module we looked at why teamwork skills matter for your career success:</p>
     <ul>
       <li>You will most likely work in teams no matter what job you have </li>
       <li>Employers hire for good teammates </li>

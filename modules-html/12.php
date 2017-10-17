@@ -90,7 +90,7 @@ crossorigin="anonymous">
       bz_make_cr_list($items, 'radio-list', 'instant-feedback', 'dont-mix');
     bz_close_box();
     //
-    bz_open_box('answer','Giving feedback to your manager might seem like the most difficult, but having the conversation is better than not having it all. Using what you&rsquo;ll learn in this module will make such conversations easier and more productive,');
+    bz_open_box('answer','Giving feedback to your manager might seem like the most difficult, but having the conversation is better than not having it all. Using what you&rsquo;ll learn in this module will make such conversations easier and more productive.');
     bz_close_box();
     //
     bz_open_box('question', 'What should you give feedback on in a workplace setting? (check all that apply)');
@@ -319,7 +319,7 @@ crossorigin="anonymous">
     bz_open_box('read'); ?>
       <p>Read the following two stories recounting a manager giving an employee feedback. Then determine:</p>
       <ol>
-        <li>Which part is the Situation/Task, which part is the Actions, and which part is the Results. (<strong>Pro tip:</strong> They may not fall in that order!</li>
+        <li>Which part is the Situation/Task, which part is the Actions, and which part is the Results. (<strong>Pro tip:</strong> They may not fall in that order!)</li>
         <li>Whether the feedback given is asking or telling language.</li>
       </ol>
       <div class="bz-example">
@@ -702,7 +702,7 @@ crossorigin="anonymous">
       </ol>
     </div>
 
-    <h2>SO, YOU’RE FACILITATING<br />LEARNING LAB THIS WEEK&hellip;</h2>
+    <h2>SO, YOU’RE FACILITATING <br />LEARNING LAB THIS WEEK&hellip;</h2>
     <?php $GLOBALS['hlevel'] = 3; ?>
     <?php bz_open_box('action');?>
     <p>If you’re the Project Manager or the Lead Prototyper, you’re facilitating sections of Learning Lab this week. Your objectives and suggested methods for reaching those objectives are listed below. Come prepared with an agenda to facilitate Learning Lab.</p>

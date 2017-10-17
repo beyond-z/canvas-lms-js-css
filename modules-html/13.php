@@ -61,7 +61,6 @@ require('functions.php');
       array('content' => 'Sleepy',),
       array('content' => 'Anxious',),
       array('content' => 'Sad',),
-      array('content' => 'Hopeful',),
       array('content' => 'Frustrated',),
       array('content' => 'Curious',),
     );
@@ -221,8 +220,8 @@ require('functions.php');
     //
     bz_open_box('answer');
     ?>
-      <p>Eight seconds, that&rsquo;s it (this is when browsing the Web, and only according to a single non-scientific study done by a Canadian ad agency).</p>
-      <p>Statistics aside, we all know from personal experience that people tend to drift off, unless the speaker uses a <strong>"hook"</strong> grab their attention powerfully as soon as the presentation begins. Kind of like what we did here with this interactive Quick Question!</p>
+      <p>Eight seconds, that&rsquo;s it (at least when browsing the Web&hellip;).</p>
+      <p>Statistics aside, we all know from personal experience that we can drift off, unless the speaker uses a <strong>"hook"</strong> grab our attention powerfully as soon as the presentation begins. Kind of like what we did here with this interactive Quick Question!</p>
     <?php
     bz_close_box(false);
     //
@@ -422,10 +421,10 @@ require('functions.php');
   <?php
   bz_open_box('question', 'Which of these phrases would you want to hear in a presentation?');
     bz_make_radio_list(array(
+      'Let’s explore the benefits of this strategy together ',
       'I’m an expert in this field',
       'Our team did the most research',
       'Our client list is extensive ',
-      'Let’s explore the benefits of this strategy together ',
     ));
   bz_close_box();
   //
@@ -569,25 +568,6 @@ require('functions.php');
   ?>
     <p>When people hear a story, the deeper parts of the brain where memory and emotion work together are activated, and meaningful connections are made to other memories your audience already has. Your audience will feel more engaged as you speak, and remember more once you're done.</p>
   <?php 
-  bz_close_box();
-  //
-  bz_open_box('video', 'Here are eight engaging storytelling techniques you can use in presentations, with video examples of each one.');
-  bz_close_box();
-
-  echo '<div class="tbd">TBD</div>';
-
-  bz_open_box('reflection', 'Think about your Capstone Challenge presentation. Which of these storytelling techniques would work in your presentation? (check all that apply)', 'What would work for you?');
-    $items = array (
-      'Monomyth',
-      'The mountain',
-      'Nested loops',
-      'Sparklines',
-      'In media res',
-      'Converging ideas',
-      'False start',
-      'Petal structure ',
-    );
-    bz_make_simple_checklist($items);
   bz_close_box();
   ?>
   <h3>PRACTICE</h3>
@@ -762,17 +742,17 @@ require('functions.php');
       array(
         'content'=>'It depends',
         'correctness'=>'correct',
-        'feedback'=>'If your manager is giving an oral presentation then these strategies could make her shine. But if the deck is meant for sending out as a stand-alone product many of these strategies are actaully counter-productive (for example: using pithy bullets instead of full sentences on the slides won&rsquo;t make sense to the reader)',
+        'feedback'=>'If your manager is giving an oral presentation then these strategies could make her shine. But if the deck is meant for sending out as a stand-alone product many of these strategies are actaully counter-productive (for example: using pithy bullets instead of full sentences on the slides won&rsquo;t make sense to the reader).',
       ),
       array(
         'content'=>'All of them!',
         'correctness'=>'incorrect',
-        'feedback'=>'You don&rsquo;t know whether this is for her to present orally or to send out as a stand-alone (self-guided) deck.',
+        'feedback'=>'Nope. You don&rsquo;t know whether this is for her to present orally or to send out as a stand-alone (self-guided) deck. The strategies above only apply to oral presentations.',
       ),
       array(
         'content'=>'All of them, but only if she says she needs a printed copy',
         'correctness'=>'incorrect',
-        'feedback'=>'Printing lots of single-message slides using a white-on-black design will be terribly wasteful',
+        'feedback'=>'Nope. Printing lots of single-message slides using a white-on-black design will be terribly wasteful!',
       ),
     );
     bz_make_radio_list($items, false);
@@ -803,11 +783,11 @@ require('functions.php');
     <ol>
       <li>To be prepared for Learning Lab this week, make sure your cohort has completed your prototypes, tested your prototypes with at least <strong>ten</strong> users, and refined your prototypes based on their feedback.</li>
       <li>You will be rehearsing your Capstone Presentation during Learning Lab, so make sure your team has a draft of the presentation (deck and talking points) ready to rehearse.</li>
-      <li>On your own, continue working on the <a href="/courses/1/assignments/711">Tackle Career Challenges</a> project. You can complete Part 1: Prototype & Test and continue to work on Parts 2 and 3.</li>
+      <li>On your own, continue working on the <a href="/courses/1/assignments/711">Tackle Career Challenges</a> project. You can complete Part 1: Prototype &amp; Test and continue to work on Parts 2 and 3.</li>
       <li>Check out the agenda for your upcoming Learning Lab (below).</li>
     </ol>
   </div>
-  <h2>SO, YOU’RE FACILITATING<br />LEARNING LAB THIS WEEK&hellip;</h2>
+  <h2>SO, YOU’RE FACILITATING <br />LEARNING LAB THIS WEEK&hellip;</h2>
   <?php $GLOBALS['hlevel'] = 3; ?>
   <?php bz_open_box('action');?>
   <p>If you’re the <em>Project Manager</em>, <em>Lead Oral Presenter</em>, or <em>Lead Deck Designer</em>, you’re facilitating sections of Learning Lab this week. Your objectives and suggested methods for reaching those objectives are listed below. Come prepared with an agenda to facilitate Learning Lab.</p>
@@ -826,13 +806,13 @@ require('functions.php');
     </tr>
     <tr>
       <td>10 mins</td>
-      <td>Review Presentation Rubrics</td>
-      <td>LC</td>
+      <td>Project Plan Check-In</td>
+      <td>Project Manager</td>
     </tr>
     <tr>
       <td>10 mins</td>
-      <td>Build Prototypes</td>
-      <td>Lead Prototyper</td>
+      <td>Review Presentation Rubrics</td>
+      <td>LC</td>
     </tr>
     <tr>
       <td>60 mins</td>
