@@ -100,368 +100,268 @@ require('functions.php');
   //
   bz_open_box('question', null, 'Rate this cohort&rsquo;s solution using the actual rubric your group will be evaluated by:', 'Rate the Solution');
   ?>
-  <p><table class="bz-rubric-self-eval bz-ajax-loaded-rubric bz-ajax-loaded"><tbody><tr id="criterion_45_7499" class="criterion   " style="">
-    <td class="criterion_description hover-container">
-      <div class="container">
-        
-        <span class="description criterion_description_value">1.1. Presenters identify users’ needs based in their own empathy research.</span>
-        <span class="learning_outcome_id" style="display: none;"></span>
-        <div class="threshold">
-          threshold:
-          <span class="mastery_points"></span> pts
-        </div>
-        
-      </div>
-    </td>
-    <td style="padding: 0;">
-      <table class="ratings" style=""><tbody><tr>
-        <td id="rating_blank" class="rating edge_rating">
-          <div class="container">
-            <div class="description rating_description_value">Meets or exceeds</div>
-            <span class="nobr"><span class="points">10</span> pts</span>
-          </div>
-        </td>
-        <td id="rating_45_4629" class="rating ">
-          <div class="container">
-            <div class="description rating_description_value">Connection between needs and research is vague.</div>
-            <span class="nobr"><span class="points">8</span> pts</span>
-          </div>
-        </td>
-        <td id="rating_45_7254" class="rating ">
-          <div class="container">
-            <div class="description rating_description_value">Needs identified are not those of the users (e.g. the company’s needs).</div>
-            <span class="nobr"><span class="points">6</span> pts</span>
-          </div>
-        </td>
-        <td id="rating_blank_2" class="rating edge_rating">
-          <div class="container">
-            <div class="description rating_description_value">Does not address.</div>
-            <span class="nobr"><span class="points">0</span> pts</span>
-          </div>
-        </td>
-      </tr>
-      <?php bz_make_inputs_for_self_eval_rubrics(); ?>
-    </tbody></table>
-      
-    </td>
-    <td class="nobr points_form">
-      
-      <div class="displaying">
-        <span style="white-space: nowrap;">
-          
-          <span class="display_criterion_points">10</span> pts<br>
-        </span>
-      </div>
-      <div class="ignoring">
-        <span> -- </span>
-      </div>
-      <div class="criterion_comments">
-        
-        <div class="custom_rating" style="display: none;"></div>
-      </div>
-    </td>
-    
-  </tr></tbody></table></p>
-  <p><table class="bz-rubric-self-eval bz-ajax-loaded-rubric bz-ajax-loaded"><tbody><tr id="criterion_45_8812" class="criterion   " style="">
-    <td class="criterion_description hover-container">
-      <div class="container">
-        
-        <span class="description criterion_description_value">1.2. Presenters clearly define the problem and explain why it is important to address the problem.</span>
-        <span class="learning_outcome_id" style="display: none;"></span>
-        <div class="threshold">
-          threshold:
-          <span class="mastery_points"></span> pts
-        </div>
-        
-      </div>
-    </td>
-    <td style="padding: 0;">
-      <table class="ratings" style=""><tbody><tr>
-        <td id="rating_45_2872" class="rating edge_rating">
-          <div class="container">
-            <div class="description rating_description_value">Meets or exceeds</div>
-            <span class="nobr"><span class="points">10</span> pts</span>
-          </div>
-        </td>
-        <td id="rating_45_7206" class="rating ">
-          <div class="container">
-            <div class="description rating_description_value">Could be clearer in defining the problem.</div>
-            <span class="nobr"><span class="points">8</span> pts</span>
-          </div>
-        </td>
-        <td id="rating_45_5186" class="rating ">
-          <div class="container">
-            <div class="description rating_description_value">Does not explain importance of addressing problem.</div>
-            <span class="nobr"><span class="points">6</span> pts</span>
-          </div>
-        </td>
-        <td id="rating_45_6361" class="rating edge_rating">
-          <div class="container">
-            <div class="description rating_description_value">Does not address.</div>
-            <span class="nobr"><span class="points">0</span> pts</span>
-          </div>
-        </td>
-      </tr><?php bz_make_inputs_for_self_eval_rubrics(); ?></table>
-      
-    </td>
-    <td class="nobr points_form">
-      
-      <div class="displaying">
-        <span style="white-space: nowrap;">
-          
-          <span class="display_criterion_points">10</span> pts<br>
-        </span>
-      </div>
-      <div class="ignoring">
-        <span> -- </span>
-      </div>
-      <div class="criterion_comments">
-        
-        <div class="custom_rating" style="display: none;"></div>
-      </div>
-    </td>
-    
-  </tr></tbody></table></p>
-  <p><table class="bz-rubric-self-eval bz-ajax-loaded-rubric bz-ajax-loaded"><tbody><tr id="criterion_45_3125" class="criterion   " style="">
-    <td class="criterion_description hover-container">
-      <div class="container">
-        
-        <span class="description criterion_description_value">1.3. Presenters pitch their top design solution and explain how their prototype solves the given problem.</span>
-        <span class="learning_outcome_id" style="display: none;"></span>
-        <div class="threshold">
-          threshold:
-          <span class="mastery_points"></span> pts
-        </div>
-        
-      </div>
-    </td>
-    <td style="padding: 0;">
-      <table class="ratings" style=""><tbody><tr>
-        <td id="rating_45_2825" class="rating edge_rating">
-          <div class="container">
-            <div class="description rating_description_value">Meets or exceeds</div>
-            <span class="nobr"><span class="points">10</span> pts</span>
-          </div>
-        </td>
-        <td id="rating_45_2122" class="rating ">
-          <div class="container">
-            <div class="description rating_description_value">Could be clearer in connecting the solution to the problem.</div>
-            <span class="nobr"><span class="points">8</span> pts</span>
-          </div>
-        </td>
-        <td id="rating_45_2653" class="rating ">
-          <div class="container">
-            <div class="description rating_description_value">Doesn't explain how solution solves problem.</div>
-            <span class="nobr"><span class="points">6</span> pts</span>
-          </div>
-        </td>
-        <td id="rating_45_9209" class="rating edge_rating">
-          <div class="container">
-            <div class="description rating_description_value">Does not address.</div>
-            <span class="nobr"><span class="points">0</span> pts</span>
-          </div>
-        </td>
-      </tr><?php bz_make_inputs_for_self_eval_rubrics(); ?></table>
-      
-    </td>
-    <td class="nobr points_form">
-      
-      <div class="displaying">
-        <span style="white-space: nowrap;">
-          
-          <span class="display_criterion_points">10</span> pts<br>
-        </span>
-      </div>
-      <div class="ignoring">
-        <span> -- </span>
-      </div>
-      <div class="criterion_comments">
-        
-        <div class="custom_rating" style="display: none;"></div>
-      </div>
-    </td>
-    
-  </tr></tbody></table></p>
-  <p><table class="bz-rubric-self-eval bz-ajax-loaded-rubric bz-ajax-loaded"><tbody><tr id="criterion_45_9006" class="criterion   " style="">
-    <td class="criterion_description hover-container">
-      <div class="container">
-        
-        <span class="description criterion_description_value">1.4. Presenters describe the feedback they received when testing their prototype and how they iterated to improve the prototype.</span>
-        <span class="learning_outcome_id" style="display: none;"></span>
-        <div class="threshold">
-          threshold:
-          <span class="mastery_points"></span> pts
-        </div>
-        
-      </div>
-    </td>
-    <td style="padding: 0;">
-      <table class="ratings" style=""><tbody><tr>
-        <td id="rating_45_9543" class="rating edge_rating">
-          <div class="container">
-            <div class="description rating_description_value">Meets or exceeds</div>
-            <span class="nobr"><span class="points">10</span> pts</span>
-          </div>
-        </td>
-        <td id="rating_45_3417" class="rating ">
-          <div class="container">
-            <div class="description rating_description_value">Could be clearer in connecting improvements to feedback.</div>
-            <span class="nobr"><span class="points">8</span> pts</span>
-          </div>
-        </td>
-        <td id="rating_45_6743" class="rating ">
-          <div class="container">
-            <div class="description rating_description_value">Describes testing but not improvements.</div>
-            <span class="nobr"><span class="points">6</span> pts</span>
-          </div>
-        </td>
-        <td id="rating_45_7978" class="rating edge_rating">
-          <div class="container">
-            <div class="description rating_description_value">Does not address.</div>
-            <span class="nobr"><span class="points">0</span> pts</span>
-          </div>
-        </td>
-      </tr><?php bz_make_inputs_for_self_eval_rubrics(); ?></table>
-      
-    </td>
-    <td class="nobr points_form">
-      
-      <div class="displaying">
-        <span style="white-space: nowrap;">
-          
-          <span class="display_criterion_points">10</span> pts<br>
-        </span>
-      </div>
-      <div class="ignoring">
-        <span> -- </span>
-      </div>
-      <div class="criterion_comments">
-        
-        <div class="custom_rating" style="display: none;"></div>
-      </div>
-    </td>
-    
-  </tr></tbody></table></p>
-  <p><table class="bz-rubric-self-eval bz-ajax-loaded-rubric bz-ajax-loaded"><tbody><tr id="criterion_45_661" class="criterion   " style="">
-    <td class="criterion_description hover-container">
-      <div class="container">
-        
-        <span class="description criterion_description_value">1.5. Design solution is original and provides a unique value-add unlike other solutions that have been built.</span>
-        <span class="learning_outcome_id" style="display: none;"></span>
-        <div class="threshold">
-          threshold:
-          <span class="mastery_points"></span> pts
-        </div>
-        
-      </div>
-    </td>
-    <td style="padding: 0;">
-      <table class="ratings" style=""><tbody><tr>
-        <td id="rating_45_938" class="rating edge_rating">
-          <div class="container">
-            <div class="description rating_description_value">Meets or exceeds</div>
-            <span class="nobr"><span class="points">10</span> pts</span>
-          </div>
-        </td>
-        <td id="rating_45_5921" class="rating ">
-          <div class="container">
-            <div class="description rating_description_value">Solution is somewhat unique.</div>
-            <span class="nobr"><span class="points">8</span> pts</span>
-          </div>
-        </td>
-        <td id="rating_45_2562" class="rating ">
-          <div class="container">
-            <div class="description rating_description_value">Solution is similar to many other solutions.</div>
-            <span class="nobr"><span class="points">6</span> pts</span>
-          </div>
-        </td>
-        <td id="rating_45_1708" class="rating edge_rating">
-          <div class="container">
-            <div class="description rating_description_value">Solution seems to copy other solutions.</div>
-            <span class="nobr"><span class="points">0</span> pts</span>
-          </div>
-        </td>
-      </tr><?php bz_make_inputs_for_self_eval_rubrics(); ?></table>
-      
-    </td>
-    <td class="nobr points_form">
-      
-      <div class="displaying">
-        <span style="white-space: nowrap;">
-          
-          <span class="display_criterion_points">10</span> pts<br>
-        </span>
-      </div>
-      <div class="ignoring">
-        <span> -- </span>
-      </div>
-      <div class="criterion_comments">
-        
-        <div class="custom_rating" style="display: none;"></div>
-      </div>
-    </td>
-    
-  </tr></tbody></table></p>
-  <!--p><table class="bz-rubric-self-eval bz-ajax-loaded-rubric bz-ajax-loaded"><tbody><tr id="criterion_45_9678" class="criterion   " style="">
-    <td class="criterion_description hover-container">
-      <div class="container">
-        
-        <span class="description criterion_description_value">1.6.  Presenters describe what realistic, specific next steps they will take to implement their solution.</span>
-        <span class="learning_outcome_id" style="display: none;"></span>
-        <div class="threshold">
-          threshold:
-          <span class="mastery_points"></span> pts
-        </div>
-        
-      </div>
-    </td>
-    <td style="padding: 0;">
-      <table class="ratings" style=""><tbody><tr>
-        <td id="rating_45_2582" class="rating edge_rating">
-          <div class="container">
-            <div class="description rating_description_value">Meets or exceeds</div>
-            <span class="nobr"><span class="points">10</span> pts</span>
-          </div>
-        </td>
-        <td id="rating_45_1518" class="rating ">
-          <div class="container">
-            <div class="description rating_description_value">Next steps could be clearer.</div>
-            <span class="nobr"><span class="points">8</span> pts</span>
-          </div>
-        </td>
-        <td id="rating_45_5124" class="rating ">
-          <div class="container">
-            <div class="description rating_description_value">Next steps aren't realistic.</div>
-            <span class="nobr"><span class="points">6</span> pts</span>
-          </div>
-        </td>
-        <td id="rating_45_65" class="rating edge_rating">
-          <div class="container">
-            <div class="description rating_description_value">Does not address</div>
-            <span class="nobr"><span class="points">0</span> pts</span>
-          </div>
-        </td>
-      </tr><?php bz_make_inputs_for_self_eval_rubrics(); ?></table>
-      
-    </td>
-    <td class="nobr points_form">
-      
-      <div class="displaying">
-        <span style="white-space: nowrap;">
-          
-          <span class="display_criterion_points">10</span> pts<br>
-        </span>
-      </div>
-      <div class="ignoring">
-        <span> -- </span>
-      </div>
-      <div class="criterion_comments">
-        
-        <div class="custom_rating" style="display: none;"></div>
-      </div>
-    </td>
-    
-  </tr></tbody></table></p-->
+  <div>
+    <table class="bz-rubric-self-eval bz-ajax-loaded-rubric bz-ajax-loaded">
+      <tbody>
+        <tr id="criterion_45_7499" class="criterion" style="">
+          <td class="criterion_description hover-container">
+            <div class="container">
+              <span class="description criterion_description_value">1.1. Presenters identify users’ needs based in their own empathy research.</span>
+            </div>
+          </td>
+          <td style="padding: 0;">
+            <table class="ratings" style="">
+              <tbody>
+                <tr>
+                  <td id="rating_blank" class="rating edge_rating">
+                    <div class="container">
+                      <div class="description rating_description_value">Meets or exceeds</div>
+                      <span class="nobr"><span class="points">10</span> pts</span>
+                    </div>
+                  </td>
+                  <td id="rating_45_4629" class="rating ">
+                    <div class="container">
+                      <div class="description rating_description_value">Connection between needs and research is vague.</div>
+                      <span class="nobr"><span class="points">8</span> pts</span>
+                    </div>
+                  </td>
+                  <td id="rating_45_7254" class="rating ">
+                    <div class="container">
+                      <div class="description rating_description_value">Needs identified are not those of the users (e.g. the company’s needs).</div>
+                      <span class="nobr"><span class="points">6</span> pts</span>
+                    </div>
+                  </td>
+                  <td id="rating_blank_2" class="rating edge_rating">
+                    <div class="container">
+                      <div class="description rating_description_value">Does not address.</div>
+                      <span class="nobr"><span class="points">0</span> pts</span>
+                    </div>
+                  </td>
+                </tr>
+                <?php bz_make_inputs_for_self_eval_rubrics(); ?>
+              </tbody>
+            </table>
+          </td>
+          <td class="nobr points_form">
+            <div class="displaying">
+              <span style="white-space: nowrap;">
+                <span class="display_criterion_points">10</span> pts<br>
+              </span>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div>
+    <table class="bz-rubric-self-eval bz-ajax-loaded-rubric bz-ajax-loaded">
+      <tbody>
+        <tr id="criterion_45_8812" class="criterion" style="">
+          <td class="criterion_description hover-container">
+            <div class="container">
+              <span class="description criterion_description_value">1.2. Presenters clearly define the problem and explain why it is important to address the problem.</span>
+            </div>
+          </td>
+          <td style="padding: 0;">
+            <table class="ratings" style="">
+              <tbody>
+                <tr>
+                  <td id="rating_45_2872" class="rating edge_rating">
+                    <div class="container">
+                      <div class="description rating_description_value">Meets or exceeds</div>
+                      <span class="nobr"><span class="points">10</span> pts</span>
+                    </div>
+                  </td>
+                  <td id="rating_45_7206" class="rating ">
+                    <div class="container">
+                      <div class="description rating_description_value">Could be clearer in defining the problem.</div>
+                      <span class="nobr"><span class="points">8</span> pts</span>
+                    </div>
+                  </td>
+                  <td id="rating_45_5186" class="rating ">
+                    <div class="container">
+                      <div class="description rating_description_value">Does not explain importance of addressing problem.</div>
+                      <span class="nobr"><span class="points">6</span> pts</span>
+                    </div>
+                  </td>
+                  <td id="rating_45_6361" class="rating edge_rating">
+                    <div class="container">
+                      <div class="description rating_description_value">Does not address.</div>
+                      <span class="nobr"><span class="points">0</span> pts</span>
+                    </div>
+                  </td>
+                </tr><?php bz_make_inputs_for_self_eval_rubrics(); ?>
+              </tbody>
+            </table>
+          </td>
+          <td class="nobr points_form">
+            <div class="displaying">
+              <span style="white-space: nowrap;">
+                <span class="display_criterion_points">10</span> pts<br>
+              </span>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div>
+    <table class="bz-rubric-self-eval bz-ajax-loaded-rubric bz-ajax-loaded">
+      <tbody>
+        <tr id="criterion_45_3125" class="criterion   " style="">
+          <td class="criterion_description hover-container">
+            <div class="container">
+              <span class="description criterion_description_value">1.3. Presenters pitch their top design solution and explain how their prototype solves the given problem.</span>
+            </div>
+          </td>
+          <td style="padding: 0;">
+            <table class="ratings" style="">
+              <tbody>
+                <tr>
+                  <td id="rating_45_2825" class="rating edge_rating">
+                    <div class="container">
+                      <div class="description rating_description_value">Meets or exceeds</div>
+                      <span class="nobr"><span class="points">10</span> pts</span>
+                    </div>
+                  </td>
+                  <td id="rating_45_2122" class="rating ">
+                    <div class="container">
+                      <div class="description rating_description_value">Could be clearer in connecting the solution to the problem.</div>
+                      <span class="nobr"><span class="points">8</span> pts</span>
+                    </div>
+                  </td>
+                  <td id="rating_45_2653" class="rating ">
+                    <div class="container">
+                      <div class="description rating_description_value">Doesn't explain how solution solves problem.</div>
+                      <span class="nobr"><span class="points">6</span> pts</span>
+                    </div>
+                  </td>
+                  <td id="rating_45_9209" class="rating edge_rating">
+                    <div class="container">
+                      <div class="description rating_description_value">Does not address.</div>
+                      <span class="nobr"><span class="points">0</span> pts</span>
+                    </div>
+                  </td>
+                </tr><?php bz_make_inputs_for_self_eval_rubrics(); ?>
+              </tbody>
+            </table>
+          </td>
+          <td class="nobr points_form">
+            <div class="displaying">
+              <span style="white-space: nowrap;">
+                <span class="display_criterion_points">10</span> pts<br>
+              </span>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div>
+    <table class="bz-rubric-self-eval bz-ajax-loaded-rubric bz-ajax-loaded">
+      <tbody>
+        <tr id="criterion_45_9006" class="criterion   " style="">
+          <td class="criterion_description hover-container">
+            <div class="container">
+              <span class="description criterion_description_value">1.4. Presenters describe the feedback they received when testing their prototype and how they iterated to improve the prototype.</span>
+            </div>
+          </td>
+          <td style="padding: 0;">
+            <table class="ratings" style="">
+              <tbody>
+                <tr>
+                  <td id="rating_45_9543" class="rating edge_rating">
+                    <div class="container">
+                      <div class="description rating_description_value">Meets or exceeds</div>
+                      <span class="nobr"><span class="points">10</span> pts</span>
+                    </div>
+                  </td>
+                  <td id="rating_45_3417" class="rating ">
+                    <div class="container">
+                      <div class="description rating_description_value">Could be clearer in connecting improvements to feedback.</div>
+                      <span class="nobr"><span class="points">8</span> pts</span>
+                    </div>
+                  </td>
+                  <td id="rating_45_6743" class="rating ">
+                    <div class="container">
+                      <div class="description rating_description_value">Describes testing but not improvements.</div>
+                      <span class="nobr"><span class="points">6</span> pts</span>
+                    </div>
+                  </td>
+                  <td id="rating_45_7978" class="rating edge_rating">
+                    <div class="container">
+                      <div class="description rating_description_value">Does not address.</div>
+                      <span class="nobr"><span class="points">0</span> pts</span>
+                    </div>
+                  </td>
+                </tr><?php bz_make_inputs_for_self_eval_rubrics(); ?>
+              </tbody>
+            </table>
+          </td>
+          <td class="nobr points_form">
+            <div class="displaying">
+              <span style="white-space: nowrap;">
+                <span class="display_criterion_points">10</span> pts<br>
+              </span>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div>
+    <table class="bz-rubric-self-eval bz-ajax-loaded-rubric bz-ajax-loaded">
+      <tbody>
+        <tr id="criterion_45_661" class="criterion" style="">
+          <td class="criterion_description hover-container">
+            <div class="container">
+              <span class="description criterion_description_value">1.5. Design solution is original and provides a unique value-add unlike other solutions that have been built.</span>
+            </div>
+          </td>
+          <td style="padding: 0;">
+            <table class="ratings" style="">
+              <tbody>
+                <tr>
+                  <td id="rating_45_938" class="rating edge_rating">
+                    <div class="container">
+                      <div class="description rating_description_value">Meets or exceeds</div>
+                      <span class="nobr"><span class="points">10</span> pts</span>
+                    </div>
+                  </td>
+                  <td id="rating_45_5921" class="rating ">
+                    <div class="container">
+                      <div class="description rating_description_value">Solution is somewhat unique.</div>
+                      <span class="nobr"><span class="points">8</span> pts</span>
+                    </div>
+                  </td>
+                  <td id="rating_45_2562" class="rating ">
+                    <div class="container">
+                      <div class="description rating_description_value">Solution is similar to many other solutions.</div>
+                      <span class="nobr"><span class="points">6</span> pts</span>
+                    </div>
+                  </td>
+                  <td id="rating_45_1708" class="rating edge_rating">
+                    <div class="container">
+                      <div class="description rating_description_value">Solution seems to copy other solutions.</div>
+                      <span class="nobr"><span class="points">0</span> pts</span>
+                    </div>
+                  </td>
+                </tr><?php bz_make_inputs_for_self_eval_rubrics(); ?>
+              </tbody>
+            </table>
+          </td>
+          <td class="nobr points_form">
+            <div class="displaying">
+              <span style="white-space: nowrap;">
+                <span class="display_criterion_points">10</span> pts<br>
+              </span>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
   <?php
     $GLOBALS['for'] = 'for-eval-sum';
   bz_close_box();
@@ -494,546 +394,474 @@ require('functions.php');
   //
   bz_open_box('question','Now rate their oral presentation using the actual rubric your group will be evaluated by:','Rate the Oral Presentation');
   ?>
-  <p><table class="bz-rubric-self-eval bz-ajax-loaded-rubric bz-ajax-loaded"><tbody><tr id="criterion_45_6267" class="criterion   " style="">
-    <td class="criterion_description hover-container">
-      <div class="container">
-        
-        <span class="description criterion_description_value">2.1. Language and posture match the level of formality and demonstrate positivity, curiosity, respect and humility.</span>
-        <span class="learning_outcome_id" style="display: none;"></span>
-        <div class="threshold">
-          threshold:
-          <span class="mastery_points"></span> pts
-        </div>
-        
-      </div>
-    </td>
-    <td style="padding: 0;">
-      <table class="ratings" style=""><tbody><tr>
-        <td id="rating_45_4638" class="rating edge_rating">
-          <div class="container">
-            <div class="description rating_description_value">Meets or exceeds</div>
-            <span class="nobr"><span class="points">10</span> pts</span>
-          </div>
-        </td>
-        <td id="rating_45_1571" class="rating ">
-          <div class="container">
-            <div class="description rating_description_value">1 presenter does not meet expectation</div>
-            <span class="nobr"><span class="points">8</span> pts</span>
-          </div>
-        </td>
-        <td id="rating_45_4741" class="rating ">
-          <div class="container">
-            <div class="description rating_description_value">2-3 presenters do not meet</div>
-            <span class="nobr"><span class="points">6</span> pts</span>
-          </div>
-        </td>
-        <td id="rating_45_2620" class="rating edge_rating">
-          <div class="container">
-            <div class="description rating_description_value">4+ presenters do not meet</div>
-            <span class="nobr"><span class="points">0</span> pts</span>
-          </div>
-        </td>
-      </tr><?php bz_make_inputs_for_self_eval_rubrics(); ?></table>
-      
-    </td>
-    <td class="nobr points_form">
-      
-      <div class="displaying">
-        <span style="white-space: nowrap;">
-          
-          <span class="display_criterion_points">10</span> pts<br>
-        </span>
-      </div>
-      <div class="ignoring">
-        <span> -- </span>
-      </div>
-      <div class="criterion_comments">
-        
-        <div class="custom_rating" style="display: none;"></div>
-      </div>
-    </td>
-    
-  </tr></tbody></table></p>
-  <p><table class="bz-rubric-self-eval bz-ajax-loaded-rubric bz-ajax-loaded"><tbody><tr id="criterion_45_8825" class="criterion   " style="">
-    <td class="criterion_description hover-container">
-      <div class="container">
-        
-        <span class="description criterion_description_value">2.2. Presentation opens with a team introduction, including names, Braven cohort, and closes by thanking the audience and evaluators.</span>
-        <span class="learning_outcome_id" style="display: none;"></span>
-        <div class="threshold">
-          threshold:
-          <span class="mastery_points"></span> pts
-        </div>
-        
-      </div>
-    </td>
-    <td style="padding: 0;">
-      <table class="ratings" style=""><tbody><tr>
-        <td id="rating_45_8207" class="rating edge_rating">
-          <div class="container">
-            <div class="description rating_description_value">Meets or exceeds</div>
-            <span class="nobr"><span class="points">10</span> pts</span>
-          </div>
-        </td>
-        <td id="rating_45_7258" class="rating ">
-          <div class="container">
-            <div class="description rating_description_value">Includes introduction AND closing, but incomplete</div>
-            <span class="nobr"><span class="points">8</span> pts</span>
-          </div>
-        </td>
-        <td id="rating_45_5223" class="rating ">
-          <div class="container">
-            <div class="description rating_description_value">Includes introduction OR closing</div>
-            <span class="nobr"><span class="points">6</span> pts</span>
-          </div>
-        </td>
-        <td id="rating_45_8047" class="rating edge_rating">
-          <div class="container">
-            <div class="description rating_description_value">Does not include either</div>
-            <span class="nobr"><span class="points">0</span> pts</span>
-          </div>
-        </td>
-      </tr><?php bz_make_inputs_for_self_eval_rubrics(); ?></table>
-      
-    </td>
-    <td class="nobr points_form">
-      
-      <div class="displaying">
-        <span style="white-space: nowrap;">
-          
-          <span class="display_criterion_points">10</span> pts<br>
-        </span>
-      </div>
-      <div class="ignoring">
-        <span> -- </span>
-      </div>
-      <div class="criterion_comments">
-        
-        <div class="custom_rating" style="display: none;"></div>
-      </div>
-    </td>
-    
-  </tr></tbody></table></p>
-  <p><table class="bz-rubric-self-eval bz-ajax-loaded-rubric bz-ajax-loaded"><tbody><tr id="criterion_45_2744" class="criterion   " style="">
-    <td class="criterion_description hover-container">
-      <div class="container">
-        
-        <span class="description criterion_description_value">2.3. All presenters are dressed appropriately in business casual attire (no jeans).</span>
-        <span class="learning_outcome_id" style="display: none;"></span>
-        <div class="threshold">
-          threshold:
-          <span class="mastery_points"></span> pts
-        </div>
-        
-      </div>
-    </td>
-    <td style="padding: 0;">
-      <table class="ratings" style=""><tbody><tr>
-        <td id="rating_45_2760" class="rating edge_rating">
-          <div class="container">
-            <div class="description rating_description_value">Meets or exceeds</div>
-            <span class="nobr"><span class="points">10</span> pts</span>
-          </div>
-        </td>
-        <td id="rating_45_2222" class="rating ">
-          <div class="container">
-            <div class="description rating_description_value">1 presenter dressed inappropriately</div>
-            <span class="nobr"><span class="points">8</span> pts</span>
-          </div>
-        </td>
-        <td id="rating_45_7562" class="rating ">
-          <div class="container">
-            <div class="description rating_description_value">2 presenters dressed inappropriately</div>
-            <span class="nobr"><span class="points">6</span> pts</span>
-          </div>
-        </td>
-        <td id="rating_45_1786" class="rating edge_rating">
-          <div class="container">
-            <div class="description rating_description_value">3+ presenters dressed inappropriately</div>
-            <span class="nobr"><span class="points">0</span> pts</span>
-          </div>
-        </td>
-      </tr><?php bz_make_inputs_for_self_eval_rubrics(); ?></table>
-      
-    </td>
-    <td class="nobr points_form">
-      
-      <div class="displaying">
-        <span style="white-space: nowrap;">
-          
-          <span class="display_criterion_points">10</span> pts<br>
-        </span>
-      </div>
-      <div class="ignoring">
-        <span> -- </span>
-      </div>
-      <div class="criterion_comments">
-        
-        <div class="custom_rating" style="display: none;"></div>
-      </div>
-    </td>
-    
-  </tr></tbody></table></p>
-  <p><table class="bz-rubric-self-eval bz-ajax-loaded-rubric bz-ajax-loaded"><tbody><tr id="criterion_45_7642" class="criterion   " style="">
-    <td class="criterion_description hover-container">
-      <div class="container">
-        
-        <span class="description criterion_description_value">2.4. All cohort members contribute to the presentation (e.g. Clearly planned roles).</span>
-        <span class="learning_outcome_id" style="display: none;"></span>
-        <div class="threshold">
-          threshold:
-          <span class="mastery_points"></span> pts
-        </div>
-        
-      </div>
-    </td>
-    <td style="padding: 0;">
-      <table class="ratings" style=""><tbody><tr>
-        <td id="rating_45_6130" class="rating edge_rating">
-          <div class="container">
-            <div class="description rating_description_value">Meets or exceeds</div>
-            <span class="nobr"><span class="points">10</span> pts</span>
-          </div>
-        </td>
-        <td id="rating_45_4806" class="rating ">
-          <div class="container">
-            <div class="description rating_description_value">All members contribute, but  Planned roles are not apparent</div>
-            <span class="nobr"><span class="points">8</span> pts</span>
-          </div>
-        </td>
-        <td id="rating_45_8400" class="rating ">
-          <div class="container">
-            <div class="description rating_description_value">1 member does not contribute, planned roles may not be apparent</div>
-            <span class="nobr"><span class="points">6</span> pts</span>
-          </div>
-        </td>
-        <td id="rating_45_8410" class="rating edge_rating">
-          <div class="container">
-            <div class="description rating_description_value">2+ members do not contribute, planned roles may not be apparent</div>
-            <span class="nobr"><span class="points">0</span> pts</span>
-          </div>
-        </td>
-      </tr><?php bz_make_inputs_for_self_eval_rubrics(); ?></table>
-      
-    </td>
-    <td class="nobr points_form">
-      
-      <div class="displaying">
-        <span style="white-space: nowrap;">
-          
-          <span class="display_criterion_points">10</span> pts<br>
-        </span>
-      </div>
-      <div class="ignoring">
-        <span> -- </span>
-      </div>
-      <div class="criterion_comments">
-        
-        <div class="custom_rating" style="display: none;"></div>
-      </div>
-    </td>
-    
-  </tr></tbody></table></p>
-  <p><table class="bz-rubric-self-eval bz-ajax-loaded-rubric bz-ajax-loaded"><tbody><tr id="criterion_45_4690" class="criterion   " style="">
-    <td class="criterion_description hover-container">
-      <div class="container">
-        
-        <span class="description criterion_description_value">2.5. Presenters speak with minimal verbal ticks and fillers.</span>
-        <span class="learning_outcome_id" style="display: none;"></span>
-        <div class="threshold">
-          threshold:
-          <span class="mastery_points"></span> pts
-        </div>
-        
-      </div>
-    </td>
-    <td style="padding: 0;">
-      <table class="ratings" style=""><tbody><tr>
-        <td id="rating_45_8392" class="rating edge_rating">
-          <div class="container">
-            <div class="description rating_description_value">Meets or exceeds</div>
-            <span class="nobr"><span class="points">10</span> pts</span>
-          </div>
-        </td>
-        <td id="rating_45_9453" class="rating ">
-          <div class="container">
-            <div class="description rating_description_value">1 presenter noticeably has ticks and fillers</div>
-            <span class="nobr"><span class="points">8</span> pts</span>
-          </div>
-        </td>
-        <td id="rating_45_434" class="rating ">
-          <div class="container">
-            <div class="description rating_description_value">2-3 presenters noticeably have ticks and fillers</div>
-            <span class="nobr"><span class="points">6</span> pts</span>
-          </div>
-        </td>
-        <td id="rating_45_2623" class="rating edge_rating">
-          <div class="container">
-            <div class="description rating_description_value">4+ presenters noticeably have ticks and fillers</div>
-            <span class="nobr"><span class="points">0</span> pts</span>
-          </div>
-        </td>
-      </tr><?php bz_make_inputs_for_self_eval_rubrics(); ?></table>
-      
-    </td>
-    <td class="nobr points_form">
-      
-      <div class="displaying">
-        <span style="white-space: nowrap;">
-          
-          <span class="display_criterion_points">10</span> pts<br>
-        </span>
-      </div>
-      <div class="ignoring">
-        <span> -- </span>
-      </div>
-      <div class="criterion_comments">
-        
-        <div class="custom_rating" style="display: none;"></div>
-      </div>
-    </td>
-    
-  </tr></tbody></table></p>
-  <p><table class="bz-rubric-self-eval bz-ajax-loaded-rubric bz-ajax-loaded"><tbody><tr id="criterion_45_1407" class="criterion   " style="">
-    <td class="criterion_description hover-container">
-      <div class="container">
-        
-        <span class="description criterion_description_value">2.6. The presentation concludes with a clear, final summary of the main points.</span>
-        <span class="learning_outcome_id" style="display: none;"></span>
-        <div class="threshold">
-          threshold:
-          <span class="mastery_points"></span> pts
-        </div>
-        
-      </div>
-    </td>
-    <td style="padding: 0;">
-      <table class="ratings" style=""><tbody><tr>
-        <td id="rating_45_9177" class="rating edge_rating">
-          <div class="container">
-            <div class="description rating_description_value">Meets or exceeds</div>
-            <span class="nobr"><span class="points">10</span> pts</span>
-          </div>
-        </td>
-        <td id="rating_45_1193" class="rating ">
-          <div class="container">
-            <div class="description rating_description_value">Includes a  Final summary of main points, but could be clearer</div>
-            <span class="nobr"><span class="points">8</span> pts</span>
-          </div>
-        </td>
-        <td id="rating_45_6213" class="rating ">
-          <div class="container">
-            <div class="description rating_description_value">Includes a final summary, but does not focus on most important points</div>
-            <span class="nobr"><span class="points">6</span> pts</span>
-          </div>
-        </td>
-        <td id="rating_45_6668" class="rating edge_rating">
-          <div class="container">
-            <div class="description rating_description_value">Does not include a final summary</div>
-            <span class="nobr"><span class="points">0</span> pts</span>
-          </div>
-        </td>
-      </tr><?php bz_make_inputs_for_self_eval_rubrics(); ?></table>
-      
-    </td>
-    <td class="nobr points_form">
-      
-      <div class="displaying">
-        <span style="white-space: nowrap;">
-          
-          <span class="display_criterion_points">10</span> pts<br>
-        </span>
-      </div>
-      <div class="ignoring">
-        <span> -- </span>
-      </div>
-      <div class="criterion_comments">
-        
-        <div class="custom_rating" style="display: none;"></div>
-      </div>
-    </td>
-    
-  </tr></tbody></table></p>
-  <p><table class="bz-rubric-self-eval bz-ajax-loaded-rubric bz-ajax-loaded"><tbody><tr id="criterion_45_6333" class="criterion   " style="">
-    <td class="criterion_description hover-container">
-      <div class="container">
-        
-        <span class="description criterion_description_value">2.7. The presentation does not go on past 7 minutes.</span>
-        <span class="learning_outcome_id" style="display: none;"></span>
-        <div class="threshold">
-          threshold:
-          <span class="mastery_points"></span> pts
-        </div>
-        
-      </div>
-    </td>
-    <td style="padding: 0;">
-      <table class="ratings" style=""><tbody><tr>
-        <td id="rating_45_8542" class="rating edge_rating">
-          <div class="container">
-            <div class="description rating_description_value">Meets or exceeds</div>
-            <span class="nobr"><span class="points">10</span> pts</span>
-          </div>
-        </td>
-        <td id="rating_45_9492" class="rating ">
-          <div class="container">
-            <div class="description rating_description_value">Between 7 mins and 7 mins 30 secs</div>
-            <span class="nobr"><span class="points">8</span> pts</span>
-          </div>
-        </td>
-        <td id="rating_45_5059" class="rating ">
-          <div class="container">
-            <div class="description rating_description_value">Between 7 mins 30 secs and 8 mins</div>
-            <span class="nobr"><span class="points">6</span> pts</span>
-          </div>
-        </td>
-        <td id="rating_45_5292" class="rating edge_rating">
-          <div class="container">
-            <div class="description rating_description_value">Over 8 mins</div>
-            <span class="nobr"><span class="points">0</span> pts</span>
-          </div>
-        </td>
-      </tr><?php bz_make_inputs_for_self_eval_rubrics(); ?></table>
-      
-    </td>
-    <td class="nobr points_form">
-      
-      <div class="displaying">
-        <span style="white-space: nowrap;">
-          
-          <span class="display_criterion_points">10</span> pts<br>
-        </span>
-      </div>
-      <div class="ignoring">
-        <span> -- </span>
-      </div>
-      <div class="criterion_comments">
-        
-        <div class="custom_rating" style="display: none;"></div>
-      </div>
-    </td>
-    
-  </tr></tbody></table></p>
-  <p><table class="bz-rubric-self-eval bz-ajax-loaded-rubric bz-ajax-loaded"><tbody><tr id="criterion_45_8493" class="criterion   " style="">
-    <td class="criterion_description hover-container">
-      <div class="container">
-        
-        <span class="description criterion_description_value">2.8. Fellows do not read from slides/notes or sound robotic.</span>
-        <span class="learning_outcome_id" style="display: none;"></span>
-        <div class="threshold">
-          threshold:
-          <span class="mastery_points"></span> pts
-        </div>
-        
-      </div>
-    </td>
-    <td style="padding: 0;">
-      <table class="ratings" style=""><tbody><tr>
-        <td id="rating_45_6850" class="rating edge_rating">
-          <div class="container">
-            <div class="description rating_description_value">Meets or exceeds</div>
-            <span class="nobr"><span class="points">10</span> pts</span>
-          </div>
-        </td>
-        <td id="rating_45_2613" class="rating ">
-          <div class="container">
-            <div class="description rating_description_value">1 presenter reads or sounds robotic</div>
-            <span class="nobr"><span class="points">8</span> pts</span>
-          </div>
-        </td>
-        <td id="rating_45_9040" class="rating ">
-          <div class="container">
-            <div class="description rating_description_value">2-3 presenters read or sound robotic</div>
-            <span class="nobr"><span class="points">6</span> pts</span>
-          </div>
-        </td>
-        <td id="rating_45_228" class="rating edge_rating">
-          <div class="container">
-            <div class="description rating_description_value">4+ presenters read or sound robotic</div>
-            <span class="nobr"><span class="points">0</span> pts</span>
-          </div>
-        </td>
-      </tr><?php bz_make_inputs_for_self_eval_rubrics(); ?></table>
-      
-    </td>
-    <td class="nobr points_form">
-      
-      <div class="displaying">
-        <span style="white-space: nowrap;">
-          
-          <span class="display_criterion_points">10</span> pts<br>
-        </span>
-      </div>
-      <div class="ignoring">
-        <span> -- </span>
-      </div>
-      <div class="criterion_comments">
-        
-        <div class="custom_rating" style="display: none;"></div>
-      </div>
-    </td>
-    
-  </tr></tbody></table></p>
-  <p><table class="bz-rubric-self-eval bz-ajax-loaded-rubric bz-ajax-loaded"><tbody><tr id="criterion_45_6885" class="criterion   " style="">
-    <td class="criterion_description hover-container">
-      <div class="container">
-        
-        <span class="description criterion_description_value">2.9. I feel connected to the presenters and/or the content (e.g., through compelling data, use of story, or other techniques to connect to the audience).</span>
-        <span class="learning_outcome_id" style="display: none;"></span>
-        <div class="threshold">
-          threshold:
-          <span class="mastery_points"></span> pts
-        </div>
-        
-      </div>
-    </td>
-    <td style="padding: 0;">
-      <table class="ratings" style=""><tbody><tr>
-        <td id="rating_45_4316" class="rating edge_rating">
-          <div class="container">
-            <div class="description rating_description_value">Includes compelling data and/or use of story to connect</div>
-            <span class="nobr"><span class="points">10</span> pts</span>
-          </div>
-        </td>
-        <td id="rating_45_2774" class="rating ">
-          <div class="container">
-            <div class="description rating_description_value">I feel generally connected</div>
-            <span class="nobr"><span class="points">8</span> pts</span>
-          </div>
-        </td>
-        <td id="rating_45_5506" class="rating ">
-          <div class="container">
-            <div class="description rating_description_value">I feel somewhat connected</div>
-            <span class="nobr"><span class="points">6</span> pts</span>
-          </div>
-        </td>
-        <td id="rating_45_8868" class="rating edge_rating">
-          <div class="container">
-            <div class="description rating_description_value">I don't feel connected</div>
-            <span class="nobr"><span class="points">0</span> pts</span>
-          </div>
-        </td>
-      </tr><?php bz_make_inputs_for_self_eval_rubrics(); ?></table>
-      
-    </td>
-    <td class="nobr points_form">
-      
-      <div class="displaying">
-        <span style="white-space: nowrap;">
-          
-          <span class="display_criterion_points">10</span> pts<br>
-        </span>
-      </div>
-      <div class="ignoring">
-        <span> -- </span>
-      </div>
-      <div class="criterion_comments">
-        
-        <div class="custom_rating" style="display: none;"></div>
-      </div>
-    </td>
-    
-  </tr></tbody></table></p>
+  <div>
+    <table class="bz-rubric-self-eval bz-ajax-loaded-rubric bz-ajax-loaded">
+      <tbody>
+        <tr id="criterion_45_6267" class="criterion   " style="">
+          <td class="criterion_description hover-container">
+            <div class="container">
+              <span class="description criterion_description_value">2.1. Language and posture match the level of formality and demonstrate positivity, curiosity, respect and humility.</span>
+            </div>
+          </td>
+          <td style="padding: 0;">
+            <table class="ratings" style="">
+              <tbody>
+                <tr>
+                  <td id="rating_45_4638" class="rating edge_rating">
+                    <div class="container">
+                      <div class="description rating_description_value">Meets or exceeds</div>
+                      <span class="nobr"><span class="points">10</span> pts</span>
+                    </div>
+                  </td>
+                  <td id="rating_45_1571" class="rating ">
+                    <div class="container">
+                      <div class="description rating_description_value">1 presenter does not meet expectation</div>
+                      <span class="nobr"><span class="points">8</span> pts</span>
+                    </div>
+                  </td>
+                  <td id="rating_45_4741" class="rating ">
+                    <div class="container">
+                      <div class="description rating_description_value">2-3 presenters do not meet</div>
+                      <span class="nobr"><span class="points">6</span> pts</span>
+                    </div>
+                  </td>
+                  <td id="rating_45_2620" class="rating edge_rating">
+                    <div class="container">
+                      <div class="description rating_description_value">4+ presenters do not meet</div>
+                      <span class="nobr"><span class="points">0</span> pts</span>
+                    </div>
+                  </td>
+                </tr><?php bz_make_inputs_for_self_eval_rubrics(); ?>
+              </tbody>
+            </table>
+          </td>
+          <td class="nobr points_form">
+            <div class="displaying">
+              <span style="white-space: nowrap;">
+                <span class="display_criterion_points">10</span> pts<br>
+              </span>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div>
+    <table class="bz-rubric-self-eval bz-ajax-loaded-rubric bz-ajax-loaded">
+      <tbody>
+        <tr id="criterion_45_8825" class="criterion   " style="">
+          <td class="criterion_description hover-container">
+            <div class="container">
+              <span class="description criterion_description_value">2.2. Presentation opens with a team introduction, including names, Braven cohort, and closes by thanking the audience and evaluators.</span>
+            </div>
+          </td>
+          <td style="padding: 0;">
+            <table class="ratings" style="">
+              <tbody>
+                <tr>
+                  <td id="rating_45_8207" class="rating edge_rating">
+                    <div class="container">
+                      <div class="description rating_description_value">Meets or exceeds</div>
+                      <span class="nobr"><span class="points">10</span> pts</span>
+                    </div>
+                  </td>
+                  <td id="rating_45_7258" class="rating ">
+                    <div class="container">
+                      <div class="description rating_description_value">Includes introduction AND closing, but incomplete</div>
+                      <span class="nobr"><span class="points">8</span> pts</span>
+                    </div>
+                  </td>
+                  <td id="rating_45_5223" class="rating ">
+                    <div class="container">
+                      <div class="description rating_description_value">Includes introduction OR closing</div>
+                      <span class="nobr"><span class="points">6</span> pts</span>
+                    </div>
+                  </td>
+                  <td id="rating_45_8047" class="rating edge_rating">
+                    <div class="container">
+                      <div class="description rating_description_value">Does not include either</div>
+                      <span class="nobr"><span class="points">0</span> pts</span>
+                    </div>
+                  </td>
+                </tr><?php bz_make_inputs_for_self_eval_rubrics(); ?>
+              </tbody>
+            </table>     
+          </td>
+          <td class="nobr points_form">
+            <div class="displaying">
+              <span style="white-space: nowrap;">
+                <span class="display_criterion_points">10</span> pts<br>
+              </span>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div>
+    <table class="bz-rubric-self-eval bz-ajax-loaded-rubric bz-ajax-loaded">
+      <tbody>
+        <tr id="criterion_45_2744" class="criterion   " style="">
+          <td class="criterion_description hover-container">
+            <div class="container">
+              <span class="description criterion_description_value">2.3. All presenters are dressed appropriately in business casual attire (no jeans).</span>
+            </div>
+          </td>
+          <td style="padding: 0;">
+            <table class="ratings" style="">
+              <tbody>
+                <tr>
+                  <td id="rating_45_2760" class="rating edge_rating">
+                    <div class="container">
+                      <div class="description rating_description_value">Meets or exceeds</div>
+                      <span class="nobr"><span class="points">10</span> pts</span>
+                    </div>
+                  </td>
+                  <td id="rating_45_2222" class="rating ">
+                    <div class="container">
+                      <div class="description rating_description_value">1 presenter dressed inappropriately</div>
+                      <span class="nobr"><span class="points">8</span> pts</span>
+                    </div>
+                  </td>
+                  <td id="rating_45_7562" class="rating ">
+                    <div class="container">
+                      <div class="description rating_description_value">2 presenters dressed inappropriately</div>
+                      <span class="nobr"><span class="points">6</span> pts</span>
+                    </div>
+                  </td>
+                  <td id="rating_45_1786" class="rating edge_rating">
+                    <div class="container">
+                      <div class="description rating_description_value">3+ presenters dressed inappropriately</div>
+                      <span class="nobr"><span class="points">0</span> pts</span>
+                    </div>
+                  </td>
+                </tr><?php bz_make_inputs_for_self_eval_rubrics(); ?>
+              </tbody>
+            </table>
+          </td>
+          <td class="nobr points_form">
+            <div class="displaying">
+              <span style="white-space: nowrap;">
+                <span class="display_criterion_points">10</span> pts<br>
+              </span>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div>
+    <table class="bz-rubric-self-eval bz-ajax-loaded-rubric bz-ajax-loaded">
+      <tbody>
+        <tr id="criterion_45_7642" class="criterion   " style="">
+          <td class="criterion_description hover-container">
+            <div class="container">
+              <span class="description criterion_description_value">2.4. All cohort members contribute to the presentation (e.g. Clearly planned roles).</span>
+            </div>
+          </td>
+          <td style="padding: 0;">
+            <table class="ratings" style="">
+              <tbody>
+                <tr>
+                  <td id="rating_45_6130" class="rating edge_rating">
+                <div class="container">
+                  <div class="description rating_description_value">Meets or exceeds</div>
+                  <span class="nobr"><span class="points">10</span> pts</span>
+                </div>
+              </td>
+              <td id="rating_45_4806" class="rating ">
+                <div class="container">
+                  <div class="description rating_description_value">All members contribute, but  Planned roles are not apparent</div>
+                  <span class="nobr"><span class="points">8</span> pts</span>
+                </div>
+              </td>
+              <td id="rating_45_8400" class="rating ">
+                <div class="container">
+                  <div class="description rating_description_value">1 member does not contribute, planned roles may not be apparent</div>
+                  <span class="nobr"><span class="points">6</span> pts</span>
+                </div>
+              </td>
+              <td id="rating_45_8410" class="rating edge_rating">
+                <div class="container">
+                  <div class="description rating_description_value">2+ members do not contribute, planned roles may not be apparent</div>
+                  <span class="nobr"><span class="points">0</span> pts</span>
+                </div>
+              </td>
+            </tr><?php bz_make_inputs_for_self_eval_rubrics(); ?>
+          </tbody>
+        </table>
+          </td>
+          <td class="nobr points_form">
+            <div class="displaying">
+              <span style="white-space: nowrap;">
+                <span class="display_criterion_points">10</span> pts<br>
+              </span>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div>
+    <table class="bz-rubric-self-eval bz-ajax-loaded-rubric bz-ajax-loaded">
+      <tbody>
+        <tr id="criterion_45_4690" class="criterion   " style="">
+          <td class="criterion_description hover-container">
+            <div class="container">
+              <span class="description criterion_description_value">2.5. Presenters speak with minimal verbal ticks and fillers.</span>
+            </div>
+          </td>
+          <td style="padding: 0;">
+            <table class="ratings" style="">
+              <tbody>
+                <tr>
+                  <td id="rating_45_8392" class="rating edge_rating">
+                <div class="container">
+                  <div class="description rating_description_value">Meets or exceeds</div>
+                  <span class="nobr"><span class="points">10</span> pts</span>
+                </div>
+              </td>
+              <td id="rating_45_9453" class="rating ">
+                <div class="container">
+                  <div class="description rating_description_value">1 presenter noticeably has ticks and fillers</div>
+                  <span class="nobr"><span class="points">8</span> pts</span>
+                </div>
+              </td>
+              <td id="rating_45_434" class="rating ">
+                <div class="container">
+                  <div class="description rating_description_value">2-3 presenters noticeably have ticks and fillers</div>
+                  <span class="nobr"><span class="points">6</span> pts</span>
+                </div>
+              </td>
+              <td id="rating_45_2623" class="rating edge_rating">
+                <div class="container">
+                  <div class="description rating_description_value">4+ presenters noticeably have ticks and fillers</div>
+                  <span class="nobr"><span class="points">0</span> pts</span>
+                </div>
+              </td>
+            </tr><?php bz_make_inputs_for_self_eval_rubrics(); ?>
+          </tbody>
+        </table>
+          </td>
+          <td class="nobr points_form">
+            <div class="displaying">
+              <span style="white-space: nowrap;">
+                <span class="display_criterion_points">10</span> pts<br>
+              </span>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div>
+    <table class="bz-rubric-self-eval bz-ajax-loaded-rubric bz-ajax-loaded">
+      <tbody>
+        <tr id="criterion_45_1407" class="criterion   " style="">
+          <td class="criterion_description hover-container">
+            <div class="container">
+              <span class="description criterion_description_value">2.6. The presentation concludes with a clear, final summary of the main points.</span>
+            </div>
+          </td>
+          <td style="padding: 0;">
+            <table class="ratings" style="">
+              <tbody>
+                <tr>
+                  <td id="rating_45_9177" class="rating edge_rating">
+                <div class="container">
+                  <div class="description rating_description_value">Meets or exceeds</div>
+                  <span class="nobr"><span class="points">10</span> pts</span>
+                </div>
+              </td>
+              <td id="rating_45_1193" class="rating ">
+                <div class="container">
+                  <div class="description rating_description_value">Includes a  Final summary of main points, but could be clearer</div>
+                  <span class="nobr"><span class="points">8</span> pts</span>
+                </div>
+              </td>
+              <td id="rating_45_6213" class="rating ">
+                <div class="container">
+                  <div class="description rating_description_value">Includes a final summary, but does not focus on most important points</div>
+                  <span class="nobr"><span class="points">6</span> pts</span>
+                </div>
+              </td>
+              <td id="rating_45_6668" class="rating edge_rating">
+                <div class="container">
+                  <div class="description rating_description_value">Does not include a final summary</div>
+                  <span class="nobr"><span class="points">0</span> pts</span>
+                </div>
+              </td>
+            </tr><?php bz_make_inputs_for_self_eval_rubrics(); ?>
+          </tbody>
+        </table>
+          </td>
+          <td class="nobr points_form">
+            <div class="displaying">
+              <span style="white-space: nowrap;">
+                <span class="display_criterion_points">10</span> pts<br>
+              </span>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div>
+    <table class="bz-rubric-self-eval bz-ajax-loaded-rubric bz-ajax-loaded">
+      <tbody>
+        <tr id="criterion_45_6333" class="criterion   " style="">
+          <td class="criterion_description hover-container">
+            <div class="container">
+              <span class="description criterion_description_value">2.7. The presentation does not go on past 7 minutes.</span>
+            </div>
+          </td>
+          <td style="padding: 0;">
+            <table class="ratings" style="">
+              <tbody>
+                <tr>
+                  <td id="rating_45_8542" class="rating edge_rating">
+                    <div class="container">
+                      <div class="description rating_description_value">Meets or exceeds</div>
+                      <span class="nobr"><span class="points">10</span> pts</span>
+                    </div>
+                  </td>
+                  <td id="rating_45_9492" class="rating ">
+                    <div class="container">
+                      <div class="description rating_description_value">Between 7 mins and 7 mins 30 secs</div>
+                      <span class="nobr"><span class="points">8</span> pts</span>
+                    </div>
+                  </td>
+                  <td id="rating_45_5059" class="rating ">
+                    <div class="container">
+                      <div class="description rating_description_value">Between 7 mins 30 secs and 8 mins</div>
+                      <span class="nobr"><span class="points">6</span> pts</span>
+                    </div>
+                  </td>
+                  <td id="rating_45_5292" class="rating edge_rating">
+                    <div class="container">
+                      <div class="description rating_description_value">Over 8 mins</div>
+                      <span class="nobr"><span class="points">0</span> pts</span>
+                    </div>
+                  </td>
+                </tr><?php bz_make_inputs_for_self_eval_rubrics(); ?>
+              </tbody>
+            </table>
+          </td>
+          <td class="nobr points_form">
+            <div class="displaying">
+              <span style="white-space: nowrap;">
+                <span class="display_criterion_points">10</span> pts<br>
+              </span>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div>
+    <table class="bz-rubric-self-eval bz-ajax-loaded-rubric bz-ajax-loaded">
+      <tbody>
+        <tr id="criterion_45_8493" class="criterion   " style="">
+          <td class="criterion_description hover-container">
+            <div class="container">
+              <span class="description criterion_description_value">2.8. Fellows do not read from slides/notes or sound robotic.</span>
+            </div>
+          </td>
+          <td style="padding: 0;">
+            <table class="ratings" style="">
+              <tbody>
+                <tr>
+                  <td id="rating_45_6850" class="rating edge_rating">
+                    <div class="container">
+                      <div class="description rating_description_value">Meets or exceeds</div>
+                      <span class="nobr"><span class="points">10</span> pts</span>
+                    </div>
+                  </td>
+                  <td id="rating_45_2613" class="rating ">
+                    <div class="container">
+                      <div class="description rating_description_value">1 presenter reads or sounds robotic</div>
+                      <span class="nobr"><span class="points">8</span> pts</span>
+                    </div>
+                  </td>
+                  <td id="rating_45_9040" class="rating ">
+                    <div class="container">
+                      <div class="description rating_description_value">2-3 presenters read or sound robotic</div>
+                      <span class="nobr"><span class="points">6</span> pts</span>
+                    </div>
+                  </td>
+                  <td id="rating_45_228" class="rating edge_rating">
+                    <div class="container">
+                      <div class="description rating_description_value">4+ presenters read or sound robotic</div>
+                      <span class="nobr"><span class="points">0</span> pts</span>
+                    </div>
+                  </td>
+                </tr><?php bz_make_inputs_for_self_eval_rubrics(); ?>
+              </tbody>
+            </table>
+          </td>
+          <td class="nobr points_form">
+            <div class="displaying">
+              <span style="white-space: nowrap;">
+                <span class="display_criterion_points">10</span> pts<br>
+              </span>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div>
+    <table class="bz-rubric-self-eval bz-ajax-loaded-rubric bz-ajax-loaded">
+      <tbody>
+        <tr id="criterion_45_6885" class="criterion   " style="">
+          <td class="criterion_description hover-container">
+            <div class="container">
+              <span class="description criterion_description_value">2.9. I feel connected to the presenters and/or the content (e.g., through compelling data, use of story, or other techniques to connect to the audience).</span>
+            </div>
+          </td>
+          <td style="padding: 0;">
+            <table class="ratings" style="">
+              <tbody>
+                <tr>
+                  <td id="rating_45_4316" class="rating edge_rating">
+                    <div class="container">
+                      <div class="description rating_description_value">Includes compelling data and/or use of story to connect</div>
+                      <span class="nobr"><span class="points">10</span> pts</span>
+                    </div>
+                  </td>
+                  <td id="rating_45_2774" class="rating ">
+                    <div class="container">
+                      <div class="description rating_description_value">I feel generally connected</div>
+                      <span class="nobr"><span class="points">8</span> pts</span>
+                    </div>
+                  </td>
+                  <td id="rating_45_5506" class="rating ">
+                    <div class="container">
+                      <div class="description rating_description_value">I feel somewhat connected</div>
+                      <span class="nobr"><span class="points">6</span> pts</span>
+                    </div>
+                  </td>
+                  <td id="rating_45_8868" class="rating edge_rating">
+                    <div class="container">
+                      <div class="description rating_description_value">I don't feel connected</div>
+                      <span class="nobr"><span class="points">0</span> pts</span>
+                    </div>
+                  </td>
+                </tr><?php bz_make_inputs_for_self_eval_rubrics(); ?>
+              </tbody>
+            </table>
+          </td>
+          <td class="nobr points_form">
+            <div class="displaying">
+              <span style="white-space: nowrap;">=
+                <span class="display_criterion_points">10</span> pts<br>
+              </span>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
 
  <?php
