@@ -343,5 +343,20 @@ function bz_make_range($answer,$min = 0,$max = 100,$step = 1, $unit = '%') {
   echo '<div class="display-value"><span class="current-value">&nbsp;</span>'.$unit.'</div>';
 }
 
+function bz_make_inputs_for_self_eval_rubrics(){
+  $GLOBALS['innercounter']++; 
+  $magicid = bz_make_id();
+  $scores = array(
+    10,
+    8,
+    6,
+    0,
+  );
+  echo '<tr>';
+  for ($i = 0; $i <= 3; $i++) {
+    echo '<td style="text-align:center;"><input type="radio" value="'.$scores[$i].'" data-bz-retained="'.$magicid.'" name="'.$magicid.'" /></td>';
+  }
+  echo '</tr>';
+}
 
 ?>

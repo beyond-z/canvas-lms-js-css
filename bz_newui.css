@@ -1925,6 +1925,19 @@ table [type="range"] {
 	display: none;
 }
 
+/* Fine tune how self-evaluation rubrics appear: */
+.bz-rubric-self-eval .criterion_description {
+  width: 30%;
+}
+
+.bz-rubric-self-eval.bz-ajax-loaded-rubric .rating:hover {
+  background: inherit;
+}
+
+.bz-rubric-self-eval .criterion_description_value {
+  font-size: 0.9em;
+}
+
 /* Cube animation */
 .cube-anim {
   text-align: center;
