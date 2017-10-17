@@ -992,6 +992,10 @@ runOnUserContent(function(){
     if(start[a].querySelector(".bz-toggle-all-next"))
         allBoxesWithStoppingPoints.push(start[a]);
 
+  // no boxes on page, nothing else to do (old content or edit page perhaps)
+  if(allBoxesWithStoppingPoints.length == 0)
+    return;
+
   if(allBoxesWithStoppingPoints.length < openPosition)
     openPosition = allBoxesWithStoppingPoints.length;
 
