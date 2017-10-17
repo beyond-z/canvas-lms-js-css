@@ -993,7 +993,7 @@ runOnUserContent(function(){
         allBoxesWithStoppingPoints.push(start[a]);
 
   // no boxes on page, nothing else to do (old content or edit page perhaps)
-  if(allBoxesWithStoppingPoints.length == 0)
+  if(allBoxesWithStoppingPoints.length == 0 || isNaN(openPosition))
     return;
 
   if(allBoxesWithStoppingPoints.length < openPosition)
