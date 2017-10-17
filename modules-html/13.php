@@ -117,28 +117,28 @@ require('functions.php');
           <td><img src="/courses/1/files/12719/preview" alt="" style="width:150px; height:auto;" /></td>
           <td>
             <h6>4. EMPATHIZE</h6>
-            <p><?php  echo $z4 = 'Effective presenters understand their audience and consider their audience they prepare and present. They meet the audience members where they are, earn their trust, and take cues from them to adapt the presentation in real time.';?></p>
+            <p><?php  echo $z4 = 'Effective presenters understand their audience and consider their audience as they prepare and present. They meet the audience members where they are, earn their trust, and take cues from them to adapt the presentation in real time.';?></p>
           </td>
         </tr>
         <tr>
           <td><img src="/courses/1/files/12720/preview" alt="" style="width:150px; height:auto;" /></td>
           <td>
             <h6>5.&nbsp;EXUDE CONFIDENCE</h6>
-            <p><?php  echo $z5 = 'Confidence goes a long way in presentations and if you&rsquo;re lucky, you naturally have lots of it. But if you&rsquo;re like most of us, you need to believe that you can do it; and with practice <em>you can</em>! Focus on body language and voice, since those are the top two cues your audience picks up on as signs of confidence.';?></p>
+            <p><?php  echo $z5 = 'Confidence goes a long way in presentations and if you&rsquo;re lucky, you naturally have lots of it. But if you&rsquo;re like most of us, you need to believe that you can do it; and with practice, <em>you can</em>! Focus on body language and voice, since those are the top two cues your audience picks up on as signs of confidence.';?></p>
           </td>
         </tr>
         <tr>
           <td><img src="/courses/1/files/12721/preview" alt="" style="width:150px; height:auto;"/></td>
           <td>
             <h6>6. TELL A STORY</h6>
-            <p><?php  echo $z6 = 'This doesn&rsquo;t mean that you start every presentation with "once upon a time&hellip;", however, both written and oral presentations involve storytelling. Effective presentations have a seamless flow from beginning to end, which takes the audience on a journey from where they were to where you want them to be.&nbsp;';?></p>
+            <p><?php  echo $z6 = 'This doesn&rsquo;t mean that you start every presentation with "once upon a time&hellip;" However, both written and oral presentations involve storytelling. Effective presentations have a seamless flow from beginning to end, which takes the audience on a journey from where they were to where you want them to be.&nbsp;';?></p>
           </td>
         </tr>
         <tr>
           <td><img src="/courses/1/files/12722/preview" alt="" style="width:150px; height:auto;" /></td>
           <td>
             <h6>7. PRACTICE</h6>
-            <p><?php  echo $z7 = 'Your skill as a presenter is not fixed, no matter where it stands now. It is guaranteed to grow with practice, feedback, reflection, failure, and more practice. That&rsquo;s why it takes a bit of courage to step out of your comfort zone and commit to growing in this area, but it&rsquo;s the only way to improve.';?></p>
+            <p><?php  echo $z7 = 'Your skill as a presenter is not fixed, no matter where it stands now. It is guaranteed to grow with practice, feedback, reflection, failure, and more practice. It takes a bit of courage to step out of your comfort zone and commit to growing as a presenter, but it&rsquo;s the only way to improve.';?></p>
           </td>
         </tr>
         <tr>
@@ -252,7 +252,7 @@ require('functions.php');
         <li>A picture that speaks a thousand words</li>
         <li>A quote, poem, or rhyme</li>
         <li>A startling and/or personally relevant statistic ("One in five people in this audience is likely <i>X</i>")</li>
-        <li>A question to the audience ("Show of hands &mdash; how many here are <i>X</i>?"</li>
+        <li>A question to the audience ("Show of hands &mdash; how many here are <i>X</i>?")</li>
         <li>A quick reference to a current news item (just be careful with politics)</li>
         <li>A story that relates directly to your message and/or humanizes you </li>
         <li>Asking the audience to take some action ("turn to someone next to you and <i>do X</i>")</li>
@@ -547,7 +547,7 @@ require('functions.php');
         <tr>
           <td>
             <div class="bz-example">
-              <p>Lucy always wanted to become a pilot, but she failed the math section of the exam. When her son graduated high school, she decided to take it again, and again she didn't pass. But she was determined to become a pilot, and she asked her son to teach her math, so every night after dinner, he taught her everything he knew. The next time she took the exam, she passed. Finally, she got a pilot license and got a job in crop dusting. On the job, she found herself needing to use her math to calculate the airplane's fuel consumption and to plan the most efficient course to cover the all the fields she was sparying in the shortest time. She could do the math so quickly, other pilots came to her for help and she became known for her excellent math skills. What Lucy thought was her weakness turned out to be a great strength!</p>
+              <p>Lucy always wanted to become a pilot, but she failed the math section of the exam. When her son graduated high school, she decided to take it again, and again she didn't pass. But she was determined to become a pilot, and she asked her son to teach her math, so every night after dinner, he taught her everything he knew. The next time she took the exam, she passed. Finally, she got a pilot license and got a job in crop dusting. On the job, she found herself needing to use her math to calculate the airplane's fuel consumption and to plan the most efficient course to cover the all the fields she was spraying in the shortest time. She could do the math so quickly, other pilots came to her for help and she became known for her excellent math skills. What Lucy thought was her weakness turned out to be a great strength!</p>
             </div>
           </td>
           <td><p>With practice and persistence, you can turn your weakness into a strength!</p></td>
@@ -761,7 +761,7 @@ require('functions.php');
   bz_open_box('answer','You will meet many people in your career who still try in vain to create a single slide deck for both oral presentations and stand-alone written decks they send to people. Don&rsquo;t be one of them!');
   bz_close_box();
   ?>
-  <blockquote>When you present in-person you want the audience to focus on you, the presenter, <em>not</em> on the slide deck which is only there to illustrate key concepts and help the audience follow you along.</blockquote>
+  <blockquote>When you present in-person you want the audience to focus on you, the presenter, <em>not</em> on the slide deck, which is only there to illustrate key concepts and help the audience follow you.</blockquote>
   <h2 id="wrap-up">Wrap-up</h2>
   <div>
     <p>In this module we looked at two important career skills: giving effective oral presentations and preparing great slide decks to support those.</p>
@@ -777,8 +777,8 @@ require('functions.php');
         <li>Use your authentic "voice"</li>
         <li>Create a compelling presentation deck</li>
       </ul>
-    <p>While all the advice above is valuable, if there's one thing that will be determine your overall success in presenting it's simply how much practice and feedback you get.</p>
-    <p>The upcoming Capstone presentation should give plenty of opportunity to rehearse and up your game, but you should consider treating every presentation you make as a chance to improve on one or more of these fronts.</p>
+    <p>While all the advice above is valuable, if there's one thing that will determine your overall success in presenting, it's simply how much practice and feedback you get.</p>
+    <p>The upcoming Capstone Presentation should give plenty of opportunities to rehearse and up your game, but you should consider treating every presentation you make as a chance to improve on one or more of these fronts.</p>
     <h3>Next Steps:</h3>
     <ol>
       <li>To be prepared for Learning Lab this week, make sure your cohort has completed your prototypes, tested your prototypes with at least <strong>ten</strong> users, and refined your prototypes based on their feedback.</li>
@@ -817,7 +817,7 @@ require('functions.php');
     <tr>
       <td>60 mins</td>
       <td>Rehearse Capstone Challenge Presentation</td>
-      <td>Lead Prototyper</td>
+      <td>Lead Prototyper &amp; Lead Deck Designer</td>
     </tr>
     <tr>
       <td>20 mins</td>
