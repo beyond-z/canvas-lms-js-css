@@ -227,10 +227,34 @@ blockquote {
 .bz-module > blockquote:nth-of-type(3n+1) {
 	background-image: url('images/bkg700-01.jpg');
 }
+blockquote.special:nth-of-type(5n+0) {
+  background-image: url('images/bkg-special-01.jpg');
+  background-position: center center;
+}
+blockquote.special:nth-of-type(5n+1) {
+  background-image: url('images/bkg-special-02.jpg');
+  background-position: center center;
+}
+blockquote.special:nth-of-type(5n+2) {
+  background-image: url('images/bkg-special-03.jpg');
+  background-position: center center;
+}
+blockquote.special:nth-of-type(5n+3) {
+  background-image: url('images/bkg-special-04.jpg');
+  background-position: center center;
+}
+blockquote.special:nth-of-type(5n+4) {
+  background-image: url('images/bkg-special-05.jpg');
+  background-position: center center;
+}
 
 .quote-source {
 	font-size: 75%;
 	margin: 1em 0;
+}
+
+blockquote .bz-hashtag {
+  color: #D7EFEF;
 }
 
 .quote-source:before {

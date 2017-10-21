@@ -44,14 +44,16 @@ function bz_open_box($btype = 'question', $bintro = '', $btitle) {
     case 'pulse':
       $btitle = 'Pulse Check';
       break;
-    default: 
-      $btitle = '&nbsp;';
   }
 
 	// Open the box:
   echo '<div class="bz-box '.$btype.'">';
-  echo '  <h'.$GLOBALS['hlevel'].' class="box-title">'.$btitle.'</h'.$GLOBALS['hlevel'].'>';
+  if ($btitle) {
+    echo '  <h'.$GLOBALS['hlevel'].' class="box-title">'.$btitle.'</h'.$GLOBALS['hlevel'].'>';
+  }
+  if ($bintro) {
   echo '  <p>'.$bintro.'</p>';
+  }
   // Reset "for-" for "done" button interactivity:
 	/*  (e.g. "for-checklist" may be set by bz_make_cr_list(), 
       but we don't want previous box's interaction to apply here )  */
