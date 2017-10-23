@@ -111,7 +111,7 @@ jQuery( document ).ready(function() {
     });
     
     // Create auto table of contents
-    jQuery('#bz-auto-toc').each(function(){bzAutoTOC()});
+    jQuery('#bz-auto-toc').each(function(){bzAutoTOC();});
   
     // Enable jQuery UI tooltips that override browser styling/interaction: 
     jQuery(document).tooltip();
@@ -133,7 +133,7 @@ jQuery( document ).ready(function() {
       } else {
         return jQuery(this).text();
       }
-    })
+    });
     
   });
 
@@ -174,9 +174,9 @@ var bzNewUiHandlers = {
     var checklistScore = 0;
     var falsePositives = 0;
     checklist.children().each(function(){
-      jQuery(this).addClass('show-answers')
+      jQuery(this).addClass('show-answers');
       if( jQuery(this).children('input').is(':checked') ) {
-        jQuery(this).addClass('checked')
+        jQuery(this).addClass('checked');
         if ( jQuery(this).is('.correct') || jQuery(this).parents('li').is('.correct') ) {
           checklistScore++;
         } else {
@@ -217,7 +217,7 @@ var bzNewUiHandlers = {
     list.children().each(function(){
       jQuery(this).addClass('show-answers');
       if( jQuery(this).children('input').is(':checked') ) {
-        jQuery(this).addClass('checked')
+        jQuery(this).addClass('checked');
         if ( jQuery(this).is('.correct') || jQuery(this).parents('li').is('.correct') ) {
           feedback = "Good job!";
           feedbackClass = 'correct';
@@ -308,6 +308,25 @@ var bzNewUiHandlers = {
     // return results
     jQuery(this).parents('.bz-box').next().find('.bz-show-eval-sum').text(String(results));
     jQuery(this).parents('.bz-box').next().find('.bz-show-eval-max').text(String(max));
+  },
+
+  '.for-compare-scores'  : function(){
+    // add '.show-answers' to the table, then run through each row where there's a spot to display comparison results:
+    jQuery(this).parents('.bz-box').next('.bz-box').find('.bz-compare-scores-result').text(function(){
+      var row = jQuery(this).parents('tr');
+      var after = 0;
+      var before = 0;
+      after = Number( jQuery(row).find('.bz-compare-scores-after').text() );
+      before = Number( jQuery(row).find('.bz-compare-scores-before').text() );
+      var result = (after - before);
+      // color the row based on comparison
+      if (0 > result) {
+        jQuery(row).children('td').addClass('show-answers incorrect');
+      } else if (0 < result) {
+        jQuery(row).children('td').addClass('show-answers correct');
+      }
+      return result;
+    });
   },
 
 
@@ -492,7 +511,7 @@ runOnUserContent(function() {
     var btn = '<span class="toggle-transcript">Transcript<span>';
     return jQuery(btn).click(function(){
       transcript.slideToggle();
-    });;
+    });
   });
   
   // Show parent only if the child's bz-retained is populated:
@@ -507,7 +526,7 @@ runOnUserContent(function() {
   function showIfMagicIsPopulated(magicInput) {
     addOnMagicFieldsLoaded(function() {
       jQuery('.conditional-show [data-bz-retained='+magicInput.data('bz-retained')+'], [data-bz-reference="'+magicInput.data('bz-retained')+'"]').each(function(){
-        if( magicInput.prop('checked') || ( !magicInput.is('[type="checkbox"], [type="radio"]') && magicInput.val() != "" ) ) {
+        if( magicInput.prop('checked') || ( !magicInput.is('[type="checkbox"], [type="radio"]') && magicInput.val() !== "" ) ) {
           // If it's a checkbox that's checked, or if it's any other type of field that's not empty:
           jQuery(this).parents('.conditional-show').show();
         } else {
@@ -824,7 +843,7 @@ function bzAjaxLoad() {
       loadExistingMagicValues(); 
     }
   });
-};
+}
 
 // the Canvas built in thing strips scripts out of the editor, but
 // leaves it in the ENV. this hack will put it back. The timer is because
