@@ -1017,18 +1017,24 @@ figcaption {
  background: #22B573;
  color: #FFF;
 }
- .show-answers.maybe, ul:not(.instant-feedback) .show-answers.correct:not(.checked) {
- color: #B08833;
+
+.show-answers.maybe, 
+ul:not(.instant-feedback) .show-answers.correct:not(.checked) {
+  color: #B08833;
 }
+
  tr:not(.suppress-answers) td.show-answers.maybe {
  background: #B08833;
 }
- .show-answers.incorrect, ul:not(.instant-feedback) .show-answers.checked:not(.correct) {
- color: #EB3B46;
+
+.show-answers.incorrect, 
+ul:not(.instant-feedback) .show-answers.checked:not(.correct) {
+  color: #EB3B46;
 }
- tr:not(.suppress-answers) td.show-answers.incorrect {
- background: #EB3B46;
- color: #FFF;
+
+tr:not(.suppress-answers) td.show-answers.incorrect {
+  background: #EB3B46;
+  color: #FFF;
 }
 
 .feedback.inline {

@@ -198,11 +198,12 @@ require('functions.php');
       </tbody>
     </table>
   <?php
+  $GLOBALS['for'] = 'for-compare-scores';
   bz_close_box();
   //
   bz_open_box('action','Let&rsquo;s see how your current self-assessment compares to the one you took in week 1 of the Accelerator:','See your growth');
   
-    echo '<table class="no-zebra">';
+    echo '<table class="no-zebra bz-compare-scores">';
     echo '<tbody>';
 
     $items = array(
@@ -252,13 +253,13 @@ require('functions.php');
         echo '<th>Week&nbsp;1</th>';
         echo '<th>Today</th>';
         echo '<th>Change</th>';
-      echo '<tr>';
+      echo '</tr>';
       foreach ($category['criteria'] as $key => $value) {
         echo '<tr>';
           echo '<td>'.$value.'</td>';
-          echo '<td><span data-bz-retained="test-self-ass-'.$key.'">&nbsp;</span></td>';
-          echo '<td><span data-bz-retained="test-self-ass-post-'.$key.'">&nbsp;</span></td>';
-          echo '<td>&nbsp;</td>';
+          echo '<td><span class="bz-compare-scores-before" data-bz-retained="test-self-ass-'.$key.'"></span></td>';
+          echo '<td><span class="bz-compare-scores-after" data-bz-retained="test-self-ass-post-'.$key.'"></span></td>';
+          echo '<td><span class="bz-compare-scores-result">&nbsp;</span></td>';
         echo '</tr>';
       }
     }
@@ -299,7 +300,7 @@ require('functions.php');
   bz_open_box('video',null,'Listen to this'); 
   ?>
     <p>&nbsp;</p>
-    <p>Life is an Act of Literary Creation by Luis ALberto Urrea (5:01) 
+    <p>Life is an Act of Literary Creation by Luis ALberto Urrea (5:01)</p>
       <div class="transcript">
       <p>I believe God is a poet; every religion in our history was made of poems and songs, and not a few of them had books attached. I came to believe the green fuse that drives spring and summer through the world is essentially a literary energy. That the world was more than a place. Life was more than an event. It was all one thing, and that thing was: story.</p>
       <p>I was in a small house in Cuernavaca with old healer women. We were eating green Jell-O. One of them told me this: "When you write, you light a bonfire in the spirit world. It is dark there. Lost souls wander alone. Your inner flame flares up. And the lost souls gather near your light and heat. And they see the next artist at work and go there. And they follow the fires until they find their ways home."</p>
@@ -307,9 +308,9 @@ require('functions.php');
       <p>Now, if it is all story, I believe we are the narrators. Many writing instructors will tell you that to be a great writer, you must be attentive. Shamans will tell you the same thing: If you want to be a good person, a whole person, wake up! Pay attention! Be here now! Zen monks will go so far as to hit you with a stick. Look!</p>
       <p>I used to approach writing like a football game. If I went out there and aggressively saw more, I'd know more and I'd capture more, and I'd write better. Hut, hut, hut: First down and haiku! But I found out something entirely different. I learned that if I went into the world and paid attention (in Spanish, you "lend attention," presta atencion), the world would notice and respond. I would have demonstrated my worthiness to receive the world's gifts. It's a kind of library where you lend attention and receive a story. Or God will toss off a limerick for your pleasure.</p>
       <p>In South Carolina recently, I was telling my hosts before a speaking engagement all about this idea. I told them that Story comes on the wings of hummingbirds and dragonflies. My host told me to turn around. A hummingbird hovered outside the window, three inches from the back of my head. After the event, I was in the street enjoying the silence. A dragonfly came and hovered over my head. Both times, all I had to do was look.</p>
-    </div></p>
-    <iframe src="https://www.npr.org/player/embed/103362391/103397414" width="100%" height="240" frameborder="0" scrolling="no" title="NPR embedded audio player"></iframe>
-    <p>Accomplishing Big Things in Small Pieces by William Wisseman (4:46)
+    </div>
+    <iframe src="https://www.npr.org/player/embed/103362391/103397414" style="width:100%; height:240px; border=none; overflow=hidden;" title="NPR embedded audio player"></iframe>
+    <p>Accomplishing Big Things in Small Pieces by William Wisseman (4:46)</p>
       <div class="transcript">
       <p>I carry a Rubik's Cube in my backpack. Solving it quickly is a terrific conversation starter and surprisingly impressive to girls. I've been asked to solve the cube on the New York City subway, at a track meet in Westchester and at a café in Paris.</p>
       <p>I usually ask people to try it first. They turn the cube over in their hands, half-heartedly they make a few moves and then sheepishly hand it back. They don't even know where to begin. That's exactly what it was like for me to learn how to read. Letters and words were scrambled and out of sequence. Nothing made sense because I'm dyslexic.</p>
@@ -320,9 +321,9 @@ require('functions.php');
       <p>The Rubik's Cube taught me that to accomplish something big, it helps to break it down into small pieces. I learned that it's important to spend a lot of time thinking, to try to find connections and patterns. I believe that there are surprises around the corner. And, that the Rubik's Cube and I, we are more than the sum of our parts.</p>
       <p>Like a difficult text or sometimes like life itself, the Rubik's Cube can be a frustrating puzzle. So I carry one in my backpack as a reminder that I can attain my goals, no matter what obstacles I face.</p>
       <p>And did I mention that being able to solve the cube is surprisingly impressive to girls?</p>
-    </div></p>
-    <iframe src="https://www.npr.org/player/embed/94566019/94603503" width="100%" height="240" frameborder="0" scrolling="no" title="NPR embedded audio player"></iframe>
-    <p>Black is Beautiful by Sufiya Abdur-Rahman (4:36)
+    </div>
+    <iframe src="https://www.npr.org/player/embed/94566019/94603503" style="width:100%; height:240px; border=none; overflow=hidden;" title="NPR embedded audio player"></iframe>
+    <p>Black is Beautiful by Sufiya Abdur-Rahman (4:36)</p>
       <div class="transcript">
       <p>I'd been searching for a job for months with no success. I was just about ready to settle into permanent unemployment and a deep depression when my siblings suggested I try something I'd never before considered.</p>
       <p>"Why don't you put a different name on your resume," they proposed. Something less ethnic-sounding and easier to pronounce, something that doesn't set off alarm bells like my name apparently does.</p>
@@ -334,8 +335,8 @@ require('functions.php');
       <p>So I could never mask who I really am, not even to get a job.</p>
       <p>People like me may have gone out of style, with leather Africa medallions and embroidered FUBU T-shirts, but I still believe in celebrating my blackness. It starts with my name and remains at the forefront of my identity because for me, there is no shame in being black. And I don't mean just having brown skin. There's no shame in having thick nappy hair, big full lips, a colorful melodic vernacular or even an inherent sense of rhythm, stereotype or not.</p>
       <p>So I refuse to be anyone but myself: hip-hop listening, nappy hair-having, Girlfriends-watching, James Baldwin-, Zora Neale Hurston-, Malcolm X-reading me. I've internalized that black is beautiful, not a condition to rise above. For as long as it takes, I'll keep being Sufiya Abdur-Rahman on my resume and everywhere else I go.</p>
-    </div></p>
-    <iframe src="https://www.npr.org/player/embed/93879707/93954502" width="100%" height="210" frameborder="0" scrolling="no" title="NPR embedded audio player"></iframe>
+    </div>
+    <iframe src="https://www.npr.org/player/embed/93879707/93954502" style="width:100%; height:210px; border=none; overflow=hidden;" title="NPR embedded audio player"></iframe>
     
   <?php
   bz_close_box();
