@@ -44,14 +44,16 @@ function bz_open_box($btype = 'question', $bintro = '', $btitle) {
     case 'pulse':
       $btitle = 'Pulse Check';
       break;
-    default: 
-      $btitle = '&nbsp;';
   }
 
 	// Open the box:
   echo '<div class="bz-box '.$btype.'">';
-  echo '  <h'.$GLOBALS['hlevel'].' class="box-title">'.$btitle.'</h'.$GLOBALS['hlevel'].'>';
+  if ($btitle) {
+    echo '  <h'.$GLOBALS['hlevel'].' class="box-title">'.$btitle.'</h'.$GLOBALS['hlevel'].'>';
+  }
+  if ($bintro) {
   echo '  <p>'.$bintro.'</p>';
+  }
   // Reset "for-" for "done" button interactivity:
 	/*  (e.g. "for-checklist" may be set by bz_make_cr_list(), 
       but we don't want previous box's interaction to apply here )  */
@@ -252,7 +254,7 @@ function bz_make_instant_range_table($items){
           <tr class="inputs-row">
             <td><?php echo $item[0];?></td>
             <td colspan="6">
-              <input max="5" min="0" step="1" type="range" value="0" data-bz-retained="<?php $GLOBALS['innercounter']++; echo bz_make_id(); ?>" />
+              <input class="bz-optional-magic-field" bzmax="5" min="0" step="1" type="range" value="0" data-bz-retained="<?php $GLOBALS['innercounter']++; echo bz_make_id(); ?>" />
               <div class="display-value"><span class="current-value">&nbsp;</span></div>
             </td>
           </tr>

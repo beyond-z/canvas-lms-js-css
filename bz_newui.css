@@ -227,10 +227,34 @@ blockquote {
 .bz-module > blockquote:nth-of-type(3n+1) {
 	background-image: url('images/bkg700-01.jpg');
 }
+blockquote.special:nth-of-type(5n+0) {
+  background-image: url('images/bkg-special-01.jpg');
+  background-position: center center;
+}
+blockquote.special:nth-of-type(5n+1) {
+  background-image: url('images/bkg-special-02.jpg');
+  background-position: center center;
+}
+blockquote.special:nth-of-type(5n+2) {
+  background-image: url('images/bkg-special-03.jpg');
+  background-position: center center;
+}
+blockquote.special:nth-of-type(5n+3) {
+  background-image: url('images/bkg-special-04.jpg');
+  background-position: center center;
+}
+blockquote.special:nth-of-type(5n+4) {
+  background-image: url('images/bkg-special-05.jpg');
+  background-position: center center;
+}
 
 .quote-source {
 	font-size: 75%;
 	margin: 1em 0;
+}
+
+blockquote .bz-hashtag {
+  color: #D7EFEF;
 }
 
 .quote-source:before {
@@ -993,18 +1017,24 @@ figcaption {
  background: #22B573;
  color: #FFF;
 }
- .show-answers.maybe, ul:not(.instant-feedback) .show-answers.correct:not(.checked) {
- color: #B08833;
+
+.show-answers.maybe, 
+ul:not(.instant-feedback) .show-answers.correct:not(.checked) {
+  color: #B08833;
 }
+
  tr:not(.suppress-answers) td.show-answers.maybe {
  background: #B08833;
 }
- .show-answers.incorrect, ul:not(.instant-feedback) .show-answers.checked:not(.correct) {
- color: #EB3B46;
+
+.show-answers.incorrect, 
+ul:not(.instant-feedback) .show-answers.checked:not(.correct) {
+  color: #EB3B46;
 }
- tr:not(.suppress-answers) td.show-answers.incorrect {
- background: #EB3B46;
- color: #FFF;
+
+tr:not(.suppress-answers) td.show-answers.incorrect {
+  background: #EB3B46;
+  color: #FFF;
 }
 
 .feedback.inline {
