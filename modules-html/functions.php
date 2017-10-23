@@ -254,7 +254,7 @@ function bz_make_instant_range_table($items){
           <tr class="inputs-row">
             <td><?php echo $item[0];?></td>
             <td colspan="6">
-              <input max="5" min="0" step="1" type="range" value="0" data-bz-retained="<?php $GLOBALS['innercounter']++; echo bz_make_id(); ?>" />
+              <input class="bz-optional-magic-field" bzmax="5" min="0" step="1" type="range" value="0" data-bz-retained="<?php $GLOBALS['innercounter']++; echo bz_make_id(); ?>" />
               <div class="display-value"><span class="current-value">&nbsp;</span></div>
             </td>
           </tr>

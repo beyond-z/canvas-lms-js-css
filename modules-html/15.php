@@ -71,7 +71,7 @@ require('functions.php');
     bz_make_textarea(array('other'=>true));
   bz_close_box();
   //
-  bz_open_box('reflection');
+  bz_open_box('reflection','How would you rate yourself on the following skills?');
   ?>
     <table class="no-zebra bz-survey">
       <tbody>
@@ -88,17 +88,17 @@ require('functions.php');
         </tr>
         <tr>
           <td>I work effectively in teams and add value to toward team goals.</td>
-          <td colspan="3"><input class="bz-optional-magic-field bz-retained-field-setup" max="5" value="0" min="1" step="1" type="range" data-bz-retained="test-self-ass-post-01"></td>
+          <td colspan="3"><input class="bz-optional-magic-field bz-retained-field-setup" max="5"  min="1" step="1" type="range" data-bz-retained="test-self-ass-post-01"></td>
           <td class="current-value">1</td>
         </tr>
         <tr>
           <td>I navigate cultural difference on teams.</td>
-          <td colspan="3"><input class="bz-optional-magic-field bz-retained-field-setup" max="5" value="0" min="1" step="1" type="range" data-bz-retained="test-self-ass-post-02"></td>
+          <td colspan="3"><input class="bz-optional-magic-field bz-retained-field-setup" max="5"  min="1" step="1" type="range" data-bz-retained="test-self-ass-post-02"></td>
           <td class="current-value">1</td>
         </tr>
         <tr>
           <td>I cultivate belonging and safety for myself and others.</td>
-          <td colspan="3"><input class="bz-optional-magic-field bz-retained-field-setup" max="5" value="0" min="1" step="1" type="range" data-bz-retained="test-self-ass-post-03"></td>
+          <td colspan="3"><input class="bz-optional-magic-field bz-retained-field-setup" max="5"  min="1" step="1" type="range" data-bz-retained="test-self-ass-post-03"></td>
           <td class="current-value">1</td>
         </tr>
         <tr>
@@ -114,12 +114,12 @@ require('functions.php');
         </tr>
         <tr>
           <td>I identify the underlying complexity and ambiguity of problems.</td>
-          <td colspan="3"><input class="bz-optional-magic-field bz-retained-field-setup" max="5" value="0" min="1" step="1" type="range" data-bz-retained="test-self-ass-post-04"></td>
+          <td colspan="3"><input class="bz-optional-magic-field bz-retained-field-setup" max="5"  min="1" step="1" type="range" data-bz-retained="test-self-ass-post-04"></td>
           <td class="current-value">1</td>
         </tr>
         <tr>
           <td>I implement effective solutions.</td>
-          <td colspan="3"><input class="bz-optional-magic-field bz-retained-field-setup" max="5" value="0" min="1" step="1" type="range" data-bz-retained="test-self-ass-post-05"></td>
+          <td colspan="3"><input class="bz-optional-magic-field bz-retained-field-setup" max="5"  min="1" step="1" type="range" data-bz-retained="test-self-ass-post-05"></td>
           <td class="current-value">1</td>
         </tr>
         <tr>
@@ -135,17 +135,17 @@ require('functions.php');
         </tr>
         <tr>
           <td>I manage my time and personal to-dos well.</td>
-          <td colspan="3"><input class="bz-optional-magic-field bz-retained-field-setup" max="5" value="0" min="1" step="1" type="range" data-bz-retained="test-self-ass-post-06"></td>
+          <td colspan="3"><input class="bz-optional-magic-field bz-retained-field-setup" max="5"  min="1" step="1" type="range" data-bz-retained="test-self-ass-post-06"></td>
           <td class="current-value">2</td>
         </tr>
         <tr>
           <td>I manage projects to on-time and successful completion.</td>
-          <td colspan="3"><input class="bz-optional-magic-field bz-retained-field-setup" max="5" value="0" min="1" step="1" type="range" data-bz-retained="test-self-ass-post-07"></td>
+          <td colspan="3"><input class="bz-optional-magic-field bz-retained-field-setup" max="5"  min="1" step="1" type="range" data-bz-retained="test-self-ass-post-07"></td>
           <td class="current-value">3</td>
         </tr>
         <tr>
           <td>I give and receive feedback effectively.</td>
-          <td colspan="3"><input class="bz-optional-magic-field bz-retained-field-setup" max="5" value="0" min="1" step="1" type="range" data-bz-retained="test-self-ass-post-08"></td>
+          <td colspan="3"><input class="bz-optional-magic-field bz-retained-field-setup" max="5"  min="1" step="1" type="range" data-bz-retained="test-self-ass-post-08"></td>
           <td class="current-value">4</td>
         </tr>
         <tr>
@@ -161,17 +161,17 @@ require('functions.php');
         </tr>
         <tr>
           <td>I clearly present myself and ideas.</td>
-          <td colspan="3"><input class="bz-optional-magic-field bz-retained-field-setup" max="5" value="0" min="1" step="1" type="range" data-bz-retained="test-self-ass-post-09"></td>
+          <td colspan="3"><input class="bz-optional-magic-field bz-retained-field-setup" max="5"  min="1" step="1" type="range" data-bz-retained="test-self-ass-post-09"></td>
           <td class="current-value">5</td>
         </tr>
         <tr>
           <td>I demonstrate professional polish and understanding of workplace dos and don’ts.</td>
-          <td colspan="3"><input class="bz-optional-magic-field bz-retained-field-setup" max="5" value="0" min="1" step="1" type="range" data-bz-retained="test-self-ass-post-10"></td>
+          <td colspan="3"><input class="bz-optional-magic-field bz-retained-field-setup" max="5"  min="1" step="1" type="range" data-bz-retained="test-self-ass-post-10"></td>
           <td class="current-value">4</td>
         </tr>
         <tr>
           <td>I actively build and strengthen my professional network.</td>
-          <td colspan="3"><input class="bz-optional-magic-field bz-retained-field-setup" max="5" value="0" min="1" step="1" type="range" data-bz-retained="test-self-ass-post-11"></td>
+          <td colspan="3"><input class="bz-optional-magic-field bz-retained-field-setup" max="5"  min="1" step="1" type="range" data-bz-retained="test-self-ass-post-11"></td>
           <td class="current-value">3</td>
         </tr>
         <tr>
@@ -187,12 +187,12 @@ require('functions.php');
         </tr>
         <tr>
           <td>I am grounded in my purpose, clear on my path, and leverage my assets and values.</td>
-          <td colspan="3"><input class="bz-optional-magic-field bz-retained-field-setup" max="5" value="0" min="1" step="1" type="range" data-bz-retained="test-self-ass-post-12"></td>
+          <td colspan="3"><input class="bz-optional-magic-field bz-retained-field-setup" max="5"  min="1" step="1" type="range" data-bz-retained="test-self-ass-post-12"></td>
           <td class="current-value">2</td>
         </tr>
         <tr>
           <td>I learn from both wins and failure.</td>
-          <td colspan="3"><input class="bz-optional-magic-field bz-retained-field-setup" max="5" value="0" min="1" step="1" type="range" data-bz-retained="test-self-ass-post-13"></td>
+          <td colspan="3"><input class="bz-optional-magic-field bz-retained-field-setup" max="5"  min="1" step="1" type="range" data-bz-retained="test-self-ass-post-13"></td>
           <td class="current-value">1</td>
         </tr>
       </tbody>
@@ -298,6 +298,7 @@ require('functions.php');
   <?php 
   bz_open_box('video',null,'Listen to this'); 
   ?>
+    <p>&nbsp;</p>
     <p>Life is an Act of Literary Creation by Luis ALberto Urrea (5:01) 
       <div class="transcript">
       <p>I believe God is a poet; every religion in our history was made of poems and songs, and not a few of them had books attached. I came to believe the green fuse that drives spring and summer through the world is essentially a literary energy. That the world was more than a place. Life was more than an event. It was all one thing, and that thing was: story.</p>
