@@ -68,7 +68,8 @@
     bz_make_textarea(array ('optional' => true, 'other' => true,));
     bz_close_box();
     //
-
+    bz_open_box('answer',null,'Don&rsquo;t be that Fellow! Read on to get all you need to prepare.');
+    bz_close_box();
   ?>
   <blockquote><p>You should never go to a meeting or make a telephone call without a clear idea of what you are trying to achieve.</p><p class="quote-source">Steve Jobs, founder of Apple</p></blockquote>
   <h2 id="how">How do I facilitate meetings?</h2>
@@ -92,6 +93,64 @@
   <?php bz_close_box(); ?>
   <?php bz_open_box('answer','You may have rated yourself on the lower end on some of these skills. That&rsquo;s okay! Using the suggested techniques and practicing will help you improve your facilitation over time.', 'What does this mean');
     bz_close_box();
+    //
+    bz_open_box();
+  ?>
+    <p>It's 15 minutes into the meeting, and you realize your team members are losing interest. You've been explaining the reason for the meeting and your opinion on how to solve the problems your team needs to solve. What's the best way to re-engage your teammates?</p>
+    <?php
+    $items = array(
+      array(
+        'correctness'=>'correct',
+        'content'=>'Take a step back and let the other members of the group carry the discussion. ',
+        'feedback'=>'Correct! What&rsquo;s the point of a meeting if one person is doing all the problem-solving? Take a step back and ask your teammates what they think.', 
+      ),
+      array(
+        'correctness'=>'incorrect',
+        'content'=>'Move the group towards taking ownership of action steps coming out of the meeting.',
+        'feedback'=>'This is a critical step in a successful meeting, but talking about next steps should happen at the end of the meeting, not the beginning.',
+      ),
+      array(
+        'correctness'=>'incorrect',
+        'content'=>'Hold people accountable and point out when norms are not being upheld. ',
+        'feedback'=>'It doesn&rsquo;t seem like any norms are being violated in this situation. Take a look at your own actions first to see if there&rsquo;s anything you can do as a facilitator to re-engage the group.',
+      ),
+      array(
+        'correctness'=>'incorrect',
+        'content'=>'Clarify the expected outcomes or objectives of the meeting and stay focused on them. ',
+        'feedback'=>'You&rsquo;ve already spent a good deal of time laying out the context for the meeting. Time to move onto asking your teammates what they think!',
+      ),
+      );
+    bz_make_cr_list($items,'radio-list');
+  bz_close_box();
+  //
+  bz_open_box();
+  ?>
+  <p>One team member starts talking about the cool trick her dog did over the weekend, and you feel the discussion veering off into videos of animals doing funny things. What should you do?</p>
+    <?php
+    $items = array(
+      array(
+        'correctness'=>'correct',
+      'content'=>'Clarify the expected outcomes or objectives of the meeting and stay focused on them. ',
+      'feedback'=>'Correct! You can say something like, "It seems like you&rsquo;re losing focus, and we only have 15 minutes left. Let&rsquo;s get back to discussing the problem at hand." ',
+      ),
+      array(
+        'correctness'=>'incorrect',
+      'content'=>'Energize the group because their energy is low. ',
+      'feedback'=>'Seems like they have the energy to talk about animal videos! Work to channel their energy to the topics at hand. ',
+      ),
+      array(
+        'correctness'=>'incorrect',
+      'content'=>'Manage participation, ensuring everyone&rsquo;s voice is heard. ',
+      'feedback'=>'While one person may be taking over the conversation here, you&rsquo;ll need to refocus the conversation on the issue at hand before diagnosing if some people are participating too much or too little. ',
+      ),
+      array(
+        'correctness'=>'incorrect',
+      'content'=>'Take a step back and let the other members of the group carry the discussion. ',
+      'feedback'=>'In this situation, you need to reign in the group to focus rather than take a step back. ',
+      ),
+    );
+    bz_make_cr_list($items,'radio-list');
+  bz_close_box();
   ?>
     <?php $GLOBALS['hlevel'] = 4; ?>
   <h3>How do I prepare an agenda?</h3>
@@ -100,7 +159,7 @@
     <table class="no-zebra">
       <tr>
         <th>Time and Location:</th>
-        <td>Rutgers-Newark, Conklin Hall, Room 319, 6:00-8:00pm</td>
+        <td>DePalma Hall, Room 319, 6:00-8:00pm</td>
       </tr>
     <tr>
       <th>Attendees:</th>
@@ -218,7 +277,7 @@
     <li><strong>Add flex time</strong> to the end of your agenda. If one agenda item ends up running over, you’ll have the ability to adapt as needed.</li>
   </ol>
   <?php bz_close_box(); ?>
-  <?php bz_open_box('question', 'Looking back at the sample agenda, what do you notice is included in the talking points for the Identify roles agenda item? (Check all that apply)'); 
+  <?php bz_open_box('question', 'Looking back at the sample agenda, what do you notice is included in the talking points for the <em>Identify roles</em> agenda item? (Check all that apply)'); 
     $items = array(
       array('correctness' => 'correct', 'content' => 'Voicing the objective of that agenda item', ),
       array('correctness' => 'correct', 'content' => 'Explaining the purpose behind the objective and the methods you chose ', ),
@@ -245,7 +304,7 @@
   <?php bz_close_box(); ?>
 
 
-  <?php bz_open_box('question', 'Should you share your agenda with your team in advance of the meeting?', 'Final quick question');
+  <?php bz_open_box('question', 'Should you share your agenda with your team in advance of the meeting?','Last question!');
 
   $items = array(
     array('correctness' => 'correct', 'content' => 'Yes'),
@@ -253,10 +312,13 @@
   );
   bz_make_cr_list($items, 'radio-list', null);
   bz_close_box();
+  //
   bz_open_box('answer', null);?>
   <p>Sharing the agenda in advance will help your team review and plan before they arrive so that they can be fully engaged participants.</p>
   <p>In order to successfully facilitate Learning Lab during the Capstone Challenge, and as part of your Tackle Career Challenges Project, you’ll have to create a meeting agenda. If you’re facilitating next week, it’s a good idea to do that now!</p>
-  <?php bz_close_box(false);?>
+  <?php bz_close_box(false);
+  //
+  ?>
   <blockquote>The number of meetings I&rsquo;ve been in &mdash; people would be shocked. But that&rsquo;s how you gain experience, how you can gain knowledge, being in meetings and participating. You learn and grow.<p class="quote-source">Tiger Woods, professional golfer</p></blockquote>
   <h2 id="wrap-up">Wrap-up</h2>
   <div>
@@ -265,13 +327,13 @@
     <p>We also looked at some meeting agendas (and if you're facilitating this week, you get to practice using the one below).</p>
     <h3>Next Steps:</h3>
     <ol>
-      <li>Complete Tackle Career Challenges Project, Part 1: Empathy-Based Research</li>
+      <li>Complete <a href="/courses/1/assignments/711">Tackle Career Challenges Project</a>, Part 1: Empathy-Based Research</li>
       <li>Conduct empathy-based research for the Capstone Challenge (interview 3+ users)</li>
       <li>Make sure your team's Project Manager has finalized the project plan and shared it with the rest of your cohort</li>
       <li>Check out the agenda for your upcoming Learning Lab (below). Even if you're not facilitating, read through this section so you know what to expect in Learning Lab.</li>
     </ol>
   </div>
-  <h2>SO, YOU’RE FACILITATING<br />LEARNING LAB THIS WEEK&hellip;</h2>
+  <h2>SO, YOU’RE FACILITATING <br />LEARNING LAB THIS WEEK&hellip;</h2>
   <?php $GLOBALS['hlevel'] = 3; ?>
   <?php bz_open_box('action', 'If you’re the Project Manager or the Lead Researcher, you’re facilitating sections of Learning Lab this week. Your objectives and suggested methods for reaching them are listed below. Be sure to come prepared with an agenda to facilitate Learning Lab.');
   ?>

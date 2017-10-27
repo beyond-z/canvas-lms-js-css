@@ -27,8 +27,8 @@ $ns = 'csk';
 require('functions.php');
 ?>
 <div class="bz-module">
-  <p>This module focuses on team working skills, ahead of your team project kick off in the upcoming Learning Lab.</p>
-  <h2 id="why">Why are team working skills important?</h2>
+  <p>This module focuses on teamwork skills, ahead of your team project kick off in the upcoming Learning Lab.</p>
+  <h2 id="why">Why are teamwork skills important?</h2>
   <?php bz_open_box('question','Why do employers look to hire good team players?'); ?>
     <?php
     $items = array(
@@ -114,7 +114,7 @@ require('functions.php');
         <td colspan="2">
           <h6>3. Teams establish&nbsp;structure and clarity.&nbsp;</h6>
           <p>Trust is built by agreeing on clear roles, plans, and goals. These roles, plans, and goals need to personally resonate with each of the teammates, or else they will not be working to their full potential and pushing themselves to new limits.</p>
-          <p>It is a team manager's responsibility to ensure that no team member starts phoning&nbsp;it in. However, it also is essential that team managers monitor their employees without micromanaging.</p>
+          <p>It is a team manager's responsibility to ensure that no team member starts slacking off. However, it also is essential that team managers monitor their employees without micromanaging.</p>
         </td>
       </tr>
       <tr>
@@ -418,7 +418,7 @@ require('functions.php');
       <tr>
         <td>
           <h6>SONIA SOTOMAYOR</h6>
-          <p>Sonia Sotomayor is an Associate Justice of the Supreme Court of the United States, serving since August 2009. She has the distinction of being its first justice of Hispanic heritage, only its third female justice, and is one of the youngest justices on the Supreme Court. Sotomayor has made notable court opinions and articles on racial discrimination, strip searches, the environment, and 2nd amendment rights.</p>
+          <p>Sonia Sotomayor is an Associate Justice of the Supreme Court of the United States, serving since August 2009. She has the distinction of being its first justice of Hispanic heritage, only its third female justice, and is one of the youngest justices on the Supreme Court. Sotomayor has made notable court opinions and articles on racial discrimination, strip searches, the environment, and 2nd amendment rights. As a justice, she asks the tough questions and pays attention to every detail before making a decision.</p>
         </td>
         <td class="incorrect">
           <input type="radio" data-bz-retained="<?php $GLOBALS['innercounter']++; echo bz_make_id();?>" name="<?php echo bz_make_id('hold');?>" value="NORTH">
@@ -846,7 +846,7 @@ require('functions.php');
   <blockquote>Use your project plan as a map to navigate your project: check it often to how much ground you've already covered, what lies ahead, what you may have missed, and whether a course adjustment is needed.</blockquote>
   <h2 id="wrap-up">Wrap-up</h2>
   <div>
-    <p>In this module we looked at why team work skills matter for your career success:</p>
+    <p>In this module we looked at why teamwork skills matter for your career success:</p>
     <ul>
       <li>You will most likely work in teams no matter what job you have </li>
       <li>Employers hire for good teammates </li>

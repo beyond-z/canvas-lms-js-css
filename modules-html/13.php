@@ -61,7 +61,6 @@ require('functions.php');
       array('content' => 'Sleepy',),
       array('content' => 'Anxious',),
       array('content' => 'Sad',),
-      array('content' => 'Hopeful',),
       array('content' => 'Frustrated',),
       array('content' => 'Curious',),
     );
@@ -118,28 +117,28 @@ require('functions.php');
           <td><img src="/courses/1/files/12719/preview" alt="" style="width:150px; height:auto;" /></td>
           <td>
             <h6>4. EMPATHIZE</h6>
-            <p><?php  echo $z4 = 'Effective presenters understand their audience and consider their audience they prepare and present. They meet the audience members where they are, earn their trust, and take cues from them to adapt the presentation in real time.';?></p>
+            <p><?php  echo $z4 = 'Effective presenters understand their audience and consider their audience as they prepare and present. They meet the audience members where they are, earn their trust, and take cues from them to adapt the presentation in real time.';?></p>
           </td>
         </tr>
         <tr>
           <td><img src="/courses/1/files/12720/preview" alt="" style="width:150px; height:auto;" /></td>
           <td>
             <h6>5.&nbsp;EXUDE CONFIDENCE</h6>
-            <p><?php  echo $z5 = 'Confidence goes a long way in presentations and if you&rsquo;re lucky, you naturally have lots of it. But if you&rsquo;re like most of us, you need to believe that you can do it; and with practice <em>you can</em>! Focus on body language and voice, since those are the top two cues your audience picks up on as signs of confidence.';?></p>
+            <p><?php  echo $z5 = 'Confidence goes a long way in presentations and if you&rsquo;re lucky, you naturally have lots of it. But if you&rsquo;re like most of us, you need to believe that you can do it; and with practice, <em>you can</em>! Focus on body language and voice, since those are the top two cues your audience picks up on as signs of confidence.';?></p>
           </td>
         </tr>
         <tr>
           <td><img src="/courses/1/files/12721/preview" alt="" style="width:150px; height:auto;"/></td>
           <td>
             <h6>6. TELL A STORY</h6>
-            <p><?php  echo $z6 = 'This doesn&rsquo;t mean that you start every presentation with "once upon a time&hellip;", however, both written and oral presentations involve storytelling. Effective presentations have a seamless flow from beginning to end, which takes the audience on a journey from where they were to where you want them to be.&nbsp;';?></p>
+            <p><?php  echo $z6 = 'This doesn&rsquo;t mean that you start every presentation with "once upon a time&hellip;" However, both written and oral presentations involve storytelling. Effective presentations have a seamless flow from beginning to end, which takes the audience on a journey from where they were to where you want them to be.&nbsp;';?></p>
           </td>
         </tr>
         <tr>
           <td><img src="/courses/1/files/12722/preview" alt="" style="width:150px; height:auto;" /></td>
           <td>
             <h6>7. PRACTICE</h6>
-            <p><?php  echo $z7 = 'Your skill as a presenter is not fixed, no matter where it stands now. It is guaranteed to grow with practice, feedback, reflection, failure, and more practice. That&rsquo;s why it takes a bit of courage to step out of your comfort zone and commit to growing in this area, but it&rsquo;s the only way to improve.';?></p>
+            <p><?php  echo $z7 = 'Your skill as a presenter is not fixed, no matter where it stands now. It is guaranteed to grow with practice, feedback, reflection, failure, and more practice. It takes a bit of courage to step out of your comfort zone and commit to growing as a presenter, but it&rsquo;s the only way to improve.';?></p>
           </td>
         </tr>
         <tr>
@@ -221,8 +220,8 @@ require('functions.php');
     //
     bz_open_box('answer');
     ?>
-      <p>Eight seconds, that&rsquo;s it (this is when browsing the Web, and only according to a single non-scientific study done by a Canadian ad agency).</p>
-      <p>Statistics aside, we all know from personal experience that people tend to drift off, unless the speaker uses a <strong>"hook"</strong> grab their attention powerfully as soon as the presentation begins. Kind of like what we did here with this interactive Quick Question!</p>
+      <p>Eight seconds, that&rsquo;s it (at least when browsing the Web&hellip;).</p>
+      <p>Statistics aside, we all know from personal experience that we can drift off, unless the speaker uses a <strong>"hook"</strong> grab our attention powerfully as soon as the presentation begins. Kind of like what we did here with this interactive Quick Question!</p>
     <?php
     bz_close_box(false);
     //
@@ -253,7 +252,7 @@ require('functions.php');
         <li>A picture that speaks a thousand words</li>
         <li>A quote, poem, or rhyme</li>
         <li>A startling and/or personally relevant statistic ("One in five people in this audience is likely <i>X</i>")</li>
-        <li>A question to the audience ("Show of hands &mdash; how many here are <i>X</i>?"</li>
+        <li>A question to the audience ("Show of hands &mdash; how many here are <i>X</i>?")</li>
         <li>A quick reference to a current news item (just be careful with politics)</li>
         <li>A story that relates directly to your message and/or humanizes you </li>
         <li>Asking the audience to take some action ("turn to someone next to you and <i>do X</i>")</li>
@@ -422,10 +421,10 @@ require('functions.php');
   <?php
   bz_open_box('question', 'Which of these phrases would you want to hear in a presentation?');
     bz_make_radio_list(array(
+      'Let’s explore the benefits of this strategy together ',
       'I’m an expert in this field',
       'Our team did the most research',
       'Our client list is extensive ',
-      'Let’s explore the benefits of this strategy together ',
     ));
   bz_close_box();
   //
@@ -548,7 +547,7 @@ require('functions.php');
         <tr>
           <td>
             <div class="bz-example">
-              <p>Lucy always wanted to become a pilot, but she failed the math section of the exam. When her son graduated high school, she decided to take it again, and again she didn't pass. But she was determined to become a pilot, and she asked her son to teach her math, so every night after dinner, he taught her everything he knew. The next time she took the exam, she passed. Finally, she got a pilot license and got a job in crop dusting. On the job, she found herself needing to use her math to calculate the airplane's fuel consumption and to plan the most efficient course to cover the all the fields she was sparying in the shortest time. She could do the math so quickly, other pilots came to her for help and she became known for her excellent math skills. What Lucy thought was her weakness turned out to be a great strength!</p>
+              <p>Lucy always wanted to become a pilot, but she failed the math section of the exam. When her son graduated high school, she decided to take it again, and again she didn't pass. But she was determined to become a pilot, and she asked her son to teach her math, so every night after dinner, he taught her everything he knew. The next time she took the exam, she passed. Finally, she got a pilot license and got a job in crop dusting. On the job, she found herself needing to use her math to calculate the airplane's fuel consumption and to plan the most efficient course to cover the all the fields she was spraying in the shortest time. She could do the math so quickly, other pilots came to her for help and she became known for her excellent math skills. What Lucy thought was her weakness turned out to be a great strength!</p>
             </div>
           </td>
           <td><p>With practice and persistence, you can turn your weakness into a strength!</p></td>
@@ -569,25 +568,6 @@ require('functions.php');
   ?>
     <p>When people hear a story, the deeper parts of the brain where memory and emotion work together are activated, and meaningful connections are made to other memories your audience already has. Your audience will feel more engaged as you speak, and remember more once you're done.</p>
   <?php 
-  bz_close_box();
-  //
-  bz_open_box('video', 'Here are eight engaging storytelling techniques you can use in presentations, with video examples of each one.');
-  bz_close_box();
-
-  echo '<div class="tbd">TBD</div>';
-
-  bz_open_box('reflection', 'Think about your Capstone Challenge presentation. Which of these storytelling techniques would work in your presentation? (check all that apply)', 'What would work for you?');
-    $items = array (
-      'Monomyth',
-      'The mountain',
-      'Nested loops',
-      'Sparklines',
-      'In media res',
-      'Converging ideas',
-      'False start',
-      'Petal structure ',
-    );
-    bz_make_simple_checklist($items);
   bz_close_box();
   ?>
   <h3>PRACTICE</h3>
@@ -762,17 +742,17 @@ require('functions.php');
       array(
         'content'=>'It depends',
         'correctness'=>'correct',
-        'feedback'=>'If your manager is giving an oral presentation then these strategies could make her shine. But if the deck is meant for sending out as a stand-alone product many of these strategies are actaully counter-productive (for example: using pithy bullets instead of full sentences on the slides won&rsquo;t make sense to the reader)',
+        'feedback'=>'If your manager is giving an oral presentation then these strategies could make her shine. But if the deck is meant for sending out as a stand-alone product many of these strategies are actaully counter-productive (for example: using pithy bullets instead of full sentences on the slides won&rsquo;t make sense to the reader).',
       ),
       array(
         'content'=>'All of them!',
         'correctness'=>'incorrect',
-        'feedback'=>'You don&rsquo;t know whether this is for her to present orally or to send out as a stand-alone (self-guided) deck.',
+        'feedback'=>'Nope. You don&rsquo;t know whether this is for her to present orally or to send out as a stand-alone (self-guided) deck. The strategies above only apply to oral presentations.',
       ),
       array(
         'content'=>'All of them, but only if she says she needs a printed copy',
         'correctness'=>'incorrect',
-        'feedback'=>'Printing lots of single-message slides using a white-on-black design will be terribly wasteful',
+        'feedback'=>'Nope. Printing lots of single-message slides using a white-on-black design will be terribly wasteful!',
       ),
     );
     bz_make_radio_list($items, false);
@@ -781,7 +761,7 @@ require('functions.php');
   bz_open_box('answer','You will meet many people in your career who still try in vain to create a single slide deck for both oral presentations and stand-alone written decks they send to people. Don&rsquo;t be one of them!');
   bz_close_box();
   ?>
-  <blockquote>When you present in-person you want the audience to focus on you, the presenter, <em>not</em> on the slide deck which is only there to illustrate key concepts and help the audience follow you along.</blockquote>
+  <blockquote>When you present in-person you want the audience to focus on you, the presenter, <em>not</em> on the slide deck, which is only there to illustrate key concepts and help the audience follow you.</blockquote>
   <h2 id="wrap-up">Wrap-up</h2>
   <div>
     <p>In this module we looked at two important career skills: giving effective oral presentations and preparing great slide decks to support those.</p>
@@ -797,17 +777,17 @@ require('functions.php');
         <li>Use your authentic "voice"</li>
         <li>Create a compelling presentation deck</li>
       </ul>
-    <p>While all the advice above is valuable, if there's one thing that will be determine your overall success in presenting it's simply how much practice and feedback you get.</p>
-    <p>The upcoming Capstone presentation should give plenty of opportunity to rehearse and up your game, but you should consider treating every presentation you make as a chance to improve on one or more of these fronts.</p>
+    <p>While all the advice above is valuable, if there's one thing that will determine your overall success in presenting, it's simply how much practice and feedback you get.</p>
+    <p>The upcoming Capstone Presentation should give plenty of opportunities to rehearse and up your game, but you should consider treating every presentation you make as a chance to improve on one or more of these fronts.</p>
     <h3>Next Steps:</h3>
     <ol>
       <li>To be prepared for Learning Lab this week, make sure your cohort has completed your prototypes, tested your prototypes with at least <strong>ten</strong> users, and refined your prototypes based on their feedback.</li>
       <li>You will be rehearsing your Capstone Presentation during Learning Lab, so make sure your team has a draft of the presentation (deck and talking points) ready to rehearse.</li>
-      <li>On your own, continue working on the <a href="/courses/1/assignments/711">Tackle Career Challenges</a> project. You can complete Part 1: Prototype & Test and continue to work on Parts 2 and 3.</li>
+      <li>On your own, continue working on the <a href="/courses/1/assignments/711">Tackle Career Challenges</a> project. You can complete Part 1: Prototype &amp; Test and continue to work on Parts 2 and 3.</li>
       <li>Check out the agenda for your upcoming Learning Lab (below).</li>
     </ol>
   </div>
-  <h2>SO, YOU’RE FACILITATING<br />LEARNING LAB THIS WEEK&hellip;</h2>
+  <h2>SO, YOU’RE FACILITATING <br />LEARNING LAB THIS WEEK&hellip;</h2>
   <?php $GLOBALS['hlevel'] = 3; ?>
   <?php bz_open_box('action');?>
   <p>If you’re the <em>Project Manager</em>, <em>Lead Oral Presenter</em>, or <em>Lead Deck Designer</em>, you’re facilitating sections of Learning Lab this week. Your objectives and suggested methods for reaching those objectives are listed below. Come prepared with an agenda to facilitate Learning Lab.</p>
@@ -826,18 +806,18 @@ require('functions.php');
     </tr>
     <tr>
       <td>10 mins</td>
+      <td>Project Plan Check-In</td>
+      <td>Project Manager</td>
+    </tr>
+    <tr>
+      <td>10 mins</td>
       <td>Review Presentation Rubrics</td>
       <td>LC</td>
     </tr>
     <tr>
-      <td>10 mins</td>
-      <td>Build Prototypes</td>
-      <td>Lead Prototyper</td>
-    </tr>
-    <tr>
       <td>60 mins</td>
       <td>Rehearse Capstone Challenge Presentation</td>
-      <td>Lead Prototyper</td>
+      <td>Lead Prototyper &amp; Lead Deck Designer</td>
     </tr>
     <tr>
       <td>20 mins</td>
