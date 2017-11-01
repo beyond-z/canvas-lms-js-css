@@ -1,0 +1,15 @@
+#bz-staging-banner {
+	position: fixed;
+	left: calc(-100vh + 2em);
+	top: -2em; /* -height */
+	/* keep in mind it is rotated 90 degrees so height and width are flipped */
+	height: 2em;
+	background-color: yellow;
+	z-index: 9999;
+	width: 100vh;
+	text-align: center;
+	transform: rotate(270deg);
+	transform-origin: 100% 100%;
+	font-weight: bold;
+	color: black;
+}
