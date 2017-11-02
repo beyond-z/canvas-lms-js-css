@@ -2067,6 +2067,7 @@ table [type="range"] {
 .bz-in-iframe #footer,
 .bz-in-iframe #right-side-wrapper,
 .bz-in-iframe #left-side,
+.bz-in-iframe #bz-help-button,
 .bz-in-iframe #header {
   display: none;
 }
