@@ -1,0 +1,110 @@
+
+/* override some bz_newui stuff for inside the editor */
+#editor .instant-range-feedback .feedback {
+	display: block;
+	padding: 0px 0.25em;
+	border-bottom: solid 2px #ccc;
+}
+#editor .instant-range-feedback .feedback::before {
+	font-style: italic;
+	content: "(For " attr(data-bz-range-flr) "-" attr(data-bz-range-clg) ") ";
+}
+#editor.show-answers .correct:not(.bz-box) {
+	color: #22B573;
+}
+#editor.show-answers .incorrect:not(.bz-box) {
+	color: #EB3B46;
+}
+#editor.show-answers .maybe:not(.bz-box) {
+	color: #B08833;
+}
+#editor tr.conditional-show {
+	display: table-row;
+}
+#editor .conditional-show {
+	display: block;
+}
+/*
+#editor .conditional-show::before {
+	font-family: italic;
+	content: "(Conditional)";
+}
+*/
+
+html, body {
+	margin: 0px;
+	padding: 0px;
+	overflow: hidden;
+}
+body > div {
+	position: fixed;
+	box-sizing: border-box;
+	overflow: auto;
+	border: inset black 2px;
+}
+
+#toolarea {
+	left: 0px;
+	right: 0px;
+	top: 0px;
+	height: 6em;
+}
+
+#view-source,
+#editor {
+	left: 0px;
+	top: 6em;
+	width: 820px;
+	bottom: 2em;
+	/*
+	width: calc(100% - 20em);
+	height: 100vh;
+	*/
+}
+
+#view-source {
+	display: none;
+	padding: 0px;
+	margin: 0px;
+}
+
+#view-source textarea {
+	margin: 0px;
+	width: 100%;
+	height: 100%;
+	box-sizing: border-box;
+	resize: none;
+}
+
+#tree-position {
+	bottom: 0px;
+	height: 2em;
+	left: 0px;
+	right: calc(100% - 820px);
+	line-height: 1.5em;
+	vertical-align: middle;
+	padding: 0em 0.25em;
+}
+
+#sidebar {
+	right: 0em;
+	width: calc(100% - 820px);
+	top: 6em;
+	bottom: 0em;
+	padding: 0.25em;
+}
+
+#sidebar > a {
+	display: block;
+}
+
+#tree-position li {
+	display: inline;
+}
+#tree-position li:first-child::before {
+	content: "";
+}
+#tree-position li::before {
+	content: " > ";
+}
+
