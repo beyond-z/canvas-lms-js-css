@@ -207,6 +207,7 @@ blockquote {
 	border: 0;
 }
 
+.bz-module > div[data-replaced-with-page] > blockquote,
 .bz-module > blockquote {
 	background: bottom center no-repeat #D1AB5C;
 	background-image: url('images/bkg700-03.jpg');
@@ -220,10 +221,12 @@ blockquote {
 	color: #FFF;
 }
 
+.bz-module > div[data-replaced-with-page] > blockquote:nth-of-type(3n+0),
 .bz-module > blockquote:nth-of-type(3n+0) {
 	background-image: url('images/bkg700-02.jpg');
 }
 
+.bz-module > div[data-replaced-with-page] > blockquote:nth-of-type(3n+1),
 .bz-module > blockquote:nth-of-type(3n+1) {
 	background-image: url('images/bkg700-01.jpg');
 }
@@ -261,6 +264,7 @@ blockquote .bz-hashtag {
 	content:"\2014 \00a0";
 }
 
+.bz-module > div[data-replaced-with-page] > p:not(.match-heading-style),
 .bz-module > p:not(.match-heading-style) {
 	margin: 3em 0;
 }
