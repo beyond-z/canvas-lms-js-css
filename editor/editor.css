@@ -24,6 +24,12 @@
 #editor .conditional-show {
 	display: block;
 }
+
+/* canvas automatic grammar check */
+#editor g {
+  text-decoration: none;
+  border-bottom: 1px dotted red;
+}
 /*
 #editor .conditional-show::before {
 	font-family: italic;
@@ -108,3 +114,26 @@ body > div {
 	content: " > ";
 }
 
+
+.no-change {
+	background-color: #aaa;
+}
+
+.inserted {
+	background-color: #88ff88;
+}
+
+.removed {
+	background-color: #ff8888;
+}
+
+.substituted {
+	background-color: white;
+}
+
+.substituted-from {
+	background-color: #ff8888;
+}
+.substituted-to {
+	background-color: #88ff88;
+}

@@ -24,6 +24,10 @@
 		like "keep old version", "keep A", "keep B", or "merge both"
 */
 
+var currentlyLoaded = {
+	id: null
+};
+
 function listMagicFields() {
 	var mf = document.getElementById("sidebar");
 	mf.innerHTML = "";
@@ -36,6 +40,14 @@ function listMagicFields() {
 		mf.appendChild(a);
 	});
 }
+
+// from https://stackoverflow.com/a/2117523/1457000
+function uuidv4() {
+	return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+		(c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+	)
+}
+
 
 function listHeaders() {
 	var mf = document.getElementById("sidebar");
@@ -138,6 +150,17 @@ function getSidebarBox(ele) {
 				ele.classList.remove("instant-feedback");
 		}, ele.classList.contains("instant-feedback")));
 
+		div.appendChild(document.createElement("br"));
+
+		div.appendChild(makeCheckbox("To Columns", function(checked) {
+			if(checked)
+				ele.classList.add("to-columns");
+			else
+				ele.classList.remove("to-columns");
+		}, ele.classList.contains("to-columns")));
+
+
+
 		return div;
 	} else if(ele.tagName == "LI" && (isChecklist(ele.parentNode) || isRadioList(ele.parentNode))) {
 		var div = document.createElement("div");
@@ -159,6 +182,22 @@ function getSidebarBox(ele) {
 			else
 				ele.classList.add("no-zebra");
 		}, !ele.classList.contains("no-zebra")));
+
+		var button = document.createElement("button");
+		button.textContent = "Insert Row";
+		button.onclick = function() {
+
+		};
+		div.appendChild(button);
+
+		var button = document.createElement("button");
+		button.textContent = "Insert Column";
+		button.onclick = function() {
+
+		};
+		div.appendChild(button);
+
+
 		return div;
 
 	}
@@ -226,7 +265,7 @@ function insertChecklistBox(f) {
 	if(!f.querySelector("input[type=checkbpx]")) {
 		var i = document.createElement("input");
 		i.setAttribute("type", "checkbox");
-		i.setAttribute("data-bz-retained", "REPLACE_ME");
+		i.setAttribute("data-bz-retained", uuidv4());
 		f.insertBefore(i, f.firstChild);
 	}
 }
@@ -356,11 +395,66 @@ window.onload = function() {
 		}
 	});
 
+	function selectNode(ele) {
+		var selection = window.getSelection();
+		var range = document.createRange();
+		range.setStart(ele, 0);
+		range.collapse(true);
+		selection.removeAllRanges();
+		selection.addRange(range);
+		console.log("on " + ele);
+	}
+
 	var viewingHtml = true;
 	document.addEventListener("keydown", function(event) {
 		var key = event.keyCode || event.which;
-		if(key == 13 && event.shiftKey) {
-			//event.preventDefault();
+		if(key == 13 && event.ctrlKey) {
+			// move cursor out of current html element
+			// FIXME: if inside a table, insert a new row
+			event.preventDefault();
+
+			var selection = window.getSelection();
+			var b = selection.focusNode;
+			if(b.nodeType == Node.TEXT_NODE)
+				b = b.parentNode;
+			var n = b.nextElementSibling;
+			if(n == null)
+				n = b.parentNode.nextSibling;
+
+			selectNode(n);
+		}
+		if(key == 65 && event.ctrlKey) { // ctrl+a
+			var selection = window.getSelection();
+			// FIXME
+			event.preventDefault();
+		}
+
+		if(key == 66 && event.ctrlKey) { // ctrl+b
+			document.execCommand("bold");
+			event.preventDefault();
+		}
+		if(key == 73 && event.ctrlKey) { // ctrl+i
+			document.execCommand("italic");
+			event.preventDefault();
+		}
+
+		if(key == 46 && event.shiftKey) {
+			// delete key with shift will delete the entire html element
+			// containing the caret, or (eventually the common parent of the entire current
+			// selection
+			event.preventDefault();
+			var selection = window.getSelection();
+			// var a = selection.anchorNode;
+			var b = selection.focusNode;
+			if(b.nodeType == Node.TEXT_NODE)
+				b = b.parentNode;
+			var n = b.nextSibling;
+			if(n == null)
+				n = b.parentNode.nextSibling;
+			// var next = b.nextSibling;
+			b.parentNode.removeChild(b);
+
+			selectNode(n);
 		}
 		if(key == 188 /* , or < */ && event.altKey) {
 			// pop up the html edit in place

@@ -12,7 +12,37 @@
 		{ className: "action", defaultTitle: "Take a real step right now" },
 		{ className: "pulse", defaultTitle: "Pulse Check" },
 	];
+
+	var htmlBefore = "";
+	var htmlAfter = "";
 </script>
+<!--
+	Keyboard controls: FIXME: what about Macs????
+
+	Special ones
+	============
+	`Shift+Delete` 	- delete entire current html tag for current cursor
+	`Esc` 		- switch between rendered and source views
+	`alt+<` 	- open a html insertion window
+	`Enter` 	- new line (context dependent)
+	`Shift+Enter` 	- insert <br> at current location
+	`Ctrl+Enter` 	- Move cursor outside current html tag
+
+	Ones your probably know
+	=======================
+
+	`Ctrl+b` 	- toggle bold on and off
+	`Ctrl+i` 	- toggle italic on and off
+
+	`Ctrl+x` 	- cut
+	`Ctrl+c` 	- copy
+	`Ctrl+v` 	- paste
+
+	// not implemented
+	`Ctrl+a` 	- select all INSIDE the current parent (so NOT all of the whole document!)
+	`Ctrl+s` 	- save
+	`Ctrl+z` 	- undo
+-->
 
 	<link rel="stylesheet" href="bz_newui.css" />
 	<base href="https://stagingportal.bebraven.org/" target="_blank" />
@@ -25,10 +55,46 @@
 </head>
 <body>
 	<div id="toolarea">
-		<div>
-			New
-			Open
-			Save
+		<div style="border-bottom: solid 1px black;">
+			<!-- New -->
+			<button type="button" onclick="
+				var n = prompt('id');
+				EditorApi.load(n).useToReplace('editor');
+				currentlyLoaded.id = n;
+			">Open</button>
+			<button type="button" onclick="
+				EditorApi.save(currentlyLoaded.id, document.getElementById('editor').innerHTML).
+					get();
+			">Save</button>
+
+			<button type="button" onclick="
+				var element = document.createElement('a');
+				element.setAttribute('download', 'module.html');
+				element.setAttribute('href', 'data:text/html;charset=utf-8,' + encodeURIComponent(
+					htmlBefore + document.getElementById('editor').innerHTML + htmlAfter
+				));
+				element.style.display = 'none';
+				document.body.appendChild(element);
+				element.click();
+				document.body.removeChild(element);
+			">Download</button>
+
+			<button type="button" onclick="
+				var element = document.createElement('a');
+				element.setAttribute('target', '_blank');
+				element.setAttribute('href', 'data:text/html;charset=utf-8,' + encodeURIComponent(
+					htmlBefore + document.getElementById('editor').innerHTML + htmlAfter
+				));
+				element.style.display = 'none';
+				document.body.appendChild(element);
+				element.click();
+				document.body.removeChild(element);
+			">Preview</button>
+
+
+
+			Push to Staging
+			Push to Production
 		</div>
 
 		<div style="float: right;">
@@ -50,6 +116,8 @@
 		<br />
 
 		<button type="button" onclick="insertBox();">Insert Box</button>
+
+		<button type="button" onclick="document.execCommand('undo');">Undo</button>
 
 	</div>
 
