@@ -59,11 +59,17 @@
 			<!-- New -->
 			<button type="button" onclick="
 				var n = prompt('id');
-				EditorApi.load(n).useToReplace('editor');
+				EditorApi.load(n).get(function(html) {
+					var e = document.getElementById('editor');
+					e.innerHTML = html;
+					wrapStuffForEditing(e);
+				});
 				currentlyLoaded.id = n;
 			">Open</button>
 			<button type="button" onclick="
-				EditorApi.save(currentlyLoaded.id, document.getElementById('editor').innerHTML).
+				var node = document.getElementById('editor').cloneNode(true);
+				unwrapStuffForEditing(node);
+				EditorApi.save(currentlyLoaded.id, node.innerHTML).
 					get();
 			">Save</button>
 

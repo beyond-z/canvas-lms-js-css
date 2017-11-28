@@ -97,6 +97,9 @@ function getIfPresent(list, options) {
 }
 
 function getSidebarBox(ele) {
+	if(ele.nodeType == Node.TEXT_NODE)
+		return null;
+
 	if(bzBoxType(ele) !== null) {
 		var div = document.createElement("div");
 		var h3 = document.createElement("h3");
@@ -199,8 +202,55 @@ function getSidebarBox(ele) {
 
 
 		return div;
-
 	}
+	
+	if(ele.getAttribute("data-bz-retained")) {
+		var dt = document.createElement("dt");
+		if(ele.classList.contains("bz-optional-magic-field"))
+			dt.textContent = "Optional Magic Field Name"
+		else
+			dt.textContent = "Magic Field Name";
+		dl.appendChild(dt);
+		var dd = document.createElement("dd");
+		dd.textContent = ele.getAttribute("data-bz-retained");
+		dl.appendChild(dd);
+	}
+	
+	if(ele.classList.contains("bz-has-tooltip")) {
+		var dt = document.createElement("dt");
+		dt.textContent = "Tooltip";
+		dl.appendChild(dt);
+		var dd = document.createElement("dd");
+		dd.textContent = ele.getAttribute("title");
+		dl.appendChild(dd);
+	}
+	
+	if(ele.tagName == "A" && ele.href) {
+		var dt = document.createElement("dt");
+		dt.textContent = "Links To";
+		dl.appendChild(dt);
+		var dd = document.createElement("dd");
+		dd.textContent = ele.getAttribute("href");
+		dl.appendChild(dd);
+	}
+	
+	if(ele.tagName == "IMG") {
+		var dt = document.createElement("dt");
+		dt.textContent = "Image Source";
+		dl.appendChild(dt);
+		var dd = document.createElement("dd");
+		dd.textContent = ele.getAttribute("src");
+		dl.appendChild(dd);
+
+		var dt = document.createElement("dt");
+		dt.textContent = "Alt Text";
+		dl.appendChild(dt);
+		var dd = document.createElement("dd");
+		dd.textContent = ele.getAttribute("alt");
+		dl.appendChild(dd);
+	}
+
+
 	return null;
 }
 
@@ -272,6 +322,10 @@ function insertChecklistBox(f) {
 
 function updateSelectionData() {
 	var f = window.getSelection().focusNode;
+	updateSidebar(f);
+}
+
+function updateSidebar(f) {
 	if(f) {
 		var bf = document.getElementById("block-format");
 		bf.selectedIndex = 0;
@@ -320,59 +374,13 @@ window.onload = function() {
 		*/
 		var at = event.target;
 
+		updateSidebar(at);
+
 		var sidebar = document.getElementById("sidebar");
 		//sidebar.innerHTML = "";
 
 		var dl = document.createElement("dl");
 		sidebar.appendChild(dl);
-
-		if(event.target.getAttribute("data-bz-retained")) {
-			var dt = document.createElement("dt");
-			if(event.target.classList.contains("bz-optional-magic-field"))
-				dt.textContent = "Optional Magic Field Name"
-			else
-				dt.textContent = "Magic Field Name";
-			dl.appendChild(dt);
-			var dd = document.createElement("dd");
-			dd.textContent = event.target.getAttribute("data-bz-retained");
-			dl.appendChild(dd);
-		}
-
-		if(event.target.classList.contains("bz-has-tooltip")) {
-			var dt = document.createElement("dt");
-			dt.textContent = "Tooltip";
-			dl.appendChild(dt);
-			var dd = document.createElement("dd");
-			dd.textContent = event.target.getAttribute("title");
-			dl.appendChild(dd);
-		}
-
-		if(event.target.tagName == "A" && event.target.href) {
-			var dt = document.createElement("dt");
-			dt.textContent = "Links To";
-			dl.appendChild(dt);
-			var dd = document.createElement("dd");
-			dd.textContent = event.target.getAttribute("href");
-			dl.appendChild(dd);
-		}
-
-		if(event.target.tagName == "IMG") {
-			var dt = document.createElement("dt");
-			dt.textContent = "Image Source";
-			dl.appendChild(dt);
-			var dd = document.createElement("dd");
-			dd.textContent = event.target.getAttribute("src");
-			dl.appendChild(dd);
-
-			var dt = document.createElement("dt");
-			dt.textContent = "Alt Text";
-			dl.appendChild(dt);
-			var dd = document.createElement("dd");
-			dd.textContent = event.target.getAttribute("alt");
-			dl.appendChild(dd);
-		}
-
-
 
 		var disp = document.getElementById("tree-position");
 		disp.innerHTML = "";
@@ -545,6 +553,8 @@ window.onload = function() {
 			viewingHtml = !viewingHtml;
 		}
 	});
+
+	wrapStuffForEditing(document.getElementById("editor"));
 };
 
 function unwrapStuffForEditing(parent) {
