@@ -1,4 +1,8 @@
 // note that .classList is null on text nodes...
+
+// FIXME: warn on any hidden required fields
+// FIXME: all sliders need to be optional or otherwise validated
+
 /*
 	If it knows you have focused a table, it should offer
 	stuff like insert row, insert column contextually.
@@ -24,6 +28,30 @@
 		like "keep old version", "keep A", "keep B", or "merge both"
 */
 
+// convenience compatibility with dom.d
+HTMLElement.prototype.addChild = function(tag, arg1, arg2) {
+	var t = document.createElement(tag);
+	switch(tag) {
+		case "input":
+			if(arg1)
+				t.setAttribute("type", arg1);
+			if(arg2)
+				t.setAttribute("value", arg2);
+		break;
+		default:
+			if(arg1)
+				t.textContent = arg1;
+			if(arg2)
+				t.className = arg2;
+	}
+	this.appendChild(t);
+	return t;
+};
+
+var currentlyLoaded = {
+	id: null
+};
+
 function listMagicFields() {
 	var mf = document.getElementById("sidebar");
 	mf.innerHTML = "";
@@ -36,6 +64,14 @@ function listMagicFields() {
 		mf.appendChild(a);
 	});
 }
+
+// from https://stackoverflow.com/a/2117523/1457000
+function uuidv4() {
+	return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+		(c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+	)
+}
+
 
 function listHeaders() {
 	var mf = document.getElementById("sidebar");
@@ -85,6 +121,9 @@ function getIfPresent(list, options) {
 }
 
 function getSidebarBox(ele) {
+	if(ele.nodeType == Node.TEXT_NODE)
+		return null;
+
 	if(bzBoxType(ele) !== null) {
 		var div = document.createElement("div");
 		var h3 = document.createElement("h3");
@@ -138,6 +177,17 @@ function getSidebarBox(ele) {
 				ele.classList.remove("instant-feedback");
 		}, ele.classList.contains("instant-feedback")));
 
+		div.appendChild(document.createElement("br"));
+
+		div.appendChild(makeCheckbox("To Columns", function(checked) {
+			if(checked)
+				ele.classList.add("to-columns");
+			else
+				ele.classList.remove("to-columns");
+		}, ele.classList.contains("to-columns")));
+
+
+
 		return div;
 	} else if(ele.tagName == "LI" && (isChecklist(ele.parentNode) || isRadioList(ele.parentNode))) {
 		var div = document.createElement("div");
@@ -159,9 +209,72 @@ function getSidebarBox(ele) {
 			else
 				ele.classList.add("no-zebra");
 		}, !ele.classList.contains("no-zebra")));
-		return div;
 
+		var button = document.createElement("button");
+		button.textContent = "Insert Row";
+		button.onclick = function() {
+
+		};
+		div.appendChild(button);
+
+		var button = document.createElement("button");
+		button.textContent = "Insert Column";
+		button.onclick = function() {
+
+		};
+		div.appendChild(button);
+
+
+		return div;
 	}
+	
+	if(ele.getAttribute("data-bz-retained")) {
+		var dt = document.createElement("dt");
+		if(ele.classList.contains("bz-optional-magic-field"))
+			dt.textContent = "Optional Magic Field Name"
+		else
+			dt.textContent = "Magic Field Name";
+		dl.appendChild(dt);
+		var dd = document.createElement("dd");
+		dd.textContent = ele.getAttribute("data-bz-retained");
+		dl.appendChild(dd);
+	}
+	
+	if(ele.classList.contains("bz-has-tooltip")) {
+		var dt = document.createElement("dt");
+		dt.textContent = "Tooltip";
+		dl.appendChild(dt);
+		var dd = document.createElement("dd");
+		dd.textContent = ele.getAttribute("title");
+		dl.appendChild(dd);
+	}
+	
+	if(ele.tagName == "A" && ele.href) {
+		var dt = document.createElement("dt");
+		dt.textContent = "Links To";
+		dl.appendChild(dt);
+		var dd = document.createElement("dd");
+		dd.textContent = ele.getAttribute("href");
+		dl.appendChild(dd);
+	}
+	
+	if(ele.tagName == "IMG") {
+		var dt = document.createElement("dt");
+		dt.textContent = "Image Source";
+		dl.appendChild(dt);
+		var dd = document.createElement("dd");
+		dd.textContent = ele.getAttribute("src");
+		dl.appendChild(dd);
+
+		var dt = document.createElement("dt");
+		dt.textContent = "Alt Text";
+		dl.appendChild(dt);
+		var dd = document.createElement("dd");
+		dd.textContent = ele.getAttribute("alt");
+		dl.appendChild(dd);
+	}
+
+
 	return null;
 }
 
@@ -214,25 +327,65 @@ function showSidebarFor(ele) {
 		var editorElement = getSidebarBox(current);
 		if(editorElement)
 			sidebar.appendChild(editorElement);
+		else if(current.tagName) {
+			var div = document.createElement("div");
+			var h3 = document.createElement("h3");
+			h3.textContent = "HTML Tag " + current.tagName;
+			div.appendChild(h3);
+			h3.onclick = (function(current) { return function() {
+				current.classList.add("editor-focused");
+				setTimeout(function() {
+					current.classList.remove("editor-focused");
+				}, 3000);
+			} })(current);
+
+			var l = div.addChild("label");
+			l.addChild("span", "ID: ");
+			var i = l.addChild("input", "text", current.getAttribute("id"));
+
+			div.addChild("br");
+
+			var l = div.addChild("label");
+			l.addChild("span", "Classes: ");
+			var i = l.addChild("input", "text", current.getAttribute("class"));
+
+			sidebar.appendChild(div);
+		}
 		current = current.parentNode;
 		if(!current || (current.classList && current.classList.contains("bz-module")))
 			break;
+
+		sidebar.appendChild(document.createElement("hr"));
+	}
+
+	if(ele.querySelectorAll) {
+		var magicFields = ele.querySelectorAll("[data-bz-retained]");
+		for(var i = 0; i < magicFields.length; i++) {
+			var name = magicFields[i].getAttribute("data-bz-retained");
+			var mf = document.createElement("div");
+			mf.textContent = "Contains magic field: " + name;
+			sidebar.appendChild(mf);
+		}
 	}
 
 	showingSidebarFor = ele;
 }
 
 function insertChecklistBox(f) {
-	if(!f.querySelector("input[type=checkbpx]")) {
+	if(!f.querySelector("input[type=checkbox]")) {
 		var i = document.createElement("input");
 		i.setAttribute("type", "checkbox");
-		i.setAttribute("data-bz-retained", "REPLACE_ME");
+		i.setAttribute("data-bz-retained", uuidv4());
 		f.insertBefore(i, f.firstChild);
 	}
 }
 
 function updateSelectionData() {
 	var f = window.getSelection().focusNode;
+	updateSidebar(f);
+}
+
+function updateSidebar(f) {
 	if(f) {
 		var bf = document.getElementById("block-format");
 		bf.selectedIndex = 0;
@@ -281,59 +434,13 @@ window.onload = function() {
 		*/
 		var at = event.target;
 
+		updateSidebar(at);
+
 		var sidebar = document.getElementById("sidebar");
 		//sidebar.innerHTML = "";
 
 		var dl = document.createElement("dl");
 		sidebar.appendChild(dl);
-
-		if(event.target.getAttribute("data-bz-retained")) {
-			var dt = document.createElement("dt");
-			if(event.target.classList.contains("bz-optional-magic-field"))
-				dt.textContent = "Optional Magic Field Name"
-			else
-				dt.textContent = "Magic Field Name";
-			dl.appendChild(dt);
-			var dd = document.createElement("dd");
-			dd.textContent = event.target.getAttribute("data-bz-retained");
-			dl.appendChild(dd);
-		}
-
-		if(event.target.classList.contains("bz-has-tooltip")) {
-			var dt = document.createElement("dt");
-			dt.textContent = "Tooltip";
-			dl.appendChild(dt);
-			var dd = document.createElement("dd");
-			dd.textContent = event.target.getAttribute("title");
-			dl.appendChild(dd);
-		}
-
-		if(event.target.tagName == "A" && event.target.href) {
-			var dt = document.createElement("dt");
-			dt.textContent = "Links To";
-			dl.appendChild(dt);
-			var dd = document.createElement("dd");
-			dd.textContent = event.target.getAttribute("href");
-			dl.appendChild(dd);
-		}
-
-		if(event.target.tagName == "IMG") {
-			var dt = document.createElement("dt");
-			dt.textContent = "Image Source";
-			dl.appendChild(dt);
-			var dd = document.createElement("dd");
-			dd.textContent = event.target.getAttribute("src");
-			dl.appendChild(dd);
-
-			var dt = document.createElement("dt");
-			dt.textContent = "Alt Text";
-			dl.appendChild(dt);
-			var dd = document.createElement("dd");
-			dd.textContent = event.target.getAttribute("alt");
-			dl.appendChild(dd);
-		}
-
-
 
 		var disp = document.getElementById("tree-position");
 		disp.innerHTML = "";
@@ -356,11 +463,66 @@ window.onload = function() {
 		}
 	});
 
+	function selectNode(ele) {
+		var selection = window.getSelection();
+		var range = document.createRange();
+		range.setStart(ele, 0);
+		range.collapse(true);
+		selection.removeAllRanges();
+		selection.addRange(range);
+		console.log("on " + ele);
+	}
+
 	var viewingHtml = true;
 	document.addEventListener("keydown", function(event) {
 		var key = event.keyCode || event.which;
-		if(key == 13 && event.shiftKey) {
-			//event.preventDefault();
+		if(key == 13 && event.ctrlKey) {
+			// move cursor out of current html element
+			// FIXME: if inside a table, insert a new row
+			event.preventDefault();
+
+			var selection = window.getSelection();
+			var b = selection.focusNode;
+			if(b.nodeType == Node.TEXT_NODE)
+				b = b.parentNode;
+			var n = b.nextElementSibling;
+			if(n == null)
+				n = b.parentNode.nextSibling;
+
+			selectNode(n);
+		}
+		if(key == 65 && event.ctrlKey) { // ctrl+a
+			var selection = window.getSelection();
+			// FIXME
+			event.preventDefault();
+		}
+
+		if(key == 66 && event.ctrlKey) { // ctrl+b
+			document.execCommand("bold");
+			event.preventDefault();
+		}
+		if(key == 73 && event.ctrlKey) { // ctrl+i
+			document.execCommand("italic");
+			event.preventDefault();
+		}
+
+		if(key == 46 && event.shiftKey) {
+			// delete key with shift will delete the entire html element
+			// containing the caret, or (eventually the common parent of the entire current
+			// selection
+			event.preventDefault();
+			var selection = window.getSelection();
+			// var a = selection.anchorNode;
+			var b = selection.focusNode;
+			if(b.nodeType == Node.TEXT_NODE)
+				b = b.parentNode;
+			var n = b.nextSibling;
+			if(n == null)
+				n = b.parentNode.nextSibling;
+			// var next = b.nextSibling;
+			b.parentNode.removeChild(b);
+
+			selectNode(n);
 		}
 		if(key == 188 /* , or < */ && event.altKey) {
 			// pop up the html edit in place
@@ -451,6 +613,8 @@ window.onload = function() {
 			viewingHtml = !viewingHtml;
 		}
 	});
+
+	wrapStuffForEditing(document.getElementById("editor"));
 };
 
 function unwrapStuffForEditing(parent) {
