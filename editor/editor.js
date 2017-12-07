@@ -1,4 +1,8 @@
 // note that .classList is null on text nodes...
+
+// FIXME: warn on any hidden required fields
+// FIXME: all sliders need to be optional or otherwise validated
+
 /*
 	If it knows you have focused a table, it should offer
 	stuff like insert row, insert column contextually.
@@ -23,6 +27,26 @@
 	do conflict resolution by showing each thing and being
 		like "keep old version", "keep A", "keep B", or "merge both"
 */
+
+// convenience compatibility with dom.d
+HTMLElement.prototype.addChild = function(tag, arg1, arg2) {
+	var t = document.createElement(tag);
+	switch(tag) {
+		case "input":
+			if(arg1)
+				t.setAttribute("type", arg1);
+			if(arg2)
+				t.setAttribute("value", arg2);
+		break;
+		default:
+			if(arg1)
+				t.textContent = arg1;
+			if(arg2)
+				t.className = arg2;
+	}
+	this.appendChild(t);
+	return t;
+};
 
 var currentlyLoaded = {
 	id: null
@@ -303,16 +327,52 @@ function showSidebarFor(ele) {
 		var editorElement = getSidebarBox(current);
 		if(editorElement)
 			sidebar.appendChild(editorElement);
+		else if(current.tagName) {
+			var div = document.createElement("div");
+			var h3 = document.createElement("h3");
+			h3.textContent = "HTML Tag " + current.tagName;
+			div.appendChild(h3);
+			h3.onclick = (function(current) { return function() {
+				current.classList.add("editor-focused");
+				setTimeout(function() {
+					current.classList.remove("editor-focused");
+				}, 3000);
+			} })(current);
+
+			var l = div.addChild("label");
+			l.addChild("span", "ID: ");
+			var i = l.addChild("input", "text", current.getAttribute("id"));
+
+			div.addChild("br");
+
+			var l = div.addChild("label");
+			l.addChild("span", "Classes: ");
+			var i = l.addChild("input", "text", current.getAttribute("class"));
+
+			sidebar.appendChild(div);
+		}
 		current = current.parentNode;
 		if(!current || (current.classList && current.classList.contains("bz-module")))
 			break;
+
+		sidebar.appendChild(document.createElement("hr"));
+	}
+
+	if(ele.querySelectorAll) {
+		var magicFields = ele.querySelectorAll("[data-bz-retained]");
+		for(var i = 0; i < magicFields.length; i++) {
+			var name = magicFields[i].getAttribute("data-bz-retained");
+			var mf = document.createElement("div");
+			mf.textContent = "Contains magic field: " + name;
+			sidebar.appendChild(mf);
+		}
 	}
 
 	showingSidebarFor = ele;
 }
 
 function insertChecklistBox(f) {
-	if(!f.querySelector("input[type=checkbpx]")) {
+	if(!f.querySelector("input[type=checkbox]")) {
 		var i = document.createElement("input");
 		i.setAttribute("type", "checkbox");
 		i.setAttribute("data-bz-retained", uuidv4());

@@ -137,3 +137,7 @@ body > div {
 .substituted-to {
 	background-color: #88ff88;
 }
+
+.editor-focused {
+	border: solid 3px red;
+}
