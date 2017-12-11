@@ -114,6 +114,11 @@ body > div {
 	content: " > ";
 }
 
+.hidden-no-changes {
+	background-color: #ccc;
+	text-align: center;
+	font-weight: bold;
+}
 
 .no-change {
 	background-color: #aaa;
@@ -140,4 +145,37 @@ body > div {
 
 .editor-focused {
 	border: solid 3px red;
+}
+
+.history-view {
+	display: none;
+}
+.show-history .history-view {
+	display: block;
+}
+
+.three-way-merge {
+	display: table;
+	table-layout: fixed;
+	width: 100%;
+}
+
+.three-way-merge > div {
+	display: table-row;
+}
+
+.three-way-merge > div.ok {
+	background-color: #ddd;
+}
+
+.three-way-merge > div.changed {
+	background-color: white;
+}
+
+.three-way-merge > div.problem {
+	background-color: yellow;
+}
+
+.three-way-merge > div > div {
+	display: table-cell;
 }

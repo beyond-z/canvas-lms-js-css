@@ -677,3 +677,32 @@ function insertBox() {
 	updateSelectionData();
 }
 
+function load(id) {
+	EditorApi.load(id).get(function(data) {
+		var e = document.getElementById('editor');
+		e.innerHTML = data.rendered;
+		wrapStuffForEditing(e);
+		currentlyLoaded.id = data.id;
+		currentlyLoaded.branchPoint = data.basedOn;
+	});
+}
+
+var comparingAnchor = null;
+function setCompare(id) {
+	if(comparingAnchor) {
+		document.getElementById('sidebar').innerHTML = 'Loading comparison...';
+		EditorApi.diff(comparingAnchor, id).useToReplace('sidebar');
+	}
+
+	comparingAnchor = id;
+}
+
+var mergecomparingAnchor = null;
+function setMerge(id) {
+	if(mergecomparingAnchor) {
+		document.getElementById('sidebar').innerHTML = 'Loading merge...';
+		EditorApi.merge(mergecomparingAnchor, id).useToReplace('sidebar');
+	}
+
+	mergecomparingAnchor = id;
+}
