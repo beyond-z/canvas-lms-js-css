@@ -53,6 +53,7 @@ body > div {
 	height: auto;
 	padding: 0.25em;
 	border: none;
+	position: static;
 }
 
 #toolarea {
