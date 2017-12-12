@@ -330,7 +330,7 @@ function showSidebarFor(ele) {
 		else if(current.tagName) {
 			var div = document.createElement("div");
 			var h3 = document.createElement("h3");
-			h3.textContent = "HTML Tag " + current.tagName;
+			h3.textContent = "HTML Tag " + current.tagName + (current.id ? "#"+current.id : "") + (current.className.length? "."+current.className.replace(" ", ".") : "");
 			div.appendChild(h3);
 			h3.onclick = (function(current) { return function() {
 				current.classList.add("editor-focused");

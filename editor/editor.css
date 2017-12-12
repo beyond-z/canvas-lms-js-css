@@ -49,6 +49,10 @@ body > div {
 	border: inset black 2px;
 }
 
+#generic-container {
+	height: 100%;
+}
+
 #toolarea {
 	left: 0px;
 	right: 0px;
@@ -178,4 +182,8 @@ body > div {
 
 .three-way-merge > div > div {
 	display: table-cell;
+}
+
+.empty-magic-field-submission {
+	background-color: yellow;
 }

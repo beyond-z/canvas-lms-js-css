@@ -107,6 +107,19 @@ struct Save {
 }
 
 class EditorApi : ApiProvider {
+	Session session;
+	override void _initializePerCall() {
+		cgi.requireBasicAuth("temporary", "test1234");
+		/*
+		session = new Session(cgi);
+		if(!session.hasKey("user")) {
+			import std.uri;
+			redirect("https://stagingsso.bebraven.org/?service=" ~ encodeComponent("http://editor.bebraven.org.arsdnet.net/"));
+			throw new Exception("not logged in");
+		}
+		*/
+	}
+
 	export:
 	/*
 		load
@@ -264,6 +277,33 @@ class EditorApi : ApiProvider {
 		std.file.write("data/" ~ id.toString() ~ ".dat", header ~ compress(data));
 
 		return id.toString();
+	}
+
+	Element magicFieldAnalysis(string moduleId, int student_id) {
+		auto db = openProductionMagicFieldDatabase();
+
+
+		auto div = Element.make("div");
+
+		auto mod = load(moduleId);
+		auto html = mod.render(this);
+		foreach(magicField; html.querySelectorAll("[data-bz-retained]")) {
+			auto d = div.addChild("div");
+			auto mfn = magicField.dataset.bzRetained;
+			d.addChild("span", mfn);
+			d.addChild("p", magicField.parentNode.innerText);
+
+			bool empty = true;
+			foreach(row; db.query("SELECT value FROM magic_fields WHERE user_id = ? AND name = ?", student_id, mfn)) {
+				empty = false;
+				d.addChild("div", row[0]);
+			}
+
+			if(empty && !magicField.hasClass("bz-optional-magic-field") && magicField.attrs.type != "checkbox")
+				d.addClass("empty-magic-field-submission");
+		}
+
+		return div;
 	}
 
 	/++
@@ -1136,5 +1176,36 @@ MergeResult!(ElementType!R)[] threeWayMerge(R)(R o, R a, R b) {
 	*/
 
 
+import arsd.sqlite;
+Sqlite openProductionMagicFieldDatabase() {
+	return openDBAndCreateIfNotPresent("data/prod-magic-fields.db", `
+		CREATE TABLE magic_fields (
+			name TEXT NOT NULL,
+			value TEXT,
+			path TEXT,
+			user_id INTEGER NOT NULL,
+			created_at TEXT NOT NULL,
+			updated_at TEXT NOT NULL,
+			PRIMARY KEY (user_id, name)
+		);
+
+		CREATE INDEX magic_fields_by_user ON magic_fields(user_id);
+		CREATE INDEX magic_fields_by_name ON magic_fields(name);
+	`, delegate (Sqlite db) {
+		// db created, now time to populate with initial data
+		import std.file, arsd.jsvar;
+		var json = var.fromJson(readText("data/magic_field_dump.json"));
+		int count;
+		foreach(field; json) {
+			count++;
+			if(count % 100 == 0)
+				writeln("created ", count);
+			try
+			db.query("INSERT INTO magic_fields VALUES (?, ?, ?, ?, ?, ?)",
+				field.name.get!string, field.value.get!string, field.path.get!string, field.user_id.get!string, field.created_at.get!string, field.updated_at.get!string);
+			catch(Exception e) writeln(e.msg);
+		}
+	});
+}
 
 mixin FancyMain!EditorApi;
