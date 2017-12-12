@@ -84,6 +84,7 @@
 
 import arsd.web;
 import arsd.jsvar;
+import arsd.http2;
 
 import std.algorithm;
 static import std.file;
@@ -279,7 +280,7 @@ class EditorApi : ApiProvider {
 		return id.toString();
 	}
 
-	Element magicFieldAnalysis(string moduleId, int student_id) {
+	Element magicFieldAnalysis(string moduleId, int student_id = 0) {
 		auto db = openProductionMagicFieldDatabase();
 
 
@@ -288,10 +289,14 @@ class EditorApi : ApiProvider {
 		auto mod = load(moduleId);
 		auto html = mod.render(this);
 		foreach(magicField; html.querySelectorAll("[data-bz-retained]")) {
-			auto d = div.addChild("div");
+			auto d = div.addChild("div").addClass("magic-field-report");
 			auto mfn = magicField.dataset.bzRetained;
 			d.addChild("span", mfn);
-			d.addChild("p", magicField.parentNode.innerText);
+			if(magicField.hasClass("bz-optional-magic-field"))
+				d.addChild("span", " [optional]");
+			d.appendText(" ");
+			d.addChild("span", magicField.tagName == "textarea" ? "textarea" : magicField.attrs.type);
+			d.addChild("p", magicField.parentNode.innerText).addClass("magic-field-context");
 
 			bool empty = true;
 			foreach(row; db.query("SELECT value FROM magic_fields WHERE user_id = ? AND name = ?", student_id, mfn)) {
@@ -299,8 +304,11 @@ class EditorApi : ApiProvider {
 				d.addChild("div", row[0]);
 			}
 
-			if(empty && !magicField.hasClass("bz-optional-magic-field") && magicField.attrs.type != "checkbox")
+			if(empty)
 				d.addClass("empty-magic-field-submission");
+
+			if(empty && !magicField.hasClass("bz-optional-magic-field") && magicField.attrs.type != "checkbox")
+				d.addClass("empty-required-magic-field-submission");
 		}
 
 		return div;
@@ -439,6 +447,9 @@ class EditorApi : ApiProvider {
 		Element rendered;
 		Element render(EditorApi _this) {
 			if(rendered is null) {
+				if(id is null) {
+					return new TextNode(null, null);
+				}
 				if(isHtml) {
 					auto html = std.file.readText("data/" ~ id ~ ".html");
 					auto normalized = normalizeHtml(Element.make("div", Html(html)).requireSelector(".bz-module"));

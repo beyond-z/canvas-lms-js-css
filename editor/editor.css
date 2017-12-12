@@ -50,7 +50,9 @@ body > div {
 }
 
 #generic-container {
-	height: 100%;
+	height: auto;
+	padding: 0.25em;
+	border: none;
 }
 
 #toolarea {
@@ -184,6 +186,19 @@ body > div {
 	display: table-cell;
 }
 
-.empty-magic-field-submission {
+.empty-required-magic-field-submission {
 	background-color: yellow;
+}
+
+.magic-field-report {
+	margin-bottom: 2em;
+}
+
+.magic-field-report p {
+	margin-top: 0px;
+	color: #666;
+}
+
+.magic-field-report div {
+
 }
