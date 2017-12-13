@@ -312,7 +312,7 @@ class EditorApi : ApiProvider {
 						d.addChild("strong", i.dataset.bzRetained);
 						d.addChild("div", i.toString());
 						d.addChild("div","potentially conflicts with");
-						d.addChild("div", names[i.dataset.bzRetained]);
+						d.addChild("div", names[i.dataset.bzRetained].toString());
 						div.addChild("br");
 						div.addChild("br");
 					}
