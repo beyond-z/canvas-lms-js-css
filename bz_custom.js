@@ -329,7 +329,6 @@ var bzNewUiHandlers = {
     });
   },
 
-
 };
 
 function shuffleChildren(element) {
@@ -379,6 +378,10 @@ function triggerBzNewUiHandler(element) {
 
 function bzInitializeNewUi() {
     // FIXME
+
+  // Show an asterisk indicating which questions are counted towards your mastery grade
+  jQuery('.bz-check-answers').parents('.bz-box').find('.box-title').next().addClass('bz-graded-question');
+
 
   // Display current value of a range question:
   jQuery ('[type="range"]').change(function() {

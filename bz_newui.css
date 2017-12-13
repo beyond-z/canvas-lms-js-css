@@ -1117,6 +1117,11 @@ input[type='button']:disabled {
 	min-width: 33%;
 }
 
+.bz-module .bz-graded-question:before {
+  content:"* ";
+  color:red
+}
+
 .user_content table:not([cellpadding]) td, 
 .mceContentBody table:not([cellpadding]) td {
 	padding: 10px;
