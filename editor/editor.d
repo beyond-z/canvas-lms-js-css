@@ -280,6 +280,51 @@ class EditorApi : ApiProvider {
 		return id.toString();
 	}
 
+	int doMagicFieldUpdate() {
+		auto db = openProductionMagicFieldDatabase();
+
+		import std.file, arsd.jsvar;
+		var json = var.fromJson(readText("data/magic_field_dump.json"));
+		int count;
+		foreach(field; json) {
+			try
+			db.query("INSERT INTO magic_fields VALUES (?, ?, ?, ?, ?, ?)",
+				field.name.get!string, field.value.get!string, field.path.get!string, field.user_id.get!string, field.created_at.get!string, field.updated_at.get!string);
+			catch(Exception e)
+			db.query("UPDATE magic_fields SET name = ?, value = ?, path = ?, user_id = ?, created_at = ?, updated_at = ? WHERE name = ? AND user_id = ?",
+				field.name.get!string, field.value.get!string, field.path.get!string, field.user_id.get!string, field.created_at.get!string, field.updated_at.get!string, field.name.get!string, field.user_id.get!string);
+				count++;
+		}
+		return count;
+
+	}
+
+	Element magicFieldCollisions(string moduleId) {
+		import std.file;
+		Element div = Element.make("div");
+		Element[string] names;
+		foreach(name; dirEntries("data/", "*.html", SpanMode.shallow)) {
+			auto document = new Document(readText(name));
+			foreach(i; document.querySelectorAll("[data-bz-retained]")) {
+				if(name == "data/" ~ moduleId ~ ".html") {
+					if(i.dataset.bzRetained in names) {
+						auto d = div.addChild("div");
+						d.addChild("strong", i.dataset.bzRetained);
+						d.addChild("div", i.toString());
+						d.addChild("div","potentially conflicts with");
+						d.addChild("div", names[i.dataset.bzRetained]);
+						div.addChild("br");
+						div.addChild("br");
+					}
+					names[i.dataset.bzRetained] = i;
+
+				} else
+					names[i.dataset.bzRetained] = i;
+			}
+		}
+		return div;
+	}
+
 	Element magicFieldAnalysis(string moduleId, int student_id = 0) {
 		auto db = openProductionMagicFieldDatabase();
 
@@ -299,9 +344,15 @@ class EditorApi : ApiProvider {
 			d.addChild("p", magicField.parentNode.innerText).addClass("magic-field-context");
 
 			bool empty = true;
-			foreach(row; db.query("SELECT value FROM magic_fields WHERE user_id = ? AND name = ?", student_id, mfn)) {
+			foreach(row; db.query("SELECT value, created_at, updated_at FROM magic_fields WHERE user_id = ? AND name = ?", student_id, mfn)) {
 				empty = false;
 				d.addChild("div", row[0]);
+				d.addChild("span", row[1]);
+				if(row[1] != row[2]) {
+					d.appendText(" ");
+					auto span = d.addChild("span", row[2]);
+					span.style.backgroundColor = "yellow";
+				}
 			}
 
 			if(empty)
