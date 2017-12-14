@@ -302,26 +302,37 @@ class EditorApi : ApiProvider {
 	Element magicFieldCollisions(string moduleId) {
 		import std.file;
 		Element div = Element.make("div");
-		Element[string] names;
+		Element[string][string] names;
 		foreach(name; dirEntries("data/", "*.html", SpanMode.shallow)) {
+			Element[string] mod;
 			auto document = new Document(readText(name));
 			foreach(i; document.querySelectorAll("[data-bz-retained]")) {
-				if(name == "data/" ~ moduleId ~ ".html") {
-					if(i.dataset.bzRetained in names) {
-						auto d = div.addChild("div");
-						d.addChild("strong", i.dataset.bzRetained);
-						d.addChild("div", i.toString());
-						d.addChild("div","potentially conflicts with");
-						d.addChild("div", names[i.dataset.bzRetained].toString());
-						div.addChild("br");
-						div.addChild("br");
-					}
-					names[i.dataset.bzRetained] = i;
+					mod[i.dataset.bzRetained] = i;
+			}
 
-				} else
-					names[i.dataset.bzRetained] = i;
+			names[name[5 .. $-5]] = mod;
+		}
+
+
+		outer: foreach(name, element; names[moduleId]) {
+			foreach(nameId, mod; names) {
+				if(nameId == moduleId)
+					continue;
+
+				if(name in mod) {
+					auto d = div.addChild("div");
+					d.addChild("strong", name);
+					d.addChild("div", element.toString());
+					d.addChild("div","potentially conflicts with");
+					d.addChild("div", "module " ~ nameId);
+					div.addChild("br");
+					div.addChild("br");
+					continue outer;
+				}
 			}
 		}
+
+
 		return div;
 	}
 
