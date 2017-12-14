@@ -1,3 +1,7 @@
+// FIXME: insert followed by substitute might be a modified line followed by an insertion
+// that Phobos read the other way. Might be better to use LCS instead of Levenshtein , but
+// for now I want to detect that particular pattern and better portray it to the users.
+
 // i might cache the results later to avoid walking the whole directory to find
 // Distribute changes button merges from one inro multi branches
 // leafs, etc, but for now i want it to work this way so distributed editing is proven
@@ -605,7 +609,8 @@ class EditorApi : ApiProvider {
 			auto suggestion = threeWayMerge(
 				normalizeHtml(commonAncestor.render(this)),
 				normalizeHtml(into.render(this)),
-				normalizeHtml(what.render(this)));
+				normalizeHtml(what.render(this)),
+				&splitWords);
 			auto div = Element.make("div").addClass("three-way-merge");
 			foreach(line; suggestion) {
 				auto l = div.addChild("div").addClass(line.potentialProblem ? "problem" : "ok");
@@ -1109,7 +1114,12 @@ struct MergeResult(T) {
 }
 
 import std.range;
-MergeResult!(ElementType!R)[] threeWayMerge(R)(R o, R a, R b) {
+/++
+	Performs a three-way merge of `a` and `b`, if `o` is their common ancestor.
+	Will run `problemResolutionFunction` on a merge conflict line to attempt
+	a sub-merge to make a better suggestion.
++/
+MergeResult!(ElementType!R)[] threeWayMerge(R)(R o, R a, R b, string[] function(string) problemResolutionFunction = null) {
 	alias ResultType = MergeResult!(ElementType!R);
 	ResultType[] f;
 
@@ -1197,6 +1207,7 @@ MergeResult!(ElementType!R)[] threeWayMerge(R)(R o, R a, R b) {
 				if(old == b[b_pos]) {
 					// if it was in the old, but not ours, it was deliberately
 					// deleted by the one branch. We should leave it out.
+					f ~= ResultType(null, old, null, b[b_pos], false);
 				} else {
 					// otherwise, it was added legitimately and we should keep it
 					// (though flag it for review and confirmation by the user)
@@ -1217,7 +1228,23 @@ MergeResult!(ElementType!R)[] threeWayMerge(R)(R o, R a, R b) {
 					f ~= ResultType(new_by_a, old_by_a, new_by_a, new_by_b, false);
 				} else {
 					// traditional merge conflict
-					f ~= ResultType(null, old_by_a, new_by_a, new_by_b, true);
+					string suggestion = null;
+					bool problem = true;
+					if(problemResolutionFunction !is null && old_by_a == old_by_b) {
+						auto na = problemResolutionFunction(new_by_a);
+						auto nb = problemResolutionFunction(new_by_b);
+						auto no = problemResolutionFunction(old_by_a);
+						auto merged = threeWayMerge(no, na, nb, null);
+						bool anyProblem = false;
+						foreach(word; merged) {
+							suggestion ~= word.suggestion;
+							anyProblem = anyProblem || word.potentialProblem;
+						};
+						problem = anyProblem;
+					}
+
+
+					f ~= ResultType(suggestion, old_by_a, new_by_a, new_by_b, problem);
 				}
 
 				a_pos++;
@@ -1228,6 +1255,7 @@ MergeResult!(ElementType!R)[] threeWayMerge(R)(R o, R a, R b) {
 				if(old == a[a_pos]) {
 					// it was in the old, removed from the second branch
 					// also keep it removed
+					f ~= ResultType(null, old, a[a_pos], null, false);
 				} else {
 					// this must have been added by the other branch, let's keep it
 					f ~= ResultType(a[a_pos], old, a[a_pos], null, false);
