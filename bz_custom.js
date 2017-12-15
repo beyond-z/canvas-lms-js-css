@@ -1060,6 +1060,22 @@ runOnUserContent(function(){
   }
 
   jQuery('.bz-toggle-all-next').click(function(e){
+    var parentBox = this;
+    while(parentBox && !parentBox.classList.contains("bz-box"))
+    	parentBox = parentBox.parentNode;
+    // make sure instant feedback is actually showing before we next on those.
+    // want to ensure the users actually interact somehow
+    if(parentBox.querySelector(".instant-feedback") && !parentBox.querySelector(".show-answers")) {
+    	if(!parentBox.classList.contains("clicked-at-least-once")) {
+          alert("Please interact with the module before you advance.");
+	  // if you double click the next button, it goes easy on you and lets you advance
+	  // the idea here is just to ensure they try, but not really *lock* them because there
+	  // might be some other bug (currently, instant-feedback will only do anything with show-answers
+	  // but I worry we might get that wrong with changes) and it isn't essential for them to actually do it.
+	  parentBox.classList.add("clicked-at-least-once");
+          return;
+        }
+    }
     unhideNext(this);
 
     triggerBzNewUiHandler(this);
