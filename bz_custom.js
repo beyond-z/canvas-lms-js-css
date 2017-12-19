@@ -329,7 +329,6 @@ var bzNewUiHandlers = {
     });
   },
 
-
 };
 
 function shuffleChildren(element) {
@@ -379,6 +378,10 @@ function triggerBzNewUiHandler(element) {
 
 function bzInitializeNewUi() {
     // FIXME
+
+  // Show an asterisk indicating which questions are counted towards your mastery grade
+  jQuery('.bz-check-answers').parents('.bz-box').find('.box-title').next().addClass('bz-graded-question');
+
 
   // Display current value of a range question:
   jQuery ('[type="range"]').change(function() {
@@ -447,6 +450,27 @@ runOnUserContent(function() {
 
   // Referenced sources numbering:
   /* TBD */
+
+  function collectStuffUntilNextH2(startElement) {
+    var all = document.getElementsByTagName("*"); // ask the browser to flatten the tree
+    var start = 0;
+    var end = all.length;
+    // cut everything before the start
+    for(var i = 0; i < all.length; i++)
+      if(all[i] == startElement) {
+        start = i + 1; // exclude the starting element
+        break;
+      }
+    // cut everything after the end
+    for(var i = start; i < all.length; i++)
+      if(all[i].tagName == "H2") {
+        end = i; // no need to include the ending element
+        break;
+      }
+
+    return Array.prototype.slice.call(all, start, end);
+  }
+
   
   // Automatically generate a table of contents (TOC) for the top level out of h2 elements, 
   // and a h2-level TOC out of its nested h3 elements
@@ -464,10 +488,10 @@ runOnUserContent(function() {
       if ( jQuery(this).is('#wrap-up') ) {
         isWrapUp = true;
       }
-      var nextLevelDown = jQuery(this).nextUntil('h2');
-      nextLevelDown.each(function(){
-        var current = jQuery(this);
-        if (current.is('h3')) {
+      var nextLevelDown = collectStuffUntilNextH2(this);
+      nextLevelDown.forEach(function(c){
+        var current = jQuery(c);
+        if (current.is('h3') && !current.hasClass('box-title')) {
           innerHasKids = true;
           innerToc += '<li>' + current.text() + '</li>';
         }
@@ -1057,6 +1081,22 @@ runOnUserContent(function(){
   }
 
   jQuery('.bz-toggle-all-next').click(function(e){
+    var parentBox = this;
+    while(parentBox && !parentBox.classList.contains("bz-box"))
+    	parentBox = parentBox.parentNode;
+    // make sure instant feedback is actually showing before we next on those.
+    // want to ensure the users actually interact somehow
+    if(parentBox.querySelector(".instant-feedback") && !parentBox.querySelector(".show-answers")) {
+    	if(!parentBox.classList.contains("clicked-at-least-once")) {
+          alert("Please interact with the module before you advance.");
+	  // if you double click the next button, it goes easy on you and lets you advance
+	  // the idea here is just to ensure they try, but not really *lock* them because there
+	  // might be some other bug (currently, instant-feedback will only do anything with show-answers
+	  // but I worry we might get that wrong with changes) and it isn't essential for them to actually do it.
+	  parentBox.classList.add("clicked-at-least-once");
+          return;
+        }
+    }
     unhideNext(this);
 
     triggerBzNewUiHandler(this);
