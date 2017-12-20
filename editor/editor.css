@@ -203,3 +203,135 @@ body > div {
 .magic-field-report div {
 
 }
+
+
+
+
+
+
+/* FIXME move these to bz_newui.css */
+
+#compare-and-rank {
+	display: table;
+	table-layout: fixed;
+	width: 100%;
+}
+
+#compare-and-rank section {
+	display: table-row;
+}
+
+#compare-and-rank .selection-column {
+	display: table-cell;
+	text-align: center;
+}
+
+#compare-and-rank .small {
+	color: #333;
+	display: inline-block;
+	font-family: "Glyphicons Halflings";
+	font-weight: normal;
+	line-height: 1;
+	font-size: 8em;
+	box-sizing: border-box;
+	cursor: pointer;
+}
+#compare-and-rank .small::before {
+	content: "\e022";
+}
+
+#compare-and-rank .view-button {
+	cursor: pointer;
+	margin: 0.5em 0 0.8em 0;
+	color: white;
+	background-color: #5bc0de;
+	border: solid 1px #46b8da;
+	display: inline-block;
+	font-weight: normal;
+	text-align: center;
+	vertical-align: middle;
+	white-space: nowrap;
+	padding: 6px 12px;
+	line-height: 1.4;
+	border-radius: 4px;
+	box-sizing: border-box;
+}
+
+.text-center {
+	text-align: center;
+}
+
+.text-right {
+	text-align: right;
+}
+
+.resume-left {
+	float: left;
+	clear: both;
+}
+
+.resume-right {
+	float: right;
+	text-align: right;
+}
+
+.resume-right + * {
+	clear: both;
+	margin-bottom: 1.5em;
+	display: block;
+}
+
+#resume-comparison-section .html-document,
+#resume-comparison-section .partial-html-document {
+	font-size: 13px;
+}
+
+.context-notes {
+	padding: 3px;
+	position: relative;
+}
+
+.context-notes::before {
+      content: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4QMXEDoHPEmf2wAAASBJREFUOMulkyFOxGAQhb92qwYMghAEAoLFAOEAFPScYAW/4ADsrkZhSDccADIQblBLYC9AQHEAdgkGsfJ3BAR/SdO0TQPPvvdmJjPzIgJc7jEVXO5XgCFwCGwEegZMgMxUZoUWIKqYM2BAOy5N5bjwRCXzXejaBY+msudy/zvBOTCqEW4Bc+AFWKpw16biIpf7ZeCjxvxsKjuhwS3Qr9FsJsBJw5jbLvejULzfoBkmwH4D+QWchkV/Ar0aTRoD6w0F3k1l0VQWgIcGzVrcsukyl7SJXvk73uKW8bpgEgPZPwqM2x5pHs7XA87CU5VxYypH5Ve+B9KOnZ9MZdflnjiYMZUD4KKD+aowm8pPFiqJXA1xTkOcI2Aa4jw2lWk5zt+5FmkPTn8zDgAAAABJRU5ErkJggg==");
+      padding: 1px;
+      margin-right: 3px;
+}
+
+.context-notes:hover {
+	background-color: #eee;
+}
+
+.context-notes::after {
+	content: attr(data-content);
+	position: absolute;
+	bottom: 2em;
+	left: 0px;
+	border: solid 1px #ccc;
+	border-radius: 4px;
+	padding: 0.5em;
+	box-shadow: 0px 0px 2px #999;
+	background-color: white;
+	width: 0px;
+
+	opacity: 0;
+	transition: opacity 0.25s, width 1.5s;
+	overflow: hidden;
+}
+
+.context-notes:hover::after {
+	opacity: 1;
+	width: 25em;
+	transition: opacity 0.5s;
+}
+
+.html-document {
+	border: solid 1px #000;
+}
+
+.partial-html-document {
+	border-left: solid 1px #000;
+	border-right: solid 1px #000;
+	border-top: dashed 1px #ccc;
+	border-bottom: dashed 1px #ccc;
+}
+

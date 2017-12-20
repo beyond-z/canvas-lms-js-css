@@ -69,6 +69,8 @@
 					get(function(id) {
 						currentlyLoaded.branchPoint = currentlyLoaded.id;
 						currentlyLoaded.id = id;
+
+						history.pushState(null, null, EditorApi._apiBase + 'edit?id=' + id);
 					});
 			">Save</button>
 			<button type="button" onclick="
@@ -133,7 +135,6 @@
 		<button type="button" onclick="insertBox();">Insert Box</button>
 
 		<button type="button" onclick="document.execCommand('undo');">Undo</button>
-
 	</div>
 
 	<div id="sidebar"></div>

@@ -112,20 +112,42 @@ struct Save {
 }
 
 class EditorApi : ApiProvider {
-	Session session;
+	private Session session;
+	private string ssoService = "http://editor.bebraven.org.arsdnet.net/sso";
 	override void _initializePerCall() {
 		cgi.requireBasicAuth("temporary", "test1234");
-		/*
 		session = new Session(cgi);
 		if(!session.hasKey("user")) {
-			import std.uri;
-			redirect("https://stagingsso.bebraven.org/?service=" ~ encodeComponent("http://editor.bebraven.org.arsdnet.net/"));
-			throw new Exception("not logged in");
+			if(cgi.pathInfo != "/sso") {
+				import std.uri;
+				redirect("https://stagingsso.bebraven.org/login?service=" ~ encodeComponent(ssoService));
+				throw new Exception("not logged in");
+			}
 		}
-		*/
 	}
 
 	export:
+
+	string sso(string ticket) {
+		import std.uri;
+		auto client = new HttpClient();
+		auto request = client.navigateTo(arsd.http2.Uri("https://stagingsso.bebraven.org/serviceValidate?ticket="~encodeComponent(ticket)~"&service=" ~ encodeComponent(ssoService)));
+		auto response = request.waitForCompletion();
+		if(response.code == 200) {
+			auto xml = new XmlDocument(response.contentText);
+			auto user = xml.optionSelector(`cas\:authenticationSuccess > cas\:user`).innerText;
+			if(user.length && user.indexOf("@bebraven.org") != -1) {
+				session["user"] = user;
+				session.commit();
+
+				return user;
+			} else
+				throw new Exception(xml.toString);
+		}
+
+		return null;
+	}
+
 	/*
 		load
 		save
@@ -789,7 +811,7 @@ class EditorApi : ApiProvider {
 			auto div = Element.make("div");
 			auto dl = div.addChild("dl");
 			foreach(root; roots) {
-				auto dt = dl.addChild("dt", titles[root]);
+				auto dt = dl.addChild("dt", root in titles ? titles[root] : "no title");
 				foreach(id, leafRoot; leafs)
 					if(root == leafRoot) {
 						auto data = allRevisions[id];
