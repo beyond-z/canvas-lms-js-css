@@ -30,6 +30,7 @@ function runOnUserContent(func) {
     func();
   }
   // and schedule to handle future changes
+  if($.subscribe)
   $.subscribe("userContent/change", function() {
     console.log('running user content on event');
     func();

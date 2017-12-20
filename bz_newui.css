@@ -2223,7 +2223,7 @@ table [type="range"] {
 	background-color: rgba(0, 0, 0, 0.8);
 }
 
-.model .modal-content {
+.modal .modal-content {
 	background-color: white;
 	position: fixed;
 	left: 10%;
@@ -2232,6 +2232,10 @@ table [type="range"] {
 	bottom: 10%;
 	overflow: auto;
 	padding: 1em;
+}
+
+.modal .modal-body {
+	margin: 0.5em;
 }
 
 /* } end resume module stuff */

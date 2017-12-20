@@ -115,11 +115,12 @@ class EditorApi : ApiProvider {
 	private Session session;
 	private string ssoService = "http://editor.bebraven.org.arsdnet.net/sso";
 	override void _initializePerCall() {
-		cgi.requireBasicAuth("temporary", "test1234");
 		session = new Session(cgi);
 		if(!session.hasKey("user")) {
 			if(cgi.pathInfo != "/sso") {
 				import std.uri;
+				session.comingFrom = cgi.getCurrentCompleteUri();
+				session.commit();
 				redirect("https://stagingsso.bebraven.org/login?service=" ~ encodeComponent(ssoService));
 				throw new Exception("not logged in");
 			}
@@ -140,12 +141,21 @@ class EditorApi : ApiProvider {
 				session["user"] = user;
 				session.commit();
 
+				redirect(session.comingFrom);
+
 				return user;
 			} else
 				throw new Exception(xml.toString);
 		}
 
 		return null;
+	}
+
+	Document view(string id) {
+		import std.file;
+		auto document = new Document(readText("module.html"), true, true);
+		document.requireSelector("#module-container").appendChild(load(id).render(this).removeFromTree);
+		return document;
 	}
 
 	/*
@@ -946,6 +956,8 @@ class EditorApi : ApiProvider {
 		import std.file;
 		if(path == "bz_newui.css")
 			return new DataFile("text/css", readText("../bz_newui.css"));
+		if(path == "bz_custom.js")
+			return new DataFile("text/javascript", readText("../bz_custom.js"));
 		else if(path.startsWith("images/"))
 			return new DataFile(extensionToMime(path), cast(immutable) std.file.read("../" ~ path));
 		return super._catchAll(path);
@@ -964,8 +976,10 @@ class EditorApi : ApiProvider {
 				.setAttribute("id", "webd-functions-js")
 				.src = loc ~ "functions.js?" ~ compiliationStamp;
 			document.mainBody.addChild("script", "EditorApi._apiBase = " ~ toJson(loc) ~ ";");
-			document.requireElementById("embedded-css").innerRawSource = std.file.readText("editor.css");
-			document.requireElementById("embedded-js").innerRawSource = std.file.readText("editor.js");
+			if(auto css = document.getElementById("embedded-css"))
+				css.innerRawSource = std.file.readText("editor.css");
+			if(auto js = document.getElementById("embedded-js"))
+				js.innerRawSource = std.file.readText("editor.js");
 		}
 	}
 }
