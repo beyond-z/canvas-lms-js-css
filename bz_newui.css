@@ -2226,7 +2226,7 @@ table [type="range"] {
 	z-index: 1000;
 }
 
-.model .modal-content {
+.modal .modal-content {
 	background-color: white;
 	position: fixed;
 	left: 10%;
