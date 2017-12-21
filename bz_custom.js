@@ -1359,3 +1359,32 @@ for (var key in ENV) {
   console.log('ENV["' + key + '"] = ' + ENV[key]);
 }
 */
+
+/*
+	For resume module thing - a modal popup thing by attribute
+*/
+(function() {
+
+var activeModal = null;
+
+document.body.addEventListener("click", function(event) {
+	var ele = event.target;
+	if(ele.getAttribute("data-toggle") == "modal" && ele.hasAttribute("data-target")) {
+		if(activeModal) {
+			activeModal.style.display = "none";
+			activeModal = null;
+		}
+
+		var thing = document.querySelector(ele.getAttribute("data-target"));
+		if(thing) {
+			thing.style.display = "";
+			activeModal = thing;
+		}
+	} else if(ele.classList.contains("modal")) {
+		if(activeModal) {
+			activeModal.style.display = "none";
+			activeModal = null;
+		}
+	}
+});
+})();
