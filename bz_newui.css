@@ -2189,16 +2189,18 @@ table [type="range"] {
 	padding: 0.5em;
 	box-shadow: 0px 0px 2px #999;
 	background-color: white;
-	width: 0px;
+	width: 1px;
+	max-height: 1px;
 
 	opacity: 0;
-	transition: opacity 0.25s, width 1.5s;
+	transition: opacity 0.25s, width 1.5s, max-height .25s;
 	overflow: hidden;
 }
 
 .context-notes:hover::after {
 	opacity: 1;
 	width: 25em;
+	max-height: 25em;
 	transition: opacity 0.5s;
 }
 
@@ -2221,6 +2223,7 @@ table [type="range"] {
 	bottom: 0px;
 	background-color: black;
 	background-color: rgba(0, 0, 0, 0.8);
+	z-index: 1000;
 }
 
 .modal .modal-content {
