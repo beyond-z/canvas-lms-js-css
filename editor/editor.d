@@ -137,7 +137,7 @@ class EditorApi : ApiProvider {
 		if(response.code == 200) {
 			auto xml = new XmlDocument(response.contentText);
 			auto user = xml.optionSelector(`cas\:authenticationSuccess > cas\:user`).innerText;
-			if(user.length && user.indexOf("@bebraven.org") != -1) {
+			if(user.length && (user == "admin@bebraven.org" || user.indexOf("@bebraven.org") != -1)) {
 				session["user"] = user;
 				session.commit();
 
