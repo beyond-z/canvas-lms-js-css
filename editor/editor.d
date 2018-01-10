@@ -1311,7 +1311,18 @@ MergeResult!(ElementType!R)[] threeWayMerge(R)(R o, R a, R b, string[] function(
 		  -moz-transform-origin: 0 0;
 		}
 	*/
+struct CanvasCredentials {
+	string apiToken;
+	string apiSecret;
+	string apiBaseUrl;
+}
 
+CanvasCredentials stagingCredentials() {
+	return var.fromJson("data/staging_canvas_creds.json").get!CanvasCredentials;
+}
+CanvasCredentials productionCredentials() {
+	return var.fromJson("data/production_canvas_creds.json").get!CanvasCredentials;
+}
 
 import arsd.sqlite;
 Sqlite openProductionMagicFieldDatabase() {
