@@ -1278,6 +1278,7 @@ runOnUserContent(function() {
   sortToMatchSetup();
 
   function sortToMatchCheck(sortToMatchTable) {
+    var magicFieldSequence = "";
     var rows = sortToMatchTable.querySelectorAll("tr");
     for(var row = 0; row < rows.length; row++) {
       var tr = rows[row];
@@ -1288,6 +1289,11 @@ runOnUserContent(function() {
         // since I set the ID to be the same above with the wrapper
         // except draggable vs droppable, a simple string replace will
         // tell us if they are back where they are supposed to be!
+
+	// for the magic field, we want them all to be alphabet so it is single char A-Z that we string together
+	var magicFieldName = String.fromCharCode(65 + Number(d.parentNode.id.replace("draggable-", "")));
+	magicFieldSequence += magicFieldName;
+
         var thisOneCorrect = (d.parentNode.id == d.id.replace("draggable", "droppable"));
 
         if(!thisOneCorrect) {
@@ -1298,6 +1304,13 @@ runOnUserContent(function() {
 
       if(all.length)
         tr.className = allCorrect ? "correct" : "incorrect";
+    }
+
+    var magicField = sortToMatchTable.querySelector("[data-bz-retained]");
+    if(magicField) {
+        magicField.value = magicFieldSequence;
+        if(magicField.onchange)
+            magicField.onchange();
     }
   }
 });
