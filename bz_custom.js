@@ -1197,7 +1197,7 @@ runOnUserContent(function() {
         var parentTable = this;
         while(parentTable.tagName != "TABLE")
           parentTable = parentTable.parentNode;
-        sortToMatchCheck(parentTable); // instant feedback update
+        sortToMatchCheck(parentTable, true); // instant feedback update
       });
     }
 
@@ -1271,13 +1271,13 @@ runOnUserContent(function() {
         }
       }
 
-      sortToMatchCheck(table); // do show feedback for initial, untouched table...
+      sortToMatchCheck(table, false); // do show feedback for initial, untouched table...
     }
   }
 
   sortToMatchSetup();
 
-  function sortToMatchCheck(sortToMatchTable) {
+  function sortToMatchCheck(sortToMatchTable, updateMagicField) {
     var magicFieldSequence = "";
     var rows = sortToMatchTable.querySelectorAll("tr");
     for(var row = 0; row < rows.length; row++) {
@@ -1291,14 +1291,13 @@ runOnUserContent(function() {
         // tell us if they are back where they are supposed to be!
 
 	// for the magic field, we want them all to be alphabet so it is single char A-Z that we string together
-	var magicFieldName = String.fromCharCode(65 + Number(d.parentNode.id.replace("draggable-", "")));
+	var magicFieldName = String.fromCharCode(65 + Number(d.id.replace("draggable-", "")));
 	magicFieldSequence += magicFieldName;
 
         var thisOneCorrect = (d.parentNode.id == d.id.replace("draggable", "droppable"));
 
         if(!thisOneCorrect) {
           allCorrect = false;
-          break;
         }
       }
 
@@ -1306,11 +1305,13 @@ runOnUserContent(function() {
         tr.className = allCorrect ? "correct" : "incorrect";
     }
 
-    var magicField = sortToMatchTable.querySelector("[data-bz-retained]");
-    if(magicField) {
-        magicField.value = magicFieldSequence;
-        if(magicField.onchange)
-            magicField.onchange();
+    if(updateMagicField) {
+        var magicField = sortToMatchTable.querySelector("[data-bz-retained]");
+        if(magicField) {
+            magicField.value = magicFieldSequence;
+            var e = new Event('change');
+	    magicField.dispatchEvent(e);
+        }
     }
   }
 });
