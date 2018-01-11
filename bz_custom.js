@@ -1197,7 +1197,7 @@ runOnUserContent(function() {
         var parentTable = this;
         while(parentTable.tagName != "TABLE")
           parentTable = parentTable.parentNode;
-        sortToMatchCheck(parentTable); // instant feedback update
+        sortToMatchCheck(parentTable, true); // instant feedback update
       });
     }
 
@@ -1271,13 +1271,14 @@ runOnUserContent(function() {
         }
       }
 
-      sortToMatchCheck(table); // do show feedback for initial, untouched table...
+      sortToMatchCheck(table, false); // do show feedback for initial, untouched table...
     }
   }
 
   sortToMatchSetup();
 
-  function sortToMatchCheck(sortToMatchTable) {
+  function sortToMatchCheck(sortToMatchTable, updateMagicField) {
+    var magicFieldSequence = "";
     var rows = sortToMatchTable.querySelectorAll("tr");
     for(var row = 0; row < rows.length; row++) {
       var tr = rows[row];
@@ -1288,16 +1289,29 @@ runOnUserContent(function() {
         // since I set the ID to be the same above with the wrapper
         // except draggable vs droppable, a simple string replace will
         // tell us if they are back where they are supposed to be!
+
+	// for the magic field, we want them all to be alphabet so it is single char A-Z that we string together
+	var magicFieldName = String.fromCharCode(65 + Number(d.id.replace("draggable-", "")));
+	magicFieldSequence += magicFieldName;
+
         var thisOneCorrect = (d.parentNode.id == d.id.replace("draggable", "droppable"));
 
         if(!thisOneCorrect) {
           allCorrect = false;
-          break;
         }
       }
 
       if(all.length)
         tr.className = allCorrect ? "correct" : "incorrect";
+    }
+
+    if(updateMagicField) {
+        var magicField = sortToMatchTable.querySelector("[data-bz-retained]");
+        if(magicField) {
+            magicField.value = magicFieldSequence;
+            var e = new Event('change');
+	    magicField.dispatchEvent(e);
+        }
     }
   }
 });
