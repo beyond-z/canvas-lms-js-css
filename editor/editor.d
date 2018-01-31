@@ -2,6 +2,19 @@
 // that Phobos read the other way. Might be better to use LCS instead of Levenshtein , but
 // for now I want to detect that particular pattern and better portray it to the users.
 
+/*
+
+	Files:
+		branches.json:
+			{
+				// there is also a 1.html.la
+				"1.html" : {
+					"branch_name" : "latest_commit",
+					"production" : "latest on prod"
+				}
+			}
+*/
+
 // i might cache the results later to avoid walking the whole directory to find
 // Distribute changes button merges from one inro multi branches
 // leafs, etc, but for now i want it to work this way so distributed editing is proven
@@ -137,7 +150,7 @@ class EditorApi : ApiProvider {
 		if(response.code == 200) {
 			auto xml = new XmlDocument(response.contentText);
 			auto user = xml.optionSelector(`cas\:authenticationSuccess > cas\:user`).innerText;
-			if(user.length && (user == "admin@bebraven.org" || user.indexOf("@bebraven.org") != -1)) {
+			if(user.length && (user == "admin@beyondz.org" || user.indexOf("@bebraven.org") != -1)) {
 				session["user"] = user;
 				session.commit();
 
@@ -960,6 +973,8 @@ class EditorApi : ApiProvider {
 			return new DataFile("text/javascript", readText("../bz_custom.js"));
 		else if(path.startsWith("images/"))
 			return new DataFile(extensionToMime(path), cast(immutable) std.file.read("../" ~ path));
+		else if(path.startsWith("icons/"))
+			return new DataFile(extensionToMime(path), cast(immutable) std.file.read(path));
 		return super._catchAll(path);
 	}
 
@@ -971,6 +986,9 @@ class EditorApi : ApiProvider {
 				if(slash != -1)
 					loc = loc[0 .. 9 + slash + 1]; // trim off any extra path to get a root url
 			}
+
+			foreach(img; document.querySelectorAll("[src^=\"HERE/\"]"))
+				img.src = loc ~ img.src[5 .. $];
 
 			document.mainBody.addChild("script")
 				.setAttribute("id", "webd-functions-js")

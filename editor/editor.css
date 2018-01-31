@@ -204,5 +204,24 @@ body > div {
 
 }
 
+#sidebar label > span {
+	display: block;
+	font-weight: bold;
+}
 
+#sidebar label > input[type=text],
+#sidebar label > select,
+#sidebar label > textarea {
+	width: 80%;
+}
 
+#selection-buttons button {
+	padding: 0px;
+	width: 30px;
+	height: 30px;
+	overflow: hidden;
+}
+
+#editor iframe {
+	pointer-events: none;
+}

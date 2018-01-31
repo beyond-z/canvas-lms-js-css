@@ -1,5 +1,28 @@
 // note that .classList is null on text nodes...
 
+var selectionButtons = [
+	"bold",
+	"italic",
+	"underline",
+	"dottedlist",
+	"numberedlist",
+	"quote",
+	"clean",
+	"format",
+	"hyperlink",
+	"justifyleft",
+	"justifycenter",
+	"justifyright",
+	"copy",
+	"cut",
+	"paste",
+	"indent",
+	"outdent",
+	"print",
+	"undo",
+	"redo",
+];
+
 // FIXME: warn on any hidden required fields
 // FIXME: all sliders need to be optional or otherwise validated
 
@@ -227,6 +250,34 @@ function getSidebarBox(ele) {
 
 		return div;
 	}
+
+	var div = document.createElement("div");
+
+
+	var h3 = document.createElement("h3");
+	h3.textContent = "Tag: " + ele.tagName; // + (ele.id ? "#"+ele.id : "") + (ele.className.length? "."+ele.className.replace(" ", ".") : "");
+	div.appendChild(h3);
+	h3.style.cursor = "pointer";
+	h3.onclick = (function(ele) { return function() {
+		ele.classList.add("editor-focused");
+		setTimeout(function() {
+			ele.classList.remove("editor-focused");
+		}, 3000);
+	} })(ele);
+
+	var l = div.addChild("label");
+	l.addChild("span", "ID: ");
+	var i = l.addChild("input", "text", ele.getAttribute("id"));
+
+	div.addChild("br");
+
+	var l = div.addChild("label");
+	l.addChild("span", "Classes: ");
+	var i = l.addChild("input", "text", ele.getAttribute("class"));
+
+
+	var dl = document.createElement("dl");
+	div.appendChild(dl);
 	
 	if(ele.getAttribute("data-bz-retained")) {
 		var dt = document.createElement("dt");
@@ -275,7 +326,7 @@ function getSidebarBox(ele) {
 	}
 
 
-	return null;
+	return div; // null if we don't want a box for this element
 }
 
 function makeSelect(label, onchange, options, current) {
@@ -295,7 +346,10 @@ function makeSelect(label, onchange, options, current) {
 	select.onchange = function() {
 		onchange(options[select.selectedIndex]);
 	};
-	labelElement.appendChild(document.createTextNode(label + " "));
+	var span = document.createElement("span");
+	span.textContent = label;
+	labelElement.appendChild(span);
+	labelElement.appendChild(document.createTextNode(" "));
 	labelElement.appendChild(select);
 	return labelElement;
 
@@ -324,33 +378,19 @@ function showSidebarFor(ele) {
 
 	var current = ele;
 	while(current) {
-		var editorElement = getSidebarBox(current);
+		var inspecting = current;
+		if(current.classList && current.classList.contains("hacky-wrapper")) {
+			if(current.classList.contains("wraps-iframe")) {
+				inspecting = current.querySelector("iframe");
+			} else {
+				current = current.parentNode;
+				continue;
+			}
+		}
+		var editorElement = getSidebarBox(inspecting);
 		if(editorElement)
 			sidebar.appendChild(editorElement);
-		else if(current.tagName) {
-			var div = document.createElement("div");
-			var h3 = document.createElement("h3");
-			h3.textContent = "HTML Tag " + current.tagName + (current.id ? "#"+current.id : "") + (current.className.length? "."+current.className.replace(" ", ".") : "");
-			div.appendChild(h3);
-			h3.onclick = (function(current) { return function() {
-				current.classList.add("editor-focused");
-				setTimeout(function() {
-					current.classList.remove("editor-focused");
-				}, 3000);
-			} })(current);
 
-			var l = div.addChild("label");
-			l.addChild("span", "ID: ");
-			var i = l.addChild("input", "text", current.getAttribute("id"));
-
-			div.addChild("br");
-
-			var l = div.addChild("label");
-			l.addChild("span", "Classes: ");
-			var i = l.addChild("input", "text", current.getAttribute("class"));
-
-			sidebar.appendChild(div);
-		}
 		current = current.parentNode;
 		if(!current || (current.classList && current.classList.contains("bz-module")))
 			break;
@@ -424,7 +464,24 @@ function updateSidebar(f) {
 
 window.onload = function() {
 	document.execCommand("enableObjectResizing", false, false);
+	document.execCommand("enableInlineTableEditing", false, false);
 	document.execCommand("styleWithCSS", false, false);
+
+	selectionButtons.forEach(function(e) {
+		var sb = document.getElementById("selection-buttons");
+		var button = document.createElement("button");
+		var img = document.createElement("img");
+		img.src = EditorApi._apiBase + "/icons/" + e + ".png";
+		img.alt = e;
+		button.appendChild(img);
+		button.setAttribute("title", e);
+		button.setAttribute("type", "button");
+		button.onclick = function() {
+			document.execCommand(e);
+		};
+		sb.appendChild(button);
+	});
+
 
 	document.onselectionchange = updateSelectionData;
 	document.getElementById("editor").addEventListener("click", function(event) {
@@ -627,11 +684,14 @@ function unwrapStuffForEditing(parent) {
 }
 
 function wrapStuffForEditing(parent) {
-	var list = parent.querySelectorAll("input[type=checkbox], input[type=radio]");
+	var list = parent.querySelectorAll("input[type=checkbox], input[type=radio], iframe");
 	list.forEach(function(e) {
-		var wrapper = document.createElement("span");
+		var wrapper = document.createElement(e.tagName == "IFRAME" ? "div" : "span");
 		wrapper.className = "hacky-wrapper";
-		wrapper.setAttribute("contenteditable", "false");
+		if(e.tagName == "IFRAME")
+			wrapper.className += " wraps-iframe";
+		else
+			wrapper.setAttribute("contenteditable", "false");
 		e.parentNode.insertBefore(wrapper, e);
 		e.parentNode.removeChild(e);
 		wrapper.appendChild(e);

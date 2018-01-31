@@ -114,27 +114,27 @@
 			Push to Production
 		</div>
 
-		<div style="float: right;">
+		<div id="sidebar-buttons" style="float: right;">
 			<button type="button" onclick="listMagicFields();">List Magic Fields</button>
 			<button type="button" onclick="listHeaders();">List Headers</button>
 		</div>
 
-		<select id="block-format" onchange="
-			document.execCommand('formatBlock', false, this.options[this.selectedIndex].value);
-		">
-			<option value="">--Block Format--</option>
-			<option value="h2">Heading 2</option>
-			<option value="h3">Heading 3</option>
-			<option value="h4">Heading 4</option>
-			<option value="h5">Heading 5</option>
-			<option value="h6">Heading 6</option>
-		</select>
+		<div id="selection-buttons">
+			<select id="block-format" onchange="
+				document.execCommand('formatBlock', false, this.options[this.selectedIndex].value);
+			">
+				<option value="">--Block Format--</option>
+				<option value="h2">Heading 2</option>
+				<option value="h3">Heading 3</option>
+				<option value="h4">Heading 4</option>
+				<option value="h5">Heading 5</option>
+				<option value="h6">Heading 6</option>
+			</select>
+		</div>
 
-		<br />
-
-		<button type="button" onclick="insertBox();">Insert Box</button>
-
-		<button type="button" onclick="document.execCommand('undo');">Undo</button>
+		<div id="bz-buttons">
+			<button type="button" onclick="insertBox();">Insert Box</button>
+		</div>
 	</div>
 
 	<div id="sidebar"></div>
