@@ -1137,9 +1137,22 @@ runOnUserContent(function() {
       }
 
     // skip the first column as it is a label column
+    var currentParentTable = null;
+    var currentParentTableDraggableCount = 0;
     var sortToMatch = document.querySelectorAll(".sort-to-match td:not(:first-child)");
     for(var i = 0; i < sortToMatch.length; i++) {
       var td = sortToMatch[i];
+
+      var p = td.parentNode;
+      while(p.tagName != "TABLE")
+      	p = p.parentNode;
+
+      if(p != currentParentTable) {
+        currentParentTable = p;
+	currentParentTableDraggableCount = 0;
+      } else {
+        currentParentTableDraggableCount++;
+      }
 
       // wrap the contents in the draggable div so
       // it moves rather than the table cell itself
@@ -1147,6 +1160,7 @@ runOnUserContent(function() {
       wrapper.innerHTML = td.innerHTML;
       wrapper.id = "draggable-" + i;
       wrapper.setAttribute("draggable", "true");
+      wrapper.setAttribute("data-table-cell-id", currentParentTableDraggableCount);
       td.id = "droppable-" + i;
       td.className += " droppable";
       td.innerHTML = "";
@@ -1302,7 +1316,7 @@ runOnUserContent(function() {
         // tell us if they are back where they are supposed to be!
 
 	// for the magic field, we want them all to be alphabet so it is single char A-Z that we string together
-	var magicFieldName = String.fromCharCode(65 + Number(d.id.replace("draggable-", "")));
+	var magicFieldName = String.fromCharCode(65 + Number(d.getAttribute("data-table-cell-id")));
 	magicFieldSequence += magicFieldName;
 
         var thisOneCorrect = (d.parentNode.id == d.id.replace("draggable", "droppable"));
