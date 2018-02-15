@@ -1166,6 +1166,129 @@ runOnUserContent(function() {
       td.innerHTML = "";
       td.appendChild(wrapper);
 
+      function performDrop(dragging, dropping) {
+        if(dragging.parentNode) {
+          // swap our existing contents for the draggable one
+          var from = dragging.parentNode;
+          dragging.parentNode.removeChild(dragging);
+          var existing = dropping.querySelector("[draggable]");
+          if(existing) {
+            dropping.removeChild(existing);
+            from.appendChild(existing);
+          }
+        }
+        dropping.appendChild(dragging);
+
+        dropping.className = dropping.className.replace(" inside-dragging", "");
+
+        // delete these next few lines if you don't
+        // want instant feedback (prolly don't)
+        var parentTable = dropping;
+        while(parentTable.tagName != "TABLE")
+          parentTable = parentTable.parentNode;
+        sortToMatchCheck(parentTable); // instant feedback update
+      }
+
+      // keyboard control {
+      wrapper.setAttribute("tabindex", "0"); // make it focusable for keyboard control
+      wrapper.setAttribute("aria-grabbed", "false");
+      var pickedUpViaKeyboard = null;
+      var dropTargetViaKeyboard = null;
+      function changeDropTarget(to) {
+	if(dropTargetViaKeyboard) {
+		dropTargetViaKeyboard.setAttribute("aria-dropeffect", "move");
+		dropTargetViaKeyboard.className = dropTargetViaKeyboard.className.replace(" inside-dragging", "");
+	}
+	dropTargetViaKeyboard = to;
+	if(dropTargetViaKeyboard) {
+        	dropTargetViaKeyboard.className += " inside-dragging";
+		dropTargetViaKeyboard.setAttribute("aria-dropeffect", "move");
+	}
+      }
+      wrapper.addEventListener("blur", function() {
+	changeDropTarget(null);
+	pickedUpViaKeyboard = null;
+      });
+      wrapper.addEventListener("keydown", function(event) {
+
+
+	function iterateDropTarget(parentTag, selector, change) {
+		var tbl = dropTargetViaKeyboard;
+		while(tbl.tagName != parentTag)
+			tbl = tbl.parentNode;
+		var allTgts = tbl.querySelectorAll(selector);
+		for(var loopVar = 0; loopVar < allTgts.length; loopVar++)
+			if(allTgts[loopVar] == dropTargetViaKeyboard)
+				break;
+		loopVar += change;
+		// wraparound behavior
+		if(loopVar < 0)
+			loopVar += allTgts.length;
+		else if(loopVar >= allTgts.length)
+			loopVar -= allTgts.length;
+		changeDropTarget(allTgts[loopVar]);
+
+		var rect = dropTargetViaKeyboard.getBoundingClientRect();
+		// the +40 here is for Back to Top
+		if(rect.top < 0 || (rect.bottom + 40) > window.innerHeight) {
+			dropTargetViaKeyboard.scrollIntoView(change < 0); // if moving up, align to top so the window scrolls the least (less disorientating)
+			if(change > 0)
+				window.scrollBy(0, 40); // scroll a bit more when doing down so the "Back to Top" doesn't overlap any text
+		}
+	}
+
+        switch(event.keyCode) {
+	  case 32: // space
+	  if(event.target.getAttribute("aria-grabbed") == "true") {
+		// drop it
+          	event.target.setAttribute("aria-grabbed", "false");
+	  	event.preventDefault();
+
+		var returnFocusTo = pickedUpViaKeyboard;
+		performDrop(pickedUpViaKeyboard, dropTargetViaKeyboard);
+		returnFocusTo.focus();
+	  } else {
+	  	// pick it up
+          	event.target.setAttribute("aria-grabbed", "true");
+	  	event.preventDefault();
+		pickedUpViaKeyboard = this;
+		changeDropTarget(this.parentNode);
+	  }
+	  break;
+	  case 9: // tab
+	  if(event.target.getAttribute("aria-grabbed") == "true") {
+	  	event.preventDefault();
+		iterateDropTarget("TABLE", ".droppable", event.shiftKey ? -1 : 1);
+	  }
+	  break;
+	  case 37: // left arrow
+	  if(event.target.getAttribute("aria-grabbed") == "true") {
+	  	event.preventDefault();
+		iterateDropTarget("TR", ".droppable", -1);
+	  }
+	  break;
+	  case 38: // up arrow
+	  if(event.target.getAttribute("aria-grabbed") == "true") {
+	  	event.preventDefault();
+		iterateDropTarget("TABLE", ".droppable[data-column-number=\""+dropTargetViaKeyboard.getAttribute("data-column-number")+"\"]", -1);
+	  }
+	  break;
+	  case 39: // right arrow
+	  if(event.target.getAttribute("aria-grabbed") == "true") {
+	  	event.preventDefault();
+		iterateDropTarget("TR", ".droppable", 1);
+	  }
+	  break;
+	  case 40: // down arrow
+	  if(event.target.getAttribute("aria-grabbed") == "true") {
+	  	event.preventDefault();
+		iterateDropTarget("TABLE", ".droppable[data-column-number=\""+dropTargetViaKeyboard.getAttribute("data-column-number")+"\"]", 1);
+	  }
+	  break;
+	}
+      });
+      // } end keyboard control
+
       // make it draggable
       wrapper.addEventListener("dragstart", function(event) {
 	try {
@@ -1196,33 +1319,21 @@ runOnUserContent(function() {
 
         var dragging;
 	try {
-          dragging = document.getElementById(event.dataTransfer.getData("text/plain"));
+		dragging = document.getElementById(event.dataTransfer.getData("text/plain"));
 	} catch(e) {
-          // IE 9 fallback
-          dragging = document.getElementById(event.dataTransfer.getData("Text"));
+		// IE 9 fallback
+		dragging = document.getElementById(event.dataTransfer.getData("Text"));
         }
         if(dragging.parentNode) {
-          // swap our existing contents for the draggable one
-          var from = dragging.parentNode;
-          dragging.parentNode.removeChild(dragging);
-          var existing = this.querySelector("[draggable]");
-          if(existing) {
-            this.removeChild(existing);
-            from.appendChild(existing);
-          }
-        }
-        this.appendChild(dragging);
+            performDrop(dragging, this);
+            currentlyDragging = null;
 
-
-        this.className = this.className.replace(" inside-dragging", "");
-        currentlyDragging = null;
-
-        // delete these next few lines if you don't
-        // want instant feedback (prolly don't)
-        var parentTable = this;
-        while(parentTable.tagName != "TABLE")
-          parentTable = parentTable.parentNode;
-        sortToMatchCheck(parentTable, true); // instant feedback update
+            // delete these next few lines if you don't
+            // want instant feedback (prolly don't)
+            var parentTable = this;
+            while(parentTable.tagName != "TABLE")
+              parentTable = parentTable.parentNode;
+            sortToMatchCheck(parentTable, true); // instant feedback update
       });
     }
 
