@@ -2,9 +2,16 @@
 // that Phobos read the other way. Might be better to use LCS instead of Levenshtein , but
 // for now I want to detect that particular pattern and better portray it to the users.
 
+// FIXME: bz-retained-field-setup must be STRICTLY banned from all source
+
 /*
 
 	Files:
+
+		I might need to put the title on the module attribute
+
+		and pulling from production should be updated more often
+
 		branches.json:
 			{
 				// there is also a 1.html.la
@@ -127,6 +134,7 @@ struct Save {
 class EditorApi : ApiProvider {
 	private Session session;
 	private string ssoService = "http://editor.bebraven.org.arsdnet.net/sso";
+	version(none)
 	override void _initializePerCall() {
 		session = new Session(cgi);
 		if(!session.hasKey("user")) {
@@ -164,11 +172,143 @@ class EditorApi : ApiProvider {
 		return null;
 	}
 
-	Document view(string id) {
+	Document view(string id, bool showMagicFieldTimings = false) {
 		import std.file;
 		auto document = new Document(readText("module.html"), true, true);
 		document.requireSelector("#module-container").appendChild(load(id).render(this).removeFromTree);
+
+		foreach(thing; document.querySelectorAll("[data-replace-with-page]")) {
+			// fIXME
+			thing.innerHTML = readText("data/" ~ thing.dataset.replaceWithPage ~ ".html");
+		}
+
+		if(showMagicFieldTimings) {
+			auto db = openProductionMagicFieldDatabase();
+			int[int] baseline;
+			int averageSum = 0;
+			foreach(mg; document.querySelectorAll("[data-bz-retained]")) {
+				auto name = mg.dataset.bzRetained;
+				int differencesSum = 0;
+				int differencesCount = 0;
+				foreach(row; db.query("SELECT user_id, strftime('%s', updated_at) FROM magic_fields WHERE name = ?", name)) {
+					auto uid = row[0].to!int;
+					auto time = row[1].to!int;
+
+					if(auto b = uid in baseline) {
+						auto diff = time - *b;
+						if(diff < 3600) {
+						if(diff < 0)
+							diff = 0;
+						differencesSum += diff;
+						differencesCount += 1;
+						}
+					}
+
+					baseline[uid] = time;
+				}
+
+				if(differencesCount) {
+					auto average = differencesSum / differencesCount;
+					averageSum += average;
+					mg.dataset.reachedIn = to!string(average);
+					mg.dataset.reachedAt = to!string(averageSum);
+				}
+			}
+		}
+
 		return document;
+	}
+
+	Table startTimes(bool includeHour = false, int courseFilter = 0) {
+		auto table = new Table(null);
+
+		auto db = openProductionMagicFieldDatabase();
+
+		if(courseFilter) {
+			foreach(row; db.query("SELECT name FROM courses WHERE course_id = ?", courseFilter))
+				table.caption = row[0];
+		}
+
+		table.appendHeaderRow("Count", "Hour and Day (YYYY-MM-DD HH)");
+
+		foreach(i; 1 .. 17+1) {
+			auto data = view(to!string(i), false);
+
+			table.appendRow("Module " ~ to!string(i));
+
+			foreach(row; db.query("
+				SELECT
+					count(magic_fields.user_id) AS cnt,
+					strftime('%Y-%m-%d"~(includeHour ? " %H:xx":"")~"', magic_fields.updated_at) AS started
+				FROM
+					magic_fields
+				INNER JOIN
+					users ON users.user_id = magic_fields.user_id
+				" ~ (courseFilter ? "
+				INNER JOIN
+					course_enrollments ON course_enrollments.user_id = users.user_id
+				" : "") ~ "
+				WHERE
+					magic_fields.name = ?
+					AND
+					is_test_account = 0
+				" ~ (courseFilter ? "
+					AND
+					course_id = ?
+				" : " AND ? = 0" /* prevent bind column index out of range error */) ~ "
+				GROUP BY
+					started
+				ORDER BY
+					started ASC
+				",
+				data.querySelector("[data-bz-retained]").dataset.bzRetained, courseFilter))
+			{
+				table.appendRow(row[0], row[1]);
+			}
+		}
+
+		return table;
+	}
+
+	Table timingAnalysis() {
+		auto table = new Table(null);
+
+		table.appendHeaderRow("Module", "1/4 Time", "1/2 Time", "3/4 Time", "End Time", "Longest Parts");
+
+		string fmt(Element d, bool showIn = false) {
+			int secs = to!int(showIn ? d.dataset.reachedIn : d.dataset.reachedAt);
+
+			int hours = 0;
+			int mins = (secs / 60);
+			hours = (mins / 60);
+			mins %= 60;
+			secs %= 60;
+
+			string str = "";
+			if(hours)
+				str ~= hours.to!string ~ ":";
+			if(mins < 10)
+				str ~= "0";
+			str ~= mins.to!string ~ ":";
+			if(secs < 10)
+				str ~= "0";
+			str ~= secs.to!string;
+			return str;
+		}
+
+		foreach(i; 1 .. 17+1) {
+			auto data = view(to!string(i), true);
+			auto ats = data.querySelectorAll("[data-reached-at]");
+			auto details = Element.make("details");
+			foreach(at; ats) {
+				if(to!int(at.dataset.reachedIn) > 60)
+					details.addChild("p", at.dataset.bzRetained ~ " " ~ at.parentNode.innerText ~ " " ~ fmt(at, true));
+			}
+			if(ats.length)
+			table.appendRow(Element.make("a", to!string(i), "/view?id=" ~ to!string(i) ~ "&showMagicFieldTimings=true"), fmt(ats[$ / 4]), fmt(ats[$/2]), fmt(ats[3*$ / 4]), fmt(ats[$-1]), details);
+		}
+
+		return table;
 	}
 
 	/*
@@ -329,11 +469,155 @@ class EditorApi : ApiProvider {
 		return id.toString();
 	}
 
-	int doMagicFieldUpdate() {
+	void doProductionBranchUpdate() {
+		auto canvas = getCanvasApiClient(productionCredentials());
+
+		auto modulesRes = canvas.rest.
+			courses[1].modules
+			._SELF()
+			("per_page", 30)
+			("include[]", "items")
+			.GET;
+
+		var[] modules;
+
+		// handle potential pagination
+		more_modules:
+		foreach(mod; modulesRes.result) {
+			modules ~= mod;
+		}
+		if(auto next = "next" in modulesRes.response.linksHash) {
+			modulesRes = canvas.request(next.url);
+			goto more_modules;
+		}
+
+		// and here we go!
+
+		foreach(mod; modules) {
+			if(mod.published == false)
+				continue;
+			if(mod.name == "Braven Resources")
+				break; // we end after getting past the single-page modules
+
+			// writeln("Updating ", mod.position, " - ", mod.name);
+
+			// FIXME: make this only download if actually needed
+			int partNum = 0;
+			foreach(item; mod.items) {
+				auto page = canvas.request(item.url.get!string).result;
+
+				import std.file;
+				auto filename = "data/" ~ mod.position.get!string;
+				if(partNum)
+					filename = "data/" ~ item.title.get!string;
+				filename ~= ".html";
+				if(0 && std.file.exists(filename)) {
+					// update the prod branch
+					// FIXME
+				} else {
+					// create the module
+					std.file.write(filename,
+						replace(htmlBefore, "TITLE_HERE", "Module " ~mod.position.get!string ~ ": " ~ mod.name.get!string)
+						~ page["body"].get!string ~ htmlAfter);
+				}
+
+				partNum++;
+			}
+		}
+	}
+
+	void doRosterUpdate() {
+		auto db = openProductionMagicFieldDatabase();
+		auto canvas = getCanvasApiClient(productionCredentials());
+
+		if(0) {
+			auto usersRes = canvas.rest.
+				accounts.self.users
+				._SELF()
+				("per_page", 300)
+				.GET;
+
+			// handle potential pagination
+			more_users:
+			foreach(u; usersRes.result) {
+				bool isTestAccount = false;
+				if(indexOf(u.email.get!string, "@bebraven.org") != -1)
+					isTestAccount = true;
+				if(indexOf(u.email.get!string, "@beyondz.org") != -1)
+					isTestAccount = true;
+				db.query("INSERT INTO users VALUES (?, ?, ?, ?)",
+					u.id.get!string, u.name.get!string, u.email.get!string, isTestAccount ? 1 : 0);
+
+			}
+			if(auto next = "next" in usersRes.response.linksHash) {
+				usersRes = canvas.request(next.url);
+				goto more_users;
+			}
+		}
+
+		if(0) {
+
+			auto coursesRes = canvas.rest.
+				courses
+				._SELF()
+				("per_page", 300)
+				.GET;
+
+			// handle potential pagination
+			more_courses:
+			foreach(c; coursesRes.result) {
+
+				try
+				db.query("INSERT INTO courses VALUES (?, ?, ?)",
+					c.id.get!string, c.name.get!string, c.time_zone.get!string);
+				catch(DatabaseException e) { continue; }
+
+				more_users:
+				auto usersRes = canvas.rest.
+					courses[c.id.get!int]
+					.users
+					._SELF()
+					("per_page", 300)
+					("include[]", "enrollments")
+					.GET;
+
+				foreach(user; usersRes.result) {
+					foreach(enrollment; user.enrollments)
+						try
+						db.query("INSERT INTO course_enrollments VALUES (?, ?, ?, ?)",
+							enrollment.id.get!int, enrollment.course_id.get!int, enrollment.user_id.get!int, enrollment.role.get!string);
+						catch(DatabaseException e) {}
+						
+
+				}
+
+				if(auto next = "next" in usersRes.response.linksHash) {
+					usersRes = canvas.request(next.url);
+					goto more_users;
+				}
+			}
+			if(auto next = "next" in coursesRes.response.linksHash) {
+				coursesRes = canvas.request(next.url);
+				goto more_courses;
+			}
+		}
+
+
+	}
+
+	string doMagicFieldUpdate() {
 		auto db = openProductionMagicFieldDatabase();
 
+		string lastUpdate = "0";
+		foreach(res; db.query("SELECT max(strftime('%s', updated_at)) from magic_fields"))
+			lastUpdate = res[0];
+
+		auto accessToken = productionCredentials().apiToken;
+
+		auto updateJson = getText("https://portal.bebraven.org/bz/magic_field_dump?since="~lastUpdate~"&access_token=" ~ accessToken);
+
 		import std.file, arsd.jsvar;
-		var json = var.fromJson(readText("data/magic_field_dump.json"));
+		var json = var.fromJson(updateJson);
 		int count;
 		foreach(field; json) {
 			try
@@ -344,7 +628,7 @@ class EditorApi : ApiProvider {
 				field.name.get!string, field.value.get!string, field.path.get!string, field.user_id.get!string, field.created_at.get!string, field.updated_at.get!string, field.name.get!string, field.user_id.get!string);
 				count++;
 		}
-		return count;
+		return count.to!string;
 
 	}
 
@@ -383,6 +667,10 @@ class EditorApi : ApiProvider {
 
 
 		return div;
+	}
+
+	Element magicFieldTimeStats(string moduleId, int student_id = 0) {
+		assert(0);
 	}
 
 	Element magicFieldAnalysis(string moduleId, int student_id = 0) {
@@ -830,15 +1118,34 @@ class EditorApi : ApiProvider {
 		string[string] leafs;
 		string[string] titles;
 
+		static bool sorter(string a, string b) {
+			import std.string : cmp;
+			if(a.isNumeric && b.isNumeric) {
+				return (a.to!int - b.to!int) < 0;
+			}
+			if(a.startsWith("Module ") && b.startsWith("Module ")) {
+				a = a["Module ".length .. a.indexOf(":")];
+				b = b["Module ".length .. b.indexOf(":")];
+				return (a.to!int - b.to!int) < 0;
+			}
+			return a.cmp(b) < 0;
+		}
+
 		Element makeHtmlElement(Document document = null) {
 			auto div = Element.make("div");
 			auto dl = div.addChild("dl");
-			foreach(root; roots) {
+			foreach(root; roots.sort!sorter) {
 				auto dt = dl.addChild("dt", root in titles ? titles[root] : "no title");
 				foreach(id, leafRoot; leafs)
 					if(root == leafRoot) {
 						auto data = allRevisions[id];
-						auto a = Element.make("a", data.tag ~ " latest change by " ~ data.editedBy ~ " at " ~ to!string(data.timestamp), "edit?id=" ~ id);
+						/*
+							Version   Created By     Last Edited By     Last Edited Date     History / Merge / Compare / Delete
+							===================================================================================================
+							Production                                                        [Update]
+							user-branches
+						*/
+						auto a = Element.make("a", data.tag ~ " latest change by " ~ data.editedBy ~ " at " ~ printTimestamp(data.timestamp), "edit?id=" ~ id);
 						auto dd = dl.addChild("dd", a);
 						dd.appendText(" ");
 						dd.addChild("button", "History").setAttribute("type", "button").setAttribute("onclick", q{
@@ -1147,6 +1454,13 @@ Element applyBinaryDiff(Element basedOn, const(ubyte)[] binaryDiff) {
 	return Element.make("div", Html(lines.join("\n"))).requireSelector(".bz-module");
 }
 
+import core.stdc.time;
+string printTimestamp(time_t unixTimestamp) {
+	char[255] buffer;
+	auto res = strftime(buffer.ptr, buffer.length - 1, "%a, %d %b %Y %T %z", localtime(&unixTimestamp));
+	return buffer[0 .. res].idup;
+}
+
 string sanitizeId(string id) {
 	string sanitized;
 	foreach(ch; id) {
@@ -1331,15 +1645,20 @@ MergeResult!(ElementType!R)[] threeWayMerge(R)(R o, R a, R b, string[] function(
 	*/
 struct CanvasCredentials {
 	string apiToken;
-	string apiSecret;
 	string apiBaseUrl;
 }
 
 CanvasCredentials stagingCredentials() {
-	return var.fromJson("data/staging_canvas_creds.json").get!CanvasCredentials;
+	import std.file;
+	return var.fromJson(readText("data/staging_canvas_creds.json")).get!CanvasCredentials;
 }
 CanvasCredentials productionCredentials() {
-	return var.fromJson("data/production_canvas_creds.json").get!CanvasCredentials;
+	import std.file;
+	return var.fromJson(readText("data/production_canvas_creds.json")).get!CanvasCredentials;
+}
+
+HttpApiClient!() getCanvasApiClient(CanvasCredentials credentials) {
+	return new HttpApiClient!()(credentials.apiBaseUrl, credentials.apiToken, "application/json");
 }
 
 import arsd.sqlite;
@@ -1357,6 +1676,29 @@ Sqlite openProductionMagicFieldDatabase() {
 
 		CREATE INDEX magic_fields_by_user ON magic_fields(user_id);
 		CREATE INDEX magic_fields_by_name ON magic_fields(name);
+
+		CREATE TABLE users (
+			user_id INTEGER NOT NULL,
+			name TEXT,
+			email TEXT,
+			is_test_account INTEGER NOT NULL,
+			PRIMARY KEY(user_id)
+		);
+
+		CREATE TABLE courses (
+			course_id INTEGER NOT NULL,
+			name TEXT,
+			timezone TEXT,
+			PRIMARY KEY(course_id)
+		);
+
+		CREATE TABLE course_enrollments (
+			enrollment_id INTEGER NOT NULL,
+			course_id INTEGER NOT NULL,
+			user_id INTEGER NOT NULL,
+			enrollment_type TEXT,
+			PRIMARY KEY(enrollment_id)
+		);
 	`, delegate (Sqlite db) {
 		// db created, now time to populate with initial data
 		import std.file, arsd.jsvar;
@@ -1375,3 +1717,36 @@ Sqlite openProductionMagicFieldDatabase() {
 }
 
 mixin FancyMain!EditorApi;
+
+string htmlBefore = `<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>TITLE_HERE</title>
+<script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous">
+</script>
+<script
+  src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+  integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+  crossorigin="anonymous">
+</script>
+<style>
+@font-face {
+ font-family: "TradeGothicNo.20-CondBold";
+ src: url('../TradeGothicLTStd-BdCn20.otf');
+}
+</style>
+<link rel="stylesheet" type="text/css" href="../bz_newui.css" />
+</head>
+<body>
+`;
+
+string htmlAfter = `
+<script src="../new-ui-sandbox.js"></script>
+</body>
+</html>`;
+
+
