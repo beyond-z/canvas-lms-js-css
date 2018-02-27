@@ -1208,8 +1208,10 @@ runOnUserContent(function() {
       }
       wrapper.addEventListener("blur", function() {
 	changeDropTarget(null);
-	pickedUpViaKeyboard = null;
-        pickedUpViaKeyboard.setAttribute("aria-grabbed", "false");
+	if(pickedUpViaKeyboard) {
+          pickedUpViaKeyboard.setAttribute("aria-grabbed", "false");
+	  pickedUpViaKeyboard = null;
+	}
       });
       wrapper.addEventListener("keydown", function(event) {
 
