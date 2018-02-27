@@ -1167,6 +1167,7 @@ runOnUserContent(function() {
       td.appendChild(wrapper);
 
       function performDrop(dragging, dropping) {
+	if(!dragging) return;
         if(dragging.parentNode) {
           // swap our existing contents for the draggable one
           var from = dragging.parentNode;
@@ -1208,12 +1209,15 @@ runOnUserContent(function() {
       wrapper.addEventListener("blur", function() {
 	changeDropTarget(null);
 	pickedUpViaKeyboard = null;
+        pickedUpViaKeyboard.setAttribute("aria-grabbed", "false");
       });
       wrapper.addEventListener("keydown", function(event) {
 
 
 	function iterateDropTarget(parentTag, selector, change) {
 		var tbl = dropTargetViaKeyboard;
+		if(!tbl)
+			return;
 		while(tbl.tagName != parentTag)
 			tbl = tbl.parentNode;
 		var allTgts = tbl.querySelectorAll(selector);
