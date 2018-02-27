@@ -1334,8 +1334,8 @@ runOnUserContent(function() {
             while(parentTable.tagName != "TABLE")
               parentTable = parentTable.parentNode;
             sortToMatchCheck(parentTable, true); // instant feedback update
-      });
-    }
+      }
+    });
 
     // and now that drag&drop is set up, shuffle the contents so the
     // user gets to have fun sorting them back
