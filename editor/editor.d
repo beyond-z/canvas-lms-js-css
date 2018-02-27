@@ -219,6 +219,39 @@ class EditorApi : ApiProvider {
 		return document;
 	}
 
+	Table assignmentStartTimes(int course, bool includeHour = false) {
+		auto table = new Table(null);
+
+		auto db = openProductionMagicFieldDatabase();
+		auto canvas = getCanvasApiClient(productionCredentials());
+
+		auto assignmentsRes = canvas.rest.
+			courses[course].assignments
+			._SELF()
+			("per_page", 30)
+			("include[]", "items")
+			.GET;
+
+		more_assignments:
+		foreach(assignment; assignmentsRes.result) {
+			// work with assignment
+
+			auto data = Element.make("div", Html(assignment.description.get!string));
+			if(data.querySelector("[data-bz-retained]") is null)
+				continue;
+
+			table.appendRow("Assignment " ~ assignment.name.get!string);// ~ " (due " ~ assignment.due_at.get!string ~ ")");
+
+			timingHelper(db, includeHour, course, data, table);
+		}
+		if(auto next = "next" in assignmentsRes.response.linksHash) {
+			assignmentsRes = canvas.request(next.url);
+			goto more_assignments;
+		}
+
+		return table;
+	}
+
 	Table startTimes(bool includeHour = false, int courseFilter = 0) {
 		auto table = new Table(null);
 
@@ -235,40 +268,53 @@ class EditorApi : ApiProvider {
 			auto data = view(to!string(i), false);
 
 			table.appendRow("Module " ~ to!string(i));
-
-			foreach(row; db.query("
-				SELECT
-					count(magic_fields.user_id) AS cnt,
-					strftime('%Y-%m-%d"~(includeHour ? " %H:xx":"")~"', magic_fields.updated_at) AS started
-				FROM
-					magic_fields
-				INNER JOIN
-					users ON users.user_id = magic_fields.user_id
-				" ~ (courseFilter ? "
-				INNER JOIN
-					course_enrollments ON course_enrollments.user_id = users.user_id
-				" : "") ~ "
-				WHERE
-					magic_fields.name = ?
-					AND
-					is_test_account = 0
-				" ~ (courseFilter ? "
-					AND
-					course_id = ?
-				" : " AND ? = 0" /* prevent bind column index out of range error */) ~ "
-				GROUP BY
-					started
-				ORDER BY
-					started ASC
-				",
-				data.querySelector("[data-bz-retained]").dataset.bzRetained, courseFilter))
-			{
-				table.appendRow(row[0], row[1]);
-			}
+			timingHelper(db, includeHour, courseFilter, data.root, table);
 		}
 
 		return table;
 	}
+
+	private void timingHelper(Database db, bool includeHour, int courseFilter, Element data, Table table) {
+		auto allFields = data.querySelectorAll("[data-bz-retained]:not([type=checkbox]):not(.bz-optional-magic-field)");
+		string field;
+		if(allFields.length > 2)
+			field = allFields[2].dataset.bzRetained;
+		else if(allFields.length > 1)
+			field = allFields[1].dataset.bzRetained;
+		else
+			field = allFields[1].dataset.bzRetained;
+
+		foreach(row; db.query("
+			SELECT
+				count(magic_fields.user_id) AS cnt,
+				strftime('%Y-%m-%d"~(includeHour ? " %H:xx":"")~"', magic_fields.created_at) AS started
+			FROM
+				magic_fields
+			INNER JOIN
+				users ON users.user_id = magic_fields.user_id
+			" ~ (courseFilter ? "
+			INNER JOIN
+				course_enrollments ON course_enrollments.user_id = users.user_id
+			" : "") ~ "
+			WHERE
+				magic_fields.name = ?
+				AND
+				is_test_account = 0
+			" ~ (courseFilter ? "
+				AND
+				course_id = ?
+			" : " AND ? = 0" /* prevent bind column index out of range error */) ~ "
+			GROUP BY
+				started
+			ORDER BY
+				started ASC
+			",
+			field, courseFilter))
+		{
+			table.appendRow(row[0], row[1]);
+		}
+	}
+
 
 	Table timingAnalysis() {
 		auto table = new Table(null);
