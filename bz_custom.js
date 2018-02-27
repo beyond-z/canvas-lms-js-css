@@ -1123,18 +1123,18 @@ runOnUserContent(function(){
 // This needs to come AFTER the show box setup so it knows what is already showing
 runOnUserContent(function() {
   // Sort to match:
-    function sortToMatchSetup() {
-      // on chrome, it doesn't allow getData in anything but the drop event
-      // so i use this helper variable instead...
-      var currentlyDragging = null;
-      function isValidDropTarget(event, dropping) {
-        var dragging = currentlyDragging;
-        if(!dragging)
-          return false;
-        if(dragging.getAttribute("data-column-number") == dropping.getAttribute("data-column-number"))
-          return true;
+  function sortToMatchSetup() {
+    // on chrome, it doesn't allow getData in anything but the drop event
+    // so i use this helper variable instead...
+    var currentlyDragging = null;
+    function isValidDropTarget(event, dropping) {
+      var dragging = currentlyDragging;
+      if(!dragging)
         return false;
-      }
+      if(dragging.getAttribute("data-column-number") == dropping.getAttribute("data-column-number"))
+        return true;
+      return false;
+    }
 
     // skip the first column as it is a label column
     var currentParentTable = null;
@@ -1334,8 +1334,9 @@ runOnUserContent(function() {
             while(parentTable.tagName != "TABLE")
               parentTable = parentTable.parentNode;
             sortToMatchCheck(parentTable, true); // instant feedback update
-      }
-    });
+        }
+      });
+    }
 
     // and now that drag&drop is set up, shuffle the contents so the
     // user gets to have fun sorting them back
