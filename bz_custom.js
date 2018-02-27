@@ -1357,10 +1357,12 @@ runOnUserContent(function() {
         parentBox = parentBox.parentNode;
       }
 
+      var performShuffle = true;
+
       if(parentBox && parentBox.classList.contains("has-preshowing-box")) {
         // sortToMatchCheck(table); // do show feedback on reload...
         table.className += " bz-locked-table";
-        continue; // ...but don't shuffle things that are already showing from previous loads
+        performShuffle = false; // ...but don't shuffle things that are already showing from previous loads
       }
 
       // NOTE: this may break with colspan, so don't do that
@@ -1371,11 +1373,20 @@ runOnUserContent(function() {
         // nth-child uses 1-based indexing
         var draggablesDom = table.querySelectorAll("td:nth-child("+(col+1)+").droppable > [draggable]");
         var droppables = table.querySelectorAll("td:nth-child("+(col+1)+").droppable");
+
         // I have to copy the node list to a regular array
         // since modifying a node list is non-standard
         var draggables = [];
         for(var a = 0; a < draggablesDom.length; a++)
           draggables.push(draggablesDom[a]);
+
+        for(var a = 0; a < draggables.length; a++) {
+          draggables[a].setAttribute("data-column-number", col);
+          droppables[a].setAttribute("data-column-number", col);
+	}
+
+	if(!performShuffle)
+          continue;
 
         // then create an array which we will propagate in
         // random order to achieve best randomness...
@@ -1409,8 +1420,6 @@ runOnUserContent(function() {
             allInOrder = false;
           }
           droppables[a].appendChild(shuffled[a]);
-          shuffled[a].setAttribute("data-column-number", col);
-          droppables[a].setAttribute("data-column-number", col);
         }
       }
 
