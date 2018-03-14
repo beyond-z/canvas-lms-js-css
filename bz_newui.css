@@ -2243,3 +2243,34 @@ table [type="range"] {
 [aria-grabbed="true"] {
 	box-shadow: 0px 0px 2px 2px black;
 }
+
+
+
+.my-cohort-info-page {
+    width: 672px;
+    margin: 1em auto;
+}
+
+.my-cohort-info-page table {
+    width: 100%;
+}
+
+.my-cohort-info-page th {
+    width: 25%;
+    text-align: left;
+}
+
+.my-cohort-info-page caption {
+    text-align: left;
+    margin: 2em 0 1em;
+    font-family: "TradeGothicNo.20-CondBold", "Oswald", sans-serif;
+    text-transform: uppercase;
+    line-height: normal;
+    font-weight: normal;
+    font-size: 1.2em;
+    color: #EB3B46;
+}
+
+.my-cohort-info-page h1 {
+    font-size: 2em;
+}
