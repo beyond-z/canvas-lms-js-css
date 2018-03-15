@@ -46,7 +46,7 @@ function bz_open_box($btype = 'question', $bintro = '', $btitle) {
       break;
   }
 
-	// Open the box:
+  // Open the box:
   echo '<div class="bz-box '.$btype.'">';
   if ($btitle) {
     echo '  <h'.$GLOBALS['hlevel'].' class="box-title">'.$btitle.'</h'.$GLOBALS['hlevel'].'>';
@@ -55,7 +55,7 @@ function bz_open_box($btype = 'question', $bintro = '', $btitle) {
   echo '  <p>'.$bintro.'</p>';
   }
   // Reset "for-" for "done" button interactivity:
-	/*  (e.g. "for-checklist" may be set by bz_make_cr_list(), 
+  /*  (e.g. "for-checklist" may be set by bz_make_cr_list(), 
       but we don't want previous box's interaction to apply here )  */
   $GLOBALS['for'] = '';
   // Reset inner box counter used for numbering multiple fields in one box:
@@ -66,12 +66,12 @@ function bz_open_box($btype = 'question', $bintro = '', $btitle) {
 /* ==================================================*/
 
 function bz_close_box($addbutton = true) {
-	// Generate a "done" button:
+  // Generate a "done" button:
   if ($addbutton) echo '  <p><input class="bz-toggle-all-next '.$GLOBALS['for'].'" type="button" value="Done" data-bz-retained="'.$GLOBALS['namespace'].'-btn-'.$GLOBALS['boxcounter'].'" /></p>';
-	// Increment box counter for naming data-bz-retained fields etc.:
+  // Increment box counter for naming data-bz-retained fields etc.:
   $GLOBALS['boxcounter']++;
   $GLOBALS['innercounter'] = 0;
-	// Close the div:
+  // Close the div:
   echo '</div>';
 }
 
@@ -97,13 +97,17 @@ function bz_make_id($hold = null) {
     ),
   );
 */
-function bz_make_cr_list($items, $type = 'checklist', $instant = 'instant-feedback', $addlclasses = '') {
+function bz_make_cr_list($items, $type = 'checklist', $instant = 'instant-feedback', $addlclasses = '', $mastery = false) {
   $GLOBALS['innercounter']++;
   $inputtype = ($type == 'checklist') ? 'checkbox' : 'radio';
+  if ($mastery) {
+    $mastery = 'bz-check-answers';
+    $instant = null;
+  }
   if ( null == $instant ) {
     $GLOBALS['for'] = 'for-'.$type;
   }
-  echo '<ul class="' . $type . ' ' . $instant . ' ' . $addlclasses . '">';
+  echo '<ul class="' . $type . ' ' . $instant . ' ' . $addlclasses . ' ' . $mastery .'">' . PHP_EOL;
 
   foreach ($items as $key => $item) {
     if ($item['feedback']) {
@@ -112,17 +116,35 @@ function bz_make_cr_list($items, $type = 'checklist', $instant = 'instant-feedba
     $itemname = ( 'checklist' == $type ) ? bz_make_id() : bz_make_id('hold');
     echo  '<li class="'
     . $item['correctness']
-    .'"><input type="'.$inputtype
+    .'">'
+    .PHP_EOL
+    .'<input type="'.$inputtype
     .'" data-bz-retained="'.$itemname.'" name="'.$itemname
-    .'" value="option'.$key.'" />'
+    .'" value="option'.$key.'"';
+
+    $correct_answer_val = ($type == 'checklist') ? 'yes' : 'option' . array_keys($items)[0];
+
+    if('incorrect' == $item['correctness'] && $type == 'checklist') {
+      $correct_answer_val = '';
+    }
+
+    if ($mastery) {
+      echo ' data-bz-answer="'
+      .$correct_answer_val
+      .'"';
+    }
+
+    echo '/>'
     .$item['content']
     .$item['feedback']
-    .'</li>';
+    .'</li>'
+    .PHP_EOL;
   }
-  echo '</ul>';
+  echo '</ul>'.PHP_EOL;
 }
 
-function bz_make_radio_list($items, $instant = 'instant-feedback', $addlclasses = '') {
+
+function bz_make_radio_list($items, $instant = 'instant-feedback', $addlclasses = '', $mastery = '') {
   
   // TODO: refactor this one along with make_cr_list
   // for more complex input (with feedback etc.) use the more complex function:
@@ -135,27 +157,44 @@ function bz_make_radio_list($items, $instant = 'instant-feedback', $addlclasses 
       // the first value on the list will be set as the correct one:
       $items[0]['correctness'] = 'correct';
     }
-    bz_make_cr_list($items, 'radio-list', $instant, $addlclasses);
+    bz_make_cr_list($items, 'radio-list', $instant, $addlclasses, $mastery);
   } else {
+
+    if ($mastery) {
+      $mastery = 'bz-check-answers';
+      $instant = null;
+      $correct_answer_val = ($inputtype == 'checkbox') ? 'yes' : 'option' . array_keys($items)[0];
+    }
+
     // for a simple list that needs no feedback etc.:
     $GLOBALS['innercounter']++;
     if ( null == $instant ) {
       $GLOBALS['for'] = 'for-radio-list';
     }
-    echo '<ul class="radio-list ' . $instant . ' ' . $addlclasses . '">';
+    echo '<ul class="radio-list ' . $instant . ' ' . $addlclasses . ' ' . $mastery .'">' . PHP_EOL;
 
     foreach ($items as $key => $item) {
       $itemname = bz_make_id('hold');
       $correctness = (0 < $key) ? 'incorrect' : 'correct';
       echo  '<li class="'
       .$correctness
-      .'"><input type="radio'
+      .'">'
+      .PHP_EOL
+      .'<input type="radio'
       .'" data-bz-retained="'.$itemname.'" name="'.$itemname
-      .'" value="option'.$key.'" />'
+      .'" value="option'.$key.'"';
+
+      echo ' data-bz-answer="'
+      .'option' . array_keys($items)[0]
+      .'"';
+
+      echo ' />'
+      .PHP_EOL
       .$item
-      .'</li>';
+      .'</li>'
+      .PHP_EOL;
     }
-    echo '</ul>';
+    echo '</ul>'. PHP_EOL;
   }
 }
 

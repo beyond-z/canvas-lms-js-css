@@ -1124,23 +1124,36 @@ runOnUserContent(function(){
 // This needs to come AFTER the show box setup so it knows what is already showing
 runOnUserContent(function() {
   // Sort to match:
-    function sortToMatchSetup() {
-      // on chrome, it doesn't allow getData in anything but the drop event
-      // so i use this helper variable instead...
-      var currentlyDragging = null;
-      function isValidDropTarget(event, dropping) {
-        var dragging = currentlyDragging;
-        if(!dragging)
-          return false;
-        if(dragging.getAttribute("data-column-number") == dropping.getAttribute("data-column-number"))
-          return true;
+  function sortToMatchSetup() {
+    // on chrome, it doesn't allow getData in anything but the drop event
+    // so i use this helper variable instead...
+    var currentlyDragging = null;
+    function isValidDropTarget(event, dropping) {
+      var dragging = currentlyDragging;
+      if(!dragging)
         return false;
-      }
+      if(dragging.getAttribute("data-column-number") == dropping.getAttribute("data-column-number"))
+        return true;
+      return false;
+    }
 
     // skip the first column as it is a label column
+    var currentParentTable = null;
+    var currentParentTableDraggableCount = 0;
     var sortToMatch = document.querySelectorAll(".sort-to-match td:not(:first-child)");
     for(var i = 0; i < sortToMatch.length; i++) {
       var td = sortToMatch[i];
+
+      var p = td.parentNode;
+      while(p.tagName != "TABLE")
+      	p = p.parentNode;
+
+      if(p != currentParentTable) {
+        currentParentTable = p;
+	currentParentTableDraggableCount = 0;
+      } else {
+        currentParentTableDraggableCount++;
+      }
 
       // wrap the contents in the draggable div so
       // it moves rather than the table cell itself
@@ -1148,12 +1161,14 @@ runOnUserContent(function() {
       wrapper.innerHTML = td.innerHTML;
       wrapper.id = "draggable-" + i;
       wrapper.setAttribute("draggable", "true");
+      wrapper.setAttribute("data-table-cell-id", currentParentTableDraggableCount);
       td.id = "droppable-" + i;
       td.className += " droppable";
       td.innerHTML = "";
       td.appendChild(wrapper);
 
       function performDrop(dragging, dropping) {
+	if(!dragging) return;
         if(dragging.parentNode) {
           // swap our existing contents for the draggable one
           var from = dragging.parentNode;
@@ -1194,13 +1209,18 @@ runOnUserContent(function() {
       }
       wrapper.addEventListener("blur", function() {
 	changeDropTarget(null);
-	pickedUpViaKeyboard = null;
+	if(pickedUpViaKeyboard) {
+          pickedUpViaKeyboard.setAttribute("aria-grabbed", "false");
+	  pickedUpViaKeyboard = null;
+	}
       });
       wrapper.addEventListener("keydown", function(event) {
 
 
 	function iterateDropTarget(parentTag, selector, change) {
 		var tbl = dropTargetViaKeyboard;
+		if(!tbl)
+			return;
 		while(tbl.tagName != parentTag)
 			tbl = tbl.parentNode;
 		var allTgts = tbl.querySelectorAll(selector);
@@ -1278,7 +1298,12 @@ runOnUserContent(function() {
 
       // make it draggable
       wrapper.addEventListener("dragstart", function(event) {
-        event.dataTransfer.setData("text/plain", event.target.getAttribute("id"));
+	try {
+          event.dataTransfer.setData("text/plain", event.target.getAttribute("id"));
+       } catch(e) {
+	  // IE 9 fallback
+          event.dataTransfer.setData("Text", event.target.getAttribute("id"));
+       }
         currentlyDragging = this; // need for a chrome hack
       });
 
@@ -1299,10 +1324,24 @@ runOnUserContent(function() {
         event.preventDefault();
         event.stopPropagation();
 
-        var dragging = document.getElementById(event.dataTransfer.getData("text/plain"));
-	performDrop(dragging, this);
+        var dragging;
+	try {
+		dragging = document.getElementById(event.dataTransfer.getData("text/plain"));
+	} catch(e) {
+		// IE 9 fallback
+		dragging = document.getElementById(event.dataTransfer.getData("Text"));
+        }
+        if(dragging.parentNode) {
+            performDrop(dragging, this);
+            currentlyDragging = null;
 
-        currentlyDragging = null;
+            // delete these next few lines if you don't
+            // want instant feedback (prolly don't)
+            var parentTable = this;
+            while(parentTable.tagName != "TABLE")
+              parentTable = parentTable.parentNode;
+            sortToMatchCheck(parentTable, true); // instant feedback update
+        }
       });
     }
 
@@ -1319,10 +1358,12 @@ runOnUserContent(function() {
         parentBox = parentBox.parentNode;
       }
 
+      var performShuffle = true;
+
       if(parentBox && parentBox.classList.contains("has-preshowing-box")) {
         // sortToMatchCheck(table); // do show feedback on reload...
         table.className += " bz-locked-table";
-        continue; // ...but don't shuffle things that are already showing from previous loads
+        performShuffle = false; // ...but don't shuffle things that are already showing from previous loads
       }
 
       // NOTE: this may break with colspan, so don't do that
@@ -1333,11 +1374,20 @@ runOnUserContent(function() {
         // nth-child uses 1-based indexing
         var draggablesDom = table.querySelectorAll("td:nth-child("+(col+1)+").droppable > [draggable]");
         var droppables = table.querySelectorAll("td:nth-child("+(col+1)+").droppable");
+
         // I have to copy the node list to a regular array
         // since modifying a node list is non-standard
         var draggables = [];
         for(var a = 0; a < draggablesDom.length; a++)
           draggables.push(draggablesDom[a]);
+
+        for(var a = 0; a < draggables.length; a++) {
+          draggables[a].setAttribute("data-column-number", col);
+          droppables[a].setAttribute("data-column-number", col);
+	}
+
+	if(!performShuffle)
+          continue;
 
         // then create an array which we will propagate in
         // random order to achieve best randomness...
@@ -1371,18 +1421,17 @@ runOnUserContent(function() {
             allInOrder = false;
           }
           droppables[a].appendChild(shuffled[a]);
-          shuffled[a].setAttribute("data-column-number", col);
-          droppables[a].setAttribute("data-column-number", col);
         }
       }
 
-      sortToMatchCheck(table); // do show feedback for initial, untouched table...
+      sortToMatchCheck(table, false); // do show feedback for initial, untouched table...
     }
   }
 
   sortToMatchSetup();
 
-  function sortToMatchCheck(sortToMatchTable) {
+  function sortToMatchCheck(sortToMatchTable, updateMagicField) {
+    var magicFieldSequence = "";
     var rows = sortToMatchTable.querySelectorAll("tr");
     for(var row = 0; row < rows.length; row++) {
       var tr = rows[row];
@@ -1393,16 +1442,29 @@ runOnUserContent(function() {
         // since I set the ID to be the same above with the wrapper
         // except draggable vs droppable, a simple string replace will
         // tell us if they are back where they are supposed to be!
+
+	// for the magic field, we want them all to be alphabet so it is single char A-Z that we string together
+	var magicFieldName = String.fromCharCode(65 + Number(d.getAttribute("data-table-cell-id")));
+	magicFieldSequence += magicFieldName;
+
         var thisOneCorrect = (d.parentNode.id == d.id.replace("draggable", "droppable"));
 
         if(!thisOneCorrect) {
           allCorrect = false;
-          break;
         }
       }
 
       if(all.length)
         tr.className = allCorrect ? "correct" : "incorrect";
+    }
+
+    if(updateMagicField) {
+        var magicField = sortToMatchTable.querySelector("[data-bz-retained]");
+        if(magicField) {
+            magicField.value = magicFieldSequence;
+            var e = new Event('change');
+	    magicField.dispatchEvent(e);
+        }
     }
   }
 });
