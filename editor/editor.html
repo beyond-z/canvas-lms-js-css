@@ -63,9 +63,10 @@
 					load(n);
 			">Open</button>
 			<button type="button" onclick="
+				// FIXME: if we are in source view, save that not the html
 				var node = document.getElementById('editor').cloneNode(true);
 				unwrapStuffForEditing(node);
-				EditorApi.save(currentlyLoaded.id, node.innerHTML).
+				EditorApi.save(currentlyLoaded.fileId, currentlyLoaded.id, node.innerHTML).
 					get(function(id) {
 						currentlyLoaded.branchPoint = currentlyLoaded.id;
 						currentlyLoaded.id = id;
@@ -78,10 +79,12 @@
 				unwrapStuffForEditing(node);
 				var tag = prompt('Tag');
 				if(tag !== null)
-				EditorApi.save(currentlyLoaded.branchPoint, node.innerHTML, tag).
+				EditorApi.save(currentlyLoaded.fileId, currentlyLoaded.branchPoint, node.innerHTML, tag).
 					get(function(id) {
 						currentlyLoaded.id = id;
 						currentlyLoaded.branchPoint = id;
+
+						history.pushState(null, null, EditorApi._apiBase + 'edit?id=' + id);
 					});
 			">Save As</button>
 			<button type="button" onclick="
@@ -134,6 +137,7 @@
 
 		<div id="bz-buttons">
 			<button type="button" onclick="insertBox();">Insert Box</button>
+			<button type="button" onclick="document.execCommand('insertHTML', false, '<table><tr><th></th></tr></table>')">Insert Table</button>
 		</div>
 	</div>
 

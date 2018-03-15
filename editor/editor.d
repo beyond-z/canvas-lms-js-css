@@ -12,12 +12,16 @@
 
 		and pulling from production should be updated more often
 
-		branches.json:
+		branches.sqlite (it does it for atomicness):
 			{
 				// there is also a 1.html.la
 				"1.html" : {
-					"branch_name" : "latest_commit",
 					"production" : "latest on prod"
+					"ordinal" : 1 // the module number
+
+					// the rest are user-defined
+					"branch_name" : "latest_commit",
+					"other_branch_name" : "its_latest_commit"
 				}
 			}
 */
@@ -178,7 +182,7 @@ class EditorApi : ApiProvider {
 		document.requireSelector("#module-container").appendChild(load(id).render(this).removeFromTree);
 
 		foreach(thing; document.querySelectorAll("[data-replace-with-page]")) {
-			// fIXME
+			// FIXME
 			thing.innerHTML = readText("data/" ~ thing.dataset.replaceWithPage ~ ".html");
 		}
 
@@ -370,11 +374,13 @@ class EditorApi : ApiProvider {
 		Params:
 			basedOn = ID of the last version you are changing
 			html    = the new HTML you want to save
+			fileId  = the file you are working on
 	+/
-	string save(string basedOn, Html html, string tag = "", ushort flags = 0) {
+	string save(int fileId, string basedOn, Html html, string branch = "working", string tag = "", ushort flags = 0) {
 		// it saves it as a diff from the base...
-		string[] r1 = normalizeHtml(load(basedOn).render(this));
-		string[] r2 = normalizeHtml(Element.make("div", html).requireSelector(".bz-module"));
+		auto base = load(basedOn);
+		string[] r1 = normalizeHtml(base.render(this));
+		string[] r2 = normalizeHtml(Element.make("root", html)); //.requireSelector(".bz-module"));
 
 		auto path = levenshteinDistanceAndPath(r1, r2);
 
@@ -393,6 +399,7 @@ class EditorApi : ApiProvider {
 		ushort headerLength = 0;
 		headerLength +=
 			4 /* magic number */ +
+			4 /* file Id */ +
 			6 /* length, version, flags */ +
 			4 /* timestamp */ +
 			basedOn.length + editedBy.length + tag.length + mergeId.length + comment.length + 5 /* zero terminators */;
@@ -405,6 +412,11 @@ class EditorApi : ApiProvider {
 		data ~= (fileFormatVersion >>  8) & 0xff;
 		data ~= (flags >>  0) & 0xff;
 		data ~= (flags >>  8) & 0xff;
+
+		data ~= (fileId >> 0) & 0xff;
+		data ~= (fileId >> 8) & 0xff;
+		data ~= (fileId >> 16) & 0xff;
+		data ~= (fileId >> 24) & 0xff;
 
 		data ~= cast(ubyte[]) tag;
 		data ~= 0;
@@ -510,7 +522,26 @@ class EditorApi : ApiProvider {
 
 		// don't compress the header so it is easier to examine the file
 		// and it wouldn't be squashed that much anyway
-		std.file.write("data/" ~ id.toString() ~ ".dat", header ~ compress(data));
+		std.file.write("data/revisions/" ~ id.toString() ~ ".dat", header ~ compress(data));
+
+		auto db = openBranchDatabase();
+		if(db.query("SELECT latest_commit FROM branches WHERE file_id = ? AND name = ?", fileId, branch).empty)
+			db.query("
+			INSERT INTO
+				branches
+				(file_id, name, latest_commit)
+			VALUES
+				(?, ?, ?)
+			", fileId, branch, id.toString());
+		else
+			db.query("
+			UPDATE
+				branches
+			SET
+				latest_commit = ?
+			WHERE
+				file_id = ? AND name = ?
+			", id.toString(), fileId, branch);
 
 		return id.toString();
 	}
@@ -539,11 +570,13 @@ class EditorApi : ApiProvider {
 
 		// and here we go!
 
+		auto bdb = openBranchDatabase();
+
 		foreach(mod; modules) {
 			if(mod.published == false)
 				continue;
 			if(mod.name == "Braven Resources")
-				break; // we end after getting past the single-page modules
+				break; // we end after getting past the main modules
 
 			// writeln("Updating ", mod.position, " - ", mod.name);
 
@@ -552,20 +585,32 @@ class EditorApi : ApiProvider {
 			foreach(item; mod.items) {
 				auto page = canvas.request(item.url.get!string).result;
 
-				import std.file;
-				auto filename = "data/" ~ mod.position.get!string;
-				if(partNum)
-					filename = "data/" ~ item.title.get!string;
-				filename ~= ".html";
-				if(0 && std.file.exists(filename)) {
-					// update the prod branch
-					// FIXME
-				} else {
-					// create the module
-					std.file.write(filename,
-						replace(htmlBefore, "TITLE_HERE", "Module " ~mod.position.get!string ~ ": " ~ mod.name.get!string)
-						~ page["body"].get!string ~ htmlAfter);
+				int id;
+				string prodCommit;
+				foreach(r; bdb.query("SELECT id, latest_production_commit FROM files WHERE name = ?", mod.name.get!string)) {
+					id = r[0].to!int;
+					prodCommit = r[1].to!string;
 				}
+
+				if(!id) {
+					foreach(r; bdb.query("SELECT coalesce(max(id), 0) FROM files"))
+						id = r[0].to!int + 1;
+
+					bdb.query("INSERT INTO files (id, name, module_number, subnumber, latest_production_commit) VALUES (?, ?, ?, ?, ?)",
+						id, item.title.get!string, mod.position.get!string, partNum, "");
+				}
+
+				// create the module
+				auto commitId = save(id, prodCommit, Html(page["body"].get!string), "working");
+
+				bdb.query("UPDATE files SET latest_production_commit = ? WHERE id = ?", commitId, id);
+
+				/*
+				std.file.write(filename,
+					replace(htmlBefore, "TITLE_HERE", "Module " ~mod.position.get!string ~ ": " ~ mod.name.get!string)
+					~ page["body"].get!string
+					~ htmlAfter);
+				*/
 
 				partNum++;
 			}
@@ -682,6 +727,7 @@ class EditorApi : ApiProvider {
 		import std.file;
 		Element div = Element.make("div");
 		Element[string][string] names;
+		// FIXME
 		foreach(name; dirEntries("data/", "*.html", SpanMode.shallow)) {
 			Element[string] mod;
 			auto document = new Document(readText(name));
@@ -760,125 +806,159 @@ class EditorApi : ApiProvider {
 	}
 
 	/++
-		Loads the bz-module revision with the given ID
+		Returns the commit ID for the given branch of a file.
+	+/
+	string readBranch(string filename, string branch) {
+		auto bdb = openBranchDatabase();
+		if(branch == "production")
+			foreach(file; bdb.query("SELECT  latest_production_commit FROM files WHERE name = ?", filename))
+				return file[0];
+		else
+			foreach(file; bdb.query("
+				SELECT
+					latest_commit
+				FROM
+					branches
+				INNER JOIN
+					files ON branches.file_id = files.id
+				WHERE
+					files.name = ?
+					AND
+					branches.name = ?
+			", filename, branch))
+			{
+				return file[0];
+			}
+
+		return null;
+	}
+
+	/++
+		Loads the bz-module revision with the given commit ID
+
+		See_also: [readBranch]
 	+/
 	RevisionData load(string id) {
 		id = sanitizeId(id);
-		if(std.file.exists("data/" ~ id ~ ".dat")) {
+		if(id.length && std.file.exists("data/revisions/" ~ id ~ ".dat")) {
 			auto data = loadRevision(id);
 			data.render(this); // populates the html field
 			return data;
-		} else if(std.file.exists("data/" ~ id ~ ".html")) {
-			RevisionData b;
-			b.isHtml = true;
-			b.id = id;
-			b.render(this);
-			return b;
-		} else {
-			return RevisionData.init;
 		}
+		return RevisionData.init;
 	}
 
+	/++
+		Loads details about a particular commit
+	+/
 	RevisionData loadRevision(string id) {
 		RevisionData data;
 
 		if(id is null)
 			return data;
 
-		if(std.file.exists("data/" ~ id ~ ".dat")) {
-			auto rawData = cast(ubyte[]) std.file.read("data/" ~ id ~ ".dat");
+		if(!std.file.exists("data/revisions/" ~ id ~ ".dat"))
+			throw new Exception("revision " ~ id ~ " not found");
 
-			int pos = 0;
+		auto rawData = cast(ubyte[]) std.file.read("data/revisions/" ~ id ~ ".dat");
 
-			// magic number: BZME == "BZ Module Editor"
-			if(!(rawData[pos++] == 'B' &&
-				rawData[pos++] == 'Z' &&
-				rawData[pos++] == 'M' &&
-				rawData[pos++] == 'E'))
-			{
-				throw new Exception("Wrong file format");
-			}
+		int pos = 0;
 
-			ushort headerLength;
-			headerLength |= rawData[pos++];
-			headerLength |= rawData[pos++];
-
-			ushort fileFormatVersion;
-			fileFormatVersion |= rawData[pos++];
-			fileFormatVersion |= rawData[pos++];
-			ushort flags;
-			flags |= rawData[pos++];
-			flags |= rawData[pos++];
-			string tag;
-			auto tagStart = pos;
-			while(rawData[pos])
-				pos++;
-			tag = cast(string) rawData[tagStart .. pos];
-			pos++; // skip 0 terminator
-
-			string basedOn;
-			auto basedOnStart = pos;
-			while(rawData[pos])
-				pos++;
-			basedOn = cast(string) rawData[basedOnStart .. pos];
-			pos++; // skip 0 terminator
-			uint timestamp;
-			timestamp |= rawData[pos++];
-			timestamp |= rawData[pos++] << 8;
-			timestamp |= rawData[pos++] << 16;
-			timestamp |= rawData[pos++] << 24;
-			string editedBy;
-			auto start = pos;
-			while(rawData[pos])
-				pos++;
-			editedBy = cast(string) rawData[start .. pos];
-			pos++; // skip 0 terminator
-
-			string mergeId;
-			start = pos;
-			while(rawData[pos])
-				pos++;
-			mergeId = cast(string) rawData[start .. pos];
-			pos++; // skip 0 terminator
-
-			string comment;
-			start = pos;
-			while(rawData[pos])
-				pos++;
-			comment = cast(string) rawData[start .. pos];
-			pos++; // skip 0 terminator
-
-
-
-			if(pos != headerLength) {
-				throw new Exception("corrupted file");
-			}
-
-			ubyte[] diffData = cast(ubyte[]) uncompress(rawData[pos .. $]);
-
-			data.id = id;
-			data.fileFormatVersion = fileFormatVersion;
-			data.flags = flags;
-			data.tag = tag;
-			data.basedOn = basedOn;
-			data.timestamp = timestamp;
-			data.editedBy = editedBy;
-			data.mergeId = mergeId;
-			data.comment = comment;
-			data.diffData = diffData;
-		} else if(std.file.exists("data/" ~ id ~ ".html")) {
-			data.id = id;
-			data.isHtml = true;
+		// magic number: BZME == "BZ Module Editor"
+		if(!(rawData[pos++] == 'B' &&
+			rawData[pos++] == 'Z' &&
+			rawData[pos++] == 'M' &&
+			rawData[pos++] == 'E'))
+		{
+			throw new Exception("Wrong file format");
 		}
+
+		ushort headerLength;
+		headerLength |= rawData[pos++];
+		headerLength |= rawData[pos++] << 8;
+
+		ushort fileFormatVersion;
+		fileFormatVersion |= rawData[pos++];
+		fileFormatVersion |= rawData[pos++] << 8;
+		ushort flags;
+		flags |= rawData[pos++];
+		flags |= rawData[pos++] << 8;
+
+		int fileId;
+		fileId |= rawData[pos++];
+		fileId |= rawData[pos++] << 8;
+		fileId |= rawData[pos++] << 16;
+		fileId |= rawData[pos++] << 24;
+
+		string tag;
+		auto tagStart = pos;
+		while(rawData[pos])
+			pos++;
+		tag = cast(string) rawData[tagStart .. pos];
+		pos++; // skip 0 terminator
+
+		string basedOn;
+		auto basedOnStart = pos;
+		while(rawData[pos])
+			pos++;
+		basedOn = cast(string) rawData[basedOnStart .. pos];
+		pos++; // skip 0 terminator
+		uint timestamp;
+		timestamp |= rawData[pos++];
+		timestamp |= rawData[pos++] << 8;
+		timestamp |= rawData[pos++] << 16;
+		timestamp |= rawData[pos++] << 24;
+		string editedBy;
+		auto start = pos;
+		while(rawData[pos])
+			pos++;
+		editedBy = cast(string) rawData[start .. pos];
+		pos++; // skip 0 terminator
+
+		string mergeId;
+		start = pos;
+		while(rawData[pos])
+			pos++;
+		mergeId = cast(string) rawData[start .. pos];
+		pos++; // skip 0 terminator
+
+		string comment;
+		start = pos;
+		while(rawData[pos])
+			pos++;
+		comment = cast(string) rawData[start .. pos];
+		pos++; // skip 0 terminator
+
+
+
+		if(pos != headerLength) {
+			throw new Exception("corrupted file");
+		}
+
+		ubyte[] diffData = cast(ubyte[]) uncompress(rawData[pos .. $]);
+
+		data.id = id;
+		data.fileFormatVersion = fileFormatVersion;
+		data.flags = flags;
+		data.fileId = fileId;
+		data.tag = tag;
+		data.basedOn = basedOn;
+		data.timestamp = timestamp;
+		data.editedBy = editedBy;
+		data.mergeId = mergeId;
+		data.comment = comment;
+		data.diffData = diffData;
 
 		return data;
 	}
 
+	///
 	static struct RevisionData {
 		string id; // stored as file name
 		// actually in file
 		ushort fileFormatVersion;
 		ushort flags;
+		int fileId;
 		string tag;
 		string basedOn;
 		uint timestamp;
@@ -887,22 +967,27 @@ class EditorApi : ApiProvider {
 		string comment;
 		ubyte[] diffData;
 
-		bool isHtml;
-
 		Element rendered;
 		Element render(EditorApi _this) {
 			if(rendered is null) {
 				if(id is null) {
 					return new TextNode(null, null);
 				}
+				/*
 				if(isHtml) {
 					auto html = std.file.readText("data/" ~ id ~ ".html");
 					auto normalized = normalizeHtml(Element.make("div", Html(html)).requireSelector(".bz-module"));
 					rendered = (new Document(normalized.join("\n"))).requireSelector(".bz-module");
 				} else {
-					auto basedOnElement = _this.load(basedOn).render(_this);
-					rendered = applyBinaryDiff(basedOnElement, diffData);
+				*/
+				Element basedOnElement;
+				if(basedOn) {
+					basedOnElement = _this.load(basedOn).render(_this);
+				} else {
+					basedOnElement = Element.make("root");
 				}
+				rendered = applyBinaryDiff(basedOnElement, diffData);
+				//rendered = rendered.requireSelector(".bz-module");
 			}
 			return rendered;
 		}
@@ -910,6 +995,7 @@ class EditorApi : ApiProvider {
 		enum Flags : ushort {
 			autoSave = 	1 << 0,
 			merge = 	1 << 1, // the data of the file starts with the other merge id. or something
+			complete = 	1 << 2, // the data is a complete dump rather than a diff (may be set periodically to avoid excessively O(n) loads)
 		}
 
 		RevisionData[] allParents(EditorApi api) {
@@ -1245,6 +1331,20 @@ class EditorApi : ApiProvider {
 		}
 	}
 
+	Element files2() {
+		auto bdb = openBranchDatabase();
+		auto div = Element.make("div");
+		auto list = div.addChild("ol");
+		foreach(file; bdb.query("SELECT id, name, latest_production_commit FROM files ORDER BY module_number, subnumber")) {
+			auto li = list.addChild("li", Element.make("a", file[1], "/edit?id=" ~ file[2]));
+			auto ul = li.addChild("ul");
+			foreach(branch; bdb.query("SELECT name, latest_commit FROM branches WHERE file_id = ?", file[0]))
+				auto sli = ul.addChild("li", Element.make("a", branch[0], "/edit?id=" ~ branch[1]));
+
+		}
+		return div;
+	}
+
 	FilesResult files() {
 		import std.file;
 
@@ -1255,20 +1355,22 @@ class EditorApi : ApiProvider {
 
 		RevisionData[string] helper;
 
-		foreach(string name; dirEntries("data/", "*.html", SpanMode.shallow)) {
-			auto document = new Document(readText(name));
-			auto id = name["data/".length .. $-".html".length];
 
+		/*
+		auto bdb = openBranchDatabase();
+		// FIXME
+		foreach(row; bdb.query("SELECT module_number, name, latest_production_commit FROM files WHERE subnumber = 0")) {
 			RevisionData data;
-			data.id = id;
+			data.id = row[3];
 			results ~= data;
-			roots ~= id;
-			titles[id] = document.title;
+			roots ~= row[3];
+			titles[row[3]] = name[0];
 			helper[data.id] = data;
 		}
+		*/
 
-		foreach(string name; dirEntries("data/", "*.dat", SpanMode.shallow)) {
-			auto data = loadRevision(name["data/".length .. $-".dat".length]);
+		foreach(string name; dirEntries("data/revisions", "*.dat", SpanMode.shallow)) {
+			auto data = loadRevision(name["data/revisions/".length .. $-".dat".length]);
 			data.diffData = null;
 			results ~= data;
 			if(data.basedOn.length == 0)
@@ -1497,7 +1599,7 @@ Element applyBinaryDiff(Element basedOn, const(ubyte)[] binaryDiff) {
 		}
 	}
 
-	return Element.make("div", Html(lines.join("\n"))).requireSelector(".bz-module");
+	return Element.make("root", Html(lines.join("\n")));//.requireSelector(".bz-module");
 }
 
 import core.stdc.time;
@@ -1708,6 +1810,37 @@ HttpApiClient!() getCanvasApiClient(CanvasCredentials credentials) {
 }
 
 import arsd.sqlite;
+
+Sqlite openBranchDatabase() {
+	return openDBAndCreateIfNotPresent("data/branches.db", `
+		CREATE TABLE files (
+			id INTEGER NOT NULL,
+			name TEXT NOT NULL UNIQUE,
+
+			module_number INTEGER NOT NULL UNIQUE,
+			subnumber INTEGER NOT NULL,
+
+			latest_production_commit TEXT NOT NULL,
+
+			UNIQUE(module_number, subnumber),
+
+			PRIMARY KEY (name)
+		);
+
+		CREATE TABLE branches (
+			file_id INTEGER NOT NULL,
+			name TEXT NOT NULL,
+
+			latest_commit TEXT NOT NULL,
+
+			FOREIGN KEY (file_id) REFERENCES files(id) ON DELETE CASCADE ON UPDATE CASCADE,
+
+			PRIMARY KEY (file_id, name)
+		);
+	`);
+}
+
+
 Sqlite openProductionMagicFieldDatabase() {
 	return openDBAndCreateIfNotPresent("data/prod-magic-fields.db", `
 		CREATE TABLE magic_fields (

@@ -4,11 +4,11 @@ var selectionButtons = [
 	"bold",
 	"italic",
 	"underline",
-	"dottedlist",
-	"numberedlist",
-	"quote",
-	"clean",
-	"format",
+	"insertUnorderedList",
+	"insertOrderedList",
+	{ icon: "quote", command: "formatBlock", argument: "BLOCKQUOTE"},
+	"removeFormat",
+	//"format",
 	"hyperlink",
 	"justifyleft",
 	"justifycenter",
@@ -16,9 +16,9 @@ var selectionButtons = [
 	"copy",
 	"cut",
 	"paste",
-	"indent",
-	"outdent",
-	"print",
+	//"indent",
+	//"outdent",
+	//"print",
 	"undo",
 	"redo",
 ];
@@ -72,7 +72,8 @@ HTMLElement.prototype.addChild = function(tag, arg1, arg2) {
 };
 
 var currentlyLoaded = {
-	id: null
+	id: null,
+	fileId: 0
 };
 
 function listMagicFields() {
@@ -466,18 +467,32 @@ window.onload = function() {
 	document.execCommand("enableObjectResizing", false, false);
 	document.execCommand("enableInlineTableEditing", false, false);
 	document.execCommand("styleWithCSS", false, false);
+	document.execCommand("defaultParagraphSeparator", false, "p");
+	document.execCommand("insertBrOnReturn", false, false);
 
 	selectionButtons.forEach(function(e) {
+		var icon, command, argument, title;
+		if(typeof e == "object") {
+			icon = e.icon;
+			command = e.command;
+			argument = e.argument;
+			title = e.title ? e.title : e.icon;
+		} else {
+			icon = e;
+			command = e;
+			title = e;
+			argument = null;
+		}
 		var sb = document.getElementById("selection-buttons");
 		var button = document.createElement("button");
 		var img = document.createElement("img");
-		img.src = EditorApi._apiBase + "/icons/" + e + ".png";
-		img.alt = e;
+		img.src = EditorApi._apiBase + "/icons/" + icon + ".png";
+		img.alt = title;
 		button.appendChild(img);
-		button.setAttribute("title", e);
+		button.setAttribute("title", title);
 		button.setAttribute("type", "button");
 		button.onclick = function() {
-			document.execCommand(e);
+			document.execCommand(command, false, argument);
 		};
 		sb.appendChild(button);
 	});
@@ -743,6 +758,7 @@ function load(id) {
 		e.innerHTML = data.rendered;
 		wrapStuffForEditing(e);
 		currentlyLoaded.id = data.id;
+		currentlyLoaded.fileId = data.fileId;
 		currentlyLoaded.branchPoint = data.basedOn;
 	});
 }

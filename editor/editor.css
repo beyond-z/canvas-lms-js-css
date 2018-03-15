@@ -220,6 +220,8 @@ body > div {
 	width: 30px;
 	height: 30px;
 	overflow: hidden;
+	vertical-align: bottom;
+	margin: 1px;
 }
 
 #editor iframe {
