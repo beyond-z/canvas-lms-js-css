@@ -2274,3 +2274,23 @@ table [type="range"] {
 .my-cohort-info-page h1 {
     font-size: 2em;
 }
+
+.grade-explained {
+	position: absolute;
+	left: -220px;
+	width: 200px;
+	padding: 0.25em;
+	box-sizing: border-box;
+	white-space: pre-line;
+	font-family: "TradeGothicNo.20-CondBold", "Oswald", sans-serif;
+	text-transform: uppercase;
+	border-left: 10px #EB3B46 solid;
+}
+
+.grade-explained.correct {
+	border-color: green;
+}
+
+.grade-explained.partial {
+	border-color: gold;
+}
