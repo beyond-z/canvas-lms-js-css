@@ -1596,6 +1596,42 @@ table [type="range"] {
 /* TBD */
 }
 
+/* Show Resources Briefcase as list of icons */
+.bz-icons-list {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    width: 100%;
+    margin: 30px 0 0;
+    padding: 0;
+}
+
+.bz-icons-list li {
+    box-sizing: border-box;
+    display: block;
+    width: 25%;
+    padding: 0.5em;
+    padding-top: 120px;
+    text-align: center;
+    position: relative;
+}
+
+.bz-icons-list a {
+    text-decoration: none;
+}
+
+.bz-icons-list a:before {
+    content:' ';
+    background: #CCC;
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    top: 0;
+    left: calc( (100% - 100px) / 2 );
+    border-radius: 50px;
+}
+
 /* Styling for quizzes/assignments that use magic fields to layout complex content */
 
 .btn, .Button--primary {
