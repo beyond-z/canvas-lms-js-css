@@ -1643,20 +1643,19 @@ table [type="range"] {
 }
 
 .bz-icon-inline::before {
-    left: 2px;
-    transform: scale(0.23); 
-    transform-origin: 0 0;
 }
 
 .bz-icons-list a:hover::before {
     background-color: #5BBBBA;
 }
 
-.bz-icon-smart-goals::before {
+.bz-icon-smart-goals::before,
+[href~='pages/1-1-coaching-conversations-with-your-leadership-coach'] {
     background-position: 0 -100px;
 }
 
-.bz-icon-1on1::before {
+.bz-icon-1on1::before,
+[href~='pages/smart-goals'] {
     background-position: 0 -200px;
 }
 
@@ -1664,23 +1663,28 @@ table [type="range"] {
     background-position: 0 -300px;
 }
 
-.bz-icon-linkedin::before {
+.bz-icon-linkedin::before,
+[href~='pages/write-a-strong-linkedin-summary-statement'] {
     background-position: 0 -400px;
 }
 
-.bz-icon-email::before {
+.bz-icon-email::before,
+[href~='pages/write-great-emails'] {
     background-position: 0 -500px;
 }
 
-.bz-icon-icebreakers::before {
+.bz-icon-icebreakers::before,
+[href~='pages/conversation-starters-for-networking-events'] {
     background-position: 0 -600px;
 }
 
-.bz-icon-elevator::before {
+.bz-icon-elevator::before,
+[href~='pages/elevator-pitch-template'] {
     background-position: 0 -700px;
 }
 
-.bz-icon-questions::before {
+.bz-icon-questions::before,
+[href~='pages/informational-interview-questions-list'] {
     background-position: 0 -800px;
 }
 
@@ -1692,39 +1696,48 @@ table [type="range"] {
     background-position: 0 -1000px;
 }
 
-.bz-icon-resume-bank::before {
+.bz-icon-resume-bank::before,
+[href~='pages/resume-and-cover-letter-bank'] {
     background-position: 0 -1100px;
 }
 
-.bz-icon-more-resources::before {
+.bz-icon-more-resources::before,
+[href~='pages/recommended-resources-for-your-opportunity-hunt'] {
     background-position: 0 -1200px;
 }
 
-.bz-icon-scorecard::before {
+.bz-icon-scorecard::before,
+[href~='pages/rank-opportunities-with-the-career-accelerating-scorecard'] {
     background-position: 0 -1300px;
 }
 
-.bz-icon-interview::before {
+.bz-icon-interview::before,
+[href~='pages/interview-response-frameworks'] {
     background-position: 0 -1400px;
 }
 
-.bz-icon-technical-iv::before {
+.bz-icon-technical-iv::before,
+[href~='pages/technical-interviews-for-software-engineers-and-computer-scientists'] {
     background-position: 0 -1500px;
 }
 
-.bz-icon-design-thinking::before {
+.bz-icon-design-thinking::before,
+[href~='pages/design-thinking'] {
     background-position: 0 -1600px;
 }
 
-.bz-icon-finance::before {
+.bz-icon-finance::before,
+[href~='pages/personal-finance'] {
     background-position: 0 -1700px;
 }
 
-.bz-icon-excel::before {
+.bz-icon-excel::before,
+[href~='pages/excel'] {
     background-position: 0 -1800px;
 }
 
-.bz-icon-site-visit::before {
+.bz-icon-site-visit::before,
+[href~='pages/site-visit-professionalism'] {
     background-position: 0 -1900px;
 }
 
