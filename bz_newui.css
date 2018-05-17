@@ -1741,6 +1741,11 @@ table [type="range"] {
     background-position: 0 -1900px;
 }
 
+.bz-icon-resources::before,
+[href~='pages/braven-resources'] {
+    background-position: 0 -2000px;
+}
+
 /* Styling for quizzes/assignments that use magic fields to layout complex content */
 
 .btn, .Button--primary {
