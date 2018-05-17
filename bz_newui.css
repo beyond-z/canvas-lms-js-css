@@ -1643,6 +1643,9 @@ table [type="range"] {
 }
 
 .bz-icon-inline::before {
+    left: 2px;
+    transform: scale(0.23);
+    transform-origin: 0 0;
 }
 
 .bz-icons-list a:hover::before {
