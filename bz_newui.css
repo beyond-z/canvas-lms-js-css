@@ -1628,7 +1628,7 @@ table [type="range"] {
     width: 100px;
     height: 100px;
     border-radius: 50px;
-    position: absolute;
+    position: absolute !important;
     top: 0;
     background-image: url('images/lms-resources-icons.png');
 }
@@ -1747,6 +1747,7 @@ table [type="range"] {
 .bz-icon-resources::before,
 [href~='pages/braven-resources'] {
     background-position: 0 -2000px;
+    background-color: #EB3B46 !important;
 }
 
 /* Styling for quizzes/assignments that use magic fields to layout complex content */
