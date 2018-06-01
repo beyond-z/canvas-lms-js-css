@@ -2430,9 +2430,6 @@ table [type="range"] {
 }
 
 .grade-explained {
-	position: absolute;
-	left: -220px;
-	width: 200px;
 	padding: 0.25em;
 	box-sizing: border-box;
 	white-space: pre-line;
