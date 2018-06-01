@@ -56,7 +56,8 @@ th,
 .main-toc,
 .toggle-transcript,
 .ic-notification__title,
-.bz-button-pick-up {
+.bz-button-pick-up,
+.bz-explain-grade-link a {
 	font-family: "TradeGothicNo.20-CondBold", "Oswald", sans-serif;
 	text-transform: uppercase;
 	line-height: normal;
@@ -803,24 +804,24 @@ progress[value]::-webkit-progress-bar {
   color: white;
   font-weight: bold;
   position: absolute;
-  bottom: 20px;
-  left: 10px;
-  right: 10px;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 30px;
 }
 
 .bz-course-part-module-box.completed .bz-button-pick-up {
-  color: green;
-  background-color: transparent;
+  color: #FFF;
+  background-color: green;
 }
 
-.bz-course-part-module-box.completed .bz-button-pick-up::before {
+.bz-course-part-module-box .bz-button-pick-up::before {
   content: "\a0";
-  background-image: url("dynamic-syllabus-icons-completed.png");
   background-repeat: no-repeat;
   background-size: contain;
   display: inline-block;
   height: 2em;
-  width: 2em;
+  width: 1px;
   vertical-align: middle;
 }
 
@@ -2429,10 +2430,17 @@ table [type="range"] {
     font-size: 2em;
 }
 
+.bz-explain-grade-link {
+    position: absolute;
+    display: block;
+    bottom: 30px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    z-index: 2
+}
+
 .grade-explained {
-	position: absolute;
-	left: -220px;
-	width: 200px;
 	padding: 0.25em;
 	box-sizing: border-box;
 	white-space: pre-line;
