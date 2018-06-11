@@ -176,6 +176,34 @@ class EditorApi : ApiProvider {
 		return null;
 	}
 
+	string[] grep(string str) {
+		string[] result;
+		auto bdb = openBranchDatabase();
+		foreach(file; bdb.query("SELECT name, latest_production_commit FROM files")) {
+			auto info = load(file[1]);
+
+			auto html = info.rendered;
+
+			auto txt = html.toString();//innerText;
+			if(txt.indexOf(str) != -1)
+				result ~= file[0];
+		}
+		return result;
+	}
+
+	Document viewHtml(string html) {
+		import std.file;
+		auto document = new Document(readText("module.html"), true, true);
+		document.requireSelector("#module-container").appendChild(new DocumentFragment(Html(html)));
+
+		foreach(thing; document.querySelectorAll("[data-replace-with-page]")) {
+			// FIXME
+			thing.innerHTML = readText("data/" ~ thing.dataset.replaceWithPage ~ ".html");
+		}
+
+		return document;
+	}
+
 	Document view(string id, bool showMagicFieldTimings = false) {
 		import std.file;
 		auto document = new Document(readText("module.html"), true, true);
@@ -380,7 +408,7 @@ class EditorApi : ApiProvider {
 		// it saves it as a diff from the base...
 		auto base = load(basedOn);
 		string[] r1 = normalizeHtml(base.render(this));
-		string[] r2 = normalizeHtml(Element.make("root", html)); //.requireSelector(".bz-module"));
+		string[] r2 = normalizeHtml(new DocumentFragment(html)); //.requireSelector(".bz-module"));
 
 		auto path = levenshteinDistanceAndPath(r1, r2);
 
@@ -546,7 +574,73 @@ class EditorApi : ApiProvider {
 		return id.toString();
 	}
 
+	string pushToStaging(string fileId, string html) {
+		// first, find the file we have as a page in the staging content library
+		auto bdb = openBranchDatabase();
+
+		string canvasUrl;
+		foreach(line; bdb.query("SELECT canvas_page_name FROM files WHERE id = ?", fileId))
+			canvasUrl = line[0];
+
+		if(canvasUrl.length == 0)
+			return null;
+
+		if(canvasUrl.startsWith("https://portal.bebraven.org/api/v1/courses/1/pages/"))
+			canvasUrl = canvasUrl["https://portal.bebraven.org/api/v1/courses/1/pages/".length .. $];
+
+		// then update it
+		auto canvas = getCanvasApiClient(stagingCredentials());
+
+		var fix = var.emptyObject;
+		fix["wiki_page"] = var.emptyObject;
+		fix["wiki_page"]["body"] = html;
+
+		auto result = canvas.rest.courses[1].pages[canvasUrl].PUT(fix).result;
+
+		// then return the URL of the new page on Canvas
+
+		return "https://stagingportal.bebraven.org/courses/1/pages/" ~ canvasUrl;
+	}
+
+
+	string pushToProduction(string fileId, string html) {
+		// first, find the file we have as a page in the staging content library
+		auto bdb = openBranchDatabase();
+
+		string canvasUrl;
+		string prodCommit;
+		foreach(line; bdb.query("SELECT canvas_page_name, latest_production_commit FROM files WHERE id = ?", fileId)) {
+			canvasUrl = line[0];
+			prodCommit = line[1];
+		}
+
+		if(canvasUrl.length == 0)
+			return null;
+
+		if(canvasUrl.startsWith("https://portal.bebraven.org/api/v1/courses/1/pages/"))
+			canvasUrl = canvasUrl["https://portal.bebraven.org/api/v1/courses/1/pages/".length .. $];
+
+		// then update it
+		auto canvas = getCanvasApiClient(productionCredentials());
+
+		var fix = var.emptyObject;
+		fix["wiki_page"] = var.emptyObject;
+		fix["wiki_page"]["body"] = html;
+
+		auto result = canvas.rest.courses[1].pages[canvasUrl].PUT(fix).result;
+
+		// save it locally
+		// FIXME?
+		auto commitId = save(fileId.to!int, prodCommit, Html(html), "working");
+		bdb.query("UPDATE files SET latest_production_commit = ? WHERE id = ?", commitId, fileId);
+
+		// then return the URL of the new page on Canvas
+		return "https://portal.bebraven.org/courses/1/pages/" ~ canvasUrl;
+	}
+
+
 	void doProductionBranchUpdate() {
+		assert(0);
 		auto canvas = getCanvasApiClient(productionCredentials());
 
 		auto modulesRes = canvas.rest.
@@ -571,23 +665,34 @@ class EditorApi : ApiProvider {
 		// and here we go!
 
 		auto bdb = openBranchDatabase();
+		bool breakOnNext = false;
 
 		foreach(mod; modules) {
 			if(mod.published == false)
 				continue;
+			//if(breakOnNext)
+				//break;
 			if(mod.name == "Braven Resources")
-				break; // we end after getting past the main modules
+				breakOnNext = true;
+
+			if(mod.name != "Braven Resources")
+				continue;
 
 			// writeln("Updating ", mod.position, " - ", mod.name);
 
 			// FIXME: make this only download if actually needed
 			int partNum = 0;
 			foreach(item; mod.items) {
+				if(item.title != "Cover Letter Checklist") {
+				partNum++;
+					continue;
+				}
+
 				auto page = canvas.request(item.url.get!string).result;
 
 				int id;
 				string prodCommit;
-				foreach(r; bdb.query("SELECT id, latest_production_commit FROM files WHERE name = ?", mod.name.get!string)) {
+				foreach(r; bdb.query("SELECT id, latest_production_commit FROM files WHERE name = ?", item.title.get!string)) {
 					id = r[0].to!int;
 					prodCommit = r[1].to!string;
 				}
@@ -596,8 +701,9 @@ class EditorApi : ApiProvider {
 					foreach(r; bdb.query("SELECT coalesce(max(id), 0) FROM files"))
 						id = r[0].to!int + 1;
 
-					bdb.query("INSERT INTO files (id, name, module_number, subnumber, latest_production_commit) VALUES (?, ?, ?, ?, ?)",
-						id, item.title.get!string, mod.position.get!string, partNum, "");
+					import std.stdio; writeln("*** ",  mod.position.get!string, partNum);
+					bdb.query("INSERT INTO files (id, name, module_number, subnumber, latest_production_commit, canvas_page_name) VALUES (?, ?, ?, ?, ?, ?)",
+						id, item.title.get!string, mod.position.get!string, partNum, "", item.url.get!string);
 				}
 
 				// create the module
@@ -615,6 +721,63 @@ class EditorApi : ApiProvider {
 				partNum++;
 			}
 		}
+	}
+
+	string uploadFile(string description, Cgi.UploadedFile file) {
+
+		string contentHash = "unimplemented"; // FIXME
+		import std.datetime;
+		string lastChanged = Clock.currTime.toISOExtString;
+		import std.random;
+		int id = uniform(1, int.max);
+		import std.conv;
+
+		auto db = openUploadsDatabase();
+		db.query("INSERT INTO uploads
+			(id, description, name, size, content_type, content_hash, last_changed)
+			VALUES
+			(?, ?, ?, ?, ?, ?, ?)
+		", id, description, file.filename, file.fileSize(), file.contentType, contentHash, lastChanged);
+
+		import std.file;
+		mkdirRecurse("data/uploads");
+
+		file.writeToFile("data/uploads/" ~ to!string(id) ~ ".dat");
+
+		auto canvas = getCanvasApiClient(stagingCredentials()); // productionCredentials());
+		auto response = canvas.rest.courses[1].files.POST(
+			"name", file.filename,
+			"size", file.fileSize(),
+			"content_type", file.contentType,
+			"parent_folder_path", "editor_uploads"
+		).result;
+
+		auto url = response.upload_url.get!string;
+		auto fd = new FormData();
+		foreach(k, v; response.upload_params) {
+			fd.append(k.get!string, v.get!string);
+		}
+		fd.append("file", std.file.read("data/uploads/" ~ to!string(id) ~ ".dat"));
+
+		auto client = new HttpClient();
+		import arsd.http2 : Uri;
+		auto request2 = client.request(Uri(url), fd);
+		auto response2 = request2.waitForCompletion();
+
+		if(response2.code >= 400)
+			throw new Exception(response2.contentText);
+
+		auto canvasObject = canvas.request(response2.location, response2.code == 201 ? HttpVerb.GET : HttpVerb.POST).result;
+
+		db.query("UPDATE uploads SET staging_id = ? WHERE id = ?", canvasObject.id.get!string, id);
+
+		//production_id INTEGER NULL,
+		//staging_id INTEGER NULL,
+		return "https://stagingportal.bebraven.org/courses/1/files/"~canvasObject.id.get!string~"/preview";
+	}
+
+	string[] allClassNames() {
+		return null;
 	}
 
 	void doRosterUpdate() {
@@ -984,7 +1147,7 @@ class EditorApi : ApiProvider {
 				if(basedOn) {
 					basedOnElement = _this.load(basedOn).render(_this);
 				} else {
-					basedOnElement = Element.make("root");
+					basedOnElement = null;
 				}
 				rendered = applyBinaryDiff(basedOnElement, diffData);
 				//rendered = rendered.requireSelector(".bz-module");
@@ -1026,7 +1189,6 @@ class EditorApi : ApiProvider {
 						all ~= api.loadRevision(all[pos].mergeId);
 				}
 				pos++;
-
 			}
 
 			return all;
@@ -1051,6 +1213,8 @@ class EditorApi : ApiProvider {
 				a = whatParents;
 				b = intoParents;
 			}
+
+		//assert(0, to!string(intoParents.map!("a.id")) ~ " ---- " ~ to!string(whatParents.map!("a.id")));
 
 			outer: foreach(p; a)
 				foreach(p2; b)
@@ -1331,21 +1495,30 @@ class EditorApi : ApiProvider {
 		}
 	}
 
-	Element files2() {
+	Element files() {
 		auto bdb = openBranchDatabase();
 		auto div = Element.make("div");
-		auto list = div.addChild("ol");
-		foreach(file; bdb.query("SELECT id, name, latest_production_commit FROM files ORDER BY module_number, subnumber")) {
-			auto li = list.addChild("li", Element.make("a", file[1], "/edit?id=" ~ file[2]));
+		string lastModule;
+		Element list;
+		foreach(file; bdb.query("SELECT id, name, latest_production_commit, module_number FROM files ORDER BY module_number, subnumber")) {
+			if(file[3] != lastModule) {
+				lastModule = file[3];
+				div.addChild("h3", "Module " ~ lastModule);
+				list = div.addChild("ol");
+			}
+			auto li = list.addChild("li", file[1]); // Element.make("a", file[1], "/edit?id=" ~ file[2]));
 			auto ul = li.addChild("ul");
-			foreach(branch; bdb.query("SELECT name, latest_commit FROM branches WHERE file_id = ?", file[0]))
-				auto sli = ul.addChild("li", Element.make("a", branch[0], "/edit?id=" ~ branch[1]));
+			foreach(branch; bdb.query("SELECT name, latest_commit FROM branches WHERE file_id = ?", file[0])) {
+				auto sli = ul.addChild("li", Element.make("a", branch[0], "/edit?fileId=" ~ file[0] ~ "&branch=" ~ branch[0]));
+				sli.appendText(" ");
+				auto cl = sli.addChild("a", "[Changes]", "/diff?v1=" ~ file[2] ~ "&v2=" ~ branch[1]);
+			}
 
 		}
 		return div;
 	}
 
-	FilesResult files() {
+	FilesResult reflog() {
 		import std.file;
 
 		RevisionData[] results;
@@ -1397,11 +1570,23 @@ class EditorApi : ApiProvider {
 		return FilesResult(helper, roots, leafs, titles);
 	}
 
-	Document edit(string id) {
+	Document edit(int fileId = 0, string branch = "working", string id = null) {
 		import std.file;
 		auto document = new Document(readText("editor.html"), true, true);
 		_postProcess(document);
-		document.mainBody.addChild("script", "load(" ~ var(id).toJson() ~ ");");
+		if(fileId && branch.length && id is null) {
+			auto bdb = openBranchDatabase();
+			foreach(res; bdb.query("SELECT latest_commit FROM branches WHERE file_id = ? AND name = ?", fileId, branch))
+				id = res[0];
+
+			document.mainBody.addChild("script", "loadObject(" ~ toJson(load(id)) ~ ", "~var(branch).toJson~");");
+		} else if(fileId && branch.length) {
+			// specific id inside the branch
+			assert(0, "FIXME");
+		} else {
+			// specific id, no branch info
+			document.mainBody.addChild("script", "load(" ~ var(id).toJson() ~ ");");
+		}
 		return document;
 	}
 
@@ -1415,8 +1600,9 @@ class EditorApi : ApiProvider {
 		return document.requireElementById("generic-container");
 	}
 	public override Document _defaultPage() {
-		import std.file;
-		return new Document(readText("editor.html"), true, true);
+		auto e = _getGenericContainer();
+		e.appendChild(files());
+		return e.parentDocument;
 	}
 
 	protected override FileResource _catchAll(string path) {
@@ -1444,6 +1630,8 @@ class EditorApi : ApiProvider {
 
 			foreach(img; document.querySelectorAll("[src^=\"HERE/\"]"))
 				img.src = loc ~ img.src[5 .. $];
+			foreach(img; document.querySelectorAll("[href^=\"HERE/\"]"))
+				img.href = loc ~ img.href[5 .. $];
 
 			document.mainBody.addChild("script")
 				.setAttribute("id", "webd-functions-js")
@@ -1599,7 +1787,7 @@ Element applyBinaryDiff(Element basedOn, const(ubyte)[] binaryDiff) {
 		}
 	}
 
-	return Element.make("root", Html(lines.join("\n")));//.requireSelector(".bz-module");
+	return new DocumentFragment(Html(lines.join("\n")));//.requireSelector(".bz-module");
 }
 
 import core.stdc.time;
@@ -1817,10 +2005,12 @@ Sqlite openBranchDatabase() {
 			id INTEGER NOT NULL,
 			name TEXT NOT NULL UNIQUE,
 
-			module_number INTEGER NOT NULL UNIQUE,
+			module_number INTEGER NOT NULL,
 			subnumber INTEGER NOT NULL,
 
 			latest_production_commit TEXT NOT NULL,
+
+			canvas_page_name TEXT,
 
 			UNIQUE(module_number, subnumber),
 
@@ -1836,6 +2026,27 @@ Sqlite openBranchDatabase() {
 			FOREIGN KEY (file_id) REFERENCES files(id) ON DELETE CASCADE ON UPDATE CASCADE,
 
 			PRIMARY KEY (file_id, name)
+		);
+	`);
+}
+
+Sqlite openUploadsDatabase() {
+	return openDBAndCreateIfNotPresent("data/uploads.db", `
+		CREATE TABLE uploads (
+			id INTEGER NOT NULL,
+
+			name TEXT NOT NULL,
+			description TEXT NOT NULL,
+			size INTEGER NOT NULL,
+			content_type TEXT NOT NULL,
+			content_hash TEXT NOT NULL,
+
+			last_changed TEXT NOT NULL,
+
+			production_id INTEGER NULL,
+			staging_id INTEGER NULL,
+
+			PRIMARY KEY (id)
 		);
 	`);
 }

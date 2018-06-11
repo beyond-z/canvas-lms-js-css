@@ -1,21 +1,29 @@
 // note that .classList is null on text nodes...
 
+// FIXME: for-match, for-checklist
+
 var selectionButtons = [
 	"bold",
 	"italic",
 	"underline",
+	"",
 	"insertUnorderedList",
 	"insertOrderedList",
 	{ icon: "quote", command: "formatBlock", argument: "BLOCKQUOTE"},
+	"",
 	"removeFormat",
 	//"format",
-	"hyperlink",
+	{ icon: "hyperlink", command: "createLink", argument: "#" },
+	{ icon: "hyperlink", command: "unlink" },
+	"",
 	"justifyleft",
 	"justifycenter",
 	"justifyright",
+	"",
 	"copy",
 	"cut",
 	"paste",
+	"",
 	//"indent",
 	//"outdent",
 	//"print",
@@ -50,6 +58,8 @@ var selectionButtons = [
 	do conflict resolution by showing each thing and being
 		like "keep old version", "keep A", "keep B", or "merge both"
 */
+
+var viewingHtml = true;
 
 // convenience compatibility with dom.d
 HTMLElement.prototype.addChild = function(tag, arg1, arg2) {
@@ -137,6 +147,34 @@ function bzBoxType(ele) {
 		replace(/\s/g, '');
 }
 
+function addAttributeTextBox(parent, ele, attr) {
+	var input = document.createElement("input");
+	input.setAttribute("type", "text");
+	input.value = ele.getAttribute(attr);
+	input.onchange = function() {
+		ele.setAttribute(attr, input.value);
+	};
+	input.refersToInEditor = ele;
+	parent.appendChild(input);
+}
+
+function addStyleTextBox(parent, ele, attr, unit) {
+	if(!unit)
+		unit = "";
+	var input = document.createElement("input");
+	input.setAttribute("type", "text");
+	input.value = ele.style[attr].replace(unit, "");
+	input.onchange = function() {
+		if(input.value.length)
+			ele.style[attr] = input.value + unit;
+		else
+			ele.style[attr] = null;
+	};
+	input.refersToInEditor = ele;
+	parent.appendChild(input);
+}
+
+
 function getIfPresent(list, options) {
 	for(var i = 0; i < options.length; i++)
 		if(list.contains(options[i]))
@@ -162,8 +200,17 @@ function getSidebarBox(ele) {
 					if(header.textContent == def.defaultTitle)
 						isDefault = true;
 				});
-				if(isDefault)
+				if(isDefault) {
 					header.textContent = opt.defaultTitle;
+					if(opt.className == "video") {
+						// insert the default scaffolding for a video if empty
+						if(!ele.querySelector("h4 + *")) {
+							ele.innerHTML += "<figure><iframe allow=\"encrypted-media\" allowfullscreen width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/zHP4gPwJCDs\"></iframe><figcaption><p>Description here</p><p class=\"media-duration\">About 2 minutes</p></figcaption></figure>";
+							wrapStuffForEditing(ele);
+						}
+
+					}
+				}
 			}
 		}, bzBoxTypes, bzBoxType(ele)));
 
@@ -210,6 +257,13 @@ function getSidebarBox(ele) {
 				ele.classList.remove("to-columns");
 		}, ele.classList.contains("to-columns")));
 
+	// FIXME
+			dt = document.createElement("dt");
+			dt.textContent = "Checklist Max Score";
+			div.appendChild(dt);
+			dd = document.createElement("dd");
+			addAttributeTextBox(dd, ele, "data-bz-max-score");
+			div.appendChild(dd);
 
 
 		return div;
@@ -221,6 +275,16 @@ function getSidebarBox(ele) {
 		div.appendChild(makeSelect("Correctness:", function(opt) {
 			ele.className = opt;
 		}, ["", "correct", "incorrect", "maybe"], ele.className));
+		if(!ele.querySelector(".inline.feedback")) {
+			var button = document.createElement("button");
+			button.setAttribute("type", "button");
+			button.textContent = "Add Inline Feedback";
+			button.addEventListener("click", function() {
+				ele.innerHTML += "<p class=\"inline feedback\">Inline Feedback</p>";
+				selectAll(ele.querySelector(".inline.feedback").firstChild);
+			});
+			div.appendChild(button);
+		}
 		return div;
 	} else if(ele.tagName == "TABLE") {
 		var div = document.createElement("div");
@@ -237,7 +301,16 @@ function getSidebarBox(ele) {
 		var button = document.createElement("button");
 		button.textContent = "Insert Row";
 		button.onclick = function() {
-
+			var orig = ele.querySelector("tr");
+			var tr = orig.cloneNode(true);
+			var inside = tr.querySelectorAll("td");
+			for(var i = 0; i < inside.length; i++)
+				inside[i].innerHTML = "<p>&nbsp;</p>";
+			ele.appendChild(tr);
+			if(tr.querySelector("p")) {
+				selectAll(tr.querySelector("p"));
+				tr.querySelector("p").scrollIntoView();
+			}
 		};
 		div.appendChild(button);
 
@@ -256,7 +329,7 @@ function getSidebarBox(ele) {
 
 
 	var h3 = document.createElement("h3");
-	h3.textContent = "Tag: " + ele.tagName; // + (ele.id ? "#"+ele.id : "") + (ele.className.length? "."+ele.className.replace(" ", ".") : "");
+	h3.textContent = "<" + ele.tagName + ">"; // + (ele.id ? "#"+ele.id : "") + (ele.className.length? "."+ele.className.replace(" ", ".") : "");
 	div.appendChild(h3);
 	h3.style.cursor = "pointer";
 	h3.onclick = (function(ele) { return function() {
@@ -266,21 +339,62 @@ function getSidebarBox(ele) {
 		}, 3000);
 	} })(ele);
 
-	var l = div.addChild("label");
+	var details = div.addChild("details");
+
+	var l = details.addChild("label");
 	l.addChild("span", "ID: ");
 	var i = l.addChild("input", "text", ele.getAttribute("id"));
+	i.onchange = (function(ele) { return function() {
+		ele.setAttribute("id", this.value);
+	} })(ele);
+
 
 	div.addChild("br");
 
-	var l = div.addChild("label");
+	var l = details.addChild("label");
 	l.addChild("span", "Classes: ");
 	var i = l.addChild("input", "text", ele.getAttribute("class"));
+	i.onchange = (function(ele) { return function() {
+		ele.setAttribute("class", this.value);
+	} })(ele);
 
 
 	var dl = document.createElement("dl");
 	div.appendChild(dl);
+
+	if(ele.tagName == "TR") {
+		var button = document.createElement("button");
+		button.textContent = "Delete Whole Row";
+		button.onclick = function() {
+			ele.parentNode.removeChild(ele);
+		};
+		div.appendChild(button);
+
+	}
+
+	if(ele.getAttribute("data-bz-reference")) {
+		// .conditional-show
+	}
 	
 	if(ele.getAttribute("data-bz-retained")) {
+		if(ele.tagName == "TEXTAREA") {
+
+			dt = document.createElement("dt");
+			dt.textContent = "Display Height";
+			dl.appendChild(dt);
+			dd = document.createElement("dd");
+			addStyleTextBox(dd, ele, "height", "em");
+			dl.appendChild(dd);
+
+		}
+
+		dt = document.createElement("dt");
+		dt.textContent = "Placeholder";
+		dl.appendChild(dt);
+		dd = document.createElement("dd");
+		addAttributeTextBox(dd, ele, "placeholder");
+		dl.appendChild(dd);
+
 		var dt = document.createElement("dt");
 		if(ele.classList.contains("bz-optional-magic-field"))
 			dt.textContent = "Optional Magic Field Name"
@@ -288,8 +402,71 @@ function getSidebarBox(ele) {
 			dt.textContent = "Magic Field Name";
 		dl.appendChild(dt);
 		var dd = document.createElement("dd");
-		dd.textContent = ele.getAttribute("data-bz-retained");
+		addAttributeTextBox(dd, ele, "data-bz-retained");
 		dl.appendChild(dd);
+
+		dt = document.createElement("dt");
+		dt.textContent = "Mastery Answer";
+		dl.appendChild(dt);
+		dd = document.createElement("dd");
+		addAttributeTextBox(dd, ele, "data-bz-answer");
+		dl.appendChild(dd);
+
+		dt = document.createElement("dt");
+		dt.textContent = "Mastery Weight";
+		dl.appendChild(dt);
+		dd = document.createElement("dd");
+		addAttributeTextBox(dd, ele, "data-bz-weight");
+		dl.appendChild(dd);
+
+		dt = document.createElement("dt");
+		dt.textContent = "Mastery Partial Credit";
+		dl.appendChild(dt);
+		dd = document.createElement("dd");
+		addAttributeTextBox(dd, ele, "data-bz-partial-credit");
+		dl.appendChild(dd);
+
+		if(ele.getAttribute("type") == "range") {
+			dt = document.createElement("dt");
+			dt.textContent = "Range Answer";
+			dl.appendChild(dt);
+			dd = document.createElement("dd");
+			addAttributeTextBox(dd, ele, "data-bz-range-answer");
+			dl.appendChild(dd);
+
+			dt = document.createElement("dt");
+			dt.textContent = "Min";
+			dl.appendChild(dt);
+			dd = document.createElement("dd");
+			addAttributeTextBox(dd, ele, "min");
+			dl.appendChild(dd);
+
+			dt = document.createElement("dt");
+			dt.textContent = "Max";
+			dl.appendChild(dt);
+			dd = document.createElement("dd");
+			addAttributeTextBox(dd, ele, "max");
+			dl.appendChild(dd);
+
+			dt = document.createElement("dt");
+			dt.textContent = "Step";
+			dl.appendChild(dt);
+			dd = document.createElement("dd");
+			addAttributeTextBox(dd, ele, "step");
+			dl.appendChild(dd);
+		}
+	}
+
+	if(ele.tagName == "P") {
+		div.appendChild(makeCheckbox("Inline Feedback", function(checked) {
+			if(checked) {
+				ele.classList.add("inline");
+				ele.classList.add("feedback");
+			} else {
+				ele.classList.remove("inline");
+				ele.classList.remove("feedback");
+			}
+		}, ele.classList.contains("inline") && ele.classList.contains("feedback")));
 	}
 	
 	if(ele.classList.contains("bz-has-tooltip")) {
@@ -297,7 +474,7 @@ function getSidebarBox(ele) {
 		dt.textContent = "Tooltip";
 		dl.appendChild(dt);
 		var dd = document.createElement("dd");
-		dd.textContent = ele.getAttribute("title");
+		addAttributeTextBox(dd, ele, "title");
 		dl.appendChild(dd);
 	}
 	
@@ -306,7 +483,16 @@ function getSidebarBox(ele) {
 		dt.textContent = "Links To";
 		dl.appendChild(dt);
 		var dd = document.createElement("dd");
-		dd.textContent = ele.getAttribute("href");
+		addAttributeTextBox(dd, ele, "href");
+		dl.appendChild(dd);
+	}
+
+	if(ele.tagName == "IFRAME") {
+		var dt = document.createElement("dt");
+		dt.textContent = "Iframe Source";
+		dl.appendChild(dt);
+		var dd = document.createElement("dd");
+		addAttributeTextBox(dd, ele, "src");
 		dl.appendChild(dd);
 	}
 	
@@ -315,14 +501,14 @@ function getSidebarBox(ele) {
 		dt.textContent = "Image Source";
 		dl.appendChild(dt);
 		var dd = document.createElement("dd");
-		dd.textContent = ele.getAttribute("src");
+		addAttributeTextBox(dd, ele, "src");
 		dl.appendChild(dd);
 
 		var dt = document.createElement("dt");
 		dt.textContent = "Alt Text";
 		dl.appendChild(dt);
 		var dd = document.createElement("dd");
-		dd.textContent = ele.getAttribute("alt");
+		addAttributeTextBox(dd, ele, "alt");
 		dl.appendChild(dd);
 	}
 
@@ -378,7 +564,9 @@ function showSidebarFor(ele) {
 	sidebar.innerHTML = "";
 
 	var current = ele;
-	while(current) {
+	while(current || (!current.classList || !current.classList.contains("bz-module"))) {
+		if(current.id == "editor")
+			break;
 		var inspecting = current;
 		if(current.classList && current.classList.contains("hacky-wrapper")) {
 			if(current.classList.contains("wraps-iframe")) {
@@ -418,6 +606,8 @@ function insertChecklistBox(f) {
 		i.setAttribute("type", "checkbox");
 		i.setAttribute("data-bz-retained", uuidv4());
 		f.insertBefore(i, f.firstChild);
+
+		wrapStuffForEditing(f);
 	}
 }
 
@@ -463,6 +653,18 @@ function updateSidebar(f) {
 	}
 };
 
+
+function selectNode(ele) {
+	var selection = window.getSelection();
+	var range = document.createRange();
+	range.setStart(ele, 0);
+	range.collapse(true);
+	selection.removeAllRanges();
+	selection.addRange(range);
+	console.log("on " + ele);
+}
+
+
 window.onload = function() {
 	document.execCommand("enableObjectResizing", false, false);
 	document.execCommand("enableInlineTableEditing", false, false);
@@ -484,18 +686,58 @@ window.onload = function() {
 			argument = null;
 		}
 		var sb = document.getElementById("selection-buttons");
-		var button = document.createElement("button");
-		var img = document.createElement("img");
-		img.src = EditorApi._apiBase + "/icons/" + icon + ".png";
-		img.alt = title;
-		button.appendChild(img);
-		button.setAttribute("title", title);
-		button.setAttribute("type", "button");
-		button.onclick = function() {
-			document.execCommand(command, false, argument);
-		};
-		sb.appendChild(button);
+		if(command == "") {
+			var span = document.createElement("span");
+			span.textContent = " ";
+			sb.appendChild(span);
+		} else {
+			var button = document.createElement("button");
+			var img = document.createElement("img");
+			img.src = EditorApi._apiBase + "/icons/" + icon + ".png";
+			img.alt = title;
+			button.appendChild(img);
+			button.setAttribute("title", title);
+			button.setAttribute("type", "button");
+			button.onclick = function() {
+				document.execCommand(command, false, argument);
+			};
+			sb.appendChild(button);
+		}
 	});
+
+	document.getElementById("sidebar").addEventListener("keydown", function(event) {
+		var key = event.keyCode || event.which;
+		var target = event.target;
+		if(key == 13 && event.target.refersToInEditor) {
+			event.preventDefault();
+			selectAll(event.target.refersToInEditor);
+			document.getElementById("editor").focus();
+		}
+	});
+
+	/*
+	var storedSelectionRange = null;
+	document.getElementById("editor").addEventListener("focusout", function(event) {
+		storedSelectionRange = null;
+		var s = window.getSelection();
+		if(s) {
+			var r = s.getRangeAt(0);
+			if(r)
+				storedSelectionRange = r.cloneRange();
+		}
+
+	});
+
+	document.getElementById("editor").addEventListener("focusin", function(event) {
+		if(storedSelectionRange) {
+			var s = window.getSelection();
+			if(!s.getRangeAt(0)) {
+				s.removeAllRanges();
+				s.addRange(storedSelectionRange);
+			}
+		}
+	});
+	*/
 
 
 	document.onselectionchange = updateSelectionData;
@@ -535,20 +777,41 @@ window.onload = function() {
 		}
 	});
 
-	function selectNode(ele) {
-		var selection = window.getSelection();
-		var range = document.createRange();
-		range.setStart(ele, 0);
-		range.collapse(true);
-		selection.removeAllRanges();
-		selection.addRange(range);
-		console.log("on " + ele);
-	}
-
-	var viewingHtml = true;
 	document.addEventListener("keydown", function(event) {
 		var key = event.keyCode || event.which;
-		if(key == 13 && event.ctrlKey) {
+		if(key == 32 && event.shiftKey) {
+			var selection = window.getSelection();
+			var b = selection.focusNode;
+			var o = b;
+			if(b.nodeType == Node.TEXT_NODE)
+				b = b.parentNode;
+			if(b.tagName == "SPAN" || b.tagName == "STRONG" || b.tagName == "I" || b.tagName == "B" || b.tagName == "EM" || b.tagName == "A") {
+				event.preventDefault();
+				var txt = document.createTextNode(" ");
+				b.parentNode.insertBefore(txt, b.nextSibling);
+				selectAll(txt);
+			}
+		}
+		if(key == 13 && event.ctrlKey && event.shiftKey) {
+			event.preventDefault();
+
+			var selection = window.getSelection();
+			var b = selection.focusNode;
+			while(!b.classList || !b.classList.contains("bz-box"))
+				b = b.parentNode;
+			if(b) {
+				var p = document.createElement("p");
+				p.textContent = "hi";
+				if(b.nextElementSibling)
+					b.parentNode.insertBefore(p, b.nextElementSibling);
+				else
+					b.parentNode.appendChild(p);
+
+				selectAll(p.firstChild);
+				p.scrollIntoView();
+			}
+
+		} else if(key == 13 && event.ctrlKey) {
 			// move cursor out of current html element
 			// FIXME: if inside a table, insert a new row
 			event.preventDefault();
@@ -716,6 +979,17 @@ function wrapStuffForEditing(parent) {
 	});
 }
 
+function selectAll(textNode) {
+	var range = document.createRange();
+	var selection = window.getSelection();
+	range.selectNode(textNode);
+	selection.removeAllRanges();
+	selection.addRange(range);
+
+	document.getElementById("editor").focus();
+	updateSelectionData();
+}
+
 
 function insertBox() {
 	var box = document.createElement("div");
@@ -728,8 +1002,14 @@ function insertBox() {
 	box.appendChild(h4);
 
 	var current = window.getSelection().focusNode;
+	var original = current;
 	while(current && (!current.classList || !current.classList.contains("bz-box")))
 		current = current.parentNode;
+	if(current == null) {
+		current = original;
+		while(!current.parentNode.classList.contains("bz-module"))
+			current = current.parentNode;
+	}
 	if(current == null) {
 		current = document.querySelectorAll("#editor .bz-module .bz-box");
 		if(current.length)
@@ -742,25 +1022,23 @@ function insertBox() {
 
 	h4.scrollIntoView();
 
-	var range = document.createRange();
-	var selection = window.getSelection();
-	range.selectNode(textNode);
-	selection.removeAllRanges();
-	selection.addRange(range);
-
-	document.getElementById("editor").focus();
-	updateSelectionData();
+	selectAll(textNode);
 }
 
 function load(id) {
 	EditorApi.load(id).get(function(data) {
-		var e = document.getElementById('editor');
-		e.innerHTML = data.rendered;
-		wrapStuffForEditing(e);
-		currentlyLoaded.id = data.id;
-		currentlyLoaded.fileId = data.fileId;
-		currentlyLoaded.branchPoint = data.basedOn;
+		loadObject(data, null);
 	});
+}
+
+function loadObject(data, branch) {
+	var e = document.getElementById('editor');
+	e.innerHTML = data.rendered;
+	wrapStuffForEditing(e);
+	currentlyLoaded.id = data.id;
+	currentlyLoaded.fileId = data.fileId;
+	currentlyLoaded.branchPoint = data.basedOn;
+	currentlyLoaded.branchName = branch;
 }
 
 var comparingAnchor = null;
@@ -781,4 +1059,34 @@ function setMerge(id) {
 	}
 
 	mergecomparingAnchor = id;
+}
+
+function getCurrentEditingHtml() {
+	if(viewingHtml) {
+		var node = document.getElementById('editor').cloneNode(true);
+		unwrapStuffForEditing(node);
+		return node.innerHTML;
+	} else {
+		var textarea = document.querySelector("#view-source textarea");
+		return textarea.value;
+	}
+}
+
+function wrapSelection() {
+	if (window.getSelection) {
+		var sel = window.getSelection();
+		if (sel.rangeCount) {
+			var element = document.createElement("span");
+			element.className = "bz-has-tooltip";
+
+			var range = sel.getRangeAt(0).cloneRange();
+			range.surroundContents(element);
+
+			selectAll(element.firstChild ? element.firstChild : element);
+
+			var sb = document.querySelector("#sidebar dd input");
+			if(sb)
+				sb.focus();
+		}
+	}
 }

@@ -215,6 +215,10 @@ body > div {
 	width: 80%;
 }
 
+#sidebar input[type=text] {
+	width: 90%;
+}
+
 #selection-buttons button {
 	padding: 0px;
 	width: 30px;
@@ -226,4 +230,15 @@ body > div {
 
 #editor iframe {
 	pointer-events: none;
+}
+
+#editor [data-replace-with-page] {
+	border: dashed yellow 3px;
+	outline: dashed orange 1px;
+}
+
+#editor [data-replace-with-page]::before {
+	content: "This box will be replaced with content from the page:\00000a\"" attr(data-replace-with-page) "\"";
+	display: block;
+	white-space: pre-line;
 }
