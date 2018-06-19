@@ -2392,13 +2392,16 @@ table [type="range"] {
 	padding: 1em;
 }
 
+.modal .modal-body {
+	margin: 0.5em;
+}
+
 /* } end resume module stuff */
 
 /* for keyboard drag and drop */
 [aria-grabbed="true"] {
 	box-shadow: 0px 0px 2px 2px black;
 }
-
 
 
 .my-cohort-info-page {

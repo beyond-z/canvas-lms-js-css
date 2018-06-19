@@ -1,0 +1,244 @@
+
+/* override some bz_newui stuff for inside the editor */
+#editor .instant-range-feedback .feedback {
+	display: block;
+	padding: 0px 0.25em;
+	border-bottom: solid 2px #ccc;
+}
+#editor .instant-range-feedback .feedback::before {
+	font-style: italic;
+	content: "(For " attr(data-bz-range-flr) "-" attr(data-bz-range-clg) ") ";
+}
+#editor.show-answers .correct:not(.bz-box) {
+	color: #22B573;
+}
+#editor.show-answers .incorrect:not(.bz-box) {
+	color: #EB3B46;
+}
+#editor.show-answers .maybe:not(.bz-box) {
+	color: #B08833;
+}
+#editor tr.conditional-show {
+	display: table-row;
+}
+#editor .conditional-show {
+	display: block;
+}
+
+/* canvas automatic grammar check */
+#editor g {
+  text-decoration: none;
+  border-bottom: 1px dotted red;
+}
+/*
+#editor .conditional-show::before {
+	font-family: italic;
+	content: "(Conditional)";
+}
+*/
+
+html, body {
+	margin: 0px;
+	padding: 0px;
+	overflow: hidden;
+}
+body > div {
+	position: fixed;
+	box-sizing: border-box;
+	overflow: auto;
+	border: inset black 2px;
+}
+
+#generic-container {
+	height: auto;
+	padding: 0.25em;
+	border: none;
+	position: static;
+}
+
+#toolarea {
+	left: 0px;
+	right: 0px;
+	top: 0px;
+	height: 6em;
+}
+
+#view-source,
+#editor {
+	left: 0px;
+	top: 6em;
+	width: 820px;
+	bottom: 2em;
+	/*
+	width: calc(100% - 20em);
+	height: 100vh;
+	*/
+}
+
+#view-source {
+	display: none;
+	padding: 0px;
+	margin: 0px;
+}
+
+#view-source textarea {
+	margin: 0px;
+	width: 100%;
+	height: 100%;
+	box-sizing: border-box;
+	resize: none;
+}
+
+#tree-position {
+	bottom: 0px;
+	height: 2em;
+	left: 0px;
+	right: calc(100% - 820px);
+	line-height: 1.5em;
+	vertical-align: middle;
+	padding: 0em 0.25em;
+}
+
+#sidebar {
+	right: 0em;
+	width: calc(100% - 820px);
+	top: 6em;
+	bottom: 0em;
+	padding: 0.25em;
+}
+
+#sidebar > a {
+	display: block;
+}
+
+#tree-position li {
+	display: inline;
+}
+#tree-position li:first-child::before {
+	content: "";
+}
+#tree-position li::before {
+	content: " > ";
+}
+
+.hidden-no-changes {
+	background-color: #ccc;
+	text-align: center;
+	font-weight: bold;
+}
+
+.no-change {
+	background-color: #aaa;
+}
+
+.inserted {
+	background-color: #88ff88;
+}
+
+.removed {
+	background-color: #ff8888;
+}
+
+.substituted {
+	background-color: white;
+}
+
+.substituted-from {
+	background-color: #ff8888;
+}
+.substituted-to {
+	background-color: #88ff88;
+}
+
+.editor-focused {
+	border: solid 3px red;
+}
+
+.history-view {
+	display: none;
+}
+.show-history .history-view {
+	display: block;
+}
+
+.three-way-merge {
+	display: table;
+	table-layout: fixed;
+	width: 100%;
+}
+
+.three-way-merge > div {
+	display: table-row;
+}
+
+.three-way-merge > div.ok {
+	background-color: #ddd;
+}
+
+.three-way-merge > div.changed {
+	background-color: white;
+}
+
+.three-way-merge > div.problem {
+	background-color: yellow;
+}
+
+.three-way-merge > div > div {
+	display: table-cell;
+}
+
+.empty-required-magic-field-submission {
+	background-color: yellow;
+}
+
+.magic-field-report {
+	margin-bottom: 2em;
+}
+
+.magic-field-report p {
+	margin-top: 0px;
+	color: #666;
+}
+
+.magic-field-report div {
+
+}
+
+#sidebar label > span {
+	display: block;
+	font-weight: bold;
+}
+
+#sidebar label > input[type=text],
+#sidebar label > select,
+#sidebar label > textarea {
+	width: 80%;
+}
+
+#sidebar input[type=text] {
+	width: 90%;
+}
+
+#selection-buttons button {
+	padding: 0px;
+	width: 30px;
+	height: 30px;
+	overflow: hidden;
+	vertical-align: bottom;
+	margin: 1px;
+}
+
+#editor iframe {
+	pointer-events: none;
+}
+
+#editor [data-replace-with-page] {
+	border: dashed yellow 3px;
+	outline: dashed orange 1px;
+}
+
+#editor [data-replace-with-page]::before {
+	content: "This box will be replaced with content from the page:\00000a\"" attr(data-replace-with-page) "\"";
+	display: block;
+	white-space: pre-line;
+}

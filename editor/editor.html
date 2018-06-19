@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+	var bzBoxTypes = [
+		{ className: "", defaultTitle: ""},
+		{ className: "question", defaultTitle: "Quick Question" },
+		{ className: "answer", defaultTitle: "Answer" },
+		{ className: "video", defaultTitle: "Watch This" },
+		{ className: "read", defaultTitle: "Story Time" },
+		{ className: "reflection", defaultTitle: "Get to know yourself" },
+		{ className: "action", defaultTitle: "Take a real step right now" },
+		{ className: "key", defaultTitle: "Resources to get you started" },
+		{ className: "pulse", defaultTitle: "Pulse Check" },
+	];
+
+	var htmlBefore = "";
+	var htmlAfter = "";
+</script>
+<!--
+	Keyboard controls: FIXME: what about Macs????
+
+	Special ones
+	============
+	`Shift+Delete` 	- delete entire current html tag for current cursor
+	`Esc` 		- switch between rendered and source views
+	`alt+<` 	- open a html insertion window
+	`Enter` 	- new line (context dependent)
+	`Shift+Enter` 	- insert <br> at current location
+	`Ctrl+Enter` 	- Move cursor outside current html tag
+	`Shift+Space` 	- Break out of span
+	`Ctrl+Shift+Enter`- Break out of BZ Box
+
+	Ones your probably know
+	=======================
+
+	`Ctrl+b` 	- toggle bold on and off
+	`Ctrl+i` 	- toggle italic on and off
+
+	`Ctrl+x` 	- cut
+	`Ctrl+c` 	- copy
+	`Ctrl+v` 	- paste
+
+	// not implemented
+	`Ctrl+a` 	- select all INSIDE the current parent (so NOT all of the whole document!)
+	`Ctrl+s` 	- save
+	`Ctrl+z` 	- undo
+-->
+
+	<link rel="stylesheet" href="bz_newui.css" />
+	<link rel="shortcut icon" href="HERE/icons/favicon.png" />
+	<base href="https://portal.bebraven.org/" target="_blank" />
+	<meta charset="UTF-8" />
+
+	<title>Braven Editor</title>
+
+	<style id="embedded-css"></style>
+	<script id="embedded-js"></script>
+</head>
+<body>
+	<div id="toolarea">
+		<div style="border-bottom: solid 1px black;">
+			<!-- New -->
+			<button type="button" onclick="
+				location.href = EditorApi._apiBase + 'files';
+			">Open</button>
+			<button type="button" onclick="
+				var branchChanged = false;
+				if(currentlyLoaded.branchName === null || currentlyLoaded.branchName === '') {
+					currentlyLoaded.branchName = prompt('Name');
+					branchChanged = true;
+				}
+				if(currentlyLoaded.branchName !== null)
+				EditorApi.save(currentlyLoaded.fileId, currentlyLoaded.id, getCurrentEditingHtml(), currentlyLoaded.branchName).
+					get(function(id) {
+						currentlyLoaded.branchPoint = currentlyLoaded.id;
+						currentlyLoaded.id = id;
+
+						if(branchChanged)
+						history.pushState(null, null, EditorApi._apiBase + 'edit?fileId=' + currentlyLoaded.fileId + '&amp;branch=' + encodeURIComponent(currentlyLoaded.branchName));
+					});
+			">Save</button>
+			<button type="button" onclick="
+				var tag = prompt('Name');
+				if(tag !== null)
+				EditorApi.save(currentlyLoaded.fileId, currentlyLoaded.branchPoint, getCurrentEditingHtml(), tag).
+					get(function(id) {
+						currentlyLoaded.id = id;
+						currentlyLoaded.branchPoint = id;
+
+						currentlyLoaded.branchName = tag;
+
+						//history.pushState(null, null, EditorApi._apiBase + 'edit?id=' + id);
+						history.pushState(null, null, EditorApi._apiBase + 'edit?fileId=' + currentlyLoaded.fileId + '&amp;branch=' + encodeURIComponent(currentlyLoaded.branchName));
+					});
+			">Save As</button>
+
+			<button type="button" onclick="
+				var form = document.createElement('form');
+				form.setAttribute('method', 'POST');
+				form.setAttribute('target', 'preview');
+				form.setAttribute('action', EditorApi._apiBase + 'viewHtml');
+				var input = document.createElement('input');
+				input.setAttribute('name', 'html')
+				input.setAttribute('type', 'text');
+				input.value = getCurrentEditingHtml();
+				form.appendChild(input);
+				var btn = document.createElement('input');
+				btn.setAttribute('type', 'submit');
+				form.appendChild(btn);
+				document.body.appendChild(form);
+				btn.click();
+				document.body.removeChild(form);
+			">Preview</button>
+
+			<span style="margin-right: 3em;">&nbsp;</span>
+
+
+			<button type="button" onclick="
+				this.textContent = 'Pushing.....';
+				var btn = this;
+				EditorApi.pushToStaging(currentlyLoaded.fileId, getCurrentEditingHtml()).get(function(canvas_url) {
+					btn.textContent = 'Push to Staging';
+					window.open(canvas_url);
+				});
+			">Push to Staging</button>
+
+
+			<button style="margin-left: 100px; background-color: yellow;" type="button" onclick="
+				if(confirm('Are you sure you want to push to production? It will be immediately visible to users and may overwrite changes there!')) {
+					this.textContent = 'Pushing.....';
+					var btn = this;
+					EditorApi.pushToProduction(currentlyLoaded.fileId, getCurrentEditingHtml()).get(function(canvas_url) {
+						btn.textContent = 'Push to Production';
+						window.open(canvas_url);
+					});
+				}
+			">Push to Production</button>
+		</div>
+
+		<div id="sidebar-buttons" style="float: right;">
+			<button type="button" onclick="listMagicFields();">List Magic Fields</button>
+			<button type="button" onclick="listHeaders();">List Headers</button>
+		</div>
+
+		<div id="selection-buttons">
+			<select id="block-format" onchange="
+				document.execCommand('formatBlock', false, this.options[this.selectedIndex].value);
+			">
+				<option value="">--Block Format--</option>
+				<option value="h2">Heading 2</option>
+				<option value="h3">Heading 3</option>
+				<option value="h4">Heading 4</option>
+				<option value="h5">Heading 5</option>
+				<option value="h6">Heading 6</option>
+			</select>
+
+			<button type="button" onclick="wrapSelection();">Add Tooltip</button>
+		</div>
+
+		<div id="bz-buttons">
+			<button type="button" onclick="insertBox();">Insert Box</button>
+			<button type="button" onclick="document.execCommand('insertHTML', false, '<table><tr><th></th></tr></table>')">Insert Table</button>
+			<button type="button" onclick="document.execCommand('insertHTML', false, '<ul class=\'checklist\'><li class=\'correct\'>Checklist</li></ul>')">Insert Checklist</button>
+			<button type="button" onclick="document.execCommand('insertHTML', false, '<input type=\'text\' data-bz-retained=\'NAME\' />')">Insert Magic Field</button>
+			<button type="button" onclick="document.execCommand('insertHTML', false, '<textarea data-bz-retained=\'NAME\'></textarea>')">Insert Magic Textarea</button>
+			<button type="button" onclick="document.execCommand('insertHTML', false, '<input data-bz-retained=&quot;'+uuidv4()+'&quot; value=&quot;Done&quot; class=&quot;bz-toggle-all-next&quot; type=&quot;button&quot;>')">Insert Done Button</button>
+		</div>
+	</div>
+
+	<div id="sidebar"></div>
+
+	<div id="tree-position"></div>
+
+	<div id="view-source"> <textarea></textarea> </div>
+
+	<div id="editor" class="user_content show-answers" contenteditable="true"></div>
+
+	<!--
+	// fucking jquery required
+	<script src="bz_custom.js"></script>
+	-->
+</body>
+</html>
