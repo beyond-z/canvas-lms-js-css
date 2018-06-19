@@ -2459,3 +2459,40 @@ table [type="range"] {
 .grade-explained.partial {
 	border-color: gold;
 }
+
+/* Friendly assignment UI */
+.bz-assignment-part {
+    padding-top: 0;
+    transition: height 2s;
+    overflow: hidden;
+}
+
+.collapsed {
+    height: 2.75em;
+}
+
+.bz-assignment-part h3 {
+    position: relative;
+    cursor: pointer;
+    margin-top: 0;
+    padding-top: 0.25em;
+    padding-left: 40px;
+    height: 2.5em;
+}
+
+.bz-assignment-part h3:before {
+    display: block;
+    position: absolute;
+    left: 5px;
+    top: 9px;
+    content: "✕";
+    padding: 1px;
+    border-radius: 20px;
+    line-height: 1;
+    transition: all 0.3s;
+}
+
+.bz-assignment-part.collapsed h3:before {
+    transform: rotate(-45deg);
+    zoom: 0.95;
+}
