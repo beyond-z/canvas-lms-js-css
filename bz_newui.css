@@ -2498,10 +2498,16 @@ table [type="range"] {
 }
 
 /* Notifications on home page */
-#bz-announcements-list {
-  background: #EB3B46;
-  color: #FFF;
-  border: none;
+#bz-announcements-list, 
+#bz-announcements-list tr:nth-child(even) {
+    background: #EB3B46;
+    border: none;
+    color: #FFF;
+}
+
+#bz-announcements-list tr, 
+#bz-announcements-list tr:nth-child(even) {
+    border-bottom: #FFF 1px solid;
 }
 
 #bz-announcements-list td {
