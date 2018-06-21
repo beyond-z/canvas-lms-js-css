@@ -30,6 +30,7 @@ function runOnUserContent(func) {
     func();
   }
   // and schedule to handle future changes
+  if($.subscribe)
   $.subscribe("userContent/change", function() {
     console.log('running user content on event');
     func();
@@ -70,6 +71,12 @@ jQuery( document ).ready(function() {
   });
 
   runOnUserContent(function() {
+    /* Improve navigability of assignment content by collapsing/expanding parts: */
+    $('.bz-assignment-part').addClass('collapsed').click(function(e){ 
+      $(this).toggleClass('collapsed'); 
+    });
+
+
     /* Improve Priorities Quiz */  
     jQuery('.context-course_11 #question_482_question_text ol li, .context-course_15 #question_619_question_text ol li, .context-course_23 #question_1918_question_text ol li, .context-course_25 #question_2260_question_text ol li').prepend('<span class="dynamic"></span>');
     jQuery('.context-course_11 #question_481_question_text input, .context-course_15 #question_618_question_text input, .context-course_23 #question_1917_question_text input, .context-course_25 #question_2259_question_text input').each(function(i){
