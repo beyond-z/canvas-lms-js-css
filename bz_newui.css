@@ -1259,7 +1259,7 @@ li input:not([type="button"]):not([type="radio"]):not([type="checkbox"]), li tex
 	break-inside: avoid;
 }
 
-table:not(.no-zebra):not(.sort-to-match) tr:nth-child(even):not(.no-zebra), 
+#wiki_page_show table:not(.no-zebra):not(.sort-to-match) tr:nth-child(even):not(.no-zebra), 
 .to-columns li:nth-child(even) {
  background: #F6F6F6;
 }
@@ -2498,14 +2498,36 @@ table [type="range"] {
 }
 
 /* Notifications on home page */
-#bz-announcements-list {
+#bz-announcements-list,
+#bz-announcements-list tr {
+  background: #F3888E;
+    border: none;
+    color: #FFF;
+}
+
+#bz-announcements-list .unread {
+  font-weight: bold;
   background: #EB3B46;
-  color: #FFF;
-  border: none;
 }
 
 #bz-announcements-list td {
-  border: none;
+  border-bottom: #FFF 1px solid;
+}
+
+#bz-announcements-list .remove a {
+  background: #FFF;
+  border-radius: 20px;
+  color: #EB3B46;
+  height: 18px;
+  line-height: 0.8;
+  text-decoration: none;
+  width: 18px;
+}
+
+#bz-announcements-list .remove a:hover, 
+#bz-announcements-list .remove a:active {
+  color: #000;
+  text-decoration: none;
 }
 
 #bz-announcements-list a {
@@ -2515,19 +2537,4 @@ table [type="range"] {
 
 #bz-announcements-list a:hover {
   text-decoration: underline;
-}
-
-#bz-announcements-list .remove a {
-  color: #EB3B46;
-  background: #FFF;
-  width: 18px;
-  height: 18px;
-  border-radius: 20px;
-  line-height: 0.8;
-  text-decoration: none;
-}
-
-#bz-announcements-list .remove a:hover,
-#bz-announcements-list .remove a:active {
-  color: #000;
 }
