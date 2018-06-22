@@ -1259,7 +1259,7 @@ li input:not([type="button"]):not([type="radio"]):not([type="checkbox"]), li tex
 	break-inside: avoid;
 }
 
-table:not(.no-zebra):not(.sort-to-match) tr:nth-child(even):not(.no-zebra), 
+#wiki_page_show table:not(.no-zebra):not(.sort-to-match) tr:nth-child(even):not(.no-zebra), 
 .to-columns li:nth-child(even) {
  background: #F6F6F6;
 }
@@ -2499,8 +2499,7 @@ table [type="range"] {
 
 /* Notifications on home page */
 #bz-announcements-list,
-#bz-announcements-list tr, 
-#bz-announcements-list tr:nth-child(even) {
+#bz-announcements-list tr {
   background: #F3888E;
     border: none;
     color: #FFF;
