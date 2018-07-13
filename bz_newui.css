@@ -2277,3 +2277,37 @@ table [type="range"] {
 .my-cohort-info-page h1 {
     font-size: 2em;
 }
+
+
+.slider-container > span {
+	display: none;
+}
+
+.slider-container.likert-style {
+	display: table;
+	width: 100%;
+	border-spacing: 6px;
+}
+
+.slider-container.likert-style > * {
+	display: table-cell;
+	width: 50%;
+	vertical-align: middle;
+}
+
+.slider-container.likert-style > span {
+	width: 25%;
+}
+
+.slider-container.likert-style > span:first-child {
+	text-align: right;
+}
+
+.slider-container.likert-style > span:last-child {
+	text-align: left;
+}
+
+.slider-container.likert-style input[type=range] {
+	margin: auto;
+	width: 100%;
+}
