@@ -242,3 +242,14 @@ body > div {
 	display: block;
 	white-space: pre-line;
 }
+
+#editor img:not([alt]) {
+	border: dotted red 4px;
+	outline: dashed orange 3px;
+}
+
+.timing-table-display .bar {
+	height: 20px;
+	background: #ccc;
+}
+
