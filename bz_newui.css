@@ -56,7 +56,8 @@ th,
 .main-toc,
 .toggle-transcript,
 .ic-notification__title,
-.bz-button-pick-up {
+.bz-button-pick-up,
+.bz-explain-grade-link a {
 	font-family: "TradeGothicNo.20-CondBold", "Oswald", sans-serif;
 	text-transform: uppercase;
 	line-height: normal;
@@ -803,24 +804,24 @@ progress[value]::-webkit-progress-bar {
   color: white;
   font-weight: bold;
   position: absolute;
-  bottom: 20px;
-  left: 10px;
-  right: 10px;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 30px;
 }
 
 .bz-course-part-module-box.completed .bz-button-pick-up {
-  color: green;
-  background-color: transparent;
+  color: #FFF;
+  background-color: green;
 }
 
-.bz-course-part-module-box.completed .bz-button-pick-up::before {
+.bz-course-part-module-box .bz-button-pick-up::before {
   content: "\a0";
-  background-image: url("dynamic-syllabus-icons-completed.png");
   background-repeat: no-repeat;
   background-size: contain;
   display: inline-block;
   height: 2em;
-  width: 2em;
+  width: 1px;
   vertical-align: middle;
 }
 
@@ -1258,7 +1259,7 @@ li input:not([type="button"]):not([type="radio"]):not([type="checkbox"]), li tex
 	break-inside: avoid;
 }
 
-table:not(.no-zebra):not(.sort-to-match) tr:nth-child(even):not(.no-zebra), 
+#wiki_page_show table:not(.no-zebra):not(.sort-to-match) tr:nth-child(even):not(.no-zebra), 
 .to-columns li:nth-child(even) {
  background: #F6F6F6;
 }
@@ -1594,6 +1595,160 @@ table [type="range"] {
 .instant-feedback,
 .bz-toggle-all-next {
 /* TBD */
+}
+
+/* Show Resources Briefcase as list of icons */
+.bz-icons-list {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    width: 100%;
+    margin: 30px 0 0;
+    padding: 0;
+}
+
+.bz-icons-list li {
+    box-sizing: border-box;
+    display: block;
+    width: 25%;
+    padding: 0.5em;
+    padding-top: 120px;
+    text-align: center;
+    position: relative;
+}
+
+.bz-icons-list a {
+    text-decoration: none;
+}
+
+.bz-icons-list a::before,
+.bz-icon-inline::before {
+    content: ' ';
+    background-color: #9AD7D7;
+    width: 100px;
+    height: 100px;
+    border-radius: 50px;
+    position: absolute !important;
+    top: 0;
+    background-image: url('images/lms-resources-icons.png');
+}
+
+.bz-icons-list a::before {
+    left: calc( (100% - 100px) / 2 );
+}
+
+.bz-icon-inline {
+    position: relative;
+    padding-left: 30px;
+}
+
+.bz-icon-inline::before {
+    left: 2px;
+    transform: scale(0.23);
+    transform-origin: 0 0;
+}
+
+.bz-icons-list a:hover::before {
+    background-color: #5BBBBA;
+}
+
+.bz-icon-smart-goals::before,
+[href~='pages/1-1-coaching-conversations-with-your-leadership-coach'] {
+    background-position: 0 -100px;
+}
+
+.bz-icon-1on1::before,
+[href~='pages/smart-goals'] {
+    background-position: 0 -200px;
+}
+
+.bz-icon-apply-game::before {
+    background-position: 0 -300px;
+}
+
+.bz-icon-linkedin::before,
+[href~='pages/write-a-strong-linkedin-summary-statement'] {
+    background-position: 0 -400px;
+}
+
+.bz-icon-email::before,
+[href~='pages/write-great-emails'] {
+    background-position: 0 -500px;
+}
+
+.bz-icon-icebreakers::before,
+[href~='pages/conversation-starters-for-networking-events'] {
+    background-position: 0 -600px;
+}
+
+.bz-icon-elevator::before,
+[href~='pages/elevator-pitch-template'] {
+    background-position: 0 -700px;
+}
+
+.bz-icon-questions::before,
+[href~='pages/informational-interview-questions-list'] {
+    background-position: 0 -800px;
+}
+
+.bz-icon-champion::before {
+    background-position: 0 -900px;
+}
+
+.bz-icon-resume-writing::before {
+    background-position: 0 -1000px;
+}
+
+.bz-icon-resume-bank::before,
+[href~='pages/resume-and-cover-letter-bank'] {
+    background-position: 0 -1100px;
+}
+
+.bz-icon-more-resources::before,
+[href~='pages/recommended-resources-for-your-opportunity-hunt'] {
+    background-position: 0 -1200px;
+}
+
+.bz-icon-scorecard::before,
+[href~='pages/rank-opportunities-with-the-career-accelerating-scorecard'] {
+    background-position: 0 -1300px;
+}
+
+.bz-icon-interview::before,
+[href~='pages/interview-response-frameworks'] {
+    background-position: 0 -1400px;
+}
+
+.bz-icon-technical-iv::before,
+[href~='pages/technical-interviews-for-software-engineers-and-computer-scientists'] {
+    background-position: 0 -1500px;
+}
+
+.bz-icon-design-thinking::before,
+[href~='pages/design-thinking'] {
+    background-position: 0 -1600px;
+}
+
+.bz-icon-finance::before,
+[href~='pages/personal-finance'] {
+    background-position: 0 -1700px;
+}
+
+.bz-icon-excel::before,
+[href~='pages/excel'] {
+    background-position: 0 -1800px;
+}
+
+.bz-icon-site-visit::before,
+[href~='pages/site-visit-professionalism'] {
+    background-position: 0 -1900px;
+}
+
+.bz-icon-resources::before,
+[href~='pages/braven-resources'] {
+    background-position: 0 -2000px;
+    background-color: #EB3B46 !important;
 }
 
 /* Styling for quizzes/assignments that use magic fields to layout complex content */
@@ -2250,34 +2405,33 @@ table [type="range"] {
 
 
 .my-cohort-info-page {
-    width: 672px;
-    margin: 1em auto;
+  width: 672px;
+  margin: 1em auto;
 }
 
 .my-cohort-info-page table {
-    width: 100%;
+  width: 100%;
 }
 
 .my-cohort-info-page th {
-    width: 25%;
-    text-align: left;
+  width: 25%;
+  text-align: left;
 }
 
 .my-cohort-info-page caption {
-    text-align: left;
-    margin: 2em 0 1em;
-    font-family: "TradeGothicNo.20-CondBold", "Oswald", sans-serif;
-    text-transform: uppercase;
-    line-height: normal;
-    font-weight: normal;
-    font-size: 1.2em;
-    color: #EB3B46;
+  text-align: left;
+  margin: 2em 0 1em;
+  font-family: "TradeGothicNo.20-CondBold", "Oswald", sans-serif;
+  text-transform: uppercase;
+  line-height: normal;
+  font-weight: normal;
+  font-size: 1.2em;
+  color: #EB3B46;
 }
 
 .my-cohort-info-page h1 {
-    font-size: 2em;
+  font-size: 2em;
 }
-
 
 .slider-container > span {
 	display: none;
@@ -2310,4 +2464,111 @@ table [type="range"] {
 .slider-container.likert-style input[type=range] {
 	margin: auto;
 	width: 100%;
+}
+
+.bz-explain-grade-link {
+  position: absolute;
+  display: block;
+  bottom: 30px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  z-index: 2
+}
+
+.grade-explained {
+	padding: 0.25em;
+	box-sizing: border-box;
+	white-space: pre-line;
+	font-family: "TradeGothicNo.20-CondBold", "Oswald", sans-serif;
+	text-transform: uppercase;
+	border-left: 10px #EB3B46 solid;
+}
+
+.grade-explained.correct {
+	border-color: green;
+}
+
+.grade-explained.partial {
+	border-color: gold;
+}
+
+/* Friendly assignment UI */
+.bz-assignment-part {
+  padding-top: 0;
+  transition: height 2s;
+  overflow: hidden;
+}
+
+.collapsed {
+  height: 2.75em;
+}
+
+.bz-assignment-part h3 {
+  position: relative;
+  cursor: pointer;
+  margin-top: 0;
+  padding-top: 0.25em;
+  padding-left: 40px;
+  height: 2.5em;
+}
+
+.bz-assignment-part h3:before {
+  display: block;
+  position: absolute;
+  left: 5px;
+  top: 9px;
+  content: "✕";
+  padding: 1px;
+  border-radius: 20px;
+  line-height: 1;
+  transition: all 0.3s;
+}
+
+.bz-assignment-part.collapsed h3:before {
+  transform: rotate(-45deg);
+  zoom: 0.95;
+}
+
+/* Notifications on home page */
+#bz-announcements-list,
+#bz-announcements-list tr {
+  background: #F3888E;
+    border: none;
+    color: #FFF;
+}
+
+#bz-announcements-list .unread {
+  font-weight: bold;
+  background: #EB3B46;
+}
+
+#bz-announcements-list td {
+  border: none;
+  border-bottom: #FFF 1px solid;
+}
+
+#bz-announcements-list .remove a {
+  background: #FFF;
+  border-radius: 20px;
+  color: #EB3B46;
+  height: 18px;
+  line-height: 0.8;
+  text-decoration: none;
+  width: 18px;
+}
+
+#bz-announcements-list .remove a:hover, 
+#bz-announcements-list .remove a:active {
+  color: #000;
+  text-decoration: none;
+}
+
+#bz-announcements-list a {
+  color: #FFF;
+  opacity: 1;
+}
+
+#bz-announcements-list a:hover {
+  text-decoration: underline;
 }

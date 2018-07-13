@@ -205,13 +205,22 @@ class EditorApi : ApiProvider {
 	}
 
 	Document view(string id, bool showMagicFieldTimings = false) {
+
+		if(id.length < 3) {
+			auto bdb = openBranchDatabase();
+			foreach(res; bdb.query("SELECT latest_commit FROM branches WHERE file_id = ? AND name = ?", id, "working"))
+				id = res[0];
+		}
+
 		import std.file;
 		auto document = new Document(readText("module.html"), true, true);
 		document.requireSelector("#module-container").appendChild(load(id).render(this).removeFromTree);
 
 		foreach(thing; document.querySelectorAll("[data-replace-with-page]")) {
 			// FIXME
-			thing.innerHTML = readText("data/" ~ thing.dataset.replaceWithPage ~ ".html");
+			auto bdb = openBranchDatabase();
+			foreach(res; bdb.query("SELECT id FROM files WHERE name = ?", thing.dataset.replaceWithPage))
+				thing.innerHTML = load(res[0]).render(this).toString;
 		}
 
 		if(showMagicFieldTimings) {
@@ -307,14 +316,17 @@ class EditorApi : ApiProvider {
 	}
 
 	private void timingHelper(Database db, bool includeHour, int courseFilter, Element data, Table table) {
+		table.addClass("timing-table-display");
 		auto allFields = data.querySelectorAll("[data-bz-retained]:not([type=checkbox]):not(.bz-optional-magic-field)");
 		string field;
 		if(allFields.length > 2)
 			field = allFields[2].dataset.bzRetained;
 		else if(allFields.length > 1)
 			field = allFields[1].dataset.bzRetained;
+		else if(allFields.length == 1)
+			field = allFields[0].dataset.bzRetained;
 		else
-			field = allFields[1].dataset.bzRetained;
+			return;
 
 		foreach(row; db.query("
 			SELECT
@@ -343,7 +355,7 @@ class EditorApi : ApiProvider {
 			",
 			field, courseFilter))
 		{
-			table.appendRow(row[0], row[1]);
+			table.appendRow(row[0], row[1], Element.make("div", "", "bar").setAttribute("style", "width: " ~ row[0] ~ "px;"));
 		}
 	}
 
@@ -405,6 +417,9 @@ class EditorApi : ApiProvider {
 			fileId  = the file you are working on
 	+/
 	string save(int fileId, string basedOn, Html html, string branch = "working", string tag = "", ushort flags = 0) {
+
+		html = annotateHtml(html);
+
 		// it saves it as a diff from the base...
 		auto base = load(basedOn);
 		string[] r1 = normalizeHtml(base.render(this));
@@ -574,6 +589,26 @@ class EditorApi : ApiProvider {
 		return id.toString();
 	}
 
+	/**
+		Performs scans of HTML structure and adds other necessary html annotations
+		such as class names.
+	*/
+	Html annotateHtml(Html content) {
+		auto df = new DocumentFragment(content);
+
+		// FIXME: for-eval, for-eval-sum, for-compare-scores
+		foreach(e; df.querySelectorAll(".bz-box:has(.checklist) .bz-toggle-all-next:not(.for-checklist)"))
+			e.addClass("for-checklist");
+		foreach(e; df.querySelectorAll(".bz-box:has(.radio-list) .bz-toggle-all-next:not(.for-radio-list)"))
+			e.addClass("for-radio-list");
+		foreach(e; df.querySelectorAll(".bz-box:has([data-bz-range-answer]) .bz-toggle-all-next:not(.for-range)"))
+			e.addClass("for-range");
+		foreach(e; df.querySelectorAll(".bz-box:has(.sort-to-match) .bz-toggle-all-next:not(.for-match)"))
+			e.addClass("for-match");
+
+		return Html(df.innerHTML);
+	}
+
 	string pushToStaging(string fileId, string html) {
 		// first, find the file we have as a page in the staging content library
 		auto bdb = openBranchDatabase();
@@ -638,9 +673,24 @@ class EditorApi : ApiProvider {
 		return "https://portal.bebraven.org/courses/1/pages/" ~ canvasUrl;
 	}
 
+	void rollbackCommits() {
+		auto bdb = openBranchDatabase();
 
-	void doProductionBranchUpdate() {
-		assert(0);
+		foreach(branch; bdb.query("SELECT branches.name, latest_commit, files.name FROM branches inner join files on files.id = branches.file_id")) {
+			auto info = loadRevision(branch[1]);
+			import core.stdc.time;
+			if(info.timestamp >= time(null) - 3600) {
+				import std.stdio;
+				writeln("rolling back ", info.id, " ", branch[2], "/", branch[0]);
+			} else {
+				writeln(info.id, " ok ", time(null) - info.timestamp, " ", branch[2], "/", branch[0]);
+			}
+		}
+
+	}
+
+	Html doProductionBranchUpdate() {
+		string returnedToBrowser;
 		auto canvas = getCanvasApiClient(productionCredentials());
 
 		auto modulesRes = canvas.rest.
@@ -675,20 +725,30 @@ class EditorApi : ApiProvider {
 			if(mod.name == "Braven Resources")
 				breakOnNext = true;
 
-			if(mod.name != "Braven Resources")
-				continue;
-
 			// writeln("Updating ", mod.position, " - ", mod.name);
 
 			// FIXME: make this only download if actually needed
 			int partNum = 0;
 			foreach(item; mod.items) {
-				if(item.title != "Cover Letter Checklist") {
-				partNum++;
+				auto page = canvas.request(item.url.get!string).result;
+
+				if(true) {
+					int fileId;
+					string oldName;
+					foreach(r; bdb.query("SELECT id, name FROM files WHERE module_number = ? AND subnumber = ?", mod.position.get!string, partNum)) {
+						fileId = to!int(r[0]);
+						oldName = r[1];
+						break;
+					}
+					if(item.title.get!string != oldName) {
+						renamePage(oldName, item.title.get!string, item.url.get!string, false, false);
+
+						returnedToBrowser ~= oldName ~ " => " ~ item.title.get!string ~ "<br>";
+
+					}
+					partNum++;
 					continue;
 				}
-
-				auto page = canvas.request(item.url.get!string).result;
 
 				int id;
 				string prodCommit;
@@ -721,9 +781,116 @@ class EditorApi : ApiProvider {
 				partNum++;
 			}
 		}
+
+		return Html(returnedToBrowser);
 	}
 
-	string uploadFile(string description, Cgi.UploadedFile file) {
+	void renamePage(string oldName, string newName, string newUrl, bool onStaging, bool onProduction) {
+		/*
+		// FIXME
+			This must:
+				* rename file on Canvas (if not already done - new url should be null then)
+				* rename files on the branches.db and update the canvas URL
+				* rename Course Participation assignment
+				* rename throughout the synced pages too
+				* fix up any data-replace-with
+				* fix links?
+				* save back fixed content to canvas and locally
+		*/
+		if(oldName == newName)
+			return;
+		auto bdb = openBranchDatabase();
+		auto entry = bdb.query("SELECT id, canvas_page_name, latest_production_commit FROM files WHERE name = ?", oldName).front;
+		if(newUrl == entry[1])
+			return;
+
+		auto fileId = entry[0];
+		auto oldUrl = entry[1];
+		auto latestProductionCommit = entry[2];
+
+		auto canvasApi = getCanvasApiClient(productionCredentials());
+
+		if(newUrl is null) {
+			// FIXME: rename the file on canvas, get the new url
+			assert(0);
+		}
+
+		bdb.query("UPDATE files SET name = ?, canvas_page_name = ? WHERE id = ?", newName, newUrl, entry[0]);
+
+
+		// FIXME: other courses too probably.
+		courses_loop: foreach(course; [1]) {
+
+			auto assignments = loadCachedAssignments(canvasApi, course);
+			foreach(assignment; assignments) {
+				auto an = assignment.name.get!string;
+
+				if(an == "Course Participation - " ~ oldName) {
+					var changes = var.emptyObject;
+					changes["assignment"] = var.emptyObject;
+					changes["assignment"]["name"] = "Course Participation - " ~ newName;
+					canvasApi.rest.courses[course].assignments[assignment.id.get!string].PUT(changes).waitForCompletion();
+					writeln("UPDATED ASSIGNMENT");
+					continue courses_loop;
+				}
+			}
+		}
+
+
+		foreach(branch; bdb.query("SELECT name, latest_commit, file_id FROM branches")) {
+			auto info = loadRevision(branch[1]);
+			auto element = info.render(this);
+			bool changed = false;
+
+			foreach(e; element.querySelectorAll("[data-replace-with-page=\""~oldName~"\"]")) {
+				e.dataset.replaceWithPage = newName;
+				changed = true;
+			}
+
+			if(!changed)
+				continue;
+
+			writeln("UPDATED CONTENT ", info.id);
+
+			auto fixedHtml = element.toString();
+			if(branch[1] == latestProductionCommit && branch[0] == "working") {
+				pushToProduction(branch[2], fixedHtml);
+			} else {
+				auto commitId = save(branch[2].to!int, branch[1], Html(fixedHtml), branch[0]);
+			}
+		}
+	}
+
+	var[] loadCachedAssignments(T)(T canvasApi, int course) {
+		assert(course == 1);
+		static var[] assignments;
+		if(assignments is null) {
+			auto assignmentsRes = canvasApi.rest.
+				courses[course].assignments
+				._SELF()
+				("per_page", 30)
+				.GET;
+
+			more_assignments:
+			foreach(assignment; assignmentsRes.result) {
+				assignments ~= assignment;
+
+			}
+			if(auto next = "next" in assignmentsRes.response.linksHash) {
+				assignmentsRes = canvasApi.request(next.url);
+				goto more_assignments;
+			}
+		}
+		return assignments;
+	}
+
+	static struct UploadedFileInfo {
+		string url;
+		string contentType;
+		string description;
+	}
+
+	UploadedFileInfo uploadFile(string description, Cgi.UploadedFile file) {
 
 		string contentHash = "unimplemented"; // FIXME
 		import std.datetime;
@@ -744,7 +911,7 @@ class EditorApi : ApiProvider {
 
 		file.writeToFile("data/uploads/" ~ to!string(id) ~ ".dat");
 
-		auto canvas = getCanvasApiClient(stagingCredentials()); // productionCredentials());
+		auto canvas = getCanvasApiClient(productionCredentials()); // stagingCredentials());
 		auto response = canvas.rest.courses[1].files.POST(
 			"name", file.filename,
 			"size", file.fileSize(),
@@ -769,11 +936,15 @@ class EditorApi : ApiProvider {
 
 		auto canvasObject = canvas.request(response2.location, response2.code == 201 ? HttpVerb.GET : HttpVerb.POST).result;
 
-		db.query("UPDATE uploads SET staging_id = ? WHERE id = ?", canvasObject.id.get!string, id);
+		//db.query("UPDATE uploads SET staging_id = ? WHERE id = ?", canvasObject.id.get!string, id);
+		db.query("UPDATE uploads SET production_id = ? WHERE id = ?", canvasObject.id.get!string, id);
 
-		//production_id INTEGER NULL,
-		//staging_id INTEGER NULL,
-		return "https://stagingportal.bebraven.org/courses/1/files/"~canvasObject.id.get!string~"/preview";
+		return
+			UploadedFileInfo(
+			//"https://stagingportal.bebraven.org/courses/1/files/"~canvasObject.id.get!string~"/preview",
+			"https://portal.bebraven.org/courses/1/files/"~canvasObject.id.get!string~"/preview",
+			file.contentType,
+			description);
 	}
 
 	string[] allClassNames() {
@@ -1409,10 +1580,12 @@ class EditorApi : ApiProvider {
 	*/
 
 	static struct FilesResult {
+		string findme;
 		RevisionData[string] allRevisions;
 		string[] roots;
 		string[string] leafs;
 		string[string] titles;
+		string[string] htmls;
 
 		static bool sorter(string a, string b) {
 			import std.string : cmp;
@@ -1432,7 +1605,7 @@ class EditorApi : ApiProvider {
 			auto dl = div.addChild("dl");
 			foreach(root; roots.sort!sorter) {
 				auto dt = dl.addChild("dt", root in titles ? titles[root] : "no title");
-				foreach(id, leafRoot; leafs)
+				foreach(id, leafRoot; leafs) {
 					if(root == leafRoot) {
 						auto data = allRevisions[id];
 						/*
@@ -1442,6 +1615,15 @@ class EditorApi : ApiProvider {
 							user-branches
 						*/
 						auto a = Element.make("a", data.tag ~ " latest change by " ~ data.editedBy ~ " at " ~ printTimestamp(data.timestamp), "edit?id=" ~ id);
+
+
+						if(findme.length) {
+							auto e = htmls[id];
+							if(e.indexOf(findme) != -1)
+								a.innerText = "********** " ~ a.innerText;
+
+						}
+
 						auto dd = dl.addChild("dd", a);
 						dd.appendText(" ");
 						dd.addChild("button", "History").setAttribute("type", "button").setAttribute("onclick", q{
@@ -1489,6 +1671,7 @@ class EditorApi : ApiProvider {
 							parent = allRevisions[parent.basedOn];
 						}
 					}
+				}
 				
 			}
 			return div;
@@ -1500,47 +1683,62 @@ class EditorApi : ApiProvider {
 		auto div = Element.make("div");
 		string lastModule;
 		Element list;
-		foreach(file; bdb.query("SELECT id, name, latest_production_commit, module_number FROM files ORDER BY module_number, subnumber")) {
+		foreach(file; bdb.query("SELECT id, name, latest_production_commit, module_number, canvas_page_name FROM files ORDER BY module_number, subnumber")) {
 			if(file[3] != lastModule) {
 				lastModule = file[3];
 				div.addChild("h3", "Module " ~ lastModule);
 				list = div.addChild("ol");
 			}
-			auto li = list.addChild("li", file[1]); // Element.make("a", file[1], "/edit?id=" ~ file[2]));
+			auto li = list.addChild("li", Element.make("span", file[1]).setAttribute("title", file[4])); // Element.make("a", file[1], "/edit?id=" ~ file[2]));
 			auto ul = li.addChild("ul");
 			foreach(branch; bdb.query("SELECT name, latest_commit FROM branches WHERE file_id = ?", file[0])) {
 				auto sli = ul.addChild("li", Element.make("a", branch[0], "/edit?fileId=" ~ file[0] ~ "&branch=" ~ branch[0]));
 				sli.appendText(" ");
-				auto cl = sli.addChild("a", "[Changes]", "/diff?v1=" ~ file[2] ~ "&v2=" ~ branch[1]);
+				auto cl = sli.addChild("a", "[Changes from Production]", "/diff?v1=" ~ file[2] ~ "&v2=" ~ branch[1]);
+				sli.appendText(" ");
+				auto clh = sli.addChild("a", "[History]", "/branchHistory?fileId="~file[0]~"&branch="~branch[0]);
 			}
 
 		}
 		return div;
 	}
 
-	FilesResult reflog() {
+	Element branchHistory(int fileId, string branch) {
+		auto bdb = openBranchDatabase();
+		auto lc = bdb.query("SELECT latest_commit FROM branches WHERE file_id = ? AND name = ?", fileId, branch).front[0];
+
+		auto div = Element.make("div");
+		auto table = cast(Table) div.addChild("table");
+		auto rd = loadRevision(lc);
+		string prev;
+		while(rd.id.length) {
+			table.appendRow(Element.make("a", printTimestamp(rd.timestamp), "/edit?id=" ~ rd.id), prev.length ? Element.make("a", "Changes", "/diff?v1=" ~ prev ~ "&v2=" ~ rd.id) : Element.make("span"));
+			prev = rd.id;
+			if(rd.basedOn.length == 0)
+				break;
+			rd = loadRevision(rd.basedOn);
+		}
+		return div;
+	}
+
+	FilesResult reflog(string findme = null) {
 		import std.file;
 
+		EditorApi api;
 		RevisionData[] results;
 		string[] roots;
 		string[string] leafs;
 		string[string] titles;
+		string[string] htmls;
 
 		RevisionData[string] helper;
 
 
-		/*
 		auto bdb = openBranchDatabase();
 		// FIXME
-		foreach(row; bdb.query("SELECT module_number, name, latest_production_commit FROM files WHERE subnumber = 0")) {
-			RevisionData data;
-			data.id = row[3];
-			results ~= data;
-			roots ~= row[3];
-			titles[row[3]] = name[0];
-			helper[data.id] = data;
+		foreach(row; bdb.query("SELECT name, latest_production_commit FROM files")) {
+			titles[row[1]] = row[0];
 		}
-		*/
 
 		foreach(string name; dirEntries("data/revisions", "*.dat", SpanMode.shallow)) {
 			auto data = loadRevision(name["data/revisions/".length .. $-".dat".length]);
@@ -1565,9 +1763,15 @@ class EditorApi : ApiProvider {
 			}
 
 			leafs[k] = root;
+
+			if(findme.length) {
+				auto d = helper[k];
+				//auto e = d.render(this);
+				htmls[k] = load(k).rendered.toString;//e.toString;
+			}
 		}
 
-		return FilesResult(helper, roots, leafs, titles);
+		return FilesResult(findme, helper, roots, leafs, titles, htmls);
 	}
 
 	Document edit(int fileId = 0, string branch = "working", string id = null) {
@@ -1632,6 +1836,8 @@ class EditorApi : ApiProvider {
 				img.src = loc ~ img.src[5 .. $];
 			foreach(img; document.querySelectorAll("[href^=\"HERE/\"]"))
 				img.href = loc ~ img.href[5 .. $];
+			foreach(img; document.querySelectorAll("[action^=\"HERE/\"]"))
+				img.action = loc ~ img.action[5 .. $];
 
 			document.mainBody.addChild("script")
 				.setAttribute("id", "webd-functions-js")

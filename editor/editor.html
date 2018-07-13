@@ -162,9 +162,13 @@
 			<button type="button" onclick="insertBox();">Insert Box</button>
 			<button type="button" onclick="document.execCommand('insertHTML', false, '<table><tr><th></th></tr></table>')">Insert Table</button>
 			<button type="button" onclick="document.execCommand('insertHTML', false, '<ul class=\'checklist\'><li class=\'correct\'>Checklist</li></ul>')">Insert Checklist</button>
-			<button type="button" onclick="document.execCommand('insertHTML', false, '<input type=\'text\' data-bz-retained=\'NAME\' />')">Insert Magic Field</button>
-			<button type="button" onclick="document.execCommand('insertHTML', false, '<textarea data-bz-retained=\'NAME\'></textarea>')">Insert Magic Textarea</button>
-			<button type="button" onclick="document.execCommand('insertHTML', false, '<input data-bz-retained=&quot;'+uuidv4()+'&quot; value=&quot;Done&quot; class=&quot;bz-toggle-all-next&quot; type=&quot;button&quot;>')">Insert Done Button</button>
+			<button type="button" onclick="document.execCommand('insertHTML', false, '<input type=\'text\' data-bz-retained=\''+uuidv4()+'\' />')">Insert Magic Field</button>
+			<button type="button" onclick="document.execCommand('insertHTML', false, '<textarea data-bz-retained=\''+uuidv4()+'\'></textarea>')">Insert Magic Textarea</button>
+			<button type="button" onclick="insertDoneButton();">Insert Done Button</button>
+			<button type="button" onclick="document.execCommand('insertHTML', false, '<div class=\'slider-container\'><span class=\'left-label\'>Less</span><input type=\'range\' min=\'0\' max=\'10\' class=\'two-thirds\' data-bz-retained=\''+uuidv4()+'\' /><span class=\'right-label\'>More</span></div>')">Insert Magic Slider</button>
+
+			<button type="button" onclick="invokeEditorDialog('upload-dialog', insertUpload);">Upload File/Image</button>
+			<button type="button" onclick="invokeEditorDialog('embed-dialog', insertEmbed);">Embed Video</button>
 		</div>
 	</div>
 
@@ -175,6 +179,32 @@
 	<div id="view-source"> <textarea></textarea> </div>
 
 	<div id="editor" class="user_content show-answers" contenteditable="true"></div>
+
+	<div id="dialogs-templates" style="display: none;">
+		<div id="upload-dialog">
+			<form action="HERE/uploadFile" method="POST" enctype="multipart/form-data">
+				<label>
+					Description<br />
+					<textarea name="description"></textarea>
+				</label>
+				<br />
+				<input type="file" name="file" />
+				<br />
+				<input type="submit" value="Upload" />
+			</form>
+		</div>
+
+		<div id="embed-dialog">
+			<form class="nosubmit">
+				<label>
+					Paste a video link or embed here from vimeo or youtube<br />
+					<input type="text" name="url" />
+				</label>
+				<br />
+				<input type="submit" value="Embed" />
+			</form>
+		</div>
+	</div>
 
 	<!--
 	// fucking jquery required

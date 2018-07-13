@@ -6,5 +6,5 @@ all:
 		../../../arsd/http2.d \
 		-version=webd_memory_sessions \
 		-version=embedded_httpd_threads -debug -g \
-		-debug=arsd_http2 \
 		-d
+		# -debug=arsd_http2 \

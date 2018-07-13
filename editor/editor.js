@@ -317,7 +317,24 @@ function getSidebarBox(ele) {
 		var button = document.createElement("button");
 		button.textContent = "Insert Column";
 		button.onclick = function() {
+			var rows = ele.querySelectorAll("tr");
+			for(var i = 0; i < rows.length; i++) {
+				var row = rows[i];
+				var td = row.querySelector("td:last-child");
+				if(td) {
+					td = td.cloneNode(true);
+				} else {
+					td = document.createElement("td");
+					td.innerHTML = "<p>&nbsp;</p>";
+				}
 
+				row.appendChild(td);
+
+				if(td.querySelector("p")) {
+					selectAll(td.querySelector("p"));
+					td.querySelector("p").scrollIntoView();
+				}
+			}
 		};
 		div.appendChild(button);
 
@@ -375,6 +392,25 @@ function getSidebarBox(ele) {
 	if(ele.getAttribute("data-bz-reference")) {
 		// .conditional-show
 	}
+
+
+	if(ele.classList.contains("feedback")) {
+		dt = document.createElement("dt");
+		dt.textContent = "Feedback Lower Range";
+		dl.appendChild(dt);
+		dd = document.createElement("dd");
+		addAttributeTextBox(dd, ele, "data-bz-range-flr");
+		dl.appendChild(dd);
+
+		dt = document.createElement("dt");
+		dt.textContent = "Feedback Upper Range";
+		dl.appendChild(dt);
+		dd = document.createElement("dd");
+		addAttributeTextBox(dd, ele, "data-bz-range-clg");
+		dl.appendChild(dd);
+
+	}
+
 	
 	if(ele.getAttribute("data-bz-retained")) {
 		if(ele.tagName == "TEXTAREA") {
@@ -396,10 +432,7 @@ function getSidebarBox(ele) {
 		dl.appendChild(dd);
 
 		var dt = document.createElement("dt");
-		if(ele.classList.contains("bz-optional-magic-field"))
-			dt.textContent = "Optional Magic Field Name"
-		else
-			dt.textContent = "Magic Field Name";
+		dt.textContent = "Magic Field Name";
 		dl.appendChild(dt);
 		var dd = document.createElement("dd");
 		addAttributeTextBox(dd, ele, "data-bz-retained");
@@ -425,6 +458,15 @@ function getSidebarBox(ele) {
 		dd = document.createElement("dd");
 		addAttributeTextBox(dd, ele, "data-bz-partial-credit");
 		dl.appendChild(dd);
+
+		div.appendChild(makeCheckbox("Optional Magic Field", function(checked) {
+			if(checked) {
+				ele.classList.add("bz-optional-magic-field");
+			} else {
+				ele.classList.remove("bz-optional-magic-field");
+			}
+		}, ele.classList.contains("bz-optional-magic-field")));
+
 
 		if(ele.getAttribute("type") == "range") {
 			dt = document.createElement("dt");
@@ -457,6 +499,17 @@ function getSidebarBox(ele) {
 		}
 	}
 
+	if(ele.classList.contains("slider-container")) {
+		div.appendChild(makeCheckbox("Likert Style", function(checked) {
+			if(checked)
+				ele.classList.add("likert-style");
+			else
+				ele.classList.remove("likert-style");
+
+		}, ele.classList.contains("likert-style")));
+	}
+
+
 	if(ele.tagName == "P") {
 		div.appendChild(makeCheckbox("Inline Feedback", function(checked) {
 			if(checked) {
@@ -468,7 +521,7 @@ function getSidebarBox(ele) {
 			}
 		}, ele.classList.contains("inline") && ele.classList.contains("feedback")));
 	}
-	
+
 	if(ele.classList.contains("bz-has-tooltip")) {
 		var dt = document.createElement("dt");
 		dt.textContent = "Tooltip";
@@ -477,6 +530,16 @@ function getSidebarBox(ele) {
 		addAttributeTextBox(dd, ele, "title");
 		dl.appendChild(dd);
 	}
+
+	if(ele.classList.contains("context-notes")) {
+		var dt = document.createElement("dt");
+		dt.textContent = "Popup Notes";
+		dl.appendChild(dt);
+		var dd = document.createElement("dd");
+		addAttributeTextBox(dd, ele, "data-content");
+		dl.appendChild(dd);
+	}
+
 	
 	if(ele.tagName == "A" && ele.href) {
 		var dt = document.createElement("dt");
@@ -772,10 +835,24 @@ window.onload = function() {
 				disp.insertBefore(li, disp.firstChild);
 			}
 			at = at.parentNode;
-			if(at.getAttribute("id") == "editor")
+			if(at && at.getAttribute && at.getAttribute("id") == "editor")
 				break;
 		}
 	});
+
+	function enterShouldBreakOutTo(e) {
+		while(e) {
+			if(e.classList && e.classList.contains("slider-container")) {
+				if(e.nextElementSibling)
+					return e.nextElementSibling;
+				else if(e.parentNode.nextElementSibling)
+					return e.parentNode.nextElementSibling;
+			}
+
+			e = e.parentNode;
+		}
+		return null;
+	}
 
 	document.addEventListener("keydown", function(event) {
 		var key = event.keyCode || event.which;
@@ -825,7 +902,16 @@ window.onload = function() {
 				n = b.parentNode.nextSibling;
 
 			selectNode(n);
+		} else if(key == 13) {
+			var selection = window.getSelection();
+			var b = selection.focusNode;
+			var eto = enterShouldBreakOutTo(b);
+			if(eto) {
+				event.preventDefault();
+				selectNode(eto);
+			}
 		}
+
 		if(key == 65 && event.ctrlKey) { // ctrl+a
 			var selection = window.getSelection();
 			// FIXME
@@ -1089,4 +1175,240 @@ function wrapSelection() {
 				sb.focus();
 		}
 	}
+}
+
+function elementInEditor(ele) {
+	while(ele) {
+		if(ele.id == "editor")
+			return true;
+		ele = ele.parentNode;
+	}
+	return false;
+}
+
+function invokeEditorDialog(whichOne, callback) {
+
+	var selection = window.getSelection();
+	var currentFocus = selection.focusNode;
+
+	var range = selection.getRangeAt(0);
+
+	if(!elementInEditor(currentFocus)) {
+		alert("click a spot in the editor content to put the thing first");
+		return;
+	}
+
+	var sb = document.getElementById("sidebar");
+	sb.innerHTML = document.getElementById(whichOne).innerHTML;
+
+	var forms = sb.querySelectorAll("form");
+	for(var i = 0; i < forms.length; i++) {
+		let form = forms[i];
+		form.addEventListener("submit", function(event) {
+			var d = new FormData(form);
+
+			d.append("envelopeFormat", "json");
+			d.append("format", "json");
+
+			if(!form.classList.contains("nosubmit")) {
+				var r = new XMLHttpRequest();
+				r.open(form.method, form.action, true);
+				r.onload = function(ev) {
+					if(r.status == 200) {
+						var answer = JSON.parse(r.responseText);
+
+						if(answer.errorMessage.length) {
+							sb.textContent = answer.errorMessage;
+						} else {
+							callback(answer.result, range);
+						}
+					} else {
+						console.log(r.status + ": " + r.responseText);
+					}
+				};
+
+				r.send(d);
+			} else {
+				//callback(form.elements);
+				var e = {};
+				for(var i = 0; i < form.elements.length; i++)
+					e[form.elements[i].name] = form.elements[i].value;
+				callback(e, range);
+			}
+			event.preventDefault();
+		});
+	}
+}
+
+function htmlEscape(text) {
+	var tn = document.createTextNode(text);
+	var p = document.createElement('p');
+	p.appendChild(tn);
+	return p.innerHTML;
+}
+
+function insertUpload(result, range) {
+	var code;
+	var url = result.url;
+	switch(result.contentType) {
+		case "application/pdf":
+			//code = "<iframe src=\""+url+"\"></iframe>";
+			code = "<embed src=\"https://drive.google.com/viewerng/viewer?embedded=true&url="+encodeURIComponent(url)+"\" width=\"500\" height=\"375\">";
+		break;
+		case "image/png":
+		case "image/jpeg":
+			code = "<img src=\""+url+"\" alt=\""+htmlEscape(result.description)+"\" />";
+		break;
+		default:
+			code = "<a href=\""+url+"\">" + url + "</a>";
+	}
+	insertHTML(code, range);
+}
+
+function insertEmbed(result, range) {
+	var url = result.url;
+	var code = "";
+
+	var videoId;
+	var provider;
+
+	var idx = url.indexOf("http");
+	if(idx != -1)
+		url = url.substr(idx);
+
+	idx = url.indexOf("\"");
+	if(idx != -1)
+		url = url.substr(0, idx);
+
+	if(url.indexOf("youtu.be") != -1) {
+		idx = url.indexOf("?");
+		if(idx != -1)
+			url = url.substr(0, idx);
+		idx = url.lastIndexOf("/");
+		url = url.substr(idx + 1);
+
+		videoId = url;
+		provider = "youtube";
+	} else if(url.indexOf("youtube.com/embed") != -1) {
+		idx = url.indexOf("/embed/");
+		if(idx != -1)
+			url = url.substr(idx + 7);
+		idx = url.lastIndexOf("?");
+		if(idx != -1)
+			url = url.substr(0, idx);
+
+		videoId = url;
+		provider = "youtube";
+
+	} else if(url.indexOf("youtube.com") != -1) {
+		idx = url.indexOf("v=");
+		if(idx != -1)
+			url = url.substr(idx + 2);
+		idx = url.lastIndexOf("&");
+		if(idx != -1)
+			url = url.substr(0, idx);
+
+		videoId = url;
+		provider = "youtube";
+	} else if(url.indexOf("vimeo.com") != -1) {
+		idx = url.indexOf("?");
+		if(idx != -1)
+			url = url.substr(0, idx);
+		idx = url.lastIndexOf("/");
+		url = url.substr(idx + 1);
+
+		videoId = url;
+		provider = "vimeo";
+	} else {
+		alert("Couldn't find valid video url in the content.");
+		return;
+	}
+
+	if(provider == "youtube")
+		url = "https://www.youtube.com/embed/" + videoId + "?rel=0";
+	else if(provider == "vimeo")
+		url = "https://player.vimeo.com/video/" + videoId;
+	else alert("unknown video provider");
+
+	code = '<iframe width="560" height="315" frameborder="0" allowfullscreen="allowfullscreen" allow="encrypted-media" src="'+htmlEscape(url)+'"></iframe>';
+
+	var div = document.createElement("div");
+	div.innerHTML = code;
+	wrapStuffForEditing(div);
+
+	insertHTML(div.innerHTML, range);
+}
+
+function insertHTML(html, rangePassed) {
+	var div = document.createElement("div");
+	div.innerHTML = html;
+	var frag = document.createDocumentFragment();
+	while(div.children.length)
+		frag.appendChild(div.removeChild(div.firstChild));
+
+	var range;
+	if(rangePassed)
+		range = rangePassed;
+	else
+		range = window.getSelection().getRangeAt(0);
+
+	if (range) {
+		range.collapse(true);
+		range.insertNode(frag);
+		/*
+		range.setStartAfter(frag);
+		range.collapse(true);
+		sel.removeAllRanges();
+		sel.addRange(range);
+		*/
+	}
+}
+
+function moveToEndOfBox() {
+	var selection = window.getSelection();
+	var currentFocus = selection.focusNode;
+	var oldFocus = currentFocus;
+
+	while(currentFocus && (!currentFocus.classList || !currentFocus.classList.contains("bz-box")))
+		currentFocus = currentFocus.parentNode;
+
+	if(!currentFocus)
+		return;
+
+	var range = document.createRange();
+	range.setStartAfter(currentFocus.lastChild);
+	range.setEndAfter(currentFocus.lastChild);
+	selection.removeAllRanges();
+	selection.addRange(range);
+
+	document.getElementById("editor").focus();
+	updateSelectionData();
+}
+
+function insertDoneButton() {
+	var button = document.createElement("input");
+	button.setAttribute("data-bz-retained", uuidv4());
+	button.setAttribute("value", "Done");
+	button.setAttribute("type", "button");
+	button.setAttribute("class", "bz-toggle-all-next");
+
+	var selection = window.getSelection();
+	var currentFocus = selection.focusNode;
+	var oldFocus = currentFocus;
+
+	while(currentFocus && (!currentFocus.classList || !currentFocus.classList.contains("bz-box")))
+		currentFocus = currentFocus.parentNode;
+
+	if(!currentFocus)
+		return;
+
+	currentFocus.appendChild(button);
+
+	range.selectNode(button);
+	selection.removeAllRanges();
+	selection.addRange(range);
+
+	document.getElementById("editor").focus();
+	updateSelectionData();
+
 }
