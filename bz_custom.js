@@ -72,6 +72,7 @@ jQuery( document ).ready(function() {
 
   runOnUserContent(function() {
     /* Improve navigability of assignment content by collapsing/expanding parts: */
+    /* Disabling b/c it sucks:
     $('.bz-assignment-part').addClass('collapsed').click(function(e){ 
       $(this).toggleClass('collapsed'); 
     });
