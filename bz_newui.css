@@ -2572,3 +2572,7 @@ table [type="range"] {
 #bz-announcements-list a:hover {
   text-decoration: underline;
 }
+
+.bz-uploaded-file-display[href=""] {
+  display: none;
+}
