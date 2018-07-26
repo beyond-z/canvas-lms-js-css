@@ -2576,3 +2576,9 @@ table [type="range"] {
 .bz-uploaded-file-display[href=""] {
   display: none;
 }
+
+.stealth-link {
+	text-decoration: inherit;
+	color: inherit;
+	cursor: inherit;
+}
