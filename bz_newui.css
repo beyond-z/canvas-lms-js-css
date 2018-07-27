@@ -1950,6 +1950,14 @@ table [type="range"] {
   margin: 2em auto;
 }
 
+/* Generic toggle link for (un)collapsing the parent element (with associated JS) */
+
+.bz-toggle-collapse {
+    cursor: pointer;
+    text-decoration: underline;
+    color: #0081bd;
+}
+
 /* Timline */
 .bz-magic-field-assignment .timeline,
 .bz-magic-field-submission .timeline {
