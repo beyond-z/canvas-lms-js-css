@@ -57,7 +57,8 @@ th,
 .toggle-transcript,
 .ic-notification__title,
 .bz-button-pick-up,
-.bz-explain-grade-link a {
+.bz-explain-grade-link a,
+.bz-module .bz-graded-question:before {
 	font-family: "TradeGothicNo.20-CondBold", "Oswald", sans-serif;
 	text-transform: uppercase;
 	line-height: normal;
@@ -1128,8 +1129,15 @@ input[type='button']:disabled {
 }
 
 .bz-module .bz-graded-question:before {
-  content:"* ";
-  color:red
+  content: "MASTERY Q";
+  color: #EB3B46;
+  margin-right: 0.25em;
+  text-transform: uppercase;
+  background: white;
+  padding: 0 4px;
+  border: 2px solid #EB3B46;
+  border-radius: 4px;
+  font-size: 0.9em;
 }
 
 .user_content table:not([cellpadding]) td, 
