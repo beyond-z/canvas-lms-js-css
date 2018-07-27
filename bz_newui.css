@@ -1307,7 +1307,7 @@ figcaption {
 
 .bz-box textarea {
 	width: calc( 100% - 2em );
-	height: 3.5em;
+	height: 5em;
 }
 
 .user_content table:not([cellpadding]) {
@@ -1550,6 +1550,7 @@ table [type="range"] {
 
 #bz-back-to-top {
     display: none;
+    opacity: 0.75;
     position: fixed;
     text-align: center;
     margin: 0 auto;
@@ -1567,6 +1568,8 @@ table [type="range"] {
 
 #bz-back-to-top:hover {
 	color: #EB3B46;
+  opacity: 1;
+
 }
 
 .bz-resume-box * {
