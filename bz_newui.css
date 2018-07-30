@@ -57,7 +57,8 @@ th,
 .toggle-transcript,
 .ic-notification__title,
 .bz-button-pick-up,
-.bz-explain-grade-link a {
+.bz-explain-grade-link a,
+.bz-module .bz-graded-question:before {
 	font-family: "TradeGothicNo.20-CondBold", "Oswald", sans-serif;
 	text-transform: uppercase;
 	line-height: normal;
@@ -104,8 +105,13 @@ a:visited {
 	color: #EB3B46;
 }
 
-.bz-module h2 {
+.bz-module h2,
+.bz-assignment h3 {
 	font-size: 40px;
+}
+
+.bz-assignment h3 {
+  padding-top: 0.5em;
 }
 
 .bz-module h3 {
@@ -122,6 +128,10 @@ a:visited {
 .bz-module .main-toc {
  font-size: 16px;
  letter-spacing: 0.1em;
+}
+
+.bz-assignment h5 {
+  color: black;
 }
 
 .bz-module .main-toc {
@@ -1119,8 +1129,15 @@ input[type='button']:disabled {
 }
 
 .bz-module .bz-graded-question:before {
-  content:"* ";
-  color:red
+  content: "MASTERY Q";
+  color: #EB3B46;
+  margin-right: 0.25em;
+  text-transform: uppercase;
+  background: white;
+  padding: 0 4px;
+  border: 2px solid #EB3B46;
+  border-radius: 4px;
+  font-size: 0.9em;
 }
 
 .user_content table:not([cellpadding]) td, 
@@ -1903,6 +1920,33 @@ table [type="range"] {
 	margin-left: 0 !important;
 }
 
+.bz-assignment p,
+.bz-assignment li {
+  margin-bottom: 1em;
+  line-height: 1.3;
+}
+
+.bz-assignment {
+  margin: 2em auto;
+  width: 672px;
+}
+
+.bz-assignment-intro {
+  background: #EBF7F7;
+  padding: 2em;
+  margin: 2em auto;
+}
+
+.bz-assignment .bz-helpful-tip-box,
+.bz-assignment .bz-watch-out-box,
+.bz-assignment .bz-example,
+.bz-assignment p textarea {
+  width: calc(100% - 4em - 10px);
+  background: white;
+  padding: 2em;
+  margin: 2em auto;
+}
+
 /* Timline */
 .bz-magic-field-assignment .timeline,
 .bz-magic-field-submission .timeline {
@@ -2491,43 +2535,6 @@ table [type="range"] {
 
 .grade-explained.partial {
 	border-color: gold;
-}
-
-/* Friendly assignment UI */
-.bz-assignment-part {
-  padding-top: 0;
-  transition: height 2s;
-  overflow: hidden;
-}
-
-.collapsed {
-  height: 2.75em;
-}
-
-.bz-assignment-part h3 {
-  position: relative;
-  cursor: pointer;
-  margin-top: 0;
-  padding-top: 0.25em;
-  padding-left: 40px;
-  height: 2.5em;
-}
-
-.bz-assignment-part h3:before {
-  display: block;
-  position: absolute;
-  left: 5px;
-  top: 9px;
-  content: "✕";
-  padding: 1px;
-  border-radius: 20px;
-  line-height: 1;
-  transition: all 0.3s;
-}
-
-.bz-assignment-part.collapsed h3:before {
-  transform: rotate(-45deg);
-  zoom: 0.95;
 }
 
 /* Notifications on home page */
