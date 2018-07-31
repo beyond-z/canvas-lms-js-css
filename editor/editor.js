@@ -158,6 +158,24 @@ function addAttributeTextBox(parent, ele, attr) {
 	parent.appendChild(input);
 }
 
+function addAttributeSelect(parent, ele, attr, options) {
+	var input = document.createElement("select");
+
+	options.forEach(function(opt) {
+		var option = document.createElement("option");
+		option.textContent = opt;
+		input.appendChild(option);
+	});
+
+	input.value = ele.getAttribute(attr);
+	input.onchange = function() {
+		ele.setAttribute(attr, input.value);
+	};
+	input.refersToInEditor = ele;
+	parent.appendChild(input);
+}
+
+
 function addStyleTextBox(parent, ele, attr, unit) {
 	if(!unit)
 		unit = "";
@@ -205,7 +223,7 @@ function getSidebarBox(ele) {
 					if(opt.className == "video") {
 						// insert the default scaffolding for a video if empty
 						if(!ele.querySelector("h4 + *")) {
-							ele.innerHTML += "<figure><iframe allow=\"encrypted-media\" allowfullscreen width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/zHP4gPwJCDs\"></iframe><figcaption><p>Description here</p><p class=\"media-duration\">About 2 minutes</p></figcaption></figure>";
+							ele.innerHTML += "<figure>Replace this text with the video<figcaption><p>Description here</p><p class=\"media-duration\">About 2 minutes</p></figcaption></figure>";
 							wrapStuffForEditing(ele);
 						}
 
@@ -423,6 +441,19 @@ function getSidebarBox(ele) {
 			dl.appendChild(dd);
 
 		}
+
+		dt = document.createElement("dt");
+		dt.textContent = "Type";
+		dl.appendChild(dt);
+		dd = document.createElement("dd");
+		addAttributeSelect(dd, ele, "type", [
+			"",
+			"text",
+			"file",
+			"checkbox",
+			"radio"
+		]);
+		dl.appendChild(dd);
 
 		dt = document.createElement("dt");
 		dt.textContent = "Placeholder";
@@ -842,11 +873,19 @@ window.onload = function() {
 
 	function enterShouldBreakOutTo(e) {
 		while(e) {
-			if(e.classList && e.classList.contains("slider-container")) {
-				if(e.nextElementSibling)
+			if(e.classList && (e.classList.contains("slider-container") || e.classList.contains("hacky-wrapper"))) {
+				if(e.nextElementSibling && e.nextElementSibling.tagName != "BR")
 					return e.nextElementSibling;
-				else if(e.parentNode.nextElementSibling)
+				else if(e.parentNode.nextElementSibling && e.parentNode.nextElementSibling.tagName != "BR")
 					return e.parentNode.nextElementSibling;
+				else {
+					var p = document.createElement("p");
+					if(e.parentNode.tagName == "P") {
+						e.parentNode.parentNode.insertBefore(p, e.parentNode.nextElementSibling);
+					} else
+						e.parentNode.appendChild(p);
+					return p;
+				}
 			}
 
 			e = e.parentNode;
@@ -1056,6 +1095,8 @@ function wrapStuffForEditing(parent) {
 			wrapper.className += " wraps-iframe";
 		else
 			wrapper.setAttribute("contenteditable", "false");
+		if(e.parentNode.classList.contains("hacky-wrapper"))
+			return; // don't double wrap
 		e.parentNode.insertBefore(wrapper, e);
 		e.parentNode.removeChild(e);
 		wrapper.appendChild(e);
@@ -1201,6 +1242,10 @@ function invokeEditorDialog(whichOne, callback) {
 	var sb = document.getElementById("sidebar");
 	sb.innerHTML = document.getElementById(whichOne).innerHTML;
 
+	var f = sb.querySelector("input, textarea");
+	if(f)
+		f.focus();
+
 	var forms = sb.querySelectorAll("form");
 	for(var i = 0; i < forms.length; i++) {
 		let form = forms[i];
@@ -1254,6 +1299,10 @@ function insertUpload(result, range) {
 		case "application/pdf":
 			//code = "<iframe src=\""+url+"\"></iframe>";
 			code = "<embed src=\"https://drive.google.com/viewerng/viewer?embedded=true&url="+encodeURIComponent(url)+"\" width=\"500\" height=\"375\">";
+			var div = document.createElement("div");
+			div.innerHTML = code;
+			wrapStuffForEditing(div);
+			code = div.innerHTML;
 		break;
 		case "image/png":
 		case "image/jpeg":

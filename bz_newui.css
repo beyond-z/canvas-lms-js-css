@@ -1307,7 +1307,7 @@ figcaption {
 
 .bz-box textarea {
 	width: calc( 100% - 2em );
-	height: 3.5em;
+	height: 5em;
 }
 
 .user_content table:not([cellpadding]) {
@@ -1550,6 +1550,7 @@ table [type="range"] {
 
 #bz-back-to-top {
     display: none;
+    opacity: 0.75;
     position: fixed;
     text-align: center;
     margin: 0 auto;
@@ -1567,6 +1568,8 @@ table [type="range"] {
 
 #bz-back-to-top:hover {
 	color: #EB3B46;
+  opacity: 1;
+
 }
 
 .bz-resume-box * {
@@ -1945,6 +1948,14 @@ table [type="range"] {
   background: white;
   padding: 2em;
   margin: 2em auto;
+}
+
+/* Generic toggle link for (un)collapsing the parent element (with associated JS) */
+
+.bz-toggle-collapse {
+    cursor: pointer;
+    text-decoration: underline;
+    color: #0081bd;
 }
 
 /* Timline */
@@ -2582,4 +2593,10 @@ table [type="range"] {
 
 .bz-uploaded-file-display[href=""] {
   display: none;
+}
+
+.stealth-link {
+	text-decoration: inherit;
+	color: inherit;
+	cursor: inherit;
 }
