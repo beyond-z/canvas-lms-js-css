@@ -613,7 +613,7 @@ class EditorApi : ApiProvider {
 				while(df.getElementById(p)) {
 					if(count > 0 && count < 10)
 						p = p[0 .. $-2];
-					else if(count < 100)
+					else if(count && count < 100)
 						p = p[0 .. $-3];
 					count++;
 					p ~= "-" ~ to!string(count);
@@ -661,6 +661,17 @@ class EditorApi : ApiProvider {
 		return "https://stagingportal.bebraven.org/courses/1/pages/" ~ canvasUrl;
 	}
 
+	void pushAllToProduction() {
+		auto bdb = openBranchDatabase();
+		foreach(line; bdb.query("SELECT id FROM files")) {
+			foreach(res; bdb.query("SELECT latest_commit FROM branches WHERE file_id = ? AND name = ?", line[0], "working")) {
+				auto l = load(res[0]);
+				pushToProduction(line[0], l.render(this).toString);
+				break;
+			}
+		}
+
+	}
 
 	string pushToProduction(string fileId, string html) {
 		// first, find the file we have as a page in the staging content library
@@ -756,7 +767,7 @@ class EditorApi : ApiProvider {
 			foreach(item; mod.items) {
 				auto page = canvas.request(item.url.get!string).result;
 
-				if(true) {
+				if(false) {
 					int fileId;
 					string oldName;
 					foreach(r; bdb.query("SELECT id, name FROM files WHERE module_number = ? AND subnumber = ?", mod.position.get!string, partNum)) {
