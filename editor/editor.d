@@ -606,6 +606,30 @@ class EditorApi : ApiProvider {
 		foreach(e; df.querySelectorAll(".bz-box:has(.sort-to-match) .bz-toggle-all-next:not(.for-match)"))
 			e.addClass("for-match");
 
+		foreach(e; df.querySelectorAll("h1, h2, h3, h4, h5, h6")) {
+			if(!e.hasAttribute("id")) {
+				auto p = urlify(e.innerText);
+				int count;
+				while(df.getElementById(p)) {
+					if(count > 0 && count < 10)
+						p = p[0 .. $-2];
+					else if(count < 100)
+						p = p[0 .. $-3];
+					count++;
+					p ~= "-" ~ to!string(count);
+				}
+				e.id = p;
+			}
+			if(!e.querySelector("a")) {
+				auto a = Element.make("a");
+				a.addClass("stealth-link");
+				a.href = "#" ~ e.id;
+				a.innerHTML = e.innerHTML;
+				e.removeAllChildren();
+				e.appendChild(a);
+			}
+		}
+
 		return Html(df.innerHTML);
 	}
 
@@ -2001,6 +2025,23 @@ string printTimestamp(time_t unixTimestamp) {
 	char[255] buffer;
 	auto res = strftime(buffer.ptr, buffer.length - 1, "%a, %d %b %Y %T %z", localtime(&unixTimestamp));
 	return buffer[0 .. res].idup;
+}
+
+string urlify(string text) {
+	string n;
+	foreach(ch; text) {
+		if(ch >= 'a' && ch <= 'z')
+			n ~= ch;
+		else if(ch >= 'A' && ch <= 'Z')
+			n ~= ch | 0x20;
+		else if(ch >= '0' && ch <= '9')
+			n ~= ch;
+		else if(ch == '-' || ch == '_')
+			n ~= ch;
+		else if(ch == ' ')
+			n ~= '-';
+	}
+	return n;
 }
 
 string sanitizeId(string id) {
