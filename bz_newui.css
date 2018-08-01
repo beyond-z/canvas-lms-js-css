@@ -2600,3 +2600,9 @@ table [type="range"] {
 	color: inherit;
 	cursor: inherit;
 }
+
+.stealth-link::hover {
+	text-decoration: inherit !important;
+	color: inherit !important;
+	cursor: inherit !important;
+}
