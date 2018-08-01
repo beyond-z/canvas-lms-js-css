@@ -72,11 +72,12 @@ jQuery( document ).ready(function() {
 
   runOnUserContent(function() {
     /* Improve navigability of assignment content by collapsing/expanding parts: */
-    /* Disabling b/c it sucks:
-    $('.bz-assignment-part').addClass('collapsed').click(function(e){ 
-      $(this).toggleClass('collapsed'); 
+    jQuery('.bz-toggle-collapse').parent().addClass('collapsed'); //.append('<span class="bz-toggle-collapse icon">&#10005;</span>');
+    jQuery('.bz-toggle-collapse').parent().children().not('.bz-toggle-collapse').hide();
+    jQuery('.bz-toggle-collapse').click(function(e){
+      e.preventDefault();
+      jQuery(this).parent().toggleClass('collapsed').children().not('.bz-toggle-collapse').slideToggle();
     });
-
 
     /* Improve Priorities Quiz */  
     jQuery('.context-course_11 #question_482_question_text ol li, .context-course_15 #question_619_question_text ol li, .context-course_23 #question_1918_question_text ol li, .context-course_25 #question_2260_question_text ol li').prepend('<span class="dynamic"></span>');
