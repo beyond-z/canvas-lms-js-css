@@ -2596,9 +2596,9 @@ table [type="range"] {
 }
 
 .stealth-link {
-	text-decoration: inherit;
-	color: inherit;
-	cursor: inherit;
+	text-decoration: inherit !important;
+	color: inherit !important;
+	cursor: inherit !important;
 }
 
 .stealth-link::hover {

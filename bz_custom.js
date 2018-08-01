@@ -1126,7 +1126,11 @@ runOnUserContent(function(){
 
   }).parents('.bz-box').addClass('bz-has-toggle-btn');
 
-  if(location.hash.length == 0 && openPosition != 0 && openPosition < allBoxesWithStoppingPoints.length && allBoxesWithStoppingPoints.length > 0)
+  if(location.hash.length) {
+    var where = document.getElementById(location.hash.substring(1));
+    if(where)
+    	where.scrollIntoView();
+  } else if(openPosition != 0 && openPosition < allBoxesWithStoppingPoints.length && allBoxesWithStoppingPoints.length > 0)
     allBoxesWithStoppingPoints[openPosition].scrollIntoView();
 });
 
