@@ -1329,7 +1329,7 @@ function insertEmbed(result, range) {
 	if(idx != -1)
 		url = url.substr(0, idx);
 
-	if(url.indexOf("youtu.be") != -1) {
+	if(url.indexOf("youtu.be/") != -1) {
 		idx = url.indexOf("?");
 		if(idx != -1)
 			url = url.substr(0, idx);
@@ -1349,11 +1349,11 @@ function insertEmbed(result, range) {
 		videoId = url;
 		provider = "youtube";
 
-	} else if(url.indexOf("youtube.com") != -1) {
+	} else if(url.indexOf("youtube.com/") != -1) {
 		idx = url.indexOf("v=");
 		if(idx != -1)
 			url = url.substr(idx + 2);
-		idx = url.lastIndexOf("&");
+		idx = url.indexOf("&");
 		if(idx != -1)
 			url = url.substr(0, idx);
 

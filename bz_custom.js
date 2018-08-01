@@ -397,6 +397,7 @@ function bzInitializeNewUi() {
     var currentVal = jQuery(this).val();
     jQuery(this).parents('.question').find('.display-value .current-value').text(currentVal);
     jQuery(this).parents('td').siblings('.current-value').text(currentVal);
+    jQuery(this).parents('td').find('.current-value').text(currentVal);
   }).change();
 
   // Provide instant feedback when any input on a list is checked:
@@ -1125,7 +1126,11 @@ runOnUserContent(function(){
 
   }).parents('.bz-box').addClass('bz-has-toggle-btn');
 
-  if(openPosition != 0 && openPosition < allBoxesWithStoppingPoints.length && allBoxesWithStoppingPoints.length > 0)
+  if(location.hash.length) {
+    var where = document.getElementById(location.hash.substring(1));
+    if(where)
+    	where.scrollIntoView();
+  } else if(openPosition != 0 && openPosition < allBoxesWithStoppingPoints.length && allBoxesWithStoppingPoints.length > 0)
     allBoxesWithStoppingPoints[openPosition].scrollIntoView();
 });
 
