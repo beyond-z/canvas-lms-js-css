@@ -503,10 +503,14 @@ runOnUserContent(function() {
         var current = jQuery(c);
         if (current.is('h3') && !current.hasClass('box-title')) {
           innerHasKids = true;
-          innerToc += '<li>' + current.text() + '</li>';
+          if(typeof current.attr('id') !== "undefined") {
+            innerToc += '<li><a href="#' + current.attr('id') + '">' + current.text() + '</a></li>';
+          } else {
+            innerToc += '<li>' + current.text() + '</li>';
+          }
         }
       });
-      var mainListObj = jQuery('<li>' + jQuery(this).text() + '</li>');
+      var mainListObj = jQuery('<li><a href="#' + jQuery(this).attr('id') + '">' + jQuery(this).text() + '</a></li>');
 
       if (innerHasKids && !isWrapUp) {
         jQuery(this).after(innerToc);
