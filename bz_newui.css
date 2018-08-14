@@ -122,6 +122,7 @@ a:visited {
 	font-size: 27px;
 }
 
+.user_content td h5, /* for https://portal.bebraven.org/courses/1/pages/how-to-coach-fellows?module_item_id=5113 specifically right now */
 .bz-module .bz-box h5:not(.box-title), 
 .bz-module h6, 
 .bz-module .inner-toc, 
