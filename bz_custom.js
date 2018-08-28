@@ -180,6 +180,8 @@ var bzNewUiHandlers = {
   '.for-checklist' : function(){
     var checklist = jQuery(this).parents('.question').find('.checklist');
     var maxScore = checklist.find('.correct').length;
+    if(maxScore == 0)
+    	return;
     var checklistScore = 0;
     var falsePositives = 0;
     checklist.children().each(function(){
