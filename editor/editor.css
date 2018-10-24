@@ -252,3 +252,18 @@ body > div {
 	height: 20px;
 	background: #ccc;
 }
+
+.data-display {
+	border: solid 1px black;
+	border-collapse: collapse;
+}
+
+.data-display th {
+	text-align: left;
+}
+
+.data-display th,
+.data-display td {
+	padding: 2px 4px;
+	border: solid 1px black;
+}

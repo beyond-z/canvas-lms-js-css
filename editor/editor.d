@@ -1,3 +1,10 @@
+/++
+	The Braven Content Editor and associated code.
++/
+module braven.editor;
+
+version=hosted;
+
 // FIXME: insert followed by substitute might be a modified line followed by an insertion
 // that Phobos read the other way. Might be better to use LCS instead of Levenshtein , but
 // for now I want to detect that particular pattern and better portray it to the users.
@@ -119,26 +126,31 @@ static import std.file;
 import std.uuid;
 import std.zlib;
 
-struct Save {
-	string id;
-	string basedOn;
-	long timestamp;
-	string editedBy;
-	/*
-		the diff is a simple RLE thing of edit ops on lines
-		for a substitution or insert it has a length+string thing followed
-		the whole file is gzipped on disk.
+/++
+	Symbol_groups:
+		editing =
+			## Editing
+		schema =
+			## Magic Field Schema
+		analytics =
+			## Analytics
+		revision_management =
+			## Revision Management
 
-		Upper two bits: operation
-		Lower six bits: repeat count
-	*/
-	string diff;
-}
-
+			The editor supports complex revision management, similar to Git.
+		utility =
+			## Utilities
+		session_management =
+			## Session Management
+		portal_syncing =
+			## Portal Syncing
++/
 class EditorApi : ApiProvider {
 	private Session session;
 	private string ssoService = "http://editor.bebraven.org.arsdnet.net/sso";
-	version(none)
+
+	/// All access to the hosted editor requires a valid SSO login.
+	version(hosted)
 	override void _initializePerCall() {
 		session = new Session(cgi);
 		if(!session.hasKey("user")) {
@@ -154,6 +166,8 @@ class EditorApi : ApiProvider {
 
 	export:
 
+	/// Log in via stagingsso.bebraven.org
+	/// Group: session_management
 	string sso(string ticket) {
 		import std.uri;
 		auto client = new HttpClient();
@@ -176,6 +190,8 @@ class EditorApi : ApiProvider {
 		return null;
 	}
 
+	/// Returns a list of module names that contain the given string in their html
+	/// Group: utility
 	string[] grep(string str) {
 		string[] result;
 		auto bdb = openBranchDatabase();
@@ -191,6 +207,8 @@ class EditorApi : ApiProvider {
 		return result;
 	}
 
+	/// Just bounces some of the HTML from the client back out for preview purposes.
+	/// Group: editing
 	Document viewHtml(string html) {
 		import std.file;
 		auto document = new Document(readText("module.html"), true, true);
@@ -204,6 +222,15 @@ class EditorApi : ApiProvider {
 		return document;
 	}
 
+	/++
+		Views the given commit or file ID
+
+		Params:
+			id = Commit ID or File ID
+			showMagicFieldTimings = perform a magic field timing analysis for inline viewing
+
+		Group: editing
+	+/
 	Document view(string id, bool showMagicFieldTimings = false) {
 
 		if(id.length < 3) {
@@ -232,6 +259,8 @@ class EditorApi : ApiProvider {
 				int differencesSum = 0;
 				int differencesCount = 0;
 				foreach(row; db.query("SELECT user_id, strftime('%s', updated_at) FROM magic_fields WHERE name = ?", name)) {
+					if(row[0] == "null")
+						continue;
 					auto uid = row[0].to!int;
 					auto time = row[1].to!int;
 
@@ -260,145 +289,462 @@ class EditorApi : ApiProvider {
 		return document;
 	}
 
-	Table assignmentStartTimes(int course, bool includeHour = false) {
-		auto table = new Table(null);
+	@GenericContainerType("magic_field_schema") {
+		/// Represents a magic field
+		static struct MagicField {
+			string key;///                     data-bz-retained
+			string display_name;///            <not on html>
+			int weight = 1;///                  data-bz-weight
 
-		auto db = openProductionMagicFieldDatabase();
-		auto canvas = getCanvasApiClient(productionCredentials());
-
-		auto assignmentsRes = canvas.rest.
-			courses[course].assignments
-			._SELF()
-			("per_page", 30)
-			("include[]", "items")
-			.GET;
-
-		more_assignments:
-		foreach(assignment; assignmentsRes.result) {
-			// work with assignment
-
-			auto data = Element.make("div", Html(assignment.description.get!string));
-			if(data.querySelector("[data-bz-retained]") is null)
-				continue;
-
-			table.appendRow("Assignment " ~ assignment.name.get!string);// ~ " (due " ~ assignment.due_at.get!string ~ ")");
-
-			timingHelper(db, includeHour, course, data, table);
-		}
-		if(auto next = "next" in assignmentsRes.response.linksHash) {
-			assignmentsRes = canvas.request(next.url);
-			goto more_assignments;
-		}
-
-		return table;
-	}
-
-	Table startTimes(bool includeHour = false, int courseFilter = 0) {
-		auto table = new Table(null);
-
-		auto db = openProductionMagicFieldDatabase();
-
-		if(courseFilter) {
-			foreach(row; db.query("SELECT name FROM courses WHERE course_id = ?", courseFilter))
-				table.caption = row[0];
-		}
-
-		table.appendHeaderRow("Count", "Hour and Day (YYYY-MM-DD HH)");
-
-		foreach(i; 1 .. 17+1) {
-			auto data = view(to!string(i), false);
-
-			table.appendRow("Module " ~ to!string(i));
-			timingHelper(db, includeHour, courseFilter, data.root, table);
-		}
-
-		return table;
-	}
-
-	private void timingHelper(Database db, bool includeHour, int courseFilter, Element data, Table table) {
-		table.addClass("timing-table-display");
-		auto allFields = data.querySelectorAll("[data-bz-retained]:not([type=checkbox]):not(.bz-optional-magic-field)");
-		string field;
-		if(allFields.length > 2)
-			field = allFields[2].dataset.bzRetained;
-		else if(allFields.length > 1)
-			field = allFields[1].dataset.bzRetained;
-		else if(allFields.length == 1)
-			field = allFields[0].dataset.bzRetained;
-		else
-			return;
-
-		foreach(row; db.query("
-			SELECT
-				count(magic_fields.user_id) AS cnt,
-				strftime('%Y-%m-%d"~(includeHour ? " %H:xx":"")~"', magic_fields.created_at) AS started
-			FROM
-				magic_fields
-			INNER JOIN
-				users ON users.user_id = magic_fields.user_id
-			" ~ (courseFilter ? "
-			INNER JOIN
-				course_enrollments ON course_enrollments.user_id = users.user_id
-			" : "") ~ "
-			WHERE
-				magic_fields.name = ?
-				AND
-				is_test_account = 0
-			" ~ (courseFilter ? "
-				AND
-				course_id = ?
-			" : " AND ? = 0" /* prevent bind column index out of range error */) ~ "
-			GROUP BY
-				started
-			ORDER BY
-				started ASC
-			",
-			field, courseFilter))
-		{
-			table.appendRow(row[0], row[1], Element.make("div", "", "bar").setAttribute("style", "width: " ~ row[0] ~ "px;"));
-		}
-	}
-
-
-	Table timingAnalysis() {
-		auto table = new Table(null);
-
-		table.appendHeaderRow("Module", "1/4 Time", "1/2 Time", "3/4 Time", "End Time", "Longest Parts");
-
-		string fmt(Element d, bool showIn = false) {
-			int secs = to!int(showIn ? d.dataset.reachedIn : d.dataset.reachedAt);
-
-			int hours = 0;
-			int mins = (secs / 60);
-			hours = (mins / 60);
-			mins %= 60;
-			secs %= 60;
-
-			string str = "";
-			if(hours)
-				str ~= hours.to!string ~ ":";
-			if(mins < 10)
-				str ~= "0";
-			str ~= mins.to!string ~ ":";
-			if(secs < 10)
-				str ~= "0";
-			str ~= secs.to!string;
-			return str;
-		}
-
-		foreach(i; 1 .. 17+1) {
-			auto data = view(to!string(i), true);
-			auto ats = data.querySelectorAll("[data-reached-at]");
-			auto details = Element.make("details");
-			foreach(at; ats) {
-				if(to!int(at.dataset.reachedIn) > 60)
-					details.addChild("p", at.dataset.bzRetained ~ " " ~ at.parentNode.innerText ~ " " ~ fmt(at, true));
+			///
+			enum DisplayType {
+				text,///
+				checkbox,///
+				radio,///
+				button,///
+				textarea,///
+				file,///
+				range,///
+				email,///
+				select///
 			}
-			if(ats.length)
-			table.appendRow(Element.make("a", to!string(i), "/view?id=" ~ to!string(i) ~ "&showMagicFieldTimings=true"), fmt(ats[$ / 4]), fmt(ats[$/2]), fmt(ats[3*$ / 4]), fmt(ats[$-1]), details);
+
+			DisplayType type;///              type, tagName, etc
+
+			string answer;///                  data-bz-answer (nullable)
+
+			///
+			enum PartialCreditMode {
+				none,///
+				per_char,///
+			}
+
+			PartialCreditMode partial_credit;///          data-bz-partial-credit
+			bool optional;///                data-bz-optional
+
+			float min;/// for range types
+			float max;/// ditto
+			float step;/// ditto
+
+			// for radios
+			string[] options;///
+
+			URL[] uses; ///
 		}
 
-		return table;
+		/// Get the current magic field schema out of the live HTML
+		/// Group: schema
+		MagicField[] allMagicFieldsFromHtml() {
+			MagicField[string] fields;
+			auto bdb = openBranchDatabase();
+			foreach(res; bdb.query("SELECT latest_production_commit, name, id FROM files")) {
+				string name = res[1];
+				auto e = load(res[0]).render(this);
+
+				foreach(i; e.querySelectorAll("[data-bz-retained]")) {
+					MagicField field;
+					switch(i.tagName) {
+						case "input":
+							field.type = to!(MagicField.DisplayType)(i.attrs.type);
+						break;
+						case "textarea":
+							field.type = MagicField.DisplayType.textarea;
+						break;
+
+						case "img":
+						case "span":
+						default:
+							// view-only, skip
+							continue;
+					}
+
+					if(i.dataset.bzWeight.length) field.weight = to!int(i.dataset.bzWeight);
+					if(i.attrs.min.length) field.min = to!float(i.attrs.min);
+					if(i.attrs.max.length) field.max = to!float(i.attrs.max);
+					if(i.attrs.step.length) field.step = to!float(i.attrs.step);
+					if(i.hasAttribute("data-bz-answer")) field.answer = i.dataset.bzAnswer;
+					if(i.hasAttribute("data-bz-partial-credit")) field.partial_credit = to!(MagicField.PartialCreditMode)(i.dataset.bzPartialCredit);
+					if(i.hasClass("bz-optional-magic-field")) field.optional = true;
+
+					if(i.hasAttribute("value")) field.options ~= i.attrs.value;
+
+					field.key = i.dataset.bzRetained;
+					string usageHash = encodeComponent("editor [data-bz-retained=\""~field.key~"\"]");
+					/*
+					auto withId = i;
+					while(withId !is null && !withId.hasAttribute("id"))
+						withId = withId.previousInSource();
+					if(withId !is null)
+						usageHash = withId.attrs.id;
+					*/
+					field.uses ~= URL("/edit?fileId=" ~ res[2] ~ "&branch=working#" ~ usageHash, name);
+					if(field.key in fields) {
+						fields[field.key].options ~= i.attrs.value;
+						fields[field.key].uses ~= field.uses;
+					} else {
+						fields[field.key] = field;
+					}
+				}
+			}
+
+			return fields.values;
+		}
+	}
+
+	@GenericContainerType("analytics") {
+		/// Get the fellow's interests for the given course. Suggest viewing with `format=table` on the url.
+		/// Group: analytics
+		string[6][string] fellowInterests(int courseId) {
+			string[6][string] res;
+			auto mf = openProductionMagicFieldDatabase();
+			foreach(row; mf.query("
+				SELECT
+					users.user_id,
+					users.name,
+					users.email,
+					magic_fields.name,
+					magic_fields.value
+				FROM
+					magic_fields
+				INNER JOIN
+					users ON users.user_id = magic_fields.user_id
+				INNER JOIN
+					course_enrollments ON course_enrollments.user_id = users.user_id
+				WHERE
+					course_enrollments.course_id = ?
+					AND
+					magic_fields.name IN (?, ?, ?)
+			", courseId, "dyc-industry-1", "dyc-industry-2", "dyc-industry-freeform-other"))
+			{
+				if(row[0] !in res)
+					res[row[0]] = typeof(res[null]).init;
+				auto ptr = &res[row[0]];
+				(*ptr)[0] = row[0];
+				(*ptr)[1] = row[1];
+				(*ptr)[2] = row[2];
+				if(row[3] == "dyc-industry-1")
+					(*ptr)[3] = row[4];
+				else if(row[3] == "dyc-industry-2")
+					(*ptr)[4] = row[4];
+				else
+					(*ptr)[5] = row[4];
+			}
+			return res;
+		}
+
+		/// Displays Rate This Module responses
+		/// Group: analytics
+		Element rateThisModule() {
+			Element div = Element.make("div");
+			div.addChild("h1", "Rate This Module Responses");
+			auto bdb = openBranchDatabase();
+			auto mf = openProductionMagicFieldDatabase();
+			foreach(res; bdb.query("SELECT latest_production_commit, name FROM files")) {
+				string name = res[1];
+				auto e = load(res[0]).render(this);
+
+				string rangeField;
+				string commentsField;
+				foreach(i; e.querySelectorAll("div:has(#rate-this-module) [data-bz-retained]")) {
+					if(i.attrs.type == "range")
+						rangeField = i.dataset.bzRetained;
+					else if(i.tagName == "textarea")
+						commentsField = i.dataset.bzRetained;
+				}
+
+				div.addChild("h2", name);
+
+				if(rangeField.length == 0 || commentsField.length == 0) {
+					div.addChild("p", "No Rate This Module header on module");
+					continue;
+				}
+
+				auto overview = div.addChild("div");
+
+				auto details = div.addChild("details");
+				auto table = cast(Table) details.addChild("table");
+				table.addClass("data-display");
+				table.caption = "Raw Data";
+				table.appendHeaderRow("User ID", "Updated", "Response");
+
+				int[11] hits;
+				int totalCount;
+				int totalSum;
+
+				foreach(row; mf.query("SELECT user_id, value, updated_at, name FROM magic_fields WHERE name IN (?, ?) ORDER BY user_id, name = ? DESC", rangeField, commentsField, rangeField)) {
+					table.appendRow(row[0], row[2], row[1]);
+					if(row[3] == rangeField) {
+						int val;
+						try
+							val = to!int(row[1]);
+						catch(Exception)
+							val = 0;
+
+						if(val >= 0 && val < hits.length) {
+							hits[val] ++;
+							totalCount++;
+							totalSum += val;
+						}
+					}
+				}
+
+				overview.addChild("p", format("%s responses, average score: %.2f", totalCount, cast(float) totalSum / totalCount));
+
+				table = cast(Table) overview.addChild("table");
+				table.addClass("data-display");
+				table.caption = "Overview";
+				table.appendHeaderRow("Score", "Number of Responses");
+				foreach(i; 1 .. hits.length) {
+					table.appendRow(i, hits[i]);
+				}
+			}
+			return div;
+		}
+
+		/// Analytics homepage. Returns list of links of all analytics group functions.
+		/// Group: analytics
+		Element analytics() {
+			auto div = Element.make("div");
+			div.addClass("analytics-nav");
+			foreach(fun; __traits(derivedMembers, typeof(this))) {
+				static if(hasValueAnnotation!(__traits(getMember, this, fun), GenericContainerType))
+				static if(__traits(getProtection, __traits(getMember, this, fun)) == "export")
+					div.addChild("a", beautify(fun), fun);
+			}
+			return div;
+		}
+
+		/// Group: analytics
+		Table assignmentStartTimes(int course, bool includeHour = false) {
+			auto table = new Table(null);
+
+			auto db = openProductionMagicFieldDatabase();
+			auto canvas = getCanvasApiClient(productionCredentials());
+
+			auto assignmentsRes = canvas.rest.
+				courses[course].assignments
+				._SELF()
+				("per_page", 30)
+				("include[]", "items")
+				.GET;
+
+			more_assignments:
+			foreach(assignment; assignmentsRes.result) {
+				// work with assignment
+
+				auto data = Element.make("div", Html(assignment.description.get!string));
+				if(data.querySelector("[data-bz-retained]") is null)
+					continue;
+
+				table.appendRow("Assignment " ~ assignment.name.get!string);// ~ " (due " ~ assignment.due_at.get!string ~ ")");
+
+				timingHelper(db, includeHour, course, data, table);
+			}
+			if(auto next = "next" in assignmentsRes.response.linksHash) {
+				assignmentsRes = canvas.request(next.url);
+				goto more_assignments;
+			}
+
+			return table;
+		}
+
+		/// Group: analytics
+		Table startTimes(bool includeHour = false, int courseFilter = 0) {
+			auto table = new Table(null);
+
+			auto db = openProductionMagicFieldDatabase();
+
+			if(courseFilter) {
+				foreach(row; db.query("SELECT name FROM courses WHERE course_id = ?", courseFilter))
+					table.caption = row[0];
+			}
+
+			table.appendHeaderRow("Count", "Hour and Day (YYYY-MM-DD HH)");
+
+			foreach(i; 1 .. 17+1) {
+				auto data = view(to!string(i), false);
+
+				table.appendRow("Module " ~ to!string(i));
+				timingHelper(db, includeHour, courseFilter, data.root, table);
+			}
+
+			return table;
+		}
+
+		private void timingHelper(Database db, bool includeHour, int courseFilter, Element data, Table table) {
+			table.addClass("timing-table-display");
+			auto allFields = data.querySelectorAll("[data-bz-retained]:not([type=checkbox]):not(.bz-optional-magic-field)");
+			string field;
+			if(allFields.length > 2)
+				field = allFields[2].dataset.bzRetained;
+			else if(allFields.length > 1)
+				field = allFields[1].dataset.bzRetained;
+			else if(allFields.length == 1)
+				field = allFields[0].dataset.bzRetained;
+			else
+				return;
+
+			foreach(row; db.query("
+				SELECT
+					count(magic_fields.user_id) AS cnt,
+					strftime('%Y-%m-%d"~(includeHour ? " %H:xx":"")~"', magic_fields.created_at) AS started
+				FROM
+					magic_fields
+				INNER JOIN
+					users ON users.user_id = magic_fields.user_id
+				" ~ (courseFilter ? "
+				INNER JOIN
+					course_enrollments ON course_enrollments.user_id = users.user_id
+				" : "") ~ "
+				WHERE
+					magic_fields.name = ?
+					AND
+					is_test_account = 0
+				" ~ (courseFilter ? "
+					AND
+					course_id = ?
+				" : " AND ? = 0" /* prevent bind column index out of range error */) ~ "
+				GROUP BY
+					started
+				ORDER BY
+					started ASC
+				",
+				field, courseFilter))
+			{
+				table.appendRow(row[0], row[1], Element.make("div", "", "bar").setAttribute("style", "width: " ~ row[0] ~ "px;"));
+			}
+		}
+
+
+		/// Group: analytics
+		Table timingAnalysis() {
+			auto table = new Table(null);
+
+			table.appendHeaderRow("Module", "1/4 Time", "1/2 Time", "3/4 Time", "End Time", "Longest Parts");
+
+			string fmt(Element d, bool showIn = false) {
+				int secs = to!int(showIn ? d.dataset.reachedIn : d.dataset.reachedAt);
+
+				int hours = 0;
+				int mins = (secs / 60);
+				hours = (mins / 60);
+				mins %= 60;
+				secs %= 60;
+
+				string str = "";
+				if(hours)
+					str ~= hours.to!string ~ ":";
+				if(mins < 10)
+					str ~= "0";
+				str ~= mins.to!string ~ ":";
+				if(secs < 10)
+					str ~= "0";
+				str ~= secs.to!string;
+				return str;
+			}
+
+			foreach(i; 1 .. 17+1) {
+				auto data = view(to!string(i), true);
+				auto ats = data.querySelectorAll("[data-reached-at]");
+				auto details = Element.make("details");
+				foreach(at; ats) {
+					if(to!int(at.dataset.reachedIn) > 60)
+						details.addChild("p", at.dataset.bzRetained ~ " " ~ at.parentNode.innerText ~ " " ~ fmt(at, true));
+				}
+				if(ats.length)
+				table.appendRow(Element.make("a", to!string(i), "/view?id=" ~ to!string(i) ~ "&showMagicFieldTimings=true"), fmt(ats[$ / 4]), fmt(ats[$/2]), fmt(ats[3*$ / 4]), fmt(ats[$-1]), details);
+			}
+
+			return table;
+		}
+
+		/// Group: analytics
+		Element magicFieldCollisions(string moduleId) {
+			import std.file;
+			Element div = Element.make("div");
+			Element[string][string] names;
+
+			auto bdb = openBranchDatabase();
+			foreach(res; bdb.query("SELECT latest_production_commit, name FROM files")) {
+				string name = res[1];
+				Element[string] mod;
+				auto e = load(res[0]).render(this);
+				foreach(i; e.querySelectorAll("[data-bz-retained]")) {
+						mod[i.dataset.bzRetained] = i;
+				}
+
+				names[name[5 .. $-5]] = mod;
+			}
+
+
+			outer: foreach(name, element; names[moduleId]) {
+				foreach(nameId, mod; names) {
+					if(nameId == moduleId)
+						continue;
+
+					if(name in mod) {
+						auto d = div.addChild("div");
+						d.addChild("strong", name);
+						d.addChild("div", element.toString());
+						d.addChild("div","potentially conflicts with");
+						d.addChild("div", "module " ~ nameId);
+						div.addChild("br");
+						div.addChild("br");
+						continue outer;
+					}
+				}
+			}
+
+
+			return div;
+		}
+
+		Element magicFieldTimeStats(string moduleId, int student_id = 0) {
+			assert(0);
+		}
+
+		/// Displays a magic field report
+		/// Group: analytics
+		Element magicFieldAnalysis(string moduleId, int student_id = 0) {
+			auto db = openProductionMagicFieldDatabase();
+
+
+			auto div = Element.make("div");
+
+			auto mod = load(moduleId);
+			auto html = mod.render(this);
+			foreach(magicField; html.querySelectorAll("[data-bz-retained]")) {
+				auto d = div.addChild("div").addClass("magic-field-report");
+				auto mfn = magicField.dataset.bzRetained;
+				d.addChild("span", mfn);
+				if(magicField.hasClass("bz-optional-magic-field"))
+					d.addChild("span", " [optional]");
+				d.appendText(" ");
+				d.addChild("span", magicField.tagName == "textarea" ? "textarea" : magicField.attrs.type);
+				d.addChild("p", magicField.parentNode.innerText).addClass("magic-field-context");
+
+				bool empty = true;
+				foreach(row; db.query("SELECT value, created_at, updated_at FROM magic_fields WHERE user_id = ? AND name = ?", student_id, mfn)) {
+					empty = false;
+					d.addChild("div", row[0]);
+					d.addChild("span", row[1]);
+					if(row[1] != row[2]) {
+						d.appendText(" ");
+						auto span = d.addChild("span", row[2]);
+						span.style.backgroundColor = "yellow";
+					}
+				}
+
+				if(empty)
+					d.addClass("empty-magic-field-submission");
+
+				if(empty && !magicField.hasClass("bz-optional-magic-field") && magicField.attrs.type != "checkbox")
+					d.addClass("empty-required-magic-field-submission");
+			}
+
+			return div;
+		}
+
 	}
 
 	/*
@@ -415,6 +761,7 @@ class EditorApi : ApiProvider {
 			basedOn = ID of the last version you are changing
 			html    = the new HTML you want to save
 			fileId  = the file you are working on
+		Group: editing
 	+/
 	string save(int fileId, string basedOn, Html html, string branch = "working", string tag = "", ushort flags = 0) {
 
@@ -592,6 +939,8 @@ class EditorApi : ApiProvider {
 	/**
 		Performs scans of HTML structure and adds other necessary html annotations
 		such as class names.
+
+		Group: editing
 	*/
 	Html annotateHtml(Html content) {
 		auto df = new DocumentFragment(content);
@@ -605,6 +954,12 @@ class EditorApi : ApiProvider {
 			e.addClass("for-range");
 		foreach(e; df.querySelectorAll(".bz-box:has(.sort-to-match) .bz-toggle-all-next:not(.for-match)"))
 			e.addClass("for-match");
+
+		// for masteries
+		foreach(e; df.querySelectorAll(".radio-list:has([data-bz-answer]):not(.bz-check-answers)"))
+			e.addClass("bz-check-answers");
+		foreach(e; df.querySelectorAll(".checklist:has([data-bz-answer]):not(.bz-check-answers)"))
+			e.addClass("bz-check-answers");
 
 		foreach(e; df.querySelectorAll("h1, h2, h3, h4, h5, h6")) {
 			if(!e.hasAttribute("id")) {
@@ -633,6 +988,8 @@ class EditorApi : ApiProvider {
 		return Html(df.innerHTML);
 	}
 
+	/// $(WARNING Use with caution.)
+	/// Group: portal_syncing
 	string pushToStaging(string fileId, string html) {
 		// first, find the file we have as a page in the staging content library
 		auto bdb = openBranchDatabase();
@@ -661,6 +1018,8 @@ class EditorApi : ApiProvider {
 		return "https://stagingportal.bebraven.org/courses/1/pages/" ~ canvasUrl;
 	}
 
+	/// $(PITFALL Use with extreme caution)
+	/// Group: portal_syncing
 	void pushAllToProduction() {
 		auto bdb = openBranchDatabase();
 		foreach(line; bdb.query("SELECT id FROM files")) {
@@ -673,6 +1032,8 @@ class EditorApi : ApiProvider {
 
 	}
 
+	/// $(PITFALL Use with extreme caution)
+	/// Group: portal_syncing
 	string pushToProduction(string fileId, string html) {
 		// first, find the file we have as a page in the staging content library
 		auto bdb = openBranchDatabase();
@@ -708,7 +1069,9 @@ class EditorApi : ApiProvider {
 		return "https://portal.bebraven.org/courses/1/pages/" ~ canvasUrl;
 	}
 
-	void rollbackCommits() {
+	/// $(PITFALL Use with caution)
+	/// Group: revision_management
+	void rollbackCommits(string areYouSure) {
 		auto bdb = openBranchDatabase();
 
 		foreach(branch; bdb.query("SELECT branches.name, latest_commit, files.name FROM branches inner join files on files.id = branches.file_id")) {
@@ -724,6 +1087,8 @@ class EditorApi : ApiProvider {
 
 	}
 
+	/// $(PITFALL Use with caution)
+	/// Group: portal_syncing
 	Html doProductionBranchUpdate() {
 		string returnedToBrowser;
 		auto canvas = getCanvasApiClient(productionCredentials());
@@ -796,7 +1161,21 @@ class EditorApi : ApiProvider {
 					foreach(r; bdb.query("SELECT coalesce(max(id), 0) FROM files"))
 						id = r[0].to!int + 1;
 
-					import std.stdio; writeln("*** ",  mod.position.get!string, partNum);
+					import std.stdio; writeln("*** ",  mod.position.get!string, " ", partNum);
+					if(partNum == 0) {
+						// this handles https://stackoverflow.com/questions/19381350/simulate-order-by-in-sqlite-update-to-handle-uniqueness-constraint via hack
+						bdb.startTransaction();
+						bdb.query("UPDATE files SET module_number = - (module_number + 1) WHERE module_number >= ?", mod.position.get!string);
+						bdb.query("UPDATE files SET module_number = -module_number WHERE module_number < 0");
+						bdb.query("COMMIT");
+					} else {
+						// ditto, just subnumber
+						bdb.startTransaction();
+						bdb.query("UPDATE files SET subnumber = - (subnumber + 1) WHERE module_number = ? AND subnumber >= ?", mod.position.get!string, partNum);
+						bdb.query("UPDATE files SET subnumber = -subnumber WHERE module_number = ? AND subnumber < 0", mod.position.get!string);
+						bdb.query("COMMIT");
+					}
+
 					bdb.query("INSERT INTO files (id, name, module_number, subnumber, latest_production_commit, canvas_page_name) VALUES (?, ?, ?, ?, ?, ?)",
 						id, item.title.get!string, mod.position.get!string, partNum, "", item.url.get!string);
 				}
@@ -805,6 +1184,7 @@ class EditorApi : ApiProvider {
 				auto commitId = save(id, prodCommit, Html(page["body"].get!string), "working");
 
 				bdb.query("UPDATE files SET latest_production_commit = ? WHERE id = ?", commitId, id);
+				//}
 
 				/*
 				std.file.write(filename,
@@ -820,6 +1200,10 @@ class EditorApi : ApiProvider {
 		return Html(returnedToBrowser);
 	}
 
+	alias _sitemap sitemap;
+
+	/// $(PITFALL Use with extreme caution)
+	/// Group: portal_syncing
 	void renamePage(string oldName, string newName, string newUrl, bool onStaging, bool onProduction) {
 		/*
 		// FIXME
@@ -896,6 +1280,7 @@ class EditorApi : ApiProvider {
 		}
 	}
 
+	/// Group: portal_syncing
 	var[] loadCachedAssignments(T)(T canvasApi, int course) {
 		assert(course == 1);
 		static var[] assignments;
@@ -919,12 +1304,15 @@ class EditorApi : ApiProvider {
 		return assignments;
 	}
 
+	///
 	static struct UploadedFileInfo {
-		string url;
-		string contentType;
-		string description;
+		string url; ///
+		string contentType; ///
+		string description; ///
 	}
 
+	/// Uploads a file to Portal, returning information so we can embed it in the editor html.
+	/// Group: portal_syncing
 	UploadedFileInfo uploadFile(string description, Cgi.UploadedFile file) {
 
 		string contentHash = "unimplemented"; // FIXME
@@ -986,11 +1374,13 @@ class EditorApi : ApiProvider {
 		return null;
 	}
 
+	/// Update the roster for better analytics.
+	/// Group: portal_syncing
 	void doRosterUpdate() {
 		auto db = openProductionMagicFieldDatabase();
 		auto canvas = getCanvasApiClient(productionCredentials());
 
-		if(0) {
+		if(1) {
 			auto usersRes = canvas.rest.
 				accounts.self.users
 				._SELF()
@@ -1005,8 +1395,10 @@ class EditorApi : ApiProvider {
 					isTestAccount = true;
 				if(indexOf(u.email.get!string, "@beyondz.org") != -1)
 					isTestAccount = true;
+				try
 				db.query("INSERT INTO users VALUES (?, ?, ?, ?)",
 					u.id.get!string, u.name.get!string, u.email.get!string, isTestAccount ? 1 : 0);
+				catch(Exception e) {}
 
 			}
 			if(auto next = "next" in usersRes.response.linksHash) {
@@ -1015,7 +1407,7 @@ class EditorApi : ApiProvider {
 			}
 		}
 
-		if(0) {
+		if(1) {
 
 			auto coursesRes = canvas.rest.
 				courses
@@ -1065,6 +1457,8 @@ class EditorApi : ApiProvider {
 
 	}
 
+	/// Update the magic field for analytics.
+	/// Group: portal_syncing
 	string doMagicFieldUpdate() {
 		auto db = openProductionMagicFieldDatabase();
 
@@ -1092,90 +1486,10 @@ class EditorApi : ApiProvider {
 
 	}
 
-	Element magicFieldCollisions(string moduleId) {
-		import std.file;
-		Element div = Element.make("div");
-		Element[string][string] names;
-		// FIXME
-		foreach(name; dirEntries("data/", "*.html", SpanMode.shallow)) {
-			Element[string] mod;
-			auto document = new Document(readText(name));
-			foreach(i; document.querySelectorAll("[data-bz-retained]")) {
-					mod[i.dataset.bzRetained] = i;
-			}
-
-			names[name[5 .. $-5]] = mod;
-		}
-
-
-		outer: foreach(name, element; names[moduleId]) {
-			foreach(nameId, mod; names) {
-				if(nameId == moduleId)
-					continue;
-
-				if(name in mod) {
-					auto d = div.addChild("div");
-					d.addChild("strong", name);
-					d.addChild("div", element.toString());
-					d.addChild("div","potentially conflicts with");
-					d.addChild("div", "module " ~ nameId);
-					div.addChild("br");
-					div.addChild("br");
-					continue outer;
-				}
-			}
-		}
-
-
-		return div;
-	}
-
-	Element magicFieldTimeStats(string moduleId, int student_id = 0) {
-		assert(0);
-	}
-
-	Element magicFieldAnalysis(string moduleId, int student_id = 0) {
-		auto db = openProductionMagicFieldDatabase();
-
-
-		auto div = Element.make("div");
-
-		auto mod = load(moduleId);
-		auto html = mod.render(this);
-		foreach(magicField; html.querySelectorAll("[data-bz-retained]")) {
-			auto d = div.addChild("div").addClass("magic-field-report");
-			auto mfn = magicField.dataset.bzRetained;
-			d.addChild("span", mfn);
-			if(magicField.hasClass("bz-optional-magic-field"))
-				d.addChild("span", " [optional]");
-			d.appendText(" ");
-			d.addChild("span", magicField.tagName == "textarea" ? "textarea" : magicField.attrs.type);
-			d.addChild("p", magicField.parentNode.innerText).addClass("magic-field-context");
-
-			bool empty = true;
-			foreach(row; db.query("SELECT value, created_at, updated_at FROM magic_fields WHERE user_id = ? AND name = ?", student_id, mfn)) {
-				empty = false;
-				d.addChild("div", row[0]);
-				d.addChild("span", row[1]);
-				if(row[1] != row[2]) {
-					d.appendText(" ");
-					auto span = d.addChild("span", row[2]);
-					span.style.backgroundColor = "yellow";
-				}
-			}
-
-			if(empty)
-				d.addClass("empty-magic-field-submission");
-
-			if(empty && !magicField.hasClass("bz-optional-magic-field") && magicField.attrs.type != "checkbox")
-				d.addClass("empty-required-magic-field-submission");
-		}
-
-		return div;
-	}
-
 	/++
 		Returns the commit ID for the given branch of a file.
+
+		Group: editing
 	+/
 	string readBranch(string filename, string branch) {
 		auto bdb = openBranchDatabase();
@@ -1206,6 +1520,8 @@ class EditorApi : ApiProvider {
 		Loads the bz-module revision with the given commit ID
 
 		See_also: [readBranch]
+
+		Group: editing
 	+/
 	RevisionData load(string id) {
 		id = sanitizeId(id);
@@ -1219,6 +1535,8 @@ class EditorApi : ApiProvider {
 
 	/++
 		Loads details about a particular commit
+
+		Group: editing
 	+/
 	RevisionData loadRevision(string id) {
 		RevisionData data;
@@ -1361,10 +1679,11 @@ class EditorApi : ApiProvider {
 			return rendered;
 		}
 
+		///
 		enum Flags : ushort {
-			autoSave = 	1 << 0,
-			merge = 	1 << 1, // the data of the file starts with the other merge id. or something
-			complete = 	1 << 2, // the data is a complete dump rather than a diff (may be set periodically to avoid excessively O(n) loads)
+			autoSave = 	1 << 0, /// it was an auto save
+			merge = 	1 << 1, /// the data of the file starts with the other merge id. or something
+			complete = 	1 << 2, /// the data is a complete dump rather than a diff (may be set periodically to avoid excessively O(n) loads)
 		}
 
 		RevisionData[] allParents(EditorApi api) {
@@ -1401,6 +1720,8 @@ class EditorApi : ApiProvider {
 		}
 	}
 
+	/// Merges two commits
+	/// Group: revision_management
 	Element merge(string intoId, string whatId) {
 		// find the common ancestor.
 		auto into = loadRevision(intoId);
@@ -1462,6 +1783,8 @@ class EditorApi : ApiProvider {
 		assert(0);
 	}
 
+	/// Display differences between two commits
+	/// Group: revision_management
 	Element diff(string v1, string v2) {
 		auto div = Element.make("div");
 
@@ -1713,6 +2036,8 @@ class EditorApi : ApiProvider {
 		}
 	}
 
+	/// Lists all files (modules for now) known to the editor
+	/// Group: editing
 	Element files() {
 		auto bdb = openBranchDatabase();
 		auto div = Element.make("div");
@@ -1738,6 +2063,7 @@ class EditorApi : ApiProvider {
 		return div;
 	}
 
+	/// Group: revision_management
 	Element branchHistory(int fileId, string branch) {
 		auto bdb = openBranchDatabase();
 		auto lc = bdb.query("SELECT latest_commit FROM branches WHERE file_id = ? AND name = ?", fileId, branch).front[0];
@@ -1756,6 +2082,8 @@ class EditorApi : ApiProvider {
 		return div;
 	}
 
+	/// Gives the raw log of revisions. For recovery of accidentally deleted items.
+	/// Group: revision_management
 	FilesResult reflog(string findme = null) {
 		import std.file;
 
@@ -1809,6 +2137,8 @@ class EditorApi : ApiProvider {
 		return FilesResult(findme, helper, roots, leafs, titles, htmls);
 	}
 
+	/// Edits a file - the main entry point to the editor
+	/// Group: editing
 	Document edit(int fileId = 0, string branch = "working", string id = null) {
 		import std.file;
 		auto document = new Document(readText("editor.html"), true, true);
@@ -1833,13 +2163,15 @@ class EditorApi : ApiProvider {
 	/* These functions are just a bit of plumbing for the framework. */
 	/* ********************************* */
 
-	public override Element _getGenericContainer() {
+	public override Element _getGenericContainer(string type) {
 		import std.file;
 		auto document = new Document(readText("skeleton.html"), true, true);
+		if(type == "analytics")
+			document.requireElementById("page-name-title").innerText = "Content Analytics";
 		return document.requireElementById("generic-container");
 	}
 	public override Document _defaultPage() {
-		auto e = _getGenericContainer();
+		auto e = _getGenericContainer("default");
 		e.appendChild(files());
 		return e.parentDocument;
 	}
@@ -1900,6 +2232,12 @@ string extensionToMime(string path) {
 	assert(0);
 }
 
+/**
+	The diff algorithm uses a custom word splitter in an attempt to better
+	display legible differences between HTML files. It is aware of HTML
+	tags and will not try to break them up into words, like a naive split
+	on space or whatever would do.
+*/
 string[] splitWords(string s) {
 	string[] words;
 	string curr;
@@ -1964,6 +2302,17 @@ string stripVerifier(string s) {
 	return s;
 }
 
+/**
+	The editor tries to minimize useless diffs by first normalizing all
+	HTML it tries to compare or to save. It changes a few WYSIWYG tags to
+	a standard representation, automatically formats whitespace inside the
+	HTML, fixes some ancillary data Portal attaches, etc.
+
+	With this, comparing two diffs, even if the formatting is radically
+	different, will only show actual content changes, not just indentation
+	or other trivial points. The automatic formatting also happens to keep
+	the HTML source code consistently legible.
+*/
 string[] normalizeHtml(Element element) {
 	if(element is null)
 		return null;
@@ -1988,6 +2337,7 @@ string[] normalizeHtml(Element element) {
 	return element.toPrettyString(false, 0, "  ").splitLines;
 }
 
+/// The commits are stored on disk as a binary diff, this applies one to build up to the final product.
 Element applyBinaryDiff(Element basedOn, const(ubyte)[] binaryDiff) {
 	auto source = normalizeHtml(basedOn);
 	int sourcePos = 0;
@@ -2038,6 +2388,7 @@ string printTimestamp(time_t unixTimestamp) {
 	return buffer[0 .. res].idup;
 }
 
+/// This function turns English text headings into HTML ids or URL components.
 string urlify(string text) {
 	string n;
 	foreach(ch; text) {
@@ -2055,6 +2406,7 @@ string urlify(string text) {
 	return n;
 }
 
+/// Commit IDs are strictly sanitized before use.
 string sanitizeId(string id) {
 	string sanitized;
 	foreach(ch; id) {
@@ -2067,12 +2419,13 @@ string sanitizeId(string id) {
 	return sanitized;
 }
 
+///
 struct MergeResult(T) {
-	T suggestion;
-	T o;
-	T a;
-	T b;
-	bool potentialProblem;
+	T suggestion; /// Suggested merged content
+	T o; /// Original ancestor content
+	T a; /// Merge candidate A content
+	T b; /// Merge candidate B content
+	bool potentialProblem; /// flags if the suggestion is likely wrong and requires manual review/merge conflict action
 }
 
 import std.range;

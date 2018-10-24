@@ -12,13 +12,64 @@
 		body {
 			height: auto;
 		}
+		#braven-header {
+			position: static;
+			display: block;
+			border: none;
+			padding: 0.25em;
+			margin-bottom: 1em;
+
+			vertical-align: middle;
+		}
+		#braven-header h1 {
+			font-family: "Trade Gothic", sans-serif;
+			font-size: 21px;
+			text-transform: uppercase;
+			font-weight: 600;
+		}
+		#braven-header img {
+			vertical-align: middle;
+			margin-right: 2em;
+		}
+		#braven-header h1 {
+			float: left;
+		}
+		#braven-header #header-navigation {
+			float: right;
+			line-height: 41px;
+			vertical-align: bottom;
+			padding-right: 4em;
+		}
+		#braven-header #header-navigation a {
+			text-transform: uppercase;
+			text-decoration: none;
+			color: black;
+		}
 		#sidebar:empty {
 			display: none;
+		}
+		.analytics-nav a {
+			display: block;
+
 		}
 	</style>
 	<link rel="shortcut icon" href="HERE/icons/favicon.png" />
 </head>
 <body>
+	<div id="braven-header">
+		<h1>
+			<img src="https://join.bebraven.org/bebraven/braven_logo.png" alt="Braven" />
+			<span id="page-name-title">Content Editor</span>
+		</h1>
+
+		<div id="header-navigation">
+			<a href="/">Editor</a>
+			|
+			<a href="/analytics">Analytics</a>
+		</div>
+		<br style="clear: both;" />
+	</div>
+
 	<div id="generic-container">
 
 	</div>

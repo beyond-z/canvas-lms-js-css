@@ -223,7 +223,7 @@ function getSidebarBox(ele) {
 					if(opt.className == "video") {
 						// insert the default scaffolding for a video if empty
 						if(!ele.querySelector("h4 + *")) {
-							ele.innerHTML += "<figure>Replace this text with the video<figcaption><p>Description here</p><p class=\"media-duration\">About 2 minutes</p></figcaption></figure>";
+							ele.innerHTML += "<figure>Replace this text with the video<figcaption><p>Description here</p><p class=\"media-duration\">About 2 minutes</p></figcaption><div class=\"transcript\"><p>Put a transcript here.<p></div></figure>";
 							wrapStuffForEditing(ele);
 						}
 
@@ -1166,6 +1166,12 @@ function loadObject(data, branch) {
 	currentlyLoaded.fileId = data.fileId;
 	currentlyLoaded.branchPoint = data.basedOn;
 	currentlyLoaded.branchName = branch;
+
+	if(location.hash && location.hash.startsWith("#editor%20")) {
+		var e = document.querySelector(decodeURIComponent(location.hash.substring(10)));
+		if(e)
+			e.scrollIntoView();
+	}
 }
 
 var comparingAnchor = null;
