@@ -71,6 +71,7 @@
 					branchChanged = true;
 				}
 				if(currentlyLoaded.branchName !== null)
+				if(presaveValidation(getCurrentEditingHtml()))
 				EditorApi.save(currentlyLoaded.fileId, currentlyLoaded.id, getCurrentEditingHtml(), currentlyLoaded.branchName).
 					get(function(id) {
 						currentlyLoaded.branchPoint = currentlyLoaded.id;
@@ -83,6 +84,7 @@
 			<button type="button" onclick="
 				var tag = prompt('Name');
 				if(tag !== null)
+				if(presaveValidation(getCurrentEditingHtml()))
 				EditorApi.save(currentlyLoaded.fileId, currentlyLoaded.branchPoint, getCurrentEditingHtml(), tag).
 					get(function(id) {
 						currentlyLoaded.id = id;

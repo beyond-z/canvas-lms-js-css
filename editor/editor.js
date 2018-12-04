@@ -1172,6 +1172,11 @@ function loadObject(data, branch) {
 		if(e)
 			e.scrollIntoView();
 	}
+
+	// run a check after a short delay to see if there is any weird plugins in place
+	// that may break stuff before the user gets much of a chance to make changes that
+	// might be lost.
+	setTimeout(function() { presaveValidation(getCurrentEditingHtml()); }, 3500);
 }
 
 var comparingAnchor = null;
@@ -1466,4 +1471,12 @@ function insertDoneButton() {
 	document.getElementById("editor").focus();
 	updateSelectionData();
 
+}
+
+function presaveValidation(html) {
+	if(html.indexOf("Privacy Badger") != -1) {
+		alert("Please make sure your Privacy Badger is disabled for the editor. Then, reload, make your edits again (otherwise, Privacy Badger will remove content we are trying to save!), and then save.");
+		return false;
+	}
+	return true;
 }

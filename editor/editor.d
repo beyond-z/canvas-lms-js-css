@@ -154,11 +154,12 @@ class EditorApi : ApiProvider {
 	override void _initializePerCall() {
 		session = new Session(cgi);
 		if(!session.hasKey("user")) {
-			if(cgi.pathInfo != "/sso") {
+			// hack for magic field update cron...
+			if(cgi.pathInfo != "/sso" && cgi.pathInfo != "/do-magic-field-update") {
 				import std.uri;
 				session.comingFrom = cgi.getCurrentCompleteUri();
 				session.commit();
-				redirect("https://stagingsso.bebraven.org/login?service=" ~ encodeComponent(ssoService));
+				redirect("https://sso.bebraven.org/login?service=" ~ encodeComponent(ssoService));
 				throw new Exception("not logged in");
 			}
 		}
@@ -166,12 +167,12 @@ class EditorApi : ApiProvider {
 
 	export:
 
-	/// Log in via stagingsso.bebraven.org
+	/// Log in via sso.bebraven.org
 	/// Group: session_management
 	string sso(string ticket) {
 		import std.uri;
 		auto client = new HttpClient();
-		auto request = client.navigateTo(arsd.http2.Uri("https://stagingsso.bebraven.org/serviceValidate?ticket="~encodeComponent(ticket)~"&service=" ~ encodeComponent(ssoService)));
+		auto request = client.navigateTo(arsd.http2.Uri("https://sso.bebraven.org/serviceValidate?ticket="~encodeComponent(ticket)~"&service=" ~ encodeComponent(ssoService)));
 		auto response = request.waitForCompletion();
 		if(response.code == 200) {
 			auto xml = new XmlDocument(response.contentText);
@@ -430,6 +431,212 @@ class EditorApi : ApiProvider {
 					(*ptr)[5] = row[4];
 			}
 			return res;
+		}
+
+		/// This is the structure of the data we get from the cohort teamwork things.
+		struct CohortMagicFieldAnswer {
+			/// The person writing the evaluation
+			string evaluatorUserId;
+			/// ditto
+			string evaluatorName;
+			/// ditto
+			string evaluatorEmail;
+
+			/// The person being evaluated
+			string subjectUserId;
+			/// ditto
+			string subjectName;
+			/// ditto
+			string subjectEmail;
+
+			/// the data source
+			string magicFieldName;
+
+			/// the data value
+			string value;
+		}
+
+		/// Gets the data from the Cohort Teamwork Evaluation in the LYL module
+		/// Group: analytics
+		CohortMagicFieldAnswer[] cohortTeamworkEvaluation(int courseId) {
+			return cohortMagicFieldAnswers(courseId, [
+				"actively-contributed-to-team-success-peer-score-for-{ID}",
+				"met-deadlines-peer-score-for-{ID}",
+				"gave-feedback-peer-score-for-{ID}",
+				"embraced-different-perspectives-peer-score-for-{ID}"
+			]);
+		}
+
+		DataFile cohortTeamworkEvaluationDownload(int courseId) {
+			import std.zip;
+
+			auto answer = cohortTeamworkEvaluation(courseId);
+
+			CohortMagicFieldAnswer[][string] bySubject;
+
+			foreach(a; answer) {
+				if(a.subjectUserId in bySubject)
+					bySubject[a.subjectUserId] ~= a;
+				else
+					bySubject[a.subjectUserId] = [a];
+			}
+
+			auto zip = new ZipArchive();
+			foreach(uid, arr; bySubject) {
+				string csv;
+
+				csv = "\"Fellow Name\",Area,Score";
+
+				int[string] areaSums;
+				int[string] areaCounts;
+
+				foreach(item; arr) {
+					/*
+					csv ~= "\n";
+					csv ~= toCsv(item.evaluatorName);
+					csv ~= ",";
+					csv ~= toCsv(item.subjectName);
+					csv ~= ",";
+					*/
+					string mfn;
+					switch(item.magicFieldName[0 .. item.magicFieldName.lastIndexOf("-")]) {
+						case "actively-contributed-to-team-success-peer-score-for":
+							mfn = "Actively Contributed to Team Success";
+						break;
+						case "met-deadlines-peer-score-for":
+							mfn = "Met Deadlines";
+						break;
+						break;
+						case "gave-feedback-peer-score-for":
+							mfn = "Gave Feedback";
+						break;
+						case "embraced-different-perspectives-peer-score-for":
+							mfn = "Embraced Different Perspectives";
+						break;
+						default: assert(0);
+					}
+					/*
+					csv ~= toCsv(mfn);
+					csv ~= ",";
+					csv ~= toCsv(item.value);
+					*/
+
+					if(mfn in areaSums) {
+						areaSums[mfn] += to!int(item.value);
+						areaCounts[mfn] ++;
+					} else {
+						areaSums[mfn] = to!int(item.value);
+						areaCounts[mfn] = 1;
+					}
+				}
+
+				foreach(area, sum; areaSums) {
+					auto count = areaCounts[area];
+
+					auto avg = format("%0.2f", cast(float) sum / count);
+					
+					csv ~= "\n" ~ toCsv(arr[0].subjectName) ~ "," ~ toCsv(area) ~ "," ~ avg;
+				}
+
+				auto am = new ArchiveMember();
+				am.name = "data-course-"~to!string(courseId)~"/" ~ arr[0].subjectName ~ ".csv";
+				am.expandedData = csv.representation.dup;
+				zip.addMember(am);
+			}
+
+			cgi.header("Content-Disposition: attachment; filename=\"data-course-"~to!string(courseId)~".zip\"");
+			return new DataFile("application/zip", zip.build().idup);
+
+		}
+
+		/// Baseline function to get magic field answers for a particular cohort thing
+		///
+		/// You can probably use [cohortTeamworkEvaluation] instead.
+		/// Group: analytics
+		CohortMagicFieldAnswer[] cohortMagicFieldAnswers(int courseId, string[] fields) {
+
+			CohortMagicFieldAnswer[] answers;
+
+			string fieldsSql;
+
+			foreach(i, field; fields) {
+				if(i) fieldsSql ~= " OR ";
+				fieldsSql ~= "magic_fields.name LIKE '";
+				fieldsSql ~= prepareMagicFieldNameForSql(field);
+				fieldsSql ~= "'";
+			}
+
+			auto mf = openProductionMagicFieldDatabase();
+
+			static struct UserCache {
+				string name;
+				string email;
+			}
+			UserCache[string] userCache;
+
+			userCache["2134"] = UserCache("Test Student" , "N/A");
+			userCache["2269"] = UserCache("Test Student" , "N/A");
+
+			foreach(row; mf.query("
+				SELECT
+					users.user_id,
+					users.name,
+					users.email
+				FROM
+					users
+				INNER JOIN
+					course_enrollments ON course_enrollments.user_id = users.user_id
+				WHERE
+					course_enrollments.course_id = ?
+			", courseId))
+				userCache[row[0]] = UserCache(row[1], row[2]);
+
+
+			// since I already have the in-memory data above, i might not need
+			// to query the users again but meh.
+			foreach(row; mf.query("
+				SELECT
+					users.user_id,
+					users.name,
+					users.email,
+					magic_fields.name,
+					magic_fields.value
+				FROM
+					magic_fields
+				INNER JOIN
+					users ON users.user_id = magic_fields.user_id
+				INNER JOIN
+					course_enrollments ON course_enrollments.user_id = users.user_id
+				WHERE
+					course_enrollments.course_id = ?
+					AND
+					(
+					" ~ fieldsSql ~ "
+					)
+			", courseId))
+			{
+				CohortMagicFieldAnswer answer;
+
+				answer.evaluatorUserId = row[0];
+				answer.evaluatorName = row[1];
+				answer.evaluatorEmail = row[2];
+
+				// this isn't strictly right but it works the way I write the fields
+				// so technical FIXME but meh
+				answer.subjectUserId = row[3][row[3].lastIndexOf("-") + 1 .. $];
+
+				if(auto found = answer.subjectUserId in userCache) {
+					answer.subjectName = found.name;
+					answer.subjectEmail = found.email;
+				}
+
+				answer.magicFieldName = row[3];
+				answer.value = row[4];
+
+				answers ~= answer;
+			}
+
+			return answers;
 		}
 
 		/// Displays Rate This Module responses
@@ -944,6 +1151,23 @@ class EditorApi : ApiProvider {
 	*/
 	Html annotateHtml(Html content) {
 		auto df = new DocumentFragment(content);
+
+		// FIXME: if title includes Privacy Badger, fail validation - this could be a lot prettier
+		if(auto e = df.querySelector("[title^=\"Privacy Badger\"]"))
+			throw new Exception("Privacy Badger corrupted content present!");
+
+		// sort-to-match isn't allowed to have headers in it; make sure the content is sane
+		foreach(e; df.querySelectorAll("
+			.sort-to-match h1,
+			.sort-to-match h2,
+			.sort-to-match h3,
+			.sort-to-match h4,
+			.sort-to-match h5,
+			.sort-to-match h6
+		")) {
+			if(e.parentNode.hasAttribute("draggable"))
+				e.parentNode.innerText = e.innerText;
+		}
 
 		// FIXME: for-eval, for-eval-sum, for-compare-scores
 		foreach(e; df.querySelectorAll(".bz-box:has(.checklist) .bz-toggle-all-next:not(.for-checklist)"))
@@ -2416,6 +2640,37 @@ string sanitizeId(string id) {
 			(ch >= '0' && ch <= '9'))
 			sanitized ~= ch;
 	}
+	return sanitized;
+}
+
+string prepareMagicFieldNameForSql(string n) {
+	string sanitized = "";
+	bool insidePlaceholder = false;
+	foreach(ch; n) {
+		if(insidePlaceholder) {
+			if(ch == '}')
+				insidePlaceholder = false;
+			continue;
+		}
+
+		if(ch == '_')
+			sanitized ~= `\_`;
+		else if(ch == '%')
+			sanitized ~= `\%`;
+		else if(ch == '\\')
+			sanitized ~= `\\`;
+		else if(ch == '{') {
+			sanitized ~= "%";
+			insidePlaceholder = true;
+		}
+		else
+			if(ch == '-' || ch == '_' || 
+				(ch >= 'a' && ch <= 'z') ||
+				(ch >= 'A' && ch <= 'Z') ||
+				(ch >= '0' && ch <= '9'))
+				sanitized ~= ch;
+	}
+
 	return sanitized;
 }
 
