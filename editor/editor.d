@@ -232,7 +232,7 @@ class EditorApi : ApiProvider {
 
 		Group: editing
 	+/
-	Document view(string id, bool showMagicFieldTimings = false) {
+	Document view(string id, bool showMagicFieldTimings = false, string start = "2010-01-01", string finish = null) {
 
 		if(id.length < 3) {
 			auto bdb = openBranchDatabase();
@@ -252,6 +252,10 @@ class EditorApi : ApiProvider {
 		}
 
 		if(showMagicFieldTimings) {
+			if(finish is null) {
+				import std.datetime;
+				finish = Clock.currTime.toISOExtString;
+			}
 			auto db = openProductionMagicFieldDatabase();
 			int[int] baseline;
 			int averageSum = 0;
@@ -259,7 +263,7 @@ class EditorApi : ApiProvider {
 				auto name = mg.dataset.bzRetained;
 				int differencesSum = 0;
 				int differencesCount = 0;
-				foreach(row; db.query("SELECT user_id, strftime('%s', updated_at) FROM magic_fields WHERE name = ?", name)) {
+				foreach(row; db.query("SELECT user_id, strftime('%s', updated_at) FROM magic_fields WHERE name = ? AND created_at > ? AND created_at < ?", name, start, finish)) {
 					if(row[0] == "null")
 						continue;
 					auto uid = row[0].to!int;
@@ -464,6 +468,45 @@ class EditorApi : ApiProvider {
 				"met-deadlines-peer-score-for-{ID}",
 				"gave-feedback-peer-score-for-{ID}",
 				"embraced-different-perspectives-peer-score-for-{ID}"
+			]);
+		}
+
+		CohortMagicFieldAnswer[] lcFellowAssessment(int courseId) {
+			return cohortMagicFieldAnswers(courseId, [
+				"how-ready-to-be-team-{ID}",
+				"how-ready-to-be-professional-{ID}",
+				"strength-working-in-teams-{ID}",
+				"would-hire-entry-level-role-{ID}",
+
+				"strength-leadership-{ID}",
+				"strength-problem-solving-{ID}",
+				"strength-networking-{ID}",
+				"strength-communicating-{ID}",
+				"strength-operating-{ID}",
+				"strength-technical-skills-{ID}",
+				"strength-punctuality-{ID}",
+				"strength-analytical-ability-{ID}",
+				"strength-attention-to-detail-{ID}",
+				"strength-reliability-{ID}",
+				"strength-adaptability-{ID}",
+				"strength-diligence-{ID}",
+				"strength-other-{ID}",
+
+				"weakness-leadership-{ID}",
+				"weakness-problem-solving-{ID}",
+				"weakness-networking-{ID}",
+				"weakness-communicating-{ID}",
+				"weakness-operating-{ID}",
+				"weakness-technical-skills-{ID}",
+				"weakness-punctuality-{ID}",
+				"weakness-analytical-ability-{ID}",
+				"weakness-attention-to-detail-{ID}",
+				"weakness-reliability-{ID}",
+				"weakness-adaptability-{ID}",
+				"weakness-diligence-{ID}",
+				"weakness-other-{ID}",
+
+				"other-fellow-comments-from-lc-{ID}"
 			]);
 		}
 
@@ -822,9 +865,14 @@ class EditorApi : ApiProvider {
 			}
 		}
 
+		enum Semester {
+			AllTime,
+			Spring2018,
+			Fall2018
+		}
 
 		/// Group: analytics
-		Table timingAnalysis() {
+		Table timingAnalysis(Semester semester) {
 			auto table = new Table(null);
 
 			table.appendHeaderRow("Module", "1/4 Time", "1/2 Time", "3/4 Time", "End Time", "Longest Parts");
@@ -850,8 +898,25 @@ class EditorApi : ApiProvider {
 				return str;
 			}
 
+			string start, finish;
+			final switch(semester) {
+				case Semester.AllTime:
+					start = "2010-01-01";
+					finish = null;
+				break;
+				case Semester.Spring2018:
+					start = "2018-01-01";
+					finish = "2018-05-20";
+				break;
+				case Semester.Fall2018:
+					start = "2018-08-01";
+					finish = "2018-12-20";
+				break;
+
+			}
+
 			foreach(i; 1 .. 17+1) {
-				auto data = view(to!string(i), true);
+				auto data = view(to!string(i), true, start, finish);
 				auto ats = data.querySelectorAll("[data-reached-at]");
 				auto details = Element.make("details");
 				foreach(at; ats) {
