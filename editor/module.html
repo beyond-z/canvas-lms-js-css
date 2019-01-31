@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="bz_newui.css" />
+	<link rel="shortcut icon" href="HERE/icons/favicon.png" />
+	<script>
+		ENV = {};
+		function BZ_LoadMagicFields() {}
+		function addOnMagicFieldsLoaded(func) {
+			func();
+		}
+	</script>
+
+<script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="//code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+
+	<script src="bz_custom.js" defer></script>
+	<base href="https://stagingportal.bebraven.org/" target="_blank" />
+	<meta charset="UTF-8" />
+
+	<title>Braven Module</title>
+</head>
+<body>
+	<div id="module-container" class="user_content"></div>
+
+
+	<script>
+		window.addEventListener("load", function() {
+			function formatTimeDiff(secs) {
+				var hours = 0;
+				var mins = Math.floor(secs / 60);
+				hours = Math.floor(mins / 60);
+				mins %= 60;
+				secs %= 60;
+
+				var str = "";
+				if(hours)
+					str += hours + ":";
+				if(mins < 10)
+					str += "0";
+				str += mins + ":";
+				if(secs < 10)
+					str += "0";
+				str += secs;
+				return str;
+			}
+
+			function getAbsoluteTop(ele) {
+				var t = 0;
+				while(ele) {
+					t += ele.offsetTop;
+					ele = ele.offsetParent;
+				}
+				return t;
+			}
+
+			var r = document.querySelectorAll("[data-reached-in]");
+			for(var i = 0; i < r.length; i++) {
+				var ele = r[i];
+				var n = document.createElement("div");
+				n.style.position = "absolute";
+				n.style.left = "0px";
+				n.style.top = getAbsoluteTop(ele) + "px";
+				n.textContent = formatTimeDiff(ele.dataset.reachedIn);
+				n.textContent += " (" + formatTimeDiff(ele.dataset.reachedAt) + ")";
+				document.body.appendChild(n);
+			}
+		});
+	</script>
+</body>
+</html>
