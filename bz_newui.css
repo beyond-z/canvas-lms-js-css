@@ -1771,6 +1771,11 @@ table [type="range"] {
     background-color: #EB3B46 !important;
 }
 
+.bz-icon-handshake::before,
+[href~='pages/handshake-tips'] {
+    background-position: 0 -2100px;
+}
+
 /* Styling for quizzes/assignments that use magic fields to layout complex content */
 
 .btn, .Button--primary {
