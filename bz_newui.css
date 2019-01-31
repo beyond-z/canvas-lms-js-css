@@ -1776,6 +1776,10 @@ table [type="range"] {
     background-position: 0 -2100px;
 }
 
+.bz-icon-briefcase::before {
+    background-position: 0 -2200px;
+}
+
 /* Styling for quizzes/assignments that use magic fields to layout complex content */
 
 .btn, .Button--primary {
