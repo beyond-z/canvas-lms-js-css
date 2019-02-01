@@ -1651,7 +1651,7 @@ table [type="range"] {
     border-radius: 50px;
     position: absolute !important;
     top: 0;
-    background-image: url('images/lms-resources-icons.png');
+    background-image: url('images/lms-resources-icons.png?date=020119');
 }
 
 .bz-icons-list a::before {
