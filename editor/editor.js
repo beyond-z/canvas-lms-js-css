@@ -209,6 +209,17 @@ function getSidebarBox(ele) {
 		var h3 = document.createElement("h3");
 		h3.textContent = "BZ Box";
 		div.appendChild(h3);
+
+		var button = document.createElement("button");
+		button.setAttribute("type", "button");
+		button.textContent = "Remove entire box";
+		button.onclick = function() {
+			if(confirm("You sure?")) {
+				ele.parentNode.removeChild(ele);
+			}
+		};
+		div.appendChild(button);
+
 		div.appendChild(makeSelect("BZ Box Type:", function(opt) {
 			ele.className = "bz-box " + opt.className;
 			var header = ele.querySelector(".box-title");

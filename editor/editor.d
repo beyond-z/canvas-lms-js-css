@@ -155,7 +155,7 @@ class EditorApi : ApiProvider {
 		session = new Session(cgi);
 		if(!session.hasKey("user")) {
 			// hack for magic field update cron...
-			if(cgi.pathInfo != "/sso" && cgi.pathInfo != "/do-magic-field-update") {
+			if(cgi.pathInfo != "/sso" && cgi.pathInfo != "/do-daily-update") {
 				import std.uri;
 				session.comingFrom = cgi.getCurrentCompleteUri();
 				session.commit();
@@ -193,19 +193,19 @@ class EditorApi : ApiProvider {
 
 	/// Returns a list of module names that contain the given string in their html
 	/// Group: utility
-	string[] grep(string str) {
-		string[] result;
+	Element grep(string str) {
+		Element ul = Element.make("ul");
 		auto bdb = openBranchDatabase();
-		foreach(file; bdb.query("SELECT name, latest_production_commit FROM files")) {
+		foreach(file; bdb.query("SELECT name, latest_production_commit, id FROM files")) {
 			auto info = load(file[1]);
 
 			auto html = info.rendered;
 
 			auto txt = html.toString();//innerText;
 			if(txt.indexOf(str) != -1)
-				result ~= file[0];
+				ul.addChild("li", Element.make("a", file[0], "/edit?branch=working&fileId=" ~ file[2]));
 		}
-		return result;
+		return ul;
 	}
 
 	/// Just bounces some of the HTML from the client back out for preview purposes.
@@ -396,30 +396,214 @@ class EditorApi : ApiProvider {
 		}
 	}
 
+	private final static string _asFilename(string v) {
+		string s;
+		foreach(c; v)
+			if(
+				(c >= 'a' && c <= 'z') ||
+				(c >= 'A' && c <= 'Z') ||
+				(c >= '0' && c <= '9') ||
+				c == ' ' ||
+				c == '-' ||
+				c == '(' || c == ')' ||
+				c == '_'
+			)
+				s ~= c;
+		return s;
+	}
+
+	enum SpreadsheetColumn { A = 0, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z }
+	enum SplitCriteria { likeContents, cohortViaStudentId, cohortViaFellowEmailAddress }
+
+	void mailMerge(Cgi.UploadedFile csvFile, SpreadsheetColumn columnToSplitOn, Text msg) {
+		import arsd.csv;
+
+		Sqlite db;
+
+		auto sheet = readCsv(cast(string) csvFile.content);
+
+		auto header = sheet[0];
+		int split = cast(int) columnToSplitOn;
+
+		string[][][string] csvs;
+
+		void addToCsv(string splitValue, string[] row) {
+			if(splitValue !in csvs) {
+				csvs[splitValue] = [header];
+			}
+
+			csvs[splitValue] ~= row;
+		}
+
+		foreach(row; sheet[1 .. $]) {
+			auto splitValue = split < row.length ? row[split] : null;
+
+			addToCsv(splitValue, row);
+		}
+
+		foreach(key, value; csvs) {
+			if(value.length < 2)
+				continue;
+
+			auto message = new EmailMessage();
+
+			message.from = `"Adam's Mail Merge" <no-reply@bebraven.org>`;
+			message.subject = "I made spreadsheet mail merge tool!";
+			message.replyTo = `"Adam D. Ruppe" <adam@bebraven.org>`;
+
+			string txt = msg.text;
+			foreach(idx, val; value[1])
+				txt = txt.replace("{{" ~ cast(char)(idx + 'A') ~ "}}", val);
+
+			message.setTextBody(txt);
+
+			message.addAttachment("text/csv", "split-sheet.csv", toCsv(value));
+			message.addAttachment("text/csv", "original-sheet.csv", csvFile.content);
+
+			message.addRecipient(key);
+
+			message.send(productionEmailCredentials());
+		}
+	}
+
+	@GenericContainerType("utilities")
+	DataFile spreadsheetSplitter(Cgi.UploadedFile csvFile, SpreadsheetColumn columnToSplitOn, SplitCriteria treatSplitColumnAs) {
+		import std.zip;
+
+		import arsd.csv;
+
+		Sqlite db;
+
+		auto sheet = readCsv(cast(string) csvFile.content);
+
+		auto header = sheet[0];
+		int split = cast(int) columnToSplitOn;
+
+		string[][][string] csvs;
+
+		void addToCsv(string splitValue, string[] row) {
+			if(splitValue !in csvs) {
+				csvs[splitValue] = [header];
+			}
+
+			csvs[splitValue] ~= row;
+		}
+
+		foreach(row; sheet[1 .. $]) {
+			auto splitValue = split < row.length ? row[split] : null;
+
+			final switch(treatSplitColumnAs) {
+				case SplitCriteria.likeContents:
+					addToCsv(splitValue, row);
+				break;
+				case SplitCriteria.cohortViaStudentId:
+				case SplitCriteria.cohortViaFellowEmailAddress:
+					if(db is null)
+						db = openProductionMagicFieldDatabase();
+
+					foreach(dr; db.query("
+						SELECT
+							sections.name
+						FROM
+							sections
+						INNER JOIN
+							users ON users.user_id = course_enrollments.user_id
+						INNER JOIN
+							course_enrollments ON course_enrollments.section_id = sections.section_id
+						WHERE
+							"~(treatSplitColumnAs == SplitCriteria.cohortViaFellowEmailAddress ?
+								"email"
+								:
+								"student_id"
+							)~" = ?;
+					", splitValue))
+					{
+						addToCsv(dr[0], row);
+					}
+				break;
+			}
+		}
+
+		auto zip = new ZipArchive();
+
+		foreach(key, value; csvs) {
+			auto am = new ArchiveMember();
+			am.name = "split-sheet/" ~ _asFilename(key) ~ ".csv";
+			am.expandedData = toCsv(value).representation.dup;
+			zip.addMember(am);
+		}
+
+		cgi.header("Content-Disposition: attachment; filename=\"split-sheet.zip\"");
+		return new DataFile("application/zip", zip.build().idup);
+	}
+
 	@GenericContainerType("analytics") {
+
+	// FIXME: sis_user_id should prolly be filtered to the actual student id
+
+		auto loginReport(int courseId) {
+			auto mf = openProductionMagicFieldDatabase();
+
+			auto table = cast(Table) Element.make("table");
+			table.appendHeaderRow("Course", "User ID", "SIS ID", "Name", "Email", "Last Login");
+			// load people who might not have done it yet...
+			foreach(row; mf.query("
+				SELECT
+					course_enrollments.course_id,
+					users.user_id,
+					users.student_id,
+					users.name,
+					users.email,
+					users.last_login
+				FROM
+					users
+				INNER JOIN
+					course_enrollments ON course_enrollments.user_id = users.user_id
+				WHERE
+					is_test_account = 0
+					AND
+					enrollment_type = 'StudentEnrollment'
+					AND
+					course_id = ?
+					AND
+					(last_login IS NULL OR last_login < date('now', '-7 day'))
+				GROUP BY
+					users.user_id
+				ORDER BY
+					course_enrollments.course_id
+			", courseId))
+			{
+				table.appendRow(row[0], row[1], row[2], row[3], row[4], row[5]);
+			}
+
+
+			return table;
+		}
+
 		/// Get the fellow's interests for the given course. Suggest viewing with `format=table` on the url.
 		/// Group: analytics
-		string[6][string] fellowInterests(int courseId) {
-			string[6][string] res;
+		string[8][string] fellowInterests(int courseId) {
+			string[8][string] res;
 			auto mf = openProductionMagicFieldDatabase();
+
+			// load people who might not have done it yet...
 			foreach(row; mf.query("
 				SELECT
 					users.user_id,
 					users.name,
 					users.email,
-					magic_fields.name,
-					magic_fields.value
+					users.student_id
 				FROM
-					magic_fields
-				INNER JOIN
-					users ON users.user_id = magic_fields.user_id
+					users
 				INNER JOIN
 					course_enrollments ON course_enrollments.user_id = users.user_id
 				WHERE
 					course_enrollments.course_id = ?
 					AND
-					magic_fields.name IN (?, ?, ?)
-			", courseId, "dyc-industry-1", "dyc-industry-2", "dyc-industry-freeform-other"))
+					is_test_account = 0
+					AND
+					enrollment_type = 'StudentEnrollment'
+			", courseId))
 			{
 				if(row[0] !in res)
 					res[row[0]] = typeof(res[null]).init;
@@ -427,12 +611,49 @@ class EditorApi : ApiProvider {
 				(*ptr)[0] = row[0];
 				(*ptr)[1] = row[1];
 				(*ptr)[2] = row[2];
-				if(row[3] == "dyc-industry-1")
-					(*ptr)[3] = row[4];
-				else if(row[3] == "dyc-industry-2")
-					(*ptr)[4] = row[4];
+				(*ptr)[3] = row[3];
+			}
+
+			// and then load the details
+			foreach(row; mf.query("
+				SELECT
+					users.user_id,
+					users.name,
+					users.email,
+					users.student_id,
+					magic_fields.name,
+					magic_fields.value
+				FROM
+					magic_fields
+				INNER JOIN
+					course_enrollments ON course_enrollments.user_id = users.user_id
+				INNER JOIN
+					users ON users.user_id = magic_fields.user_id
+				WHERE
+					course_enrollments.course_id = ?
+					AND
+					magic_fields.name IN (?, ?, ?, ?)
+					AND
+					is_test_account = 0
+					AND
+					enrollment_type = 'StudentEnrollment'
+			", courseId, "dyc-industry-1", "dyc-industry-2", "dyc-industry-freeform-other", "user-linkedin-profile"))
+			{
+				if(row[0] !in res)
+					res[row[0]] = typeof(res[null]).init;
+				auto ptr = &res[row[0]];
+				(*ptr)[0] = row[0];
+				(*ptr)[1] = row[1];
+				(*ptr)[2] = row[2];
+				(*ptr)[3] = row[3];
+				if(row[4] == "dyc-industry-1")
+					(*ptr)[4] = row[5];
+				else if(row[4] == "dyc-industry-2")
+					(*ptr)[5] = row[5];
+				else if(row[4] == "user-linkedin-profile")
+					(*ptr)[7] = row[5]; // intentionally after the "other" field
 				else
-					(*ptr)[5] = row[4];
+					(*ptr)[6] = row[5];
 			}
 			return res;
 		}
@@ -756,6 +977,19 @@ class EditorApi : ApiProvider {
 		Element analytics() {
 			auto div = Element.make("div");
 			div.addClass("analytics-nav");
+			foreach(fun; __traits(derivedMembers, typeof(this))) {
+				static if(hasValueAnnotation!(__traits(getMember, this, fun), GenericContainerType))
+				static if(__traits(getProtection, __traits(getMember, this, fun)) == "export")
+					div.addChild("a", beautify(fun), fun);
+			}
+			return div;
+		}
+
+		/// Utilities homepage. Returns list of links of all utilities group functions.
+		/// Group: utilities
+		Element utilities() {
+			auto div = Element.make("div");
+			div.addClass("utilities-nav");
 			foreach(fun; __traits(derivedMembers, typeof(this))) {
 				static if(hasValueAnnotation!(__traits(getMember, this, fun), GenericContainerType))
 				static if(__traits(getProtection, __traits(getMember, this, fun)) == "export")
@@ -1283,9 +1517,13 @@ class EditorApi : ApiProvider {
 		// first, find the file we have as a page in the staging content library
 		auto bdb = openBranchDatabase();
 
+		bool isAssignment;
+
 		string canvasUrl;
-		foreach(line; bdb.query("SELECT canvas_page_name FROM files WHERE id = ?", fileId))
+		foreach(line; bdb.query("SELECT canvas_page_name, module_number FROM files WHERE id = ?", fileId)) {
 			canvasUrl = line[0];
+			isAssignment = line[1] == "1000";
+		}
 
 		if(canvasUrl.length == 0)
 			return null;
@@ -1293,18 +1531,28 @@ class EditorApi : ApiProvider {
 		if(canvasUrl.startsWith("https://portal.bebraven.org/api/v1/courses/1/pages/"))
 			canvasUrl = canvasUrl["https://portal.bebraven.org/api/v1/courses/1/pages/".length .. $];
 
+		if(canvasUrl.startsWith("https://portal.bebraven.org/api/v1/courses/1/assignments/"))
+			canvasUrl = canvasUrl["https://portal.bebraven.org/api/v1/courses/1/assignments/".length .. $];
+
 		// then update it
 		auto canvas = getCanvasApiClient(stagingCredentials());
 
-		var fix = var.emptyObject;
-		fix["wiki_page"] = var.emptyObject;
-		fix["wiki_page"]["body"] = html;
+		if(isAssignment) {
+			var fix = var.emptyObject;
+			fix["assignment"] = var.emptyObject;
+			fix["assignment"]["description"] = html;
 
-		auto result = canvas.rest.courses[1].pages[canvasUrl].PUT(fix).result;
+			auto result = canvas.rest.courses[1].assignments[canvasUrl].PUT(fix).result;
+			return "https://stagingportal.bebraven.org/courses/1/assignments/" ~ canvasUrl;
+		} else {
+			var fix = var.emptyObject;
+			fix["wiki_page"] = var.emptyObject;
+			fix["wiki_page"]["body"] = html;
 
-		// then return the URL of the new page on Canvas
-
-		return "https://stagingportal.bebraven.org/courses/1/pages/" ~ canvasUrl;
+			auto result = canvas.rest.courses[1].pages[canvasUrl].PUT(fix).result;
+			// then return the URL of the new page on Canvas
+			return "https://stagingportal.bebraven.org/courses/1/pages/" ~ canvasUrl;
+		}
 	}
 
 	/// $(PITFALL Use with extreme caution)
@@ -1329,9 +1577,11 @@ class EditorApi : ApiProvider {
 
 		string canvasUrl;
 		string prodCommit;
-		foreach(line; bdb.query("SELECT canvas_page_name, latest_production_commit FROM files WHERE id = ?", fileId)) {
+		bool isAssignment;
+		foreach(line; bdb.query("SELECT canvas_page_name, latest_production_commit, module_number FROM files WHERE id = ?", fileId)) {
 			canvasUrl = line[0];
 			prodCommit = line[1];
+			isAssignment = line[2] == "1000";
 		}
 
 		if(canvasUrl.length == 0)
@@ -1340,22 +1590,41 @@ class EditorApi : ApiProvider {
 		if(canvasUrl.startsWith("https://portal.bebraven.org/api/v1/courses/1/pages/"))
 			canvasUrl = canvasUrl["https://portal.bebraven.org/api/v1/courses/1/pages/".length .. $];
 
+		if(canvasUrl.startsWith("https://portal.bebraven.org/api/v1/courses/1/assignments/"))
+			canvasUrl = canvasUrl["https://portal.bebraven.org/api/v1/courses/1/assignments/".length .. $];
+
 		// then update it
 		auto canvas = getCanvasApiClient(productionCredentials());
 
-		var fix = var.emptyObject;
-		fix["wiki_page"] = var.emptyObject;
-		fix["wiki_page"]["body"] = html;
+		if(isAssignment) {
+			var fix = var.emptyObject;
+			fix["assignment"] = var.emptyObject;
+			fix["assignment"]["description"] = html;
 
-		auto result = canvas.rest.courses[1].pages[canvasUrl].PUT(fix).result;
+			auto result = canvas.rest.courses[1].assignments[canvasUrl].PUT(fix).result;
 
-		// save it locally
-		// FIXME?
-		auto commitId = save(fileId.to!int, prodCommit, Html(html), "working");
-		bdb.query("UPDATE files SET latest_production_commit = ? WHERE id = ?", commitId, fileId);
+			// save it locally
+			// FIXME?
+			auto commitId = save(fileId.to!int, prodCommit, Html(html), "working");
+			bdb.query("UPDATE files SET latest_production_commit = ? WHERE id = ?", commitId, fileId);
 
-		// then return the URL of the new page on Canvas
-		return "https://portal.bebraven.org/courses/1/pages/" ~ canvasUrl;
+			// then return the URL of the new page on Canvas
+			return "https://portal.bebraven.org/courses/1/assignments/" ~ canvasUrl;
+		} else {
+			var fix = var.emptyObject;
+			fix["wiki_page"] = var.emptyObject;
+			fix["wiki_page"]["body"] = html;
+
+			auto result = canvas.rest.courses[1].pages[canvasUrl].PUT(fix).result;
+
+			// save it locally
+			// FIXME?
+			auto commitId = save(fileId.to!int, prodCommit, Html(html), "working");
+			bdb.query("UPDATE files SET latest_production_commit = ? WHERE id = ?", commitId, fileId);
+
+			// then return the URL of the new page on Canvas
+			return "https://portal.bebraven.org/courses/1/pages/" ~ canvasUrl;
+		}
 	}
 
 	/// $(PITFALL Use with caution)
@@ -1374,6 +1643,53 @@ class EditorApi : ApiProvider {
 			}
 		}
 
+	}
+
+	void pullAssignmentsFromProduction() {
+		auto canvas = getCanvasApiClient(productionCredentials());
+
+		auto assignmentsRes = canvas.rest.
+			courses[1].assignments
+			._SELF()
+			("per_page", 30)
+			("include[]", "items")
+			.GET;
+
+		var[] assignments;
+
+		// handle potential pagination
+		more_assignments:
+		foreach(assignment; assignmentsRes.result) {
+			assignments ~= assignment;
+		}
+		if(auto next = "next" in assignmentsRes.response.linksHash) {
+			assignmentsRes = canvas.request(next.url);
+			goto more_assignments;
+		}
+
+		auto bdb = openBranchDatabase();
+		int partNum = 0;
+		foreach(assignment; assignments) {
+			if(assignment.published == false)
+				continue;
+			// id
+			// name
+			// description
+
+			string prodCommit = null;
+
+			int id;
+			foreach(r; bdb.query("SELECT coalesce(max(id), 0) FROM files"))
+				id = r[0].to!int + 1;
+
+			bdb.query("INSERT INTO files (id, name, module_number, subnumber, latest_production_commit, canvas_page_name) VALUES (?, ?, ?, ?, ?, ?)",
+				id, assignment.name.get!string, 1000, ++partNum, "", "https://portal.bebraven.org/api/v1/courses/1/assignments/" ~ assignment.id.get!string);
+
+			// create the module
+			auto commitId = save(id, prodCommit, Html(assignment["description"].get!string), "working");
+
+			bdb.query("UPDATE files SET latest_production_commit = ? WHERE id = ?", commitId, id);
+		}
 	}
 
 	/// $(PITFALL Use with caution)
@@ -1663,6 +1979,143 @@ class EditorApi : ApiProvider {
 		return null;
 	}
 
+	/// Update the section roster for active courses (which is hardcoded btw).
+	/// Group: portal_syncing
+	void doSectionUpdate() {
+		auto db = openProductionMagicFieldDatabase();
+		auto canvas = getCanvasApiClient(productionCredentials());
+
+		auto req = canvas.httpClient.navigateTo(arsd.http2.Uri("https://portal.bebraven.org/bz/course_cohort_information?course_ids[]=56&course_ids[]=62&course_ids[]=57&course_ids[]=58&access_token=" ~ canvas.oauth2Token));
+
+		auto response = req.waitForCompletion;
+		var obj = var.fromJson(response.contentText);//["while(1);".length .. $]);
+
+		foreach(course; obj.courses) {
+			// has name, id, sections
+			foreach(section; course.sections) {
+				// has name, id, enrollments, and maybe info like lc_email, lc_phone, etc, etc, etc.
+				try
+				db.query("INSERT INTO sections (section_id, course_id, name) VALUES (?, ?, ?)", section.id.get!int, course.id.get!int, section.name.get!string);
+				catch(DatabaseException e) {}
+
+				// {"enrollment_id":6981,"id":2400,"name":"Bridget Correa","email":"N00456521@nlu.edu","contact_email":"correa.bridget@yahoo.com","type":"StudentEnrollment"}
+				foreach(enrollment; section.enrollments) {
+						try
+						db.query("INSERT INTO course_enrollments (enrollment_id, course_id, user_id, enrollment_type, section_id) VALUES (?, ?, ?, ?, ?)",
+							enrollment.enrollment_id.get!int, course.id.get!int, enrollment.id.get!int, enrollment.type.get!string, section.id.get!int);
+						catch(DatabaseException e) {
+							db.query("UPDATE course_enrollments SET
+								course_id = ?, user_id = ?, enrollment_type = ?, section_id = ? WHERE enrollment_id = ?)",
+							course.id.get!int, enrollment.id.get!int, enrollment.type.get!string, section.id.get!int, enrollment.enrollment_id.get!int);
+						}
+				}
+			}
+		}
+	}
+
+	private void replaceMagicFieldsWithCurrentValuesFor(Element div, int student_id) {
+		auto db = openProductionMagicFieldDatabase();
+		long maxTime;
+		foreach(ele; div.querySelectorAll("[data-bz-retained]")) {
+			string value = "";
+			foreach(row; db.query("SELECT value, strftime('%s', updated_at) FROM magic_fields WHERE name = ? AND user_id = ?", ele.dataset.bzRetained, student_id)) {
+				value = row[0];
+				auto t = to!long(row[1]);
+				if(t > maxTime)
+					maxTime = t;
+			}
+
+			Element n;
+
+			if(ele.tagName == "textarea") {
+				n = Element.make("div", value);
+			} else if(ele.tagName == "input" && ele.attrs.type == "checkbox") {
+				n = Element.make("span", value == "yes" ? "[X]" : "[ ]");
+			} else if(ele.tagName == "input" && ele.attrs.type == "radio") {
+				n = Element.make("span", value == "yes" ? "[O]" : "[ ]");
+			} else if(value.startsWith("http")) {
+				n = Element.make("a");
+				n.href = value;
+				if(value.length > 60)
+					n.innerText = value[0 .. 25] ~ " ... " ~ value[value.length - 25 .. $];
+				else
+					n.innerText = value;
+			} else {
+				n = Element.make("span", value);
+			}
+
+			n.className = "bz-retained-field-replaced";
+			ele.replaceWith(n);
+		}
+
+		//assert(0, to!string(maxTime));
+	}
+
+	Element getSubmissionDifferences(int course_id, int assignment_id, int student_id) {
+		auto canvas = getCanvasApiClient(productionCredentials());
+
+		auto result = canvas.rest.
+			courses[course_id].assignments[assignment_id].submissions[student_id]
+			._SELF()
+			("per_page", 300)
+			("include[]", "submission_history")
+			.GET;
+
+		var data = result.result;
+		// data.submission_history[$-1] is most recent
+
+		auto div = Element.make("div");
+
+		auto left_half = div.addChild("div");
+		auto right_half = div.addChild("div");
+
+		left_half.innerHTML = data.submission_history[$ - 1]["body"].get!string;
+		//right_half.innerHTML = data.submission_history[$ - 2]["body"].get!string;
+
+		{
+			auto bdb = openBranchDatabase();
+			string id;
+			foreach(res; bdb.query("SELECT latest_commit FROM branches WHERE file_id = ? AND name = ?", 143, "working"))
+				id = res[0];
+			right_half.appendChild = load(id).render(this);
+			replaceMagicFieldsWithCurrentValuesFor(right_half, student_id);
+		}
+
+		left_half.style.width = "40%";
+		left_half.style.display = "inline-block";
+		left_half.style.verticalAlign = "top";
+		left_half.dataset.submittedAt = data.submission_history[$ - 1]["submitted_at"].get!string;
+
+		//right_half.dataset.submittedAt = data.submission_history[$ - 2]["submitted_at"].get!string;
+		right_half.dataset.submittedAt = "Pending submission";
+
+		right_half.style.width = "40%";
+		right_half.style.display = "inline-block";
+		right_half.style.verticalAlign = "top";
+
+		auto r1 = left_half.querySelectorAll(".bz-retained-field-replaced");
+		auto rr = right_half.querySelectorAll(".bz-retained-field-replaced");
+
+		foreach(idx, ele; r1) {
+			auto ele2 = rr[idx];
+			if(ele.innerHTML != ele2.innerHTML) {
+				ele.style.backgroundColor = "yellow";
+				ele2.style.backgroundColor = "yellow";
+			} else {
+				ele.style.backgroundColor = "green";
+				ele2.style.backgroundColor = "green";
+			}
+		}
+
+		return div;
+	}
+
+	/// Does daily updates; call from cron
+	void doDailyUpdate() {
+		doRosterUpdate();
+		doMagicFieldUpdate();
+	}
+
 	/// Update the roster for better analytics.
 	/// Group: portal_syncing
 	void doRosterUpdate() {
@@ -1674,7 +2127,11 @@ class EditorApi : ApiProvider {
 				accounts.self.users
 				._SELF()
 				("per_page", 300)
+				("include[]", "last_login")
 				.GET;
+
+			// sis_user_id
+			// last_login // need to pass include[]=last_login there
 
 			// handle potential pagination
 			more_users:
@@ -1684,10 +2141,17 @@ class EditorApi : ApiProvider {
 					isTestAccount = true;
 				if(indexOf(u.email.get!string, "@beyondz.org") != -1)
 					isTestAccount = true;
-				try
-				db.query("INSERT INTO users VALUES (?, ?, ?, ?)",
-					u.id.get!string, u.name.get!string, u.email.get!string, isTestAccount ? 1 : 0);
-				catch(Exception e) {}
+				try {
+					db.query("INSERT INTO users (user_id, name, email, is_test_account, sis_user_id, student_id, join_server_id) VALUES (?, ?, ?, ?, ?, ?, ?)",
+						u.id.get!string, u.name.get!string, u.email.get!string, isTestAccount ? 1 : 0,
+						u.sis_user_id.get!string, getBravenIdOutOfSis(u.sis_user_id.get!string), getStudentIdOutOfSis(u.sis_user_id.get!string));
+				} catch(Exception e) {
+					db.query("UPDATE users SET sis_user_id = ?, last_login = ? WHERE user_id = ?",
+						u.sis_user_id.get!string,
+						u.last_login.get!string,
+						u.id.get!string
+					);
+				}
 
 			}
 			if(auto next = "next" in usersRes.response.linksHash) {
@@ -1696,7 +2160,7 @@ class EditorApi : ApiProvider {
 			}
 		}
 
-		if(1) {
+		if(0) {
 
 			auto coursesRes = canvas.rest.
 				courses
@@ -1725,8 +2189,8 @@ class EditorApi : ApiProvider {
 				foreach(user; usersRes.result) {
 					foreach(enrollment; user.enrollments)
 						try
-						db.query("INSERT INTO course_enrollments VALUES (?, ?, ?, ?)",
-							enrollment.id.get!int, enrollment.course_id.get!int, enrollment.user_id.get!int, enrollment.role.get!string);
+						db.query("INSERT INTO course_enrollments (enrollment_id, course_id, user_id, enrollment_type, section_id) VALUES (?, ?, ?, ?, ?)",
+							enrollment.id.get!int, enrollment.course_id.get!int, enrollment.user_id.get!int, enrollment.role.get!string, enrollment.course_section_id.get!int);
 						catch(DatabaseException e) {}
 						
 
@@ -2346,10 +2810,32 @@ class EditorApi : ApiProvider {
 				auto cl = sli.addChild("a", "[Changes from Production]", "/diff?v1=" ~ file[2] ~ "&v2=" ~ branch[1]);
 				sli.appendText(" ");
 				auto clh = sli.addChild("a", "[History]", "/branchHistory?fileId="~file[0]~"&branch="~branch[0]);
+				sli.appendText(" ");
+				if(branch[0] != "working") {
+					auto form = cast(Form) sli.addChild("form");
+					form.addClass("plain-looking");
+					form.attrs.action = "/deleteBranch";
+					form.attrs.method = "POST";
+					form.setValue("fileId", file[0]);
+					form.setValue("branch", branch[0]);
+					auto btn = form.addChild("button", "[Delete]", "submit");
+					btn.attrs.onclick = "return confirm('You sure?');";
+				}
 			}
 
 		}
 		return div;
+	}
+
+	/// Deletes a branch. Will refuse to delete "working".
+	/// Group: editing
+	void deleteBranch(int fileId, string branch) {
+		assert(cgi.requestMethod == Cgi.RequestMethod.POST);
+		if(branch != "working") {
+			auto bdb = openBranchDatabase();
+			bdb.query("DELETE FROM branches WHERE file_id = ? AND name = ?", fileId, branch);
+		}
+		redirect("/");
 	}
 
 	/// Group: revision_management
@@ -2457,6 +2943,8 @@ class EditorApi : ApiProvider {
 		auto document = new Document(readText("skeleton.html"), true, true);
 		if(type == "analytics")
 			document.requireElementById("page-name-title").innerText = "Content Analytics";
+		if(type == "utilities")
+			document.requireElementById("page-name-title").innerText = "Utilities";
 		return document.requireElementById("generic-container");
 	}
 	public override Document _defaultPage() {
@@ -2903,6 +3391,23 @@ MergeResult!(ElementType!R)[] threeWayMerge(R)(R o, R a, R b, string[] function(
 	return f;
 }
 
+
+string getStudentIdOutOfSis(string sis) {
+	auto idx = sis.indexOf("SISID");
+	if(idx == -1)
+		return null;
+	return sis[idx + "SISID".length .. $];
+}
+
+string getBravenIdOutOfSis(string sis) {
+	auto idx = sis.indexOf("-");
+	if(idx == -1)
+		return null;
+	if(sis.indexOf("BVID") != 0)
+		return null;
+	return sis["BVID".length .. idx];
+}
+
 	/*
 		#editor {
 		  zoom: 50%;	
@@ -2926,6 +3431,60 @@ CanvasCredentials productionCredentials() {
 
 HttpApiClient!() getCanvasApiClient(CanvasCredentials credentials) {
 	return new HttpApiClient!()(credentials.apiBaseUrl, credentials.apiToken, "application/json");
+}
+
+import arsd.email;
+RelayInfo productionEmailCredentials() {
+	import std.file;
+	var auth = var.fromJson(readText("data/email_creds.json"));
+	return RelayInfo(auth.host.get!string, auth.user.get!string, auth.pass.get!string);
+}
+
+void sendEmailsToGroup() { //string[] recipient, string templateText) {
+	auto message = new EmailMessage();
+	message.from = `"Adam's Mail Merge" <no-reply@bebraven.org>`;
+	message.subject = "I made spreadsheet mail merge tool!";
+	message.replyTo = `"Adam D. Ruppe" <adam@bebraven.org>`;
+
+	message.setTextBody(q"message
+Hey {{A}},
+
+I made a spreadsheet splitter and mail merge thing. It isn't
+quite done, but if you got this email, it proves it basically
+works.
+
+The idea is you upload a spreadsheet with all the rows - like
+the attached "original-sheet.csv" file - and it will split it
+up based on some column and then email the split pieces to
+recipients along with a body template. Compare the split-sheet
+and the original-sheet here to see what rows you got out of the
+bunch.
+
+I imagine you could use this to email information to instructors
+or LCs in an easy batch instead of individually going through and
+writing them.
+
+You can kinda play yourself with it here:
+http://editor.bebraven.org.arsdnet.net/mail-merge
+
+The column to split on needs to have the email address in this
+early version. Then you can do placeholders in the body with a
+column name like { {A} } (just with no spaces, I had to put them
+in so it doesn't fill in your anme) from the spreadsheet.
+
+WARNING: be careful, this sends real emails! So don't use it on
+a real spreadsheet because people might get spammed.
+
+Let me know what you think and we can finish+expand this idea!
+-adam
+message");
+
+	//message.addAttachment("text/csv", "split-sheet.csv", "just,testing");
+	//message.addAttachment("text/csv", "original-sheet.csv", originalSheet);
+
+	message.addRecipient("me@arsdnet.net");
+
+	message.send(productionEmailCredentials());
 }
 
 import arsd.sqlite;
@@ -3002,6 +3561,10 @@ Sqlite openProductionMagicFieldDatabase() {
 			user_id INTEGER NOT NULL,
 			name TEXT,
 			email TEXT,
+			sis_user_id TEXT,
+			student_id TEXT,
+			join_server_id INTEGER,
+			last_login TEXT,
 			is_test_account INTEGER NOT NULL,
 			PRIMARY KEY(user_id)
 		);
@@ -3013,11 +3576,20 @@ Sqlite openProductionMagicFieldDatabase() {
 			PRIMARY KEY(course_id)
 		);
 
+		CREATE TABLE sections (
+			section_id INTEGER NOT NULL,
+			course_id INTEGER NOT NULL,
+			name TEXT,
+			PRIMARY KEY(section_id)
+		);
+
 		CREATE TABLE course_enrollments (
 			enrollment_id INTEGER NOT NULL,
 			course_id INTEGER NOT NULL,
 			user_id INTEGER NOT NULL,
+			section_id INTEGER NULL,
 			enrollment_type TEXT,
+			-- FIXME: foreign keys!
 			PRIMARY KEY(enrollment_id)
 		);
 	`, delegate (Sqlite db) {

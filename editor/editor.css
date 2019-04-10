@@ -267,3 +267,21 @@ body > div {
 	padding: 2px 4px;
 	border: solid 1px black;
 }
+
+form.plain-looking {
+	display: inline;
+	margin: 0px;
+	padding: 0px;
+	font: inherit;
+}
+
+form.plain-looking button {
+	display: inline;
+	margin: 0px;
+	padding: 0px;
+	background: transparent;
+	border: none;
+	color: blue;
+	text-decoration: underline;
+	font: inherit;
+}
