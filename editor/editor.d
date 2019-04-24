@@ -993,6 +993,7 @@ class EditorApi : ApiProvider {
 			foreach(fun; __traits(derivedMembers, typeof(this))) {
 				static if(hasValueAnnotation!(__traits(getMember, this, fun), GenericContainerType))
 				static if(__traits(getProtection, __traits(getMember, this, fun)) == "export")
+				if(getAnnotation!(__traits(getMember, this, fun), GenericContainerType).type == "utilities")
 					div.addChild("a", beautify(fun), fun);
 			}
 			return div;
@@ -2112,6 +2113,7 @@ class EditorApi : ApiProvider {
 
 	/// Does daily updates; call from cron
 	void doDailyUpdate() {
+		// FIXME: pull W status from attendance to see who dropped
 		doRosterUpdate();
 		doMagicFieldUpdate();
 	}
