@@ -342,12 +342,14 @@ progress[value]::-webkit-progress-bar {
 		bottom: 64px;
 		width: 100px;
 		background: #f0f0f0;
-		text-align: center;
+		text-align: left;
+		padding: 4px;
 	}
 	#bz-progress-bar::before {
 		content: "Module Progress";
 	}
 	#bz-progress-bar::after {
+		text-align: center;
 		content: attr(data-place) "%";
 	}
 }
