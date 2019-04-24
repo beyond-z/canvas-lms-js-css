@@ -985,6 +985,8 @@ function createBzProgressBar() {
   input.setAttribute("id", "bz-progress-bar");
   var inner = document.createElement("div");
   input.appendChild(inner);
+  inner.style.width = "0%";
+  input.setAttribute("data-place", "0");
   document.body.appendChild(input);
 
   var height = document.body.scrollHeight;
@@ -996,8 +998,12 @@ function createBzProgressBar() {
     if (!ticking) {
       window.requestAnimationFrame(function() {
         var pos = last_known_scroll_position + window.innerHeight;
-        inner.style.width = Math.ceil(pos / height * 100) + "%";
-	input.setAttribute("data-place", Math.ceil(pos / height * 100));
+        var thing = height > 0 ? Math.floor(pos / height * 100) : 0;
+        if(thing > 100)
+            thing = 100;
+
+        inner.style.width = thing + "%";
+	input.setAttribute("data-place", thing);
         ticking = false;
       });
     }
