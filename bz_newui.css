@@ -333,22 +333,51 @@ progress[value]::-webkit-progress-bar {
   box-shadow: none;
 }
 
-#bz-progress-bar {
-	position: fixed;
-	z-index: 999;
-	right: 0;
-	bottom: 0;
-	width: 100vh;
-    -webkit-transform-origin: top right;
-       -moz-transform-origin: top right;
-        -ms-transform-origin: top right;
-         -o-transform-origin: top right;
-            transform-origin: top right;
-    -webkit-transform: rotate(90deg);
-       -moz-transform: rotate(90deg);
-        -ms-transform: rotate(90deg);
-         -o-transform: rotate(90deg);
-            transform: rotate(90deg);		
+
+@media(min-width: 640px) {
+	#bz-progress-bar {
+		position: fixed;
+		z-index: 999;
+		left: 32px;
+		bottom: 64px;
+		width: 100px;
+		background: #f0f0f0;
+		text-align: left;
+		padding: 4px;
+	}
+	#bz-progress-bar::before {
+		content: "Module Progress";
+	}
+	#bz-progress-bar::after {
+		text-align: center;
+		content: attr(data-place) "%";
+	}
+}
+
+@media(max-width: 640px) {
+	#bz-progress-bar {
+		position: fixed;
+		z-index: 999;
+		right: 0;
+		bottom: 0;
+		background: transparent;
+		width: 100vh;
+	    -webkit-transform-origin: top right;
+	       -moz-transform-origin: top right;
+		-ms-transform-origin: top right;
+		 -o-transform-origin: top right;
+		    transform-origin: top right;
+	    -webkit-transform: rotate(90deg);
+	       -moz-transform: rotate(90deg);
+		-ms-transform: rotate(90deg);
+		 -o-transform: rotate(90deg);
+		    transform: rotate(90deg);		
+	}
+}
+
+#bz-progress-bar > div {
+	background-color: #C8141F;
+	height: 4px;
 }
 
 

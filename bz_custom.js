@@ -981,9 +981,12 @@ function collectBoxesBeforeBox(button) {
 // call this BEFORE the function that hides
 // bz-boxes, but after everything else is loaded!
 function createBzProgressBar() {
-  var input = document.createElement("progress");
-  input.setAttribute("max", "100");
+  var input = document.createElement("div");
   input.setAttribute("id", "bz-progress-bar");
+  var inner = document.createElement("div");
+  input.appendChild(inner);
+  inner.style.width = "0%";
+  input.setAttribute("data-place", "0");
   document.body.appendChild(input);
 
   var height = document.body.scrollHeight;
@@ -994,8 +997,19 @@ function createBzProgressBar() {
     last_known_scroll_position = window.scrollY;
     if (!ticking) {
       window.requestAnimationFrame(function() {
+        // as images load later, it might increase the height;
+        // in that case, we will increase the thing to get a more
+        // accurate percentage
+        var newHeight = document.body.scrollHeight;
+        if(newHeight > height)
+            height = newHeight;
         var pos = last_known_scroll_position + window.innerHeight;
-        input.value = Math.ceil(pos / height * 100);
+        var thing = height > 0 ? Math.floor(pos / height * 100) : 0;
+        if(thing > 100)
+            thing = 100;
+
+        inner.style.width = thing + "%";
+	input.setAttribute("data-place", thing);
         ticking = false;
       });
     }
