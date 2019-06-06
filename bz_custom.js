@@ -997,6 +997,12 @@ function createBzProgressBar() {
     last_known_scroll_position = window.scrollY;
     if (!ticking) {
       window.requestAnimationFrame(function() {
+        // as images load later, it might increase the height;
+        // in that case, we will increase the thing to get a more
+        // accurate percentage
+        var newHeight = document.body.scrollHeight;
+        if(newHeight > height)
+            height = newHeight;
         var pos = last_known_scroll_position + window.innerHeight;
         var thing = height > 0 ? Math.floor(pos / height * 100) : 0;
         if(thing > 100)
