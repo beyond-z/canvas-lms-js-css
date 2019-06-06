@@ -486,7 +486,7 @@ runOnUserContent(function() {
   
   // Automatically generate a table of contents (TOC) for the top level out of h2 elements, 
   // and a h2-level TOC out of its nested h3 elements
-  jQuery('.bz-module').prepend(function(){
+  jQuery('.bz-module:not(.lc-module)').prepend(function(){
     var tocBox = jQuery('<div class="main-toc"><p class="match-heading-style">The big picture:</p></div>');
     var mainToc = jQuery('<ol></ol>');
     var mainHasKids = false;
