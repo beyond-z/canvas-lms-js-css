@@ -918,29 +918,29 @@ progress[value]::-webkit-progress-bar {
 }
 
 /* HEADER NUMBERING */
-.bz-module {
+.bz-module:not(.lc-module) {
 	counter-reset: bzh2counter;
 }
 
-.bz-module h2:not(.box-title):before {
+.bz-module:not(.lc-module) h2:not(.box-title):before {
 	content: counter(bzh2counter) ".\0000a0\0000a0";
 	counter-increment: bzh2counter;
 }
 
-.bz-module h2:not(.box-title) {
+.bz-module:not(.lc-module) h2:not(.box-title) {
 	counter-reset: bzh3counter;
 }
 
-.bz-module h3:not(.box-title):before {
+.bz-module:not(.lc-module) h3:not(.box-title):before {
 	content: counter(bzh2counter) "." counter(bzh3counter) ".\0000a0\0000a0";
 	counter-increment: bzh3counter;
 }
 
-.bz-module h3:not(.box-title) {
+.bz-module:not(.lc-module) h3:not(.box-title) {
 	counter-reset: bzh4counter;
 }
 
-.bz-module h4:not(.box-title):before {
+.bz-module:not(.lc-module) h4:not(.box-title):before {
 	content: counter(bzh2counter) "." counter(bzh3counter) "." counter(bzh4counter) ".\0000a0\0000a0";
 	counter-increment: bzh4counter;
 }
@@ -2644,3 +2644,56 @@ table [type="range"] {
 	color: inherit !important;
 	cursor: inherit !important;
 }
+
+/* transfer from old ui { */
+
+
+.lc-module .bz-heading {
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.lc-module .bz-special-event span {
+    color: #eb3b46;
+}
+
+.lc-module .bz-course-overview {
+    margin: 15px auto;
+}
+
+.lc-module .bz-course-overview * {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.lc-module .bz-course-overview tr {
+    border-bottom: 1px solid #222;
+}
+
+.lc-module .bz-course-overview td,
+.lc-module .bz-course-overview th {
+    vertical-align: middle !important;
+}
+
+.lc-module .bz-course-overview tr.bcp {
+    background: #e5e5e5;
+}
+
+.lc-module .bz-course-overview tr.dyc {
+    background: #eaf6f6;
+}
+
+.lc-module .bz-course-overview tr.exp {
+    background: #f5eede;
+}
+
+.lc-module .bz-course-overview tr.cap {
+    background: #f8d7d9;
+}
+
+.lc-module .bz-course-overview tr.gen,
+.lc-module .bz-course-overview th {
+    background: #f2f2f2;
+    color: #000;
+}
+/* end transfer from old ui } */
