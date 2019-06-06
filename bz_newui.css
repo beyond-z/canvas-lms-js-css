@@ -994,6 +994,10 @@ html {
 	position: relative;
 }
 
+.bz-module .roll-back-left {
+	margin-left: -200px;
+}
+
 .bz-view-box {
 	overflow-x: auto;
 }
