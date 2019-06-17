@@ -1190,6 +1190,7 @@ input[type='button'].add-other-field {
 .reflection,
 .video,
 .pulse,
+.alert,
 .key,
 .action,
 .values,
@@ -1251,6 +1252,10 @@ figure {
 
 .pulse {
 	background-image: url('images/lms-icons-30.png');
+}
+
+.alert {
+	background-image: url('images/lms-icons-11.png');
 }
 
 .key {
