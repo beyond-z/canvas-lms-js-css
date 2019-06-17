@@ -994,6 +994,10 @@ html {
 	position: relative;
 }
 
+.bz-module .roll-back-left {
+	margin-left: -200px !important;
+}
+
 .bz-view-box {
 	overflow-x: auto;
 }
@@ -1186,6 +1190,7 @@ input[type='button'].add-other-field {
 .reflection,
 .video,
 .pulse,
+.alert,
 .key,
 .action,
 .values,
@@ -1247,6 +1252,10 @@ figure {
 
 .pulse {
 	background-image: url('images/lms-icons-30.png');
+}
+
+.alert {
+	background-image: url('images/lms-icons-11.png');
 }
 
 .key {
@@ -2696,4 +2705,54 @@ table [type="range"] {
     background: #f2f2f2;
     color: #000;
 }
+
+.bz-toc-current {
+    color: #eb3b46 !important;
+}
+
+#bz-auto-toc {
+	padding: 24px 0px;
+	margin: 24px auto;
+    border: 1px dotted #e6e6e6;
+}
+
+#bz-auto-toc li {
+    border-left: 12px solid #e6e6e6 !important;
+    border-radius: 0 !important;
+    padding: 12px 24px;
+}
+#bz-auto-toc li.bz-toc-current,
+#bz-auto-toc .bz-toc-current-wrapper .ig-row {
+    border-left: 12px solid #eb3b46 !important;
+}
+#bz-auto-toc a {
+   text-decoration: none !important;
+   /*cursor: text !important;*/
+}
+#bz-auto-toc .indent_1,
+#bz-auto-toc .indent_2,
+#bz-auto-toc .indent_3,
+#bz-auto-toc .ig-header,
+#bz-auto-toc .ig-admin,
+#bz-auto-toc .draggable-handle,
+#bz-auto-toc i,
+#bz-auto-toc .context_module_sub_header,
+#bz-auto-toc .requirement-description {
+    display:none;
+}
+#bz-auto-toc li {
+    margin: 0;
+}
+
+#bz-auto-toc ol {
+	list-style-type: none;
+}
+
+#bz-auto-toc li,
+#context_modules .ig-title,
+#context_modules .ig-header-title {
+	font-family: "TradeGothicNo.20-CondBold", "Oswald", "Open Sans", sans-serif;
+	font-size: 1.2em;
+}
+
 /* end transfer from old ui } */
