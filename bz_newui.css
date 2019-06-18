@@ -918,29 +918,29 @@ progress[value]::-webkit-progress-bar {
 }
 
 /* HEADER NUMBERING */
-.bz-module {
+.bz-module:not(.lc-module) {
 	counter-reset: bzh2counter;
 }
 
-.bz-module h2:not(.box-title):before {
+.bz-module:not(.lc-module) h2:not(.box-title):before {
 	content: counter(bzh2counter) ".\0000a0\0000a0";
 	counter-increment: bzh2counter;
 }
 
-.bz-module h2:not(.box-title) {
+.bz-module:not(.lc-module) h2:not(.box-title) {
 	counter-reset: bzh3counter;
 }
 
-.bz-module h3:not(.box-title):before {
+.bz-module:not(.lc-module) h3:not(.box-title):before {
 	content: counter(bzh2counter) "." counter(bzh3counter) ".\0000a0\0000a0";
 	counter-increment: bzh3counter;
 }
 
-.bz-module h3:not(.box-title) {
+.bz-module:not(.lc-module) h3:not(.box-title) {
 	counter-reset: bzh4counter;
 }
 
-.bz-module h4:not(.box-title):before {
+.bz-module:not(.lc-module) h4:not(.box-title):before {
 	content: counter(bzh2counter) "." counter(bzh3counter) "." counter(bzh4counter) ".\0000a0\0000a0";
 	counter-increment: bzh4counter;
 }
@@ -992,6 +992,10 @@ html {
 .bz-module {
 	margin: 0 auto 200px;
 	position: relative;
+}
+
+.bz-module .roll-back-left {
+	margin-left: -200px !important;
 }
 
 .bz-view-box {
@@ -1186,6 +1190,7 @@ input[type='button'].add-other-field {
 .reflection,
 .video,
 .pulse,
+.alert,
 .key,
 .action,
 .values,
@@ -1247,6 +1252,10 @@ figure {
 
 .pulse {
 	background-image: url('images/lms-icons-30.png');
+}
+
+.alert {
+	background-image: url('images/lms-icons-11.png');
 }
 
 .key {
@@ -2644,3 +2653,106 @@ table [type="range"] {
 	color: inherit !important;
 	cursor: inherit !important;
 }
+
+/* transfer from old ui { */
+
+
+.lc-module .bz-heading {
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.lc-module .bz-special-event span {
+    color: #eb3b46;
+}
+
+.lc-module .bz-course-overview {
+    margin: 15px auto;
+}
+
+.lc-module .bz-course-overview * {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.lc-module .bz-course-overview tr {
+    border-bottom: 1px solid #222;
+}
+
+.lc-module .bz-course-overview td,
+.lc-module .bz-course-overview th {
+    vertical-align: middle !important;
+}
+
+.lc-module .bz-course-overview tr.bcp {
+    background: #e5e5e5;
+}
+
+.lc-module .bz-course-overview tr.dyc {
+    background: #eaf6f6;
+}
+
+.lc-module .bz-course-overview tr.exp {
+    background: #f5eede;
+}
+
+.lc-module .bz-course-overview tr.cap {
+    background: #f8d7d9;
+}
+
+.lc-module .bz-course-overview tr.gen,
+.lc-module .bz-course-overview th {
+    background: #f2f2f2;
+    color: #000;
+}
+
+.bz-toc-current {
+    color: #eb3b46 !important;
+}
+
+#bz-auto-toc {
+	padding: 24px 0px;
+	margin: 24px auto;
+    border: 1px dotted #e6e6e6;
+}
+
+#bz-auto-toc li {
+    border-left: 12px solid #e6e6e6 !important;
+    border-radius: 0 !important;
+    padding: 12px 24px;
+}
+#bz-auto-toc li.bz-toc-current,
+#bz-auto-toc .bz-toc-current-wrapper .ig-row {
+    border-left: 12px solid #eb3b46 !important;
+}
+#bz-auto-toc a {
+   text-decoration: none !important;
+   /*cursor: text !important;*/
+}
+#bz-auto-toc .indent_1,
+#bz-auto-toc .indent_2,
+#bz-auto-toc .indent_3,
+#bz-auto-toc .ig-header,
+#bz-auto-toc .ig-admin,
+#bz-auto-toc .draggable-handle,
+#bz-auto-toc i,
+#bz-auto-toc .context_module_sub_header,
+#bz-auto-toc .requirement-description {
+    display:none;
+}
+#bz-auto-toc li {
+    margin: 0;
+}
+
+#bz-auto-toc ol {
+	list-style-type: none;
+}
+
+#bz-auto-toc li,
+#context_modules .ig-title,
+#context_modules .ig-header-title {
+	font-family: "TradeGothicNo.20-CondBold", "Oswald", "Open Sans", sans-serif;
+	font-size: 1.2em;
+}
+
+/* end transfer from old ui } */
