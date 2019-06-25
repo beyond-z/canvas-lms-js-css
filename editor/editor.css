@@ -37,12 +37,12 @@
 }
 */
 
-html, body {
+html#editor-core, #editor-core body {
 	margin: 0px;
 	padding: 0px;
 	overflow: hidden;
 }
-body > div {
+html#editor-core body > div {
 	position: fixed;
 	box-sizing: border-box;
 	overflow: auto;
@@ -127,6 +127,12 @@ body > div {
 	font-weight: bold;
 }
 
+/*
+[data-from-function="diff"] abbr {
+	text-decoration: none;
+}
+*/
+
 .no-change {
 	background-color: #aaa;
 }
@@ -135,8 +141,16 @@ body > div {
 	background-color: #88ff88;
 }
 
+.substituted > .inserted {
+	background-color: white;
+}
+
 .removed {
 	background-color: #ff8888;
+}
+
+.substituted > .removed {
+	background-color: #dbb;
 }
 
 .substituted {

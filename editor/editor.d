@@ -122,6 +122,7 @@ import arsd.jsvar;
 import arsd.http2;
 
 import std.algorithm;
+import std.uri;
 static import std.file;
 import std.uuid;
 import std.zlib;
@@ -146,12 +147,14 @@ import std.zlib;
 			## Portal Syncing
 +/
 class EditorApi : ApiProvider {
-	private Session session;
+	package Session session;
 	private string ssoService = "http://editor.bebraven.org.arsdnet.net/sso";
 
 	/// All access to the hosted editor requires a valid SSO login.
 	version(hosted)
 	override void _initializePerCall() {
+		if(cgi.host == "localhost:10234") // hack to allow unauthenticated stuff personally for dev
+			return;
 		session = new Session(cgi);
 		if(!session.hasKey("user")) {
 			// hack for magic field update cron...
@@ -232,16 +235,23 @@ class EditorApi : ApiProvider {
 
 		Group: editing
 	+/
-	Document view(string id, bool showMagicFieldTimings = false, string start = "2010-01-01", string finish = null) {
+	Document view(string id, bool showMagicFieldTimings = false, string start = "2010-01-01", string finish = null, int magicFieldUserId = 0) {
 
-		if(id.length < 3) {
+		string title;
+
+		if(id.length <= 3) {
 			auto bdb = openBranchDatabase();
-			foreach(res; bdb.query("SELECT latest_commit FROM branches WHERE file_id = ? AND name = ?", id, "working"))
+			foreach(res; bdb.query("SELECT name FROM files WHERE id = ?", id))
+				title = res[0];
+			foreach(res; bdb.query("SELECT latest_commit FROM branches WHERE file_id = ? AND name = ?", id, cgi.request("branch", "working"))) {
 				id = res[0];
+			}
 		}
 
 		import std.file;
 		auto document = new Document(readText("module.html"), true, true);
+		document.requireSelector("#module-container").addChild("h1", title);
+		document.title = "Braven - " ~ title;
 		document.requireSelector("#module-container").appendChild(load(id).render(this).removeFromTree);
 
 		foreach(thing; document.querySelectorAll("[data-replace-with-page]")) {
@@ -249,6 +259,49 @@ class EditorApi : ApiProvider {
 			auto bdb = openBranchDatabase();
 			foreach(res; bdb.query("SELECT id FROM files WHERE name = ?", thing.dataset.replaceWithPage))
 				thing.innerHTML = load(res[0]).render(this).toString;
+		}
+
+		if(magicFieldUserId) {
+			auto db = openProductionMagicFieldDatabase();
+			foreach(mg; document.querySelectorAll("[data-bz-retained]")) {
+				auto name = mg.dataset.bzRetained;
+
+				foreach(row; db.query("SELECT value FROM magic_fields WHERE name = ? AND user_id = ?", name, magicFieldUserId)) {
+					if(mg.tagName == "textarea")
+						mg.innerText = row[0];
+					else if(mg.tagName == "input") {
+						switch(mg.attrs.type) {
+							case "checkbox":
+								if(row[0].length)
+									mg.attrs.checked = "checked";
+							break;
+							case "radio":
+								if(mg.attrs.value == row[0])
+									mg.attrs.checked = "checked";
+							break;
+							case "button":
+								// it got clicked! yay lol
+							break;
+							default:
+								mg.attrs.value = row[0];
+						}
+					}
+				}
+			}
+
+			// trigger the javascript for part hiding
+			document.mainBody.addChild("script", q{ 
+				window.ENV = { WIKI_PAGE: { } }; window.position_magic_field_name = "FIXME";
+				window.openBzBoxPosition = 9;
+
+				// also re-adjust links after everything is loaded for some interaction
+				window.addEventListener("load", function() {
+					var b = document.querySelector("base");
+					b.parentNode.removeChild(b);
+				});
+			});
+			// acts as an anchor for other scripts
+			document.requireSelector("#module-container").addClass("show-content");
 		}
 
 		if(showMagicFieldTimings) {
@@ -580,6 +633,79 @@ class EditorApi : ApiProvider {
 			return table;
 		}
 
+		mixin template CommonUserData() {
+			string user_id;
+			string name;
+			string email;
+			string student_id;
+		}
+
+		struct PafInterest {
+			mixin CommonUserData;
+			//string course_id;
+			string[] interests;
+		}
+
+		struct Paf {
+			mixin CommonUserData;
+		}
+
+		PafInterest[] pafInterests(int courseId) {
+			PafInterest[string] res;
+			auto mf = openProductionMagicFieldDatabase();
+			foreach(row; mf.query("
+				SELECT
+					users.user_id,
+					users.name,
+					users.email,
+					users.student_id,
+					magic_fields.name,
+					magic_fields.value
+				FROM
+					magic_fields
+				INNER JOIN
+					course_enrollments ON course_enrollments.user_id = users.user_id
+				INNER JOIN
+					users ON users.user_id = magic_fields.user_id
+				WHERE
+					course_enrollments.course_id = ?
+					AND
+					magic_fields.name LIKE 'interested-in-paf-opportunities-%'
+					AND
+					is_test_account = 0
+					AND
+					enrollment_type = 'StudentEnrollment'
+			", courseId))
+			{
+				if(row[0] !in res)
+					res[row[0]] = PafInterest(row[0], row[1], row[2], row[3]);
+				if(row[5] == "yes")
+					res[row[0]].interests ~= row[4]["interested-in-paf-opportunities-".length .. $];
+			}
+
+			auto v = res.values;
+			v.sort!((a, b) => icmp(a.name, b.name) < 0);
+
+			return v;
+		}
+
+		struct InterestedPafs {
+			string interest;
+			Paf[] interestedParties;
+		}
+
+		InterestedPafs[] interestedPafs(int courseId) {
+			auto pi = pafInterests(courseId);
+			InterestedPafs[string] ip;
+			foreach(i; pi)
+				foreach(interest; i.interests) {
+					if(interest !in ip)
+						ip[interest] = InterestedPafs(interest);
+					ip[interest].interestedParties ~= Paf(i.tupleof[0 .. Paf.tupleof.length]);
+				}
+			return ip.values;
+		}
+
 		/// Get the fellow's interests for the given course. Suggest viewing with `format=table` on the url.
 		/// Group: analytics
 		string[8][string] fellowInterests(int courseId) {
@@ -681,6 +807,35 @@ class EditorApi : ApiProvider {
 			string value;
 		}
 
+		/// Determines which LC hasn't yet done the field
+		/// Group: analytics
+		string[] unansweredLcs(int courseId, string fieldName, string enrollment_type) {
+			auto mf = openProductionMagicFieldDatabase();
+
+			string[] ret;
+			foreach(lc; mf.query("
+				SELECT
+					name
+				FROM
+					users
+				INNER JOIN
+					course_enrollments ON course_enrollments.user_id = users.user_id
+				WHERE
+					course_id = ?
+					AND NOT EXISTS (
+						SELECT 1 FROM magic_fields WHERE
+							user_id = users.user_id
+							AND name LIKE '"~prepareMagicFieldNameForSql(fieldName)~"'
+							AND updated_at > date('now', '-1 month')
+					)
+					AND enrollment_type = ?
+					AND is_test_account = 0
+				ORDER BY name
+			", courseId, enrollment_type))
+				ret ~= lc[0];
+			return ret;
+		}
+
 		/// Gets the data from the Cohort Teamwork Evaluation in the LYL module
 		/// Group: analytics
 		CohortMagicFieldAnswer[] cohortTeamworkEvaluation(int courseId) {
@@ -689,7 +844,7 @@ class EditorApi : ApiProvider {
 				"met-deadlines-peer-score-for-{ID}",
 				"gave-feedback-peer-score-for-{ID}",
 				"embraced-different-perspectives-peer-score-for-{ID}"
-			]);
+			], true);
 		}
 
 		CohortMagicFieldAnswer[] lcFellowAssessment(int courseId) {
@@ -711,6 +866,7 @@ class EditorApi : ApiProvider {
 				"strength-reliability-{ID}",
 				"strength-adaptability-{ID}",
 				"strength-diligence-{ID}",
+				"strength-confidence-{ID}",
 				"strength-other-{ID}",
 
 				"weakness-leadership-{ID}",
@@ -725,10 +881,11 @@ class EditorApi : ApiProvider {
 				"weakness-reliability-{ID}",
 				"weakness-adaptability-{ID}",
 				"weakness-diligence-{ID}",
+				"weakness-confidence-{ID}",
 				"weakness-other-{ID}",
 
 				"other-fellow-comments-from-lc-{ID}"
-			]);
+			], false);
 		}
 
 		DataFile cohortTeamworkEvaluationDownload(int courseId) {
@@ -817,7 +974,7 @@ class EditorApi : ApiProvider {
 		///
 		/// You can probably use [cohortTeamworkEvaluation] instead.
 		/// Group: analytics
-		CohortMagicFieldAnswer[] cohortMagicFieldAnswers(int courseId, string[] fields) {
+		CohortMagicFieldAnswer[] cohortMagicFieldAnswers(int courseId, string[] fields, bool restrictToSection) {
 
 			CohortMagicFieldAnswer[] answers;
 
@@ -835,14 +992,32 @@ class EditorApi : ApiProvider {
 			static struct UserCache {
 				string name;
 				string email;
+				string sectionId;
 			}
 			UserCache[string] userCache;
 
-			userCache["2134"] = UserCache("Test Student" , "N/A");
-			userCache["2269"] = UserCache("Test Student" , "N/A");
-
+			if(restrictToSection)
 			foreach(row; mf.query("
 				SELECT
+					users.user_id,
+					users.name,
+					users.email,
+					sections.section_id
+				FROM
+					users
+				INNER JOIN
+					course_enrollments ON course_enrollments.user_id = users.user_id
+				INNER JOIN
+					sections ON sections.section_id = course_enrollments.section_id
+				WHERE
+					course_enrollments.course_id = ?
+					AND
+					sections.name LIKE '%(%)%'
+			", courseId))
+				userCache[row[0]] = UserCache(row[1], row[2], row[3]);
+			else
+			foreach(row; mf.query("
+				SELECT DISTINCT
 					users.user_id,
 					users.name,
 					users.email
@@ -864,15 +1039,20 @@ class EditorApi : ApiProvider {
 					users.name,
 					users.email,
 					magic_fields.name,
-					magic_fields.value
+					magic_fields.value,
+					sections.section_id
 				FROM
 					magic_fields
 				INNER JOIN
 					users ON users.user_id = magic_fields.user_id
 				INNER JOIN
 					course_enrollments ON course_enrollments.user_id = users.user_id
+				INNER JOIN
+					sections ON course_enrollments.section_id = sections.section_id
 				WHERE
 					course_enrollments.course_id = ?
+					AND
+					sections.name LIKE '%(%)%'
 					AND
 					(
 					" ~ fieldsSql ~ "
@@ -892,6 +1072,10 @@ class EditorApi : ApiProvider {
 				if(auto found = answer.subjectUserId in userCache) {
 					answer.subjectName = found.name;
 					answer.subjectEmail = found.email;
+					if(restrictToSection && row[5] != found.sectionId)
+						continue;
+				} else {
+					continue;
 				}
 
 				answer.magicFieldName = row[3];
@@ -970,6 +1154,131 @@ class EditorApi : ApiProvider {
 				}
 			}
 			return div;
+		}
+
+		struct BravenNationChecklist {
+			string canvasUserId;
+			string name;
+			string email;
+			string studentId;
+
+			bool stayConnected;
+			bool payItForward;
+			bool toGetOpportunities;
+			bool participationInMoreLeadership;
+			string other;
+		}
+
+		BravenNationChecklist[] bravenNationChecklist(int courseId) {
+			BravenNationChecklist[] res;
+
+			auto db = openProductionMagicFieldDatabase();
+
+			foreach(row; db.query("
+				SELECT
+					users.user_id,
+					users.name,
+					users.email,
+					users.student_id
+				FROM
+					users
+				INNER JOIN
+					course_enrollments ON course_enrollments.user_id = users.user_id
+				WHERE
+					is_test_account = 0
+					AND
+					enrollment_type = 'StudentEnrollment'
+					AND
+					course_id = ?
+				GROUP BY
+					users.user_id
+				ORDER BY
+					course_enrollments.course_id
+			", courseId))
+			{
+				BravenNationChecklist c;
+
+				c.canvasUserId = row[0];
+				c.name = row[1];
+				c.email = row[2];
+				c.studentId = row[3];
+
+				foreach(i, field; ["lyl-q8-3", "lyl-q8-4", "9e502a6b-67b2-4613-9b2a-7867eb3eaf75", "lyl-q8-5", "lyl-q8-7-t"]) {
+					foreach(mfrow; db.query("SELECT value FROM magic_fields WHERE name = ? AND user_id = ?", field, row[0])) {
+
+						if(i == 0) c.stayConnected = !!mfrow[0].length;
+						if(i == 1) c.payItForward = !!mfrow[0].length;
+						if(i == 2) c.toGetOpportunities = !!mfrow[0].length;
+						if(i == 3) c.participationInMoreLeadership = !!mfrow[0].length;
+						if(i == 4) c.other = mfrow[0];
+					}
+				}
+
+				res ~= c;
+			}
+
+			return res;
+		}
+
+		struct RealStepChecklist {
+			string canvasUserId;
+			string name;
+			string email;
+			string studentId;
+			bool joinedLinkedInGroup;
+			bool joinedRegionalFacebookGroup;
+			bool referredAFriend;
+		}
+
+		RealStepChecklist[] realStepChecklist(int courseId) {
+			RealStepChecklist[] res;
+
+			auto db = openProductionMagicFieldDatabase();
+
+			foreach(row; db.query("
+				SELECT
+					users.user_id,
+					users.name,
+					users.email,
+					users.student_id
+				FROM
+					users
+				INNER JOIN
+					course_enrollments ON course_enrollments.user_id = users.user_id
+				WHERE
+					is_test_account = 0
+					AND
+					enrollment_type = 'StudentEnrollment'
+					AND
+					course_id = ?
+				GROUP BY
+					users.user_id
+				ORDER BY
+					course_enrollments.course_id
+			", courseId))
+			{
+				RealStepChecklist c;
+
+				c.canvasUserId = row[0];
+				c.name = row[1];
+				c.email = row[2];
+				c.studentId = row[3];
+
+				foreach(i, field; ["lyl-q12-3", "lyl-q12-4", "lyl-q12-5"]) {
+					foreach(mfrow; db.query("SELECT value FROM magic_fields WHERE name = ? AND user_id = ?", field, row[0])) {
+						if(i == 0)
+							c.joinedLinkedInGroup = !!mfrow[0].length;
+						if(i == 1)
+							c.joinedRegionalFacebookGroup = !!mfrow[0].length;
+						if(i == 2)
+							c.referredAFriend = !!mfrow[0].length;
+					}
+				}
+
+				res ~= c;
+			}
+
+			return res;
 		}
 
 		/// Analytics homepage. Returns list of links of all analytics group functions.
@@ -1103,7 +1412,8 @@ class EditorApi : ApiProvider {
 		enum Semester {
 			AllTime,
 			Spring2018,
-			Fall2018
+			Fall2018,
+			Spring2019
 		}
 
 		/// Group: analytics
@@ -1146,6 +1456,10 @@ class EditorApi : ApiProvider {
 				case Semester.Fall2018:
 					start = "2018-08-01";
 					finish = "2018-12-20";
+				break;
+				case Semester.Spring2019:
+					start = "2019-01-01";
+					finish = "2019-05-20";
 				break;
 
 			}
@@ -1206,20 +1520,125 @@ class EditorApi : ApiProvider {
 			return div;
 		}
 
+		struct ModuleProgress {
+			int userId;
+			string userName;
+			string userEmail;
+			string userStudentId;
+
+			int masteryScoreEarned;
+			int masteryScorePossible;
+			int participationScoreEarned;
+			int participationScorePossible;
+
+			long estimatedCompletionTime;
+		}
+
 		Element magicFieldTimeStats(string moduleId, int student_id = 0) {
 			assert(0);
 		}
 
+		enum EnrollmentCategory {
+			students,
+			nonStudents,
+		}
+
 		/// Displays a magic field report
 		/// Group: analytics
-		Element magicFieldAnalysis(string moduleId, int student_id = 0) {
+		ModuleProgress[] magicFieldAnalysis(string moduleId, int courseId, EnrollmentCategory enrollmentCategory) {
 			auto db = openProductionMagicFieldDatabase();
 
-
-			auto div = Element.make("div");
-
-			auto mod = load(moduleId);
+			auto mod = loadViaName(moduleId);
 			auto html = mod.render(this);
+
+			auto fields = html.querySelectorAll("[data-bz-retained]");
+
+			ModuleProgress[] res;
+
+			foreach(row; db.query("
+				SELECT
+					course_enrollments.course_id,
+					users.user_id,
+					users.student_id,
+					users.name,
+					users.email,
+					users.last_login
+				FROM
+					users
+				INNER JOIN
+					course_enrollments ON course_enrollments.user_id = users.user_id
+				WHERE
+					is_test_account = 0
+					AND
+					enrollment_type "~(enrollmentCategory == EnrollmentCategory.students ? "=" : "!=")~" 'StudentEnrollment'
+					AND
+					course_id = ?
+				GROUP BY
+					users.user_id
+				ORDER BY
+					course_enrollments.course_id
+			", courseId))
+			{
+				ModuleProgress progress;
+
+				progress.userId = to!int(row[1]);
+				progress.userName = row[3];
+				progress.userEmail = row[4];
+				progress.userStudentId = row[2];
+
+				long lastCompletion;
+
+				foreach(magicField; fields) {
+					auto mfn = magicField.dataset.bzRetained;
+					if(magicField.hasClass("bz-optional-magic-field") || magicField.attrs.type == "checkbox") {
+						// optional
+					} else {
+						// not optional
+
+						string value;
+						long created;
+						foreach(row2; db.query("SELECT value,  strftime('%s', created_at) FROM magic_fields WHERE user_id = ? AND name = ?", row[1], mfn)) {
+							value = row2[0];
+							created = to!long(row2[1]);
+						}
+
+						if(created) {
+							if(lastCompletion) {
+								auto diff = created - lastCompletion;
+								// if the difference is more than a while, it prolly means they
+								// went away for a while.
+								if(diff > 0 && diff < 30*60)
+									progress.estimatedCompletionTime += diff;
+							}
+							lastCompletion = created;
+						}
+
+						if(magicField.hasAttribute("data-bz-answer")) {
+							// mastery
+							auto answer = magicField.dataset.bzAnswer;
+							auto weight = 1;
+							if(magicField.hasAttribute("data-bz-weight"))
+								weight = to!int(magicField.dataset.bzWeight);
+
+							progress.masteryScorePossible += weight;
+							if(answer == value)
+								progress.masteryScoreEarned += weight;
+						} else {
+							// participation
+							progress.participationScorePossible++;
+							if(value !is null)
+								progress.participationScoreEarned++;
+						}
+					}
+				}
+
+				res ~= progress;
+			}
+
+
+
+			/+
+			auto div = Element.make("div");
 			foreach(magicField; html.querySelectorAll("[data-bz-retained]")) {
 				auto d = div.addChild("div").addClass("magic-field-report");
 				auto mfn = magicField.dataset.bzRetained;
@@ -1250,8 +1669,10 @@ class EditorApi : ApiProvider {
 			}
 
 			return div;
-		}
+			+/
 
+			return res;
+		}
 	}
 
 	/*
@@ -1274,12 +1695,18 @@ class EditorApi : ApiProvider {
 
 		html = annotateHtml(html);
 
-		// it saves it as a diff from the base...
-		auto base = load(basedOn);
-		string[] r1 = normalizeHtml(base.render(this));
-		string[] r2 = normalizeHtml(new DocumentFragment(html)); //.requireSelector(".bz-module"));
+		bool saveAsComplete = false;
 
-		auto path = levenshteinDistanceAndPath(r1, r2);
+		auto base = load(basedOn);
+		if(base.depthFromComplete(this) > 10)
+			saveAsComplete = true;
+
+		if(saveAsComplete)
+			flags |= RevisionData.Flags.complete;
+
+		// it saves it as a diff from the base unless we need it to be complete...
+		string[] r1 = saveAsComplete ? null : normalizeHtml(base.render(this));
+		string[] r2 = normalizeHtml(new DocumentFragment(html)); //.requireSelector(".bz-module"));
 
 		ubyte[] data;
 
@@ -1287,7 +1714,7 @@ class EditorApi : ApiProvider {
 		string comment;
 
 		auto id = randomUUID();
-		string editedBy = "admas";
+		string editedBy = session.hasKey("user") ? session["user"] : "idk";
 		import core.stdc.time;
 		uint timestamp = cast(int) time(null);
 
@@ -1337,85 +1764,91 @@ class EditorApi : ApiProvider {
 		ubyte[] header = data[];
 		data = null;
 
-		EditOp last = EditOp.none;
-		int lastCount = 0;
+		if(saveAsComplete) {
+			foreach(line; r2)
+				data ~= line ~ "\n";
+		} else {
+			EditOp last = EditOp.none;
+			int lastCount = 0;
 
-		void addOp(EditOp op, int count, string text) {
-			ubyte opByte;
-			final switch(op) {
-				case EditOp.none: opByte = 0; break;
-				case EditOp.substitute: opByte = 1; break;
-				case EditOp.insert: opByte = 2; break;
-				case EditOp.remove: opByte = 3; break;
+			void addOp(EditOp op, int count, string text) {
+				ubyte opByte;
+				final switch(op) {
+					case EditOp.none: opByte = 0; break;
+					case EditOp.substitute: opByte = 1; break;
+					case EditOp.insert: opByte = 2; break;
+					case EditOp.remove: opByte = 3; break;
+				}
+
+				assert(count > 0);
+				assert(count <= 0b00_111111);
+
+				opByte <<= 6;
+				opByte |= count;
+
+				assert(text.length == 0 || op == EditOp.insert || op == EditOp.substitute);
+
+				data ~= opByte;
+				if(op == EditOp.insert || op == EditOp.substitute) {
+					data ~= text.length & 0xff;
+					data ~= (text.length >> 8) & 0xff;
+					data ~= (text.length >> 16) & 0xff;
+					data ~= (text.length >> 24) & 0xff;
+					data ~= cast(ubyte[]) text;
+				}
 			}
 
-			assert(count > 0);
-			assert(count <= 0b00_111111);
-
-			opByte <<= 6;
-			opByte |= count;
-
-			assert(text.length == 0 || op == EditOp.insert || op == EditOp.substitute);
-
-			data ~= opByte;
-			if(op == EditOp.insert || op == EditOp.substitute) {
-				data ~= text.length & 0xff;
-				data ~= (text.length >> 8) & 0xff;
-				data ~= (text.length >> 16) & 0xff;
-				data ~= (text.length >> 24) & 0xff;
-				data ~= cast(ubyte[]) text;
+			void commit() {
+				if(lastCount == 0) return;
+				addOp(last, lastCount, null);
+				last = EditOp.none;
+				lastCount = 0;
 			}
-		}
 
-		void commit() {
-			if(lastCount == 0) return;
-			addOp(last, lastCount, null);
-			last = EditOp.none;
-			lastCount = 0;
-		}
-
-		int pos;
-		int pos2;
-		foreach(editOp; path[1]) {
-			final switch(editOp) {
-				case EditOp.none:
-					if(last == EditOp.none && lastCount < 0b00_111111) {
-						lastCount++;
-					} else {
+			int pos;
+			int pos2;
+			auto path = levenshteinDistanceAndPath(r1, r2);
+			foreach(editOp; path[1]) {
+				final switch(editOp) {
+					case EditOp.none:
+						if(last == EditOp.none && lastCount < 0b00_111111) {
+							lastCount++;
+						} else {
+							commit();
+							last = EditOp.none;
+							lastCount = 1;
+						}
+						pos++;
+						pos2++;
+					break;
+					case EditOp.insert:
 						commit();
-						last = EditOp.none;
-						lastCount = 1;
-					}
-					pos++;
-					pos2++;
-				break;
-				case EditOp.insert:
-					commit();
-					auto newText = r2[pos2];
-					pos2++;
-					addOp(editOp, 1, newText);
-				break;
-				case EditOp.substitute:
-					commit();
-					auto newText = r2[pos2];
-					pos++;
-					pos2++;
-					addOp(editOp, 1, newText);
-				break;
-				case EditOp.remove:
-					if(last == EditOp.remove && lastCount < 0b00_111111) {
-						lastCount++;
-					} else {
+						auto newText = r2[pos2];
+						pos2++;
+						addOp(editOp, 1, newText);
+					break;
+					case EditOp.substitute:
 						commit();
-						last = EditOp.remove;
-						lastCount = 1;
-					}
-					pos++;
-				break;
+						auto newText = r2[pos2];
+						pos++;
+						pos2++;
+						addOp(editOp, 1, newText);
+					break;
+					case EditOp.remove:
+						if(last == EditOp.remove && lastCount < 0b00_111111) {
+							lastCount++;
+						} else {
+							commit();
+							last = EditOp.remove;
+							lastCount = 1;
+						}
+						pos++;
+					break;
+				}
 			}
-		}
 
-		commit();
+			commit();
+		}
 
 		// don't compress the header so it is easier to examine the file
 		// and it wouldn't be squashed that much anyway
@@ -1514,7 +1947,7 @@ class EditorApi : ApiProvider {
 
 	/// $(WARNING Use with caution.)
 	/// Group: portal_syncing
-	string pushToStaging(string fileId, string html) {
+	string pushToStaging(string fileId, string html, int courseId = 1) {
 		// first, find the file we have as a page in the staging content library
 		auto bdb = openBranchDatabase();
 
@@ -1543,16 +1976,16 @@ class EditorApi : ApiProvider {
 			fix["assignment"] = var.emptyObject;
 			fix["assignment"]["description"] = html;
 
-			auto result = canvas.rest.courses[1].assignments[canvasUrl].PUT(fix).result;
-			return "https://stagingportal.bebraven.org/courses/1/assignments/" ~ canvasUrl;
+			auto result = canvas.rest.courses[courseId].assignments[canvasUrl].PUT(fix).result;
+			return "https://stagingportal.bebraven.org/courses/"~to!string(courseId)~"/assignments/" ~ canvasUrl;
 		} else {
 			var fix = var.emptyObject;
 			fix["wiki_page"] = var.emptyObject;
 			fix["wiki_page"]["body"] = html;
 
-			auto result = canvas.rest.courses[1].pages[canvasUrl].PUT(fix).result;
+			auto result = canvas.rest.courses[courseId].pages[canvasUrl].PUT(fix).result;
 			// then return the URL of the new page on Canvas
-			return "https://stagingportal.bebraven.org/courses/1/pages/" ~ canvasUrl;
+			return "https://stagingportal.bebraven.org/courses/"~to!string(courseId)~"/pages/" ~ canvasUrl;
 		}
 	}
 
@@ -1567,12 +2000,11 @@ class EditorApi : ApiProvider {
 				break;
 			}
 		}
-
 	}
 
 	/// $(PITFALL Use with extreme caution)
 	/// Group: portal_syncing
-	string pushToProduction(string fileId, string html) {
+	string pushToProduction(string fileId, string html, int courseId = 1) {
 		// first, find the file we have as a page in the staging content library
 		auto bdb = openBranchDatabase();
 
@@ -1602,29 +2034,33 @@ class EditorApi : ApiProvider {
 			fix["assignment"] = var.emptyObject;
 			fix["assignment"]["description"] = html;
 
-			auto result = canvas.rest.courses[1].assignments[canvasUrl].PUT(fix).result;
+			auto result = canvas.rest.courses[courseId].assignments[canvasUrl].PUT(fix).result;
 
 			// save it locally
 			// FIXME?
-			auto commitId = save(fileId.to!int, prodCommit, Html(html), "working");
-			bdb.query("UPDATE files SET latest_production_commit = ? WHERE id = ?", commitId, fileId);
+			if(courseId == 1) {
+				auto commitId = save(fileId.to!int, prodCommit, Html(html), "working");
+				bdb.query("UPDATE files SET latest_production_commit = ? WHERE id = ?", commitId, fileId);
+			}
 
 			// then return the URL of the new page on Canvas
-			return "https://portal.bebraven.org/courses/1/assignments/" ~ canvasUrl;
+			return "https://portal.bebraven.org/courses/"~to!string(courseId)~"/assignments/" ~ canvasUrl;
 		} else {
 			var fix = var.emptyObject;
 			fix["wiki_page"] = var.emptyObject;
 			fix["wiki_page"]["body"] = html;
 
-			auto result = canvas.rest.courses[1].pages[canvasUrl].PUT(fix).result;
+			auto result = canvas.rest.courses[courseId].pages[canvasUrl].PUT(fix).result;
 
 			// save it locally
 			// FIXME?
-			auto commitId = save(fileId.to!int, prodCommit, Html(html), "working");
-			bdb.query("UPDATE files SET latest_production_commit = ? WHERE id = ?", commitId, fileId);
+			if(courseId == 1) {
+				auto commitId = save(fileId.to!int, prodCommit, Html(html), "working");
+				bdb.query("UPDATE files SET latest_production_commit = ? WHERE id = ?", commitId, fileId);
+			}
 
 			// then return the URL of the new page on Canvas
-			return "https://portal.bebraven.org/courses/1/pages/" ~ canvasUrl;
+			return "https://portal.bebraven.org/courses/"~to!string(courseId)~"/pages/" ~ canvasUrl;
 		}
 	}
 
@@ -1647,10 +2083,11 @@ class EditorApi : ApiProvider {
 	}
 
 	void pullAssignmentsFromProduction() {
+	assert(0, "disabled");
 		auto canvas = getCanvasApiClient(productionCredentials());
 
 		auto assignmentsRes = canvas.rest.
-			courses[1].assignments
+			courses[1/*66*/].assignments
 			._SELF()
 			("per_page", 30)
 			("include[]", "items")
@@ -1680,27 +2117,40 @@ class EditorApi : ApiProvider {
 			string prodCommit = null;
 
 			int id;
+			/*
 			foreach(r; bdb.query("SELECT coalesce(max(id), 0) FROM files"))
 				id = r[0].to!int + 1;
 
 			bdb.query("INSERT INTO files (id, name, module_number, subnumber, latest_production_commit, canvas_page_name) VALUES (?, ?, ?, ?, ?, ?)",
 				id, assignment.name.get!string, 1000, ++partNum, "", "https://portal.bebraven.org/api/v1/courses/1/assignments/" ~ assignment.id.get!string);
+			*/
+
+			// for updating existing
+			foreach(r; bdb.query("SELECT id, latest_production_commit FROM files WHERE name = ?", assignment.name.get!string)) {
+				id = r[0].to!int;
+				prodCommit = r[1];
+			}
 
 			// create the module
-			auto commitId = save(id, prodCommit, Html(assignment["description"].get!string), "working");
+			auto commitId = save(id, prodCommit, Html(assignment["description"].get!string), "npd");
 
-			bdb.query("UPDATE files SET latest_production_commit = ? WHERE id = ?", commitId, id);
+			// for updating existing
+			//bdb.query("UPDATE files SET latest_production_commit = ? WHERE id = ?", commitId, id);
 		}
 	}
 
 	/// $(PITFALL Use with caution)
 	/// Group: portal_syncing
 	Html doProductionBranchUpdate() {
+	assert(0, "disabled");
+
+		int pullFromCourse = 66;
+
 		string returnedToBrowser;
 		auto canvas = getCanvasApiClient(productionCredentials());
 
 		auto modulesRes = canvas.rest.
-			courses[1].modules
+			courses[pullFromCourse].modules
 			._SELF()
 			("per_page", 30)
 			("include[]", "items")
@@ -1760,10 +2210,20 @@ class EditorApi : ApiProvider {
 				string prodCommit;
 				foreach(r; bdb.query("SELECT id, latest_production_commit FROM files WHERE name = ?", item.title.get!string)) {
 					id = r[0].to!int;
-					prodCommit = r[1].to!string;
+					if(pullFromCourse == 1) {
+						prodCommit = r[1].to!string;
+					} else {
+						foreach(r2; bdb.query("SELECT latest_commit FROM branches WHERE file_id = ? AND name = ?", id, "npd")) {
+							prodCommit = r2[0];
+						}
+					}
 				}
 
+				if(pullFromCourse != -1)
+					assert(prodCommit.length);
+
 				if(!id) {
+				assert(0);
 					foreach(r; bdb.query("SELECT coalesce(max(id), 0) FROM files"))
 						id = r[0].to!int + 1;
 
@@ -1787,9 +2247,10 @@ class EditorApi : ApiProvider {
 				}
 
 				// create the module
-				auto commitId = save(id, prodCommit, Html(page["body"].get!string), "working");
+				auto commitId = save(id, prodCommit, Html(page["body"].get!string), pullFromCourse == 1 ? "working" : "npd");
 
-				bdb.query("UPDATE files SET latest_production_commit = ? WHERE id = ?", commitId, id);
+				if(pullFromCourse == 1)
+					bdb.query("UPDATE files SET latest_production_commit = ? WHERE id = ?", commitId, id);
 				//}
 
 				/*
@@ -1938,7 +2399,25 @@ class EditorApi : ApiProvider {
 		import std.file;
 		mkdirRecurse("data/uploads");
 
-		file.writeToFile("data/uploads/" ~ to!string(id) ~ ".dat");
+		auto localFilename = "data/uploads/" ~ to!string(id) ~ ".dat";
+		file.writeToFile(localFilename);
+
+		if(file.contentType == "image/png") {
+			import std.process;
+			auto newName = localFilename ~ ".png";
+
+			executeShell("convert -resize 600x800 " ~ localFilename ~ " " ~ newName);
+
+			localFilename = newName;
+		} else if( file.contentType == "image/jpeg") {
+			import std.process;
+			auto newName = localFilename ~ ".jpg";
+
+			executeShell("convert -resize 600x800 " ~ localFilename ~ " " ~ newName);
+
+			localFilename = newName;
+		}
+
 
 		auto canvas = getCanvasApiClient(productionCredentials()); // stagingCredentials());
 		auto response = canvas.rest.courses[1].files.POST(
@@ -1953,7 +2432,7 @@ class EditorApi : ApiProvider {
 		foreach(k, v; response.upload_params) {
 			fd.append(k.get!string, v.get!string);
 		}
-		fd.append("file", std.file.read("data/uploads/" ~ to!string(id) ~ ".dat"));
+		fd.append("file", std.file.read(localFilename));
 
 		auto client = new HttpClient();
 		import arsd.http2 : Uri;
@@ -1980,13 +2459,31 @@ class EditorApi : ApiProvider {
 		return null;
 	}
 
+	/// Update attendance information
+	void updateAttendanceData() {
+		auto data = var.fromJson(readText("data/production_attendance_creds.json"));
+		auto token = data.apiToken.get!string;
+		auto url = data.apiBaseUrl.get!string;
+		// REQUEST
+		// course_id
+		// user_id[]
+		// access_token
+
+		// I need to check for W status and possibly sync with google sheet too.
+	}
+	// FIXME: i need a stop point of revisions so it doesn't spend so much time and memory going back.
+
 	/// Update the section roster for active courses (which is hardcoded btw).
 	/// Group: portal_syncing
 	void doSectionUpdate() {
 		auto db = openProductionMagicFieldDatabase();
 		auto canvas = getCanvasApiClient(productionCredentials());
 
+		// live things
 		auto req = canvas.httpClient.navigateTo(arsd.http2.Uri("https://portal.bebraven.org/bz/course_cohort_information?course_ids[]=56&course_ids[]=62&course_ids[]=57&course_ids[]=58&access_token=" ~ canvas.oauth2Token));
+
+		// lc playbooks
+		//auto req = canvas.httpClient.navigateTo(arsd.http2.Uri("https://portal.bebraven.org/bz/course_cohort_information?course_ids[]=59&course_ids[]=60&course_ids[]=61&access_token=" ~ canvas.oauth2Token));
 
 		auto response = req.waitForCompletion;
 		var obj = var.fromJson(response.contentText);//["while(1);".length .. $]);
@@ -1999,14 +2496,13 @@ class EditorApi : ApiProvider {
 				db.query("INSERT INTO sections (section_id, course_id, name) VALUES (?, ?, ?)", section.id.get!int, course.id.get!int, section.name.get!string);
 				catch(DatabaseException e) {}
 
-				// {"enrollment_id":6981,"id":2400,"name":"Bridget Correa","email":"N00456521@nlu.edu","contact_email":"correa.bridget@yahoo.com","type":"StudentEnrollment"}
 				foreach(enrollment; section.enrollments) {
 						try
 						db.query("INSERT INTO course_enrollments (enrollment_id, course_id, user_id, enrollment_type, section_id) VALUES (?, ?, ?, ?, ?)",
 							enrollment.enrollment_id.get!int, course.id.get!int, enrollment.id.get!int, enrollment.type.get!string, section.id.get!int);
 						catch(DatabaseException e) {
 							db.query("UPDATE course_enrollments SET
-								course_id = ?, user_id = ?, enrollment_type = ?, section_id = ? WHERE enrollment_id = ?)",
+								course_id = ?, user_id = ?, enrollment_type = ?, section_id = ? WHERE enrollment_id = ?",
 							course.id.get!int, enrollment.id.get!int, enrollment.type.get!string, section.id.get!int, enrollment.enrollment_id.get!int);
 						}
 				}
@@ -2111,6 +2607,484 @@ class EditorApi : ApiProvider {
 		return div;
 	}
 
+	// a courseName is like 2019 Spring Braven Accelerator - RUN
+	// a courseCode is like 2019 Spring RUN
+	@GenericContainerType("utilities")
+	string prepareNewCourse(int sourceCourseId, string courseName, string courseCode, BravenTimezone timeZone, SalesforceCampaign salesforceCampaign) {
+
+		// see: https://docs.google.com/document/d/1jf4ibekXtK7nwgEmAuI63DZYyaNUDLQF91GEH05SdhE/edit#heading=h.483cufevfaq0
+		auto canvas = getCanvasApiClient(stagingCredentials());
+
+		// create the course
+		auto courseReq = canvas.rest.
+			accounts[1].courses.POST(
+				"course[name]", courseName,
+				"course[course_code]", courseCode,
+				"course[default_view]", "dynamic_syllabus",
+				"course[time_zone]", cast(string) timeZone
+		);
+
+		auto courseRes = courseReq.result;
+		auto new_course_id = courseRes.id.get!int;
+
+		// do the copy
+		auto copyReq = canvas.rest.
+			courses[new_course_id].content_migrations.POST(
+				"migration_type", "course_copy_importer",
+				"settings[source_course_id]", sourceCourseId,
+				"date_shift_options[shift_dates]", true,
+			);
+
+		auto copyRes = copyReq.result;
+
+		auto progress_url = copyRes.progress_url.get!string;
+		// and meh i am ok with it being here but maybe i should move it later
+		progress_url ~= "?access_token=" ~ canvas.oauth2Token;
+
+		try_again:
+		//import std.stdio; writeln(progress_url);
+		var progressResult = var.fromJson(canvas.httpClient.navigateTo(arsd.http2.Uri(progress_url)).waitForCompletion.contentText);
+		//writeln(progressResult);
+
+		if(progressResult.workflow_state == "completed") {
+		// redirect("prepare-course-cohorts?courseId=" ~ to!string(new_course_id));
+
+			prepareCourseCohorts(new_course_id, salesforceCampaign);
+
+			redirect("prepare-course-assignments-and-events?timeZone="~to!string(timeZone)~"&courseId=" ~ to!string(new_course_id));
+		} else if(progressResult.workflow_state == "failed") {
+			throw new Exception("copy failed, investigate on canvas");
+		} else {
+			static import core.thread;
+			core.thread.Thread.sleep(core.thread.dur!"seconds"(5));
+			goto try_again;
+		}
+
+		return copyRes.toString;
+
+		// pull all the cohorts from Salesforce
+		// present the options for assignments - put tuesday and wednesday ion separate tracks
+
+		// also need to set the course_code and name on course object for the new one.
+		// we should set assignment and event dates kinda separately
+		// hustle 2.0 maybe manual.
+		// testing manual.
+
+		// other adjustments they can do later.
+
+	}
+
+	@GenericContainerType("utilities")
+	string prepareCourseCohorts(int courseId, SalesforceCampaign salesforceCampaign) {
+
+		auto app = loginToProductionSalesforce();
+		auto answer = app.rest.query._SELF()("q", "SELECT  COUNT(ContactId), Section_Name_In_LMS__c   FROM    CampaignMember  WHERE CampaignId = '"~cast(string) salesforceCampaign~"' AND  Candidate_Status__c = 'Confirmed' GROUP BY Section_Name_In_LMS__c").GET.result;
+
+		auto canvas = getCanvasApiClient(stagingCredentials());
+
+		foreach(record; answer.records) {
+			auto req = canvas.rest.
+				courses[courseId].sections.POST(
+					"course_section[name]", record.Section_Name_In_LMS__c
+				);
+			req.result;
+		}
+
+		// FIXME: maybe use the lock_at as a resubmission deadline
+
+		return answer.toString;
+	}
+
+	@GenericContainerType("utilities")
+	string finalizeCourseAssignmentsAndEvents(
+		int courseId,
+		BravenTimezone timeZone,
+		string[] tuesdaySections,
+		string[] wednesdaySections,
+		string[] assignmentIds,
+		string[] eventIds
+	) {
+		import std.datetime;
+		auto tz = PosixTimeZone.getTimeZone(cast(string) timeZone);
+
+		auto canvas = getCanvasApiClient(stagingCredentials());
+
+		foreach(aid; assignmentIds) {
+			var overridesArray = var.emptyArray;
+			foreach(ts; tuesdaySections) {
+				var o = var.emptyObject;
+				o.assignment_id = aid;
+				o.course_section_id = ts;
+				auto due = SysTime.fromISOExtString(
+					cgi.post["assignment_" ~ aid ~ "_due_at_tuesday"]
+						~ "T"
+						~ formatTime(cgi.post["assignment_" ~ aid ~ "_due_at_time"])
+					, tz).toUTC;
+				o.due_at = due.toISOExtString;
+				overridesArray ~= o;
+			}
+			foreach(ts; wednesdaySections) {
+				var o = var.emptyObject;
+				o.assignment_id = aid;
+				o.course_section_id = ts;
+				auto due = SysTime.fromISOExtString(
+					cgi.post["assignment_" ~ aid ~ "_due_at_wednesday"]
+						~ "T"
+						~ formatTime(cgi.post["assignment_" ~ aid ~ "_due_at_time"])
+					, tz).toUTC;
+				o.due_at = due.toISOExtString;
+				overridesArray ~= o;
+			}
+
+			var editObject = var.emptyObject;
+			editObject.assignment = var.emptyObject;
+			editObject.assignment.assignment_overrides = overridesArray;
+
+			auto req = canvas.rest.
+				courses[courseId].assignments[aid].PUT(editObject);
+
+			if(req.waitForCompletion().code >= 400)
+				throw new Exception("crapola " ~ req.result.toString);
+		}
+
+		foreach(eid; eventIds) {
+			auto builder = canvas.rest.
+				calendar_events[eid];
+
+			auto startAtTuesday = SysTime.fromISOExtString(cgi.post["event_" ~ eid ~ "_start_at_tuesday"]
+				~ "T"
+				~ formatTime(cgi.post["event_" ~ eid ~ "_start_at_time"])
+				, tz).toUTC;
+			auto startAtWednesday = SysTime.fromISOExtString(cgi.post["event_" ~ eid ~ "_start_at_wednesday"]
+				~ "T"
+				~ formatTime(cgi.post["event_" ~ eid ~ "_start_at_time"])
+				, tz).toUTC;
+
+			auto endAtTuesday = startAtTuesday + dur!"minutes"(std.conv.to!int(cgi.post["event_" ~ eid ~ "_duration"]));
+			auto endAtWednesday = startAtWednesday + dur!"minutes"(std.conv.to!int(cgi.post["event_" ~ eid ~ "_duration"]));
+
+			builder = builder("calendar_event[start_at]", startAtTuesday.toISOExtString);
+			builder = builder("calendar_event[end_at]", endAtTuesday.toISOExtString);
+
+			foreach(ts; tuesdaySections) {
+				builder = builder("calendar_event[child_event_data][" ~ ts ~ "][start_at]", startAtTuesday.toISOExtString);
+				builder = builder("calendar_event[child_event_data][" ~ ts ~ "][end_at]", endAtTuesday.toISOExtString);
+				builder = builder("calendar_event[child_event_data][" ~ ts ~ "][context_code]", "course_section_" ~ ts);
+			}
+			foreach(ts; wednesdaySections) {
+				builder = builder("calendar_event[child_event_data][" ~ ts ~ "][start_at]", startAtWednesday.toISOExtString);
+				builder = builder("calendar_event[child_event_data][" ~ ts ~ "][end_at]", endAtWednesday.toISOExtString);
+				builder = builder("calendar_event[child_event_data][" ~ ts ~ "][context_code]", "course_section_" ~ ts);
+			}
+
+			auto req = builder.PUT();
+			auto res = req.waitForCompletion();
+			if(res.code >= 400)
+				throw new Exception("crapola 2.0 " ~ req.result.toString());
+
+			//writeln(res.contentText);
+		}
+
+		return "All done! Go check it out. Course #" ~ std.conv.to!string(courseId);
+	}
+
+	/+
+	int wrapHelper() {
+		int count;
+		auto db = openBranchDatabase();
+		foreach(row; db.query("SELECT id FROM files WHERE module_number BETWEEN 20 AND 27")) {
+			auto a = loadViaName(row[0], "new_css");
+			auto ele = a.render(this);
+			/*
+			auto mod = ele.requireSelector(".lc-module");
+			mod.addClass("bz-module");
+
+			auto h2 = mod.querySelector("h2");
+			if(h2 is null) {
+				// if there is a h2, i will do it manually.
+				// otherwise though let's just take these down a notch
+				foreach(e; mod.tree) {
+					if(e.tagName == "h3")
+						e.tagName = "h2";
+					else if(ele.tagName == "h4")
+						e.tagName = "h3";
+				}
+			}
+
+			//save(to!int(row[0]), a.id, Html(ele.toString));
+			save(to!int(row[0]), a.id, Html(ele.toString), "new_css");
+			*/
+			pushToStaging(row[0], ele.toString, 1);
+		}
+		return count;
+	}
+	+/
+
+	@GenericContainerType("utilities")
+	Element prepareCourseAssignmentsAndEvents(int courseId, BravenTimezone timeZone, bool loadExisting = false) {
+
+		import std.datetime;
+		auto tz = PosixTimeZone.getTimeZone(cast(string) timeZone);
+
+		auto canvas = getCanvasApiClient(stagingCredentials());
+
+		auto sectionsReq = canvas.rest.
+			courses[courseId].sections._SELF()
+				("per_page", 500)
+			.GET;
+
+		sectionsReq.request.send();
+
+		auto eventsReq = canvas.rest.
+			calendar_events._SELF()
+				("all_events", "true")
+				("context_codes[]", "course_" ~ std.conv.to!string(courseId))
+				("excludes[]", "child_events")
+				("per_page", "500")
+			.GET;
+
+		eventsReq.request.send();
+
+		/*
+			if(auto next = "next" in usersRes.response.linksHash) {
+				usersRes = canvas.request(next.url);
+				goto more_users;
+			}
+		*/
+
+		auto assignmentsReq = canvas.rest.
+			courses[courseId].assignments._SELF()
+				("per_page", 500)
+				("include[]", "overrides")
+			.GET;
+
+		assignmentsReq.request.send();
+
+		auto div = cast(Form) Element.make("form");
+		div.attrs.method = "POST";
+		div.attrs.action = "finalize-course-assignments-and-events";
+		div.addChild("input", "courseId", std.conv.to!string(courseId));
+		div.addChild("input", "timeZone", std.conv.to!string(timeZone));
+
+		div.addChild("h2", "Detected Sections");
+
+		auto sectionsTable = cast(Table) div.addChild("table");
+		sectionsTable.appendHeaderRow("Tuesday", "Wednesday", "Other");
+		auto tuesdayList = Element.make("ul");
+		auto wednesdayList = Element.make("ul");
+		auto otherList = Element.make("ul");
+
+		string[] tuesdaySections;
+		string[] wednesdaySections;
+		string[] otherSections;
+
+		sectionsTable.appendRow(tuesdayList, wednesdayList, otherList);
+		foreach(section; sectionsReq.result) {
+			auto n = section.name.get!string;
+			auto i = section.id.get!string;
+			if(n.indexOf("(Tu") != -1) {
+				tuesdayList.addChild("li", n);
+				tuesdaySections ~= i;
+			} else if(n.indexOf("(We") != -1) {
+				wednesdayList.addChild("li", n);
+				wednesdaySections ~= i;
+			} else {
+				otherList.addChild("li", n);
+				otherSections ~= i;
+			}
+		}
+
+		div.addChild("p", "The Tuesday and Wednesday cohorts will be assigned automatically from the info you enter below.");
+
+		div.addChild("p", "Please note: all times are local time in " ~ std.conv.to!string(timeZone));
+
+		div.addChild("h2", "Module Due Dates");
+		auto modulesTable = cast(Table) div.addChild("table");
+		modulesTable.appendHeaderRow("Assignment", "Tuesday Due Date", "Wednesday Due Date", "Due Time");
+		div.addChild("h2", "Project Due Dates");
+		auto projectsTable = cast(Table) div.addChild("table");
+		projectsTable.appendHeaderRow("Assignment", "Tuesday Due Date", "Wednesday Due Date", "Due Time");
+		div.addChild("h2", "Other Assignment Due Dates");
+		auto otherAssignmentsTable = cast(Table) div.addChild("table");
+		otherAssignmentsTable.appendHeaderRow("Assignment", "Tuesday Due Date", "Wednesday Due Date", "Due Time");
+
+		foreach(assignment; assignmentsReq.result) {
+			auto name = assignment.name.get!string;
+			Table table = otherAssignmentsTable;
+			if(name.indexOf("Course Participation") == 0)
+				table = modulesTable;
+			else if(name.indexOf("Project") != -1)
+				table = projectsTable;
+
+			SysTime due = loadExisting ? (assignment.due_at ? SysTime.fromISOExtString(assignment.due_at.get!string, tz) : SysTime.init) : SysTime.init;
+
+			if(loadExisting)
+			foreach(or; assignment.overrides) {
+				if(or.title.get!string.indexOf("Tu") != -1 && or.due_at) {
+					due = SysTime.fromISOExtString(or.due_at.get!string, tz);
+					break;
+				}
+			}
+
+			auto id = assignment.id.get!string;
+
+			div.addChild("input", "assignmentIds", id);
+
+			table.appendRow(
+				name,
+				Element.make("input", "assignment_" ~ id ~ "_due_at_tuesday", due == SysTime.init ? "" : (cast(Date)due).toISOExtString).setAttribute("type", "date"),
+				Element.make("input","assignment_" ~  id ~ "_due_at_wednesday", due == SysTime.init ? "" : (cast(Date)due + dur!"days"(1)).toISOExtString).setAttribute("type", "date"),
+				Element.make("input","assignment_" ~ id ~ "_due_at_time", due == SysTime.init ? "" : (cast(TimeOfDay)due).toISOExtString).setAttribute("type", "time"),
+			);
+		}
+
+		div.addChild("h2", "Learning Lab Event Dates");
+			// sort by number!
+		auto llTable = cast(Table) div.addChild("table");
+		llTable.appendHeaderRow("Event", "Tuesday Date", "Wednesday Date", "Time", "Duration");
+		div.addChild("h2", "Other Event Dates");
+		auto otherEventsTable = cast(Table) div.addChild("table");
+		otherEventsTable.appendHeaderRow("Event", "Tuesday Date", "Wednesday Date", "Time", "Duration");
+
+		foreach(event; eventsReq.result) {
+			if(event.parent_event_id) continue;
+
+			auto table = otherEventsTable;
+
+			auto name = event.title.get!string;
+			if(name.indexOf("Learning Lab") == 0)
+				table = llTable;
+
+			auto start = loadExisting ? (event.start_at ? SysTime.fromISOExtString(event.start_at.get!string, tz) : SysTime.init) : SysTime.init;
+			auto end = loadExisting ? (event.end_at ? SysTime.fromISOExtString(event.end_at.get!string, tz) : SysTime.init) : SysTime.init;
+
+			auto duration = (end - start).split!"minutes".minutes;
+
+			if(duration > 500)
+				duration = 120;
+			if(duration == 0)
+				duration = table is llTable ? 120 : 0;
+
+			auto id = event.id.get!string;
+
+			div.addChild("input", "eventIds", id);
+
+			// date
+			// start time
+			// end time
+			// in the time zone!
+			table.appendRow(
+				event.title.get!string,
+				Element.make("input", "event_" ~ id ~ "_start_at_tuesday", start == SysTime.init ? "" : (cast(Date)start).toISOExtString).setAttribute("type", "date"),
+				Element.make("input", "event_" ~ id ~ "_start_at_wednesday", start == SysTime.init ? "" : (cast(Date)start + dur!"days"(1)).toISOExtString).setAttribute("type", "date"),
+				Element.make("input", "event_" ~ id ~ "_start_at_time", start == SysTime.init ? "" : (cast(TimeOfDay)start).toISOExtString).setAttribute("type", "time"),
+				Element.make("input", "event_" ~ id ~ "_duration", std.conv.to!string(duration)).setAttribute("type", "number"),
+			);
+		}
+
+		foreach(s; tuesdaySections)
+			div.addChild("input", "tuesdaySections", s);
+		foreach(s; wednesdaySections)
+			div.addChild("input", "wednesdaySections", s);
+
+		div.addChild("button", "Finalize").setAttribute("type", "submit");
+
+		div.addChild("p", "Finalize will take a while. Just leave your browser open. Go get a snack or something to kill a few minutes while the computer does this part!");
+
+		div.addChild("style", `
+			table th, table td {
+				text-align: left;
+				vertical-align: top;
+				padding-right: 4px;
+			}
+
+			input.locked {
+				background-color: #f0f0f0;
+			}
+		`);
+
+		// any times below this should be set to the same thing
+		// any dates to the right of it should be set to this + 1 day
+		// any dates below it should be set to this + 1 week
+		div.addChild("script", q{
+			window.onload = function() {
+				var magic = document.querySelectorAll("input[type=date], input[type=time], input[type=duration]");
+				for(var i = 0; i < magic.length; i++) {
+					var e = magic[i];
+					e.addEventListener("change", function(event) {
+						var tr = this.parentNode;
+						while(tr.tagName != "TR")
+							tr = tr.parentNode;
+						var table = tr;
+						while(table.tagName != "TABLE")
+							table = table.parentNode;
+
+						this.classList.add("locked");
+
+						if(this.getAttribute("type") == "time" || this.getAttribute("type") == "duration") {
+							var times = table.querySelectorAll("input[type="+this.getAttribute("type")+"]");
+							var found = false;
+							for(var a = 0; a < times.length; a++) {
+								if(found)
+									times[a].value = this.value;
+								if(times[a] == this)
+									found = true;
+							}
+						} else if(this.getAttribute("type") == "date") {
+							// are we the first one?
+							var siblings = tr.querySelectorAll("input[type=date]");
+							var ourPositionAmongSiblings;
+							for(var a = 0; a < siblings.length; a++) {
+								if(siblings[a] == this) {
+									ourPositionAmongSiblings = a;
+									break;
+								}
+							}
+
+							var dates = table.querySelectorAll("input[type=date]");
+							var found = false;
+							var numberOfColumns = 2;
+							var columnNumber = 0;
+							var at = new Date(this.value);
+							for(var a = 0; a < dates.length; a++) {
+								var d = dates[a];
+
+								if(found) {
+									if(ourPositionAmongSiblings == 0) {
+										// set everything ahead
+										if(columnNumber == 0)
+											at.setDate(at.getDate() + 7 - (numberOfColumns - 1));
+										else
+											at.setDate(at.getDate() + 1);
+										if(!d.classList.contains("locked"))
+											d.value = at.toISOString().substr(0, 10);
+									} else {
+										// just set stuff in the same position below
+										if(columnNumber == ourPositionAmongSiblings) {
+											at.setDate(at.getDate() + 7);
+											if(!d.classList.contains("locked"))
+												d.value = at.toISOString().substr(0, 10);
+										}
+									}
+								}
+								if(dates[a] == this)
+									found = true;
+
+								columnNumber++;
+
+								if(columnNumber == numberOfColumns)
+									columnNumber = 0;
+							}
+						}
+						
+					});
+				}
+			};
+		});
+
+		return div;
+	}
+
 	/// Does daily updates; call from cron
 	void doDailyUpdate() {
 		// FIXME: pull W status from attendance to see who dropped
@@ -2208,8 +3182,6 @@ class EditorApi : ApiProvider {
 				goto more_courses;
 			}
 		}
-
-
 	}
 
 	/// Update the magic field for analytics.
@@ -2422,13 +3394,17 @@ class EditorApi : ApiProvider {
 					rendered = (new Document(normalized.join("\n"))).requireSelector(".bz-module");
 				} else {
 				*/
-				Element basedOnElement;
-				if(basedOn) {
-					basedOnElement = _this.load(basedOn).render(_this);
+				if(flags & Flags.complete) {
+					rendered = new DocumentFragment(Html(cast(string) diffData.idup));
 				} else {
-					basedOnElement = null;
+					Element basedOnElement;
+					if(basedOn) {
+						basedOnElement = _this.load(basedOn).render(_this);
+					} else {
+						basedOnElement = null;
+					}
+					rendered = applyBinaryDiff(basedOnElement, diffData);
 				}
-				rendered = applyBinaryDiff(basedOnElement, diffData);
 				//rendered = rendered.requireSelector(".bz-module");
 			}
 			return rendered;
@@ -2439,6 +3415,16 @@ class EditorApi : ApiProvider {
 			autoSave = 	1 << 0, /// it was an auto save
 			merge = 	1 << 1, /// the data of the file starts with the other merge id. or something
 			complete = 	1 << 2, /// the data is a complete dump rather than a diff (may be set periodically to avoid excessively O(n) loads)
+		}
+
+		/// How many revisions away this is from a "complete" save, which serves as anchor points to fight O(n) load times
+		int depthFromComplete(EditorApi api) {
+			if(this.id.length == 0) return 0;
+			if(this.basedOn.length == 0) return 0;
+			if(this.flags & Flags.complete) return 0;
+
+			auto rt = api.loadRevision(this.basedOn);
+			return 1 + rt.depthFromComplete(api);
 		}
 
 		RevisionData[] allParents(EditorApi api) {
@@ -2583,10 +3569,11 @@ class EditorApi : ApiProvider {
 
 		int pos;
 		int pos2;
-		foreach(editOp; path[1]) {
+		bool skipNext;
+		foreach(idx, editOp; path[1]) {
 			final switch(editOp) {
 				case EditOp.none:
-					auto nc = Element.make("div", r1[pos], "no-change");
+					auto nc = Element.make("div", r1[pos].beautifyHtmlEntities, "no-change");
 					if(forceNoChangeShowCount) {
 						div.addChild(nc);
 						forceNoChangeShowCount--;
@@ -2598,10 +3585,36 @@ class EditorApi : ApiProvider {
 				break;
 				case EditOp.insert:
 					registerChanges();
-					div.addChild("div", r2[pos2], "inserted");
+					div.addChild("div", r2[pos2].beautifyHtmlEntities, "inserted");
 					pos2++;
 				break;
 				case EditOp.substitute:
+					// phobos's path often shows substitute when it is really an insert
+					// so in an attempt to clean that up, i will check the next item
+					if(skipNext) {
+						pos++;
+						pos2++;
+						skipNext = false;
+						break;
+					}
+					if(idx + 1 < path[1].length && path[1][idx + 1] == EditOp.substitute) {
+						auto old = r1[pos].strip;
+						auto n = r2[pos2 + 1].strip;
+
+						if(old == n) {
+							// I should actually display this as an insert, not a sub
+							registerChanges();
+							div.addChild("div", r2[pos2].beautifyHtmlEntities, "inserted");
+							pos++;
+							pos2++;
+							skipNext = true;
+							break;
+						}
+					}
+
+					auto p1 = r1[pos];
+					auto p2 = r2[pos2];
+
 					registerChanges();
 					auto sub1 = r1[pos].splitWords();
 					auto sub2 = r2[pos2].splitWords();
@@ -2611,21 +3624,25 @@ class EditorApi : ApiProvider {
 
 					Element changes = Element.make("div");
 					changes.addClass("substituted");
+					auto oldContainer = changes.addChild("div", "", "removed");
+					auto newContainer = changes.addChild("div", "", "inserted");
 
 					int sp;
 					int sp2;
 					foreach(subeditOp; subpath[1]) {
 						final switch(subeditOp) {
 							case EditOp.none:
-								changes.appendText(sub1[sp]);
+								oldContainer.appendHtml(sub1[sp].beautifyHtmlEntities.source);
+								newContainer.appendHtml(sub1[sp].beautifyHtmlEntities.source);
 								sp++;
 								sp2++;
 							break;
 							case EditOp.insert:
-								changes.addChild("span", sub2[sp2], "inserted");
+								newContainer.addChild("span", sub2[sp2].beautifyHtmlEntities, "inserted");
 								sp2++;
 							break;
 							case EditOp.substitute:
+								/+
 								// if the previous word was also a substitution, group
 								// them together as it makes the change easier to read
 								// for a human.
@@ -2647,11 +3664,15 @@ class EditorApi : ApiProvider {
 									changes.addChild("span", sub1[sp], "substituted-from");
 									changes.addChild("span", sub2[sp2], "substituted-to");
 								}
+								+/
+								oldContainer.addChild("span", sub1[sp].beautifyHtmlEntities, "substituted-from");
+								newContainer.addChild("span", sub2[sp2].beautifyHtmlEntities, "substituted-to");
+
 								sp++;
 								sp2++;
 							break;
 							case EditOp.remove:
-								changes.addChild("span", sub1[sp], "removed");
+								oldContainer.addChild("span", sub1[sp].beautifyHtmlEntities, "removed");
 								sp++;
 							break;
 						}
@@ -2661,7 +3682,7 @@ class EditorApi : ApiProvider {
 				break;
 				case EditOp.remove:
 					registerChanges();
-					div.addChild("div", r1[pos], "removed");
+					div.addChild("div", r1[pos].beautifyHtmlEntities, "removed");
 					pos++;
 				break;
 			}
@@ -2850,7 +3871,7 @@ class EditorApi : ApiProvider {
 		auto rd = loadRevision(lc);
 		string prev;
 		while(rd.id.length) {
-			table.appendRow(Element.make("a", printTimestamp(rd.timestamp), "/edit?id=" ~ rd.id), prev.length ? Element.make("a", "Changes", "/diff?v1=" ~ prev ~ "&v2=" ~ rd.id) : Element.make("span"));
+			table.appendRow(Element.make("a", printTimestamp(rd.timestamp), "/edit?id=" ~ rd.id), rd.basedOn.length ? Element.make("a", "Changes", "/diff?v1=" ~ rd.basedOn ~ "&v2=" ~ rd.id) : Element.make("span"));
 			prev = rd.id;
 			if(rd.basedOn.length == 0)
 				break;
@@ -2936,6 +3957,14 @@ class EditorApi : ApiProvider {
 		return document;
 	}
 
+	auto loadViaName(string fileId, string branch = "working") {
+		auto bdb = openBranchDatabase();
+		string id;
+		foreach(res; bdb.query("SELECT latest_commit FROM branches WHERE file_id = ? AND name = ?", fileId, branch))
+			id = res[0];
+		return load(id);
+	}
+
 	/* ********************************* */
 	/* These functions are just a bit of plumbing for the framework. */
 	/* ********************************* */
@@ -2947,6 +3976,7 @@ class EditorApi : ApiProvider {
 			document.requireElementById("page-name-title").innerText = "Content Analytics";
 		if(type == "utilities")
 			document.requireElementById("page-name-title").innerText = "Utilities";
+		document.root.addClass("scroll-please");
 		return document.requireElementById("generic-container");
 	}
 	public override Document _defaultPage() {
@@ -2962,10 +3992,14 @@ class EditorApi : ApiProvider {
 			return new DataFile("text/css", readText("../bz_newui.css"));
 		if(path == "bz_custom.js")
 			return new DataFile("text/javascript", readText("../bz_custom.js"));
-		else if(path.startsWith("images/"))
+		else if(path.startsWith("images/")) {
+			cgi.setCache(true);
 			return new DataFile(extensionToMime(path), cast(immutable) std.file.read("../" ~ path));
-		else if(path.startsWith("icons/"))
+		}
+		else if(path.startsWith("icons/")) {
+			cgi.setCache(true);
 			return new DataFile(extensionToMime(path), cast(immutable) std.file.read(path));
+		}
 		return super._catchAll(path);
 	}
 
@@ -3050,7 +4084,9 @@ string[] splitWords(string s) {
 		if(ch == '>') {
 			inHtmlTag = false;
 			inHtmlElement = false;
+			curr = curr[0 .. $ - 1];
 			commit();
+			curr = ">";
 		}
 
 		if(ch == ' ') {
@@ -3364,7 +4400,7 @@ MergeResult!(ElementType!R)[] threeWayMerge(R)(R o, R a, R b, string[] function(
 						foreach(word; merged) {
 							suggestion ~= word.suggestion;
 							anyProblem = anyProblem || word.potentialProblem;
-						};
+						}
 						problem = anyProblem;
 					}
 
@@ -3391,6 +4427,43 @@ MergeResult!(ElementType!R)[] threeWayMerge(R)(R o, R a, R b, string[] function(
 	}
 
 	return f;
+}
+
+Html beautifyHtmlEntities(string s) {
+	s = htmlEntitiesEncode(s);
+
+	enum magicString = "&amp;#";
+
+	// since we know this is strictly well-formed coming from dom.d, we can just search for relevant chars.
+	auto idx = s.indexOf(magicString);
+	if(idx == -1)
+		return Html(s); // no need to do work
+
+	string toReturn;
+
+	while(idx != -1) {
+		toReturn ~= s[0 .. idx];
+		s = s[idx .. $];
+		auto end = s[magicString.length .. $].indexOf(";") + magicString.length;
+		auto entity = s[0 .. end + 1];
+		s = s[end + 1 .. $];
+
+		toReturn ~= "<abbr title=\""~entity~"\">";
+		toReturn ~= cast(dchar) to!int(entity[magicString.length .. $-1]);
+		toReturn ~= "</abbr>";
+
+		idx = s.indexOf(magicString);
+	}
+
+
+	toReturn ~= s;
+
+	return Html(toReturn);
+}
+
+string formatTime(string time) {
+	auto parts = time.split(":");
+	return format("%02d:%02d:00", to!int(parts.length ? parts[0] : "0"), to!int(parts.length > 1 ? parts[1] : "0"));
 }
 
 
@@ -3434,6 +4507,48 @@ CanvasCredentials productionCredentials() {
 HttpApiClient!() getCanvasApiClient(CanvasCredentials credentials) {
 	return new HttpApiClient!()(credentials.apiBaseUrl, credentials.apiToken, "application/json");
 }
+
+HttpApiClient!() loginToProductionSalesforce() {
+	import std.file;
+	auto creds = var.fromJson(readText("data/production_salesforce_creds.json"));
+
+	auto req = post("https://" ~ creds.host.get!string ~ "/services/oauth2/token", [
+		"grant_type" : "password",
+		"client_id" : creds.client_id.get!string,
+		"client_secret" : creds.client_secret.get!string,
+		"username" : creds.username.get!string,
+		"password" : creds.password.get!string ~ creds.security_token.get!string
+	]);
+
+	auto response = req.waitForCompletion();
+	var answer = var.fromJson(response.contentText);
+
+	if(answer.error)
+		throw new Exception(response.contentText);
+
+	// should have an access_token, instance_url which is all i care about
+
+	return new HttpApiClient!()(answer.instance_url.get!string ~ "/services/data/v29.0/", answer.access_token.get!string, "application/json");
+}
+
+enum SalesforceCampaign : string {
+	SJSUFellows = "7011J000001JjgH",
+	NLUFellows = "7011J000001JjIF",
+	RUNFellows = "7011J0000011njJ",
+}
+
+enum BravenTimezone : string {
+	SanJose = "America/Los_Angeles",
+	Chicago = "America/Chicago",
+	Newark = "America/New_York",
+}
+
+
+/*
+	auto app = loginToSalesforce();
+	auto answer = app.rest.query._SELF()("q", "SELECT  COUNT(ContactId), Section_Name_In_LMS__c   FROM    CampaignMember  WHERE   Candidate_Status__c = 'Accepted' GROUP BY Section_Name_In_LMS__c").GET.result;
+	writeln(answer);
+*/
 
 import arsd.email;
 RelayInfo productionEmailCredentials() {
@@ -3610,8 +4725,6 @@ Sqlite openProductionMagicFieldDatabase() {
 		}
 	});
 }
-
-mixin FancyMain!EditorApi;
 
 string htmlBefore = `<!DOCTYPE HTML>
 <html>

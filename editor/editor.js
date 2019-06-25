@@ -152,10 +152,13 @@ function addAttributeTextBox(parent, ele, attr) {
 	input.setAttribute("type", "text");
 	input.value = ele.getAttribute(attr);
 	input.onchange = function() {
+		if(attr == "data-bz-retained")
+			ele.setAttribute("name", input.value);
 		ele.setAttribute(attr, input.value);
 	};
 	input.refersToInEditor = ele;
 	parent.appendChild(input);
+	return input;
 }
 
 function addAttributeSelect(parent, ele, attr, options) {
@@ -367,6 +370,26 @@ function getSidebarBox(ele) {
 		};
 		div.appendChild(button);
 
+		var details = div.addChild("details");
+
+		var l = details.addChild("label");
+		l.addChild("span", "ID: ");
+		var i = l.addChild("input", "text", ele.getAttribute("id"));
+		i.onchange = (function(ele) { return function() {
+			ele.setAttribute("id", this.value);
+		} })(ele);
+
+
+	div.addChild("br");
+
+	var l = details.addChild("label");
+	l.addChild("span", "Classes: ");
+	var i = l.addChild("input", "text", ele.getAttribute("class"));
+	i.onchange = (function(ele) { return function() {
+		ele.setAttribute("class", this.value);
+	} })(ele);
+
+
 
 		return div;
 	}
@@ -539,6 +562,25 @@ function getSidebarBox(ele) {
 			addAttributeTextBox(dd, ele, "step");
 			dl.appendChild(dd);
 		}
+
+		if(ele.getAttribute("type") == "radio") {
+			dt = document.createElement("dt");
+			dt.textContent = "Group name";
+			dl.appendChild(dt);
+			dd = document.createElement("dd");
+			addAttributeTextBox(dd, ele, "name");
+			dl.appendChild(dd);
+		}
+
+		if(ele.getAttribute("type") == "radio" || ele.getAttribute("type") == "checkbox") {
+			dt = document.createElement("dt");
+			dt.textContent = "Saved value";
+			dl.appendChild(dt);
+			dd = document.createElement("dd");
+			addAttributeTextBox(dd, ele, "value");
+			dl.appendChild(dd);
+		}
+
 	}
 
 	if(ele.classList.contains("slider-container")) {
@@ -770,7 +812,7 @@ function selectNode(ele) {
 }
 
 
-window.onload = function() {
+window.addEventListener("DOMContentLoaded", function() {
 	document.execCommand("enableObjectResizing", false, false);
 	document.execCommand("enableInlineTableEditing", false, false);
 	document.execCommand("styleWithCSS", false, false);
@@ -980,7 +1022,7 @@ window.onload = function() {
 		if(key == 46 && event.shiftKey) {
 			// delete key with shift will delete the entire html element
 			// containing the caret, or (eventually the common parent of the entire current
-			// selection
+			// selection)
 			event.preventDefault();
 			var selection = window.getSelection();
 			// var a = selection.anchorNode;
@@ -1086,7 +1128,7 @@ window.onload = function() {
 	});
 
 	wrapStuffForEditing(document.getElementById("editor"));
-};
+});
 
 function unwrapStuffForEditing(parent) {
 	parent.querySelectorAll(".hacky-wrapper").forEach(function(e) {
@@ -1490,4 +1532,36 @@ function presaveValidation(html) {
 		return false;
 	}
 	return true;
+}
+
+function courseNameForBranch(branch) {
+	switch(branch) {
+		case "npd":
+			return " the NPD course 66";
+		break;
+		case "schwab":
+			return " the Schwab course 67";
+		break;
+		case "dream-online":
+			return " the dream online pilot course 68";
+		break;
+		default:
+			return " the main content library and connected course";
+	}
+}
+
+function courseIdForBranch(branch) {
+	switch(branch) {
+		case "npd":
+			return 66;
+		break;
+		case "schwab":
+			return 67;
+		break;
+		case "dream-online":
+			return 68;
+		break;
+		default:
+			return 1;
+	}
 }
