@@ -2461,6 +2461,7 @@ class EditorApi : ApiProvider {
 
 	/// Update attendance information
 	void updateAttendanceData() {
+		import std.file;
 		auto data = var.fromJson(readText("data/production_attendance_creds.json"));
 		auto token = data.apiToken.get!string;
 		auto url = data.apiBaseUrl.get!string;
