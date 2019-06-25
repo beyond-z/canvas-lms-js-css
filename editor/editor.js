@@ -152,10 +152,13 @@ function addAttributeTextBox(parent, ele, attr) {
 	input.setAttribute("type", "text");
 	input.value = ele.getAttribute(attr);
 	input.onchange = function() {
+		if(attr == "data-bz-retained")
+			ele.setAttribute("name", input.value);
 		ele.setAttribute(attr, input.value);
 	};
 	input.refersToInEditor = ele;
 	parent.appendChild(input);
+	return input;
 }
 
 function addAttributeSelect(parent, ele, attr, options) {
@@ -209,6 +212,17 @@ function getSidebarBox(ele) {
 		var h3 = document.createElement("h3");
 		h3.textContent = "BZ Box";
 		div.appendChild(h3);
+
+		var button = document.createElement("button");
+		button.setAttribute("type", "button");
+		button.textContent = "Remove entire box";
+		button.onclick = function() {
+			if(confirm("You sure?")) {
+				ele.parentNode.removeChild(ele);
+			}
+		};
+		div.appendChild(button);
+
 		div.appendChild(makeSelect("BZ Box Type:", function(opt) {
 			ele.className = "bz-box " + opt.className;
 			var header = ele.querySelector(".box-title");
@@ -223,7 +237,7 @@ function getSidebarBox(ele) {
 					if(opt.className == "video") {
 						// insert the default scaffolding for a video if empty
 						if(!ele.querySelector("h4 + *")) {
-							ele.innerHTML += "<figure>Replace this text with the video<figcaption><p>Description here</p><p class=\"media-duration\">About 2 minutes</p></figcaption></figure>";
+							ele.innerHTML += "<figure>Replace this text with the video<figcaption><p>Description here</p><p class=\"media-duration\">About 2 minutes</p></figcaption><div class=\"transcript\"><p>Put a transcript here.<p></div></figure>";
 							wrapStuffForEditing(ele);
 						}
 
@@ -355,6 +369,26 @@ function getSidebarBox(ele) {
 			}
 		};
 		div.appendChild(button);
+
+		var details = div.addChild("details");
+
+		var l = details.addChild("label");
+		l.addChild("span", "ID: ");
+		var i = l.addChild("input", "text", ele.getAttribute("id"));
+		i.onchange = (function(ele) { return function() {
+			ele.setAttribute("id", this.value);
+		} })(ele);
+
+
+	div.addChild("br");
+
+	var l = details.addChild("label");
+	l.addChild("span", "Classes: ");
+	var i = l.addChild("input", "text", ele.getAttribute("class"));
+	i.onchange = (function(ele) { return function() {
+		ele.setAttribute("class", this.value);
+	} })(ele);
+
 
 
 		return div;
@@ -528,6 +562,25 @@ function getSidebarBox(ele) {
 			addAttributeTextBox(dd, ele, "step");
 			dl.appendChild(dd);
 		}
+
+		if(ele.getAttribute("type") == "radio") {
+			dt = document.createElement("dt");
+			dt.textContent = "Group name";
+			dl.appendChild(dt);
+			dd = document.createElement("dd");
+			addAttributeTextBox(dd, ele, "name");
+			dl.appendChild(dd);
+		}
+
+		if(ele.getAttribute("type") == "radio" || ele.getAttribute("type") == "checkbox") {
+			dt = document.createElement("dt");
+			dt.textContent = "Saved value";
+			dl.appendChild(dt);
+			dd = document.createElement("dd");
+			addAttributeTextBox(dd, ele, "value");
+			dl.appendChild(dd);
+		}
+
 	}
 
 	if(ele.classList.contains("slider-container")) {
@@ -759,7 +812,7 @@ function selectNode(ele) {
 }
 
 
-window.onload = function() {
+window.addEventListener("DOMContentLoaded", function() {
 	document.execCommand("enableObjectResizing", false, false);
 	document.execCommand("enableInlineTableEditing", false, false);
 	document.execCommand("styleWithCSS", false, false);
@@ -969,7 +1022,7 @@ window.onload = function() {
 		if(key == 46 && event.shiftKey) {
 			// delete key with shift will delete the entire html element
 			// containing the caret, or (eventually the common parent of the entire current
-			// selection
+			// selection)
 			event.preventDefault();
 			var selection = window.getSelection();
 			// var a = selection.anchorNode;
@@ -1075,7 +1128,7 @@ window.onload = function() {
 	});
 
 	wrapStuffForEditing(document.getElementById("editor"));
-};
+});
 
 function unwrapStuffForEditing(parent) {
 	parent.querySelectorAll(".hacky-wrapper").forEach(function(e) {
@@ -1166,6 +1219,17 @@ function loadObject(data, branch) {
 	currentlyLoaded.fileId = data.fileId;
 	currentlyLoaded.branchPoint = data.basedOn;
 	currentlyLoaded.branchName = branch;
+
+	if(location.hash && location.hash.startsWith("#editor%20")) {
+		var e = document.querySelector(decodeURIComponent(location.hash.substring(10)));
+		if(e)
+			e.scrollIntoView();
+	}
+
+	// run a check after a short delay to see if there is any weird plugins in place
+	// that may break stuff before the user gets much of a chance to make changes that
+	// might be lost.
+	setTimeout(function() { presaveValidation(getCurrentEditingHtml()); }, 3500);
 }
 
 var comparingAnchor = null;
@@ -1460,4 +1524,44 @@ function insertDoneButton() {
 	document.getElementById("editor").focus();
 	updateSelectionData();
 
+}
+
+function presaveValidation(html) {
+	if(html.indexOf("Privacy Badger") != -1) {
+		alert("Please make sure your Privacy Badger is disabled for the editor. Then, reload, make your edits again (otherwise, Privacy Badger will remove content we are trying to save!), and then save.");
+		return false;
+	}
+	return true;
+}
+
+function courseNameForBranch(branch) {
+	switch(branch) {
+		case "npd":
+			return " the NPD course 66";
+		break;
+		case "schwab":
+			return " the Schwab course 67";
+		break;
+		case "dream-online":
+			return " the dream online pilot course 68";
+		break;
+		default:
+			return " the main content library and connected course";
+	}
+}
+
+function courseIdForBranch(branch) {
+	switch(branch) {
+		case "npd":
+			return 66;
+		break;
+		case "schwab":
+			return 67;
+		break;
+		case "dream-online":
+			return 68;
+		break;
+		default:
+			return 1;
+	}
 }
