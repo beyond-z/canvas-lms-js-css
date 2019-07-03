@@ -1,5 +1,5 @@
 all:
-	dmd editor.d editor_main.d \
+	dmd -m64 editor.d editor_main.d \
 		arsd/web.d arsd/cgi.d arsd/jsvar.d arsd/dom.d arsd/characterencodings.d arsd/html.d \
 		arsd/color.d arsd/sha.d \
 		arsd/database.d arsd/sqlite.d \

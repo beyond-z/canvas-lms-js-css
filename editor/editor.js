@@ -203,12 +203,25 @@ function getIfPresent(list, options) {
 	return "";
 }
 
+function isHeader(ele) {
+	if(!ele.tagName) return false;
+	if(ele.tagName == "H1") return true;
+	if(ele.tagName == "H2") return true;
+	if(ele.tagName == "H3") return true;
+	if(ele.tagName == "H4") return true;
+	if(ele.tagName == "H5") return true;
+	if(ele.tagName == "H6") return true;
+	return false;
+}
+
 function getSidebarBox(ele) {
 	if(ele.nodeType == Node.TEXT_NODE)
 		return null;
 
+	var div;
+
 	if(bzBoxType(ele) !== null) {
-		var div = document.createElement("div");
+		div = document.createElement("div");
 		var h3 = document.createElement("h3");
 		h3.textContent = "BZ Box";
 		div.appendChild(h3);
@@ -256,11 +269,8 @@ function getSidebarBox(ele) {
 				ele.classList.add(opt);
 		}, ["", "correct", "incorrect", "maybe"], getIfPresent(ele.classList, ["correct", "incorrect", "maybe"])));
 
-
-		return div;
-
 	} else if(isChecklist(ele) || isRadioList(ele)) {
-		var div = document.createElement("div");
+		div = document.createElement("div");
 		var h3 = document.createElement("h3");
 		h3.textContent = isChecklist(ele) ? "Checklist" : "Radio List";
 		div.appendChild(h3);
@@ -298,9 +308,8 @@ function getSidebarBox(ele) {
 			div.appendChild(dd);
 
 
-		return div;
 	} else if(ele.tagName == "LI" && (isChecklist(ele.parentNode) || isRadioList(ele.parentNode))) {
-		var div = document.createElement("div");
+		div = document.createElement("div");
 		var h3 = document.createElement("h3");
 		h3.textContent = isChecklist(ele.parentNode) ? "Checklist Item" : "Radio List Item";
 		div.appendChild(h3);
@@ -317,9 +326,8 @@ function getSidebarBox(ele) {
 			});
 			div.appendChild(button);
 		}
-		return div;
 	} else if(ele.tagName == "TABLE") {
-		var div = document.createElement("div");
+		div = document.createElement("div");
 		var h3 = document.createElement("h3");
 		h3.textContent = "Table";
 		div.appendChild(h3);
@@ -329,6 +337,18 @@ function getSidebarBox(ele) {
 			else
 				ele.classList.add("no-zebra");
 		}, !ele.classList.contains("no-zebra")));
+
+		div.addChild("br");
+
+		div.appendChild(makeCheckbox("Sort-to-match", function(checked) {
+			if(checked)
+				ele.classList.add("sort-to-match");
+			else
+				ele.classList.remove("sort-to-match");
+		}, ele.classList.contains("sort-to-match")));
+
+		div.addChild("br");
+
 
 		var button = document.createElement("button");
 		button.textContent = "Insert Row";
@@ -369,44 +389,22 @@ function getSidebarBox(ele) {
 			}
 		};
 		div.appendChild(button);
-
-		var details = div.addChild("details");
-
-		var l = details.addChild("label");
-		l.addChild("span", "ID: ");
-		var i = l.addChild("input", "text", ele.getAttribute("id"));
-		i.onchange = (function(ele) { return function() {
-			ele.setAttribute("id", this.value);
-		} })(ele);
-
-
-	div.addChild("br");
-
-	var l = details.addChild("label");
-	l.addChild("span", "Classes: ");
-	var i = l.addChild("input", "text", ele.getAttribute("class"));
-	i.onchange = (function(ele) { return function() {
-		ele.setAttribute("class", this.value);
-	} })(ele);
-
-
-
-		return div;
 	}
 
-	var div = document.createElement("div");
+	if(!div) {
+		div = document.createElement("div");
 
-
-	var h3 = document.createElement("h3");
-	h3.textContent = "<" + ele.tagName + ">"; // + (ele.id ? "#"+ele.id : "") + (ele.className.length? "."+ele.className.replace(" ", ".") : "");
-	div.appendChild(h3);
-	h3.style.cursor = "pointer";
-	h3.onclick = (function(ele) { return function() {
-		ele.classList.add("editor-focused");
-		setTimeout(function() {
-			ele.classList.remove("editor-focused");
-		}, 3000);
-	} })(ele);
+		var h3 = document.createElement("h3");
+		h3.textContent = "<" + ele.tagName + ">"; // + (ele.id ? "#"+ele.id : "") + (ele.className.length? "."+ele.className.replace(" ", ".") : "");
+		div.appendChild(h3);
+		h3.style.cursor = "pointer";
+		h3.onclick = (function(ele) { return function() {
+			ele.classList.add("editor-focused");
+			setTimeout(function() {
+				ele.classList.remove("editor-focused");
+			}, 3000);
+		} })(ele);
+	}
 
 	var details = div.addChild("details");
 
@@ -420,16 +418,102 @@ function getSidebarBox(ele) {
 
 	div.addChild("br");
 
-	var l = details.addChild("label");
+	l = details.addChild("label");
 	l.addChild("span", "Classes: ");
-	var i = l.addChild("input", "text", ele.getAttribute("class"));
+	i = l.addChild("input", "text", ele.getAttribute("class"));
 	i.onchange = (function(ele) { return function() {
 		ele.setAttribute("class", this.value);
 	} })(ele);
 
+	l = details.addChild("label");
+	i = l.addChild("button");
+	i.setAttribute("type", "button");
+	i.textContent = "Delete element (and ALL children!)";
+	i.onclick = (function(ele) { return function() {
+		var p = ele.parentNode;
+		if(p.classList.contains("hacky-wrapper")) {
+			ele = p;
+			p = p.parentNode;
+		}
+		p.removeChild(ele);
+	} })(ele);
+
+	if(ele.childNodes && ele.childNodes.length) {
+		l = details.addChild("label");
+		i = l.addChild("button");
+		i.setAttribute("type", "button");
+		i.textContent = "Unwrap children (deletes this item though)";
+		i.onclick = (function(ele) { return function() {
+			var p = ele.parentNode;
+			if(p.classList.contains("hacky-wrapper")) {
+				ele = p;
+				p = p.parentNode;
+			}
+			var next = ele.nextSibling;
+			while(ele.childNodes.length) {
+				var c = ele.childNodes[0];
+				ele.removeChild(c);
+				p.insertBefore(c, next);
+			}
+			p.removeChild(ele);
+		} })(ele);
+	}
+
+	l = details.addChild("label");
+	i = l.addChild("button");
+	i.setAttribute("type", "button");
+	i.textContent = "Highlight Element";
+	i.onclick = (function(ele) { return function() {
+		ele.classList.add("editor-focused");
+		setTimeout(function() {
+			ele.classList.remove("editor-focused");
+		}, 3000);
+	} })(ele);
+
+	if(isHeader(ele)) {
+		var i = details.addChild("button");
+		i.setAttribute("type", "button");
+		i.textContent = "Break out of parent";
+
+		i.onclick = (function(ele) { return function() {
+			var p = ele.parentNode;
+			var next = p.nextSibling;
+			p = p.parentNode;
+			while(ele) {
+				var tmp = ele.nextSibling;
+				p.insertBefore(ele, next);
+				ele = tmp;
+			}
+		} })(ele);
+	}
+
+
+
 
 	var dl = document.createElement("dl");
 	div.appendChild(dl);
+
+	if(ele.tagName == "TD") {
+		var button = document.createElement("button");
+		button.textContent = "Convert to table header";
+		button.onclick = (function(ele) { return function() {
+			var replacement = document.createElement("th");
+			replacement.innerHTML = ele.innerHTML;
+			ele.parentNode.insertBefore(replacement, ele);
+			ele.parentNode.removeChild(ele);
+		}; })(ele);
+		div.appendChild(button);
+	} else if(ele.tagName == "TH") {
+		var button = document.createElement("button");
+		button.textContent = "Convert to table data";
+		button.onclick = (function(ele) { return function() {
+			var replacement = document.createElement("td");
+			replacement.innerHTML = ele.innerHTML;
+			ele.parentNode.insertBefore(replacement, ele);
+			ele.parentNode.removeChild(ele);
+		}; })(ele);
+		div.appendChild(button);
+	}
 
 	if(ele.tagName == "TR") {
 		var button = document.createElement("button");
@@ -758,6 +842,24 @@ function insertChecklistBox(f) {
 	}
 }
 
+function insertRadiolistBox(f) {
+	if(!f.querySelector("input[type=radio]")) {
+		var name = uuidv4();
+		var cheat = f.parentNode.querySelector("input[type=radio]");
+		if(cheat)
+			name = cheat.getAttribute("data-bz-retained");;
+		var i = document.createElement("input");
+		i.setAttribute("type", "radio");
+		i.setAttribute("data-bz-retained", name);
+		i.setAttribute("name", name);
+		i.setAttribute("value", "option" + f.parentNode.querySelectorAll("input[type=radio]").length);
+		f.insertBefore(i, f.firstChild);
+
+		wrapStuffForEditing(f);
+	}
+}
+
+
 function updateSelectionData() {
 	var f = window.getSelection().focusNode;
 	updateSidebar(f);
@@ -787,6 +889,13 @@ function updateSidebar(f) {
 		if(f.nodeType == Node.TEXT_NODE && f.parentNode.tagName == "LI" && isChecklist(f.parentNode.parentNode)) {
 			insertChecklistBox(f.parentNode);
 		}
+		if(f.tagName == "LI" && isRadioList(f.parentNode)) {
+			insertRadiolistBox(f);
+		}
+		if(f.nodeType == Node.TEXT_NODE && f.parentNode.tagName == "LI" && isRadioList(f.parentNode.parentNode)) {
+			insertRadiolistBox(f.parentNode);
+		}
+
 
 		var p = f.parentNode;
 		while(p) {
