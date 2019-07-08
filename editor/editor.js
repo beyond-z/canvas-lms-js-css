@@ -152,10 +152,13 @@ function addAttributeTextBox(parent, ele, attr) {
 	input.setAttribute("type", "text");
 	input.value = ele.getAttribute(attr);
 	input.onchange = function() {
+		if(attr == "data-bz-retained")
+			ele.setAttribute("name", input.value);
 		ele.setAttribute(attr, input.value);
 	};
 	input.refersToInEditor = ele;
 	parent.appendChild(input);
+	return input;
 }
 
 function addAttributeSelect(parent, ele, attr, options) {
@@ -200,15 +203,39 @@ function getIfPresent(list, options) {
 	return "";
 }
 
+function isHeader(ele) {
+	if(!ele.tagName) return false;
+	if(ele.tagName == "H1") return true;
+	if(ele.tagName == "H2") return true;
+	if(ele.tagName == "H3") return true;
+	if(ele.tagName == "H4") return true;
+	if(ele.tagName == "H5") return true;
+	if(ele.tagName == "H6") return true;
+	return false;
+}
+
 function getSidebarBox(ele) {
 	if(ele.nodeType == Node.TEXT_NODE)
 		return null;
 
+	var div;
+
 	if(bzBoxType(ele) !== null) {
-		var div = document.createElement("div");
+		div = document.createElement("div");
 		var h3 = document.createElement("h3");
 		h3.textContent = "BZ Box";
 		div.appendChild(h3);
+
+		var button = document.createElement("button");
+		button.setAttribute("type", "button");
+		button.textContent = "Remove entire box";
+		button.onclick = function() {
+			if(confirm("You sure?")) {
+				ele.parentNode.removeChild(ele);
+			}
+		};
+		div.appendChild(button);
+
 		div.appendChild(makeSelect("BZ Box Type:", function(opt) {
 			ele.className = "bz-box " + opt.className;
 			var header = ele.querySelector(".box-title");
@@ -223,7 +250,7 @@ function getSidebarBox(ele) {
 					if(opt.className == "video") {
 						// insert the default scaffolding for a video if empty
 						if(!ele.querySelector("h4 + *")) {
-							ele.innerHTML += "<figure>Replace this text with the video<figcaption><p>Description here</p><p class=\"media-duration\">About 2 minutes</p></figcaption></figure>";
+							ele.innerHTML += "<figure>Replace this text with the video<figcaption><p>Description here</p><p class=\"media-duration\">About 2 minutes</p></figcaption><div class=\"transcript\"><p>Put a transcript here.<p></div></figure>";
 							wrapStuffForEditing(ele);
 						}
 
@@ -242,11 +269,8 @@ function getSidebarBox(ele) {
 				ele.classList.add(opt);
 		}, ["", "correct", "incorrect", "maybe"], getIfPresent(ele.classList, ["correct", "incorrect", "maybe"])));
 
-
-		return div;
-
 	} else if(isChecklist(ele) || isRadioList(ele)) {
-		var div = document.createElement("div");
+		div = document.createElement("div");
 		var h3 = document.createElement("h3");
 		h3.textContent = isChecklist(ele) ? "Checklist" : "Radio List";
 		div.appendChild(h3);
@@ -284,9 +308,8 @@ function getSidebarBox(ele) {
 			div.appendChild(dd);
 
 
-		return div;
 	} else if(ele.tagName == "LI" && (isChecklist(ele.parentNode) || isRadioList(ele.parentNode))) {
-		var div = document.createElement("div");
+		div = document.createElement("div");
 		var h3 = document.createElement("h3");
 		h3.textContent = isChecklist(ele.parentNode) ? "Checklist Item" : "Radio List Item";
 		div.appendChild(h3);
@@ -303,9 +326,8 @@ function getSidebarBox(ele) {
 			});
 			div.appendChild(button);
 		}
-		return div;
 	} else if(ele.tagName == "TABLE") {
-		var div = document.createElement("div");
+		div = document.createElement("div");
 		var h3 = document.createElement("h3");
 		h3.textContent = "Table";
 		div.appendChild(h3);
@@ -315,6 +337,18 @@ function getSidebarBox(ele) {
 			else
 				ele.classList.add("no-zebra");
 		}, !ele.classList.contains("no-zebra")));
+
+		div.addChild("br");
+
+		div.appendChild(makeCheckbox("Sort-to-match", function(checked) {
+			if(checked)
+				ele.classList.add("sort-to-match");
+			else
+				ele.classList.remove("sort-to-match");
+		}, ele.classList.contains("sort-to-match")));
+
+		div.addChild("br");
+
 
 		var button = document.createElement("button");
 		button.textContent = "Insert Row";
@@ -355,24 +389,22 @@ function getSidebarBox(ele) {
 			}
 		};
 		div.appendChild(button);
-
-
-		return div;
 	}
 
-	var div = document.createElement("div");
+	if(!div) {
+		div = document.createElement("div");
 
-
-	var h3 = document.createElement("h3");
-	h3.textContent = "<" + ele.tagName + ">"; // + (ele.id ? "#"+ele.id : "") + (ele.className.length? "."+ele.className.replace(" ", ".") : "");
-	div.appendChild(h3);
-	h3.style.cursor = "pointer";
-	h3.onclick = (function(ele) { return function() {
-		ele.classList.add("editor-focused");
-		setTimeout(function() {
-			ele.classList.remove("editor-focused");
-		}, 3000);
-	} })(ele);
+		var h3 = document.createElement("h3");
+		h3.textContent = "<" + ele.tagName + ">"; // + (ele.id ? "#"+ele.id : "") + (ele.className.length? "."+ele.className.replace(" ", ".") : "");
+		div.appendChild(h3);
+		h3.style.cursor = "pointer";
+		h3.onclick = (function(ele) { return function() {
+			ele.classList.add("editor-focused");
+			setTimeout(function() {
+				ele.classList.remove("editor-focused");
+			}, 3000);
+		} })(ele);
+	}
 
 	var details = div.addChild("details");
 
@@ -386,16 +418,102 @@ function getSidebarBox(ele) {
 
 	div.addChild("br");
 
-	var l = details.addChild("label");
+	l = details.addChild("label");
 	l.addChild("span", "Classes: ");
-	var i = l.addChild("input", "text", ele.getAttribute("class"));
+	i = l.addChild("input", "text", ele.getAttribute("class"));
 	i.onchange = (function(ele) { return function() {
 		ele.setAttribute("class", this.value);
 	} })(ele);
 
+	l = details.addChild("label");
+	i = l.addChild("button");
+	i.setAttribute("type", "button");
+	i.textContent = "Delete element (and ALL children!)";
+	i.onclick = (function(ele) { return function() {
+		var p = ele.parentNode;
+		if(p.classList.contains("hacky-wrapper")) {
+			ele = p;
+			p = p.parentNode;
+		}
+		p.removeChild(ele);
+	} })(ele);
+
+	if(ele.childNodes && ele.childNodes.length) {
+		l = details.addChild("label");
+		i = l.addChild("button");
+		i.setAttribute("type", "button");
+		i.textContent = "Unwrap children (deletes this item though)";
+		i.onclick = (function(ele) { return function() {
+			var p = ele.parentNode;
+			if(p.classList.contains("hacky-wrapper")) {
+				ele = p;
+				p = p.parentNode;
+			}
+			var next = ele.nextSibling;
+			while(ele.childNodes.length) {
+				var c = ele.childNodes[0];
+				ele.removeChild(c);
+				p.insertBefore(c, next);
+			}
+			p.removeChild(ele);
+		} })(ele);
+	}
+
+	l = details.addChild("label");
+	i = l.addChild("button");
+	i.setAttribute("type", "button");
+	i.textContent = "Highlight Element";
+	i.onclick = (function(ele) { return function() {
+		ele.classList.add("editor-focused");
+		setTimeout(function() {
+			ele.classList.remove("editor-focused");
+		}, 3000);
+	} })(ele);
+
+	if(isHeader(ele)) {
+		var i = details.addChild("button");
+		i.setAttribute("type", "button");
+		i.textContent = "Break out of parent";
+
+		i.onclick = (function(ele) { return function() {
+			var p = ele.parentNode;
+			var next = p.nextSibling;
+			p = p.parentNode;
+			while(ele) {
+				var tmp = ele.nextSibling;
+				p.insertBefore(ele, next);
+				ele = tmp;
+			}
+		} })(ele);
+	}
+
+
+
 
 	var dl = document.createElement("dl");
 	div.appendChild(dl);
+
+	if(ele.tagName == "TD") {
+		var button = document.createElement("button");
+		button.textContent = "Convert to table header";
+		button.onclick = (function(ele) { return function() {
+			var replacement = document.createElement("th");
+			replacement.innerHTML = ele.innerHTML;
+			ele.parentNode.insertBefore(replacement, ele);
+			ele.parentNode.removeChild(ele);
+		}; })(ele);
+		div.appendChild(button);
+	} else if(ele.tagName == "TH") {
+		var button = document.createElement("button");
+		button.textContent = "Convert to table data";
+		button.onclick = (function(ele) { return function() {
+			var replacement = document.createElement("td");
+			replacement.innerHTML = ele.innerHTML;
+			ele.parentNode.insertBefore(replacement, ele);
+			ele.parentNode.removeChild(ele);
+		}; })(ele);
+		div.appendChild(button);
+	}
 
 	if(ele.tagName == "TR") {
 		var button = document.createElement("button");
@@ -528,6 +646,25 @@ function getSidebarBox(ele) {
 			addAttributeTextBox(dd, ele, "step");
 			dl.appendChild(dd);
 		}
+
+		if(ele.getAttribute("type") == "radio") {
+			dt = document.createElement("dt");
+			dt.textContent = "Group name";
+			dl.appendChild(dt);
+			dd = document.createElement("dd");
+			addAttributeTextBox(dd, ele, "name");
+			dl.appendChild(dd);
+		}
+
+		if(ele.getAttribute("type") == "radio" || ele.getAttribute("type") == "checkbox") {
+			dt = document.createElement("dt");
+			dt.textContent = "Saved value";
+			dl.appendChild(dt);
+			dd = document.createElement("dd");
+			addAttributeTextBox(dd, ele, "value");
+			dl.appendChild(dd);
+		}
+
 	}
 
 	if(ele.classList.contains("slider-container")) {
@@ -705,6 +842,24 @@ function insertChecklistBox(f) {
 	}
 }
 
+function insertRadiolistBox(f) {
+	if(!f.querySelector("input[type=radio]")) {
+		var name = uuidv4();
+		var cheat = f.parentNode.querySelector("input[type=radio]");
+		if(cheat)
+			name = cheat.getAttribute("data-bz-retained");;
+		var i = document.createElement("input");
+		i.setAttribute("type", "radio");
+		i.setAttribute("data-bz-retained", name);
+		i.setAttribute("name", name);
+		i.setAttribute("value", "option" + f.parentNode.querySelectorAll("input[type=radio]").length);
+		f.insertBefore(i, f.firstChild);
+
+		wrapStuffForEditing(f);
+	}
+}
+
+
 function updateSelectionData() {
 	var f = window.getSelection().focusNode;
 	updateSidebar(f);
@@ -734,6 +889,13 @@ function updateSidebar(f) {
 		if(f.nodeType == Node.TEXT_NODE && f.parentNode.tagName == "LI" && isChecklist(f.parentNode.parentNode)) {
 			insertChecklistBox(f.parentNode);
 		}
+		if(f.tagName == "LI" && isRadioList(f.parentNode)) {
+			insertRadiolistBox(f);
+		}
+		if(f.nodeType == Node.TEXT_NODE && f.parentNode.tagName == "LI" && isRadioList(f.parentNode.parentNode)) {
+			insertRadiolistBox(f.parentNode);
+		}
+
 
 		var p = f.parentNode;
 		while(p) {
@@ -759,7 +921,7 @@ function selectNode(ele) {
 }
 
 
-window.onload = function() {
+window.addEventListener("DOMContentLoaded", function() {
 	document.execCommand("enableObjectResizing", false, false);
 	document.execCommand("enableInlineTableEditing", false, false);
 	document.execCommand("styleWithCSS", false, false);
@@ -969,7 +1131,7 @@ window.onload = function() {
 		if(key == 46 && event.shiftKey) {
 			// delete key with shift will delete the entire html element
 			// containing the caret, or (eventually the common parent of the entire current
-			// selection
+			// selection)
 			event.preventDefault();
 			var selection = window.getSelection();
 			// var a = selection.anchorNode;
@@ -1075,7 +1237,7 @@ window.onload = function() {
 	});
 
 	wrapStuffForEditing(document.getElementById("editor"));
-};
+});
 
 function unwrapStuffForEditing(parent) {
 	parent.querySelectorAll(".hacky-wrapper").forEach(function(e) {
@@ -1166,6 +1328,17 @@ function loadObject(data, branch) {
 	currentlyLoaded.fileId = data.fileId;
 	currentlyLoaded.branchPoint = data.basedOn;
 	currentlyLoaded.branchName = branch;
+
+	if(location.hash && location.hash.startsWith("#editor%20")) {
+		var e = document.querySelector(decodeURIComponent(location.hash.substring(10)));
+		if(e)
+			e.scrollIntoView();
+	}
+
+	// run a check after a short delay to see if there is any weird plugins in place
+	// that may break stuff before the user gets much of a chance to make changes that
+	// might be lost.
+	setTimeout(function() { presaveValidation(getCurrentEditingHtml()); }, 3500);
 }
 
 var comparingAnchor = null;
@@ -1460,4 +1633,44 @@ function insertDoneButton() {
 	document.getElementById("editor").focus();
 	updateSelectionData();
 
+}
+
+function presaveValidation(html) {
+	if(html.indexOf("Privacy Badger") != -1) {
+		alert("Please make sure your Privacy Badger is disabled for the editor. Then, reload, make your edits again (otherwise, Privacy Badger will remove content we are trying to save!), and then save.");
+		return false;
+	}
+	return true;
+}
+
+function courseNameForBranch(branch) {
+	switch(branch) {
+		case "npd":
+			return " the NPD course 66";
+		break;
+		case "schwab":
+			return " the Schwab course 67";
+		break;
+		case "dream-online":
+			return " the dream online pilot course 68";
+		break;
+		default:
+			return " the main content library and connected course";
+	}
+}
+
+function courseIdForBranch(branch) {
+	switch(branch) {
+		case "npd":
+			return 66;
+		break;
+		case "schwab":
+			return 67;
+		break;
+		case "dream-online":
+			return 68;
+		break;
+		default:
+			return 1;
+	}
 }

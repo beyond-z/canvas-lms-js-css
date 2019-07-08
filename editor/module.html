@@ -10,6 +10,26 @@
 			func();
 		}
 	</script>
+	<style>
+		html, body { margin: 0px; padding: 0px; }
+		h1 {
+			margin: 0 auto 30px;
+			color: #FFF;
+			background: #EB3B46;
+			padding: 3em;
+			text-align: center;
+			font-size: 2.5em;			
+			margin: 0.5em;
+		}
+		main {
+			margin: 0.5em;
+		}
+		body > header {
+			padding: 1em;
+			background-color: #234;
+			background-image: url("https://s3.amazonaws.com/canvas-stag-assets/braven_bkg_70h_canvas.png");
+		}
+	</style>
 
 <script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="//code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
@@ -21,7 +41,11 @@
 	<title>Braven Module</title>
 </head>
 <body>
-	<div id="module-container" class="user_content"></div>
+	<header>
+		<img src="https://s3.amazonaws.com/canvas-stag-assets/braven_logo_canvas_red_white.png" alt="Braven" />
+		<!-- <img src="https://join.bebraven.org/bebraven/braven_logo.png" alt="Braven" /> -->
+	</header>
+	<main id="module-container" class="user_content"></main>
 
 
 	<script>

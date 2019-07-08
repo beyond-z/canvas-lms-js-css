@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html id="editor-core">
 <head>
 <script>
 	var bzBoxTypes = [
@@ -12,6 +12,7 @@
 		{ className: "action", defaultTitle: "Take a real step right now" },
 		{ className: "key", defaultTitle: "Resources to get you started" },
 		{ className: "pulse", defaultTitle: "Pulse Check" },
+		{ className: "alert", defaultTitle: "Project alert" },
 	];
 
 	var htmlBefore = "";
@@ -71,20 +72,25 @@
 					branchChanged = true;
 				}
 				if(currentlyLoaded.branchName !== null)
+				if(presaveValidation(getCurrentEditingHtml()))
 				EditorApi.save(currentlyLoaded.fileId, currentlyLoaded.id, getCurrentEditingHtml(), currentlyLoaded.branchName).
-					get(function(id) {
+					get([function(id) {
 						currentlyLoaded.branchPoint = currentlyLoaded.id;
 						currentlyLoaded.id = id;
 
 						if(branchChanged)
 						history.pushState(null, null, EditorApi._apiBase + 'edit?fileId=' + currentlyLoaded.fileId + '&amp;branch=' + encodeURIComponent(currentlyLoaded.branchName));
-					});
+					}, function(err) {
+						alert('The save failed, probably because Adam restarted the server or your login expired.\n\nTo fix: click OK, then LEAVE THIS TAB ALONE. Open a *new* tab and go to the editor homepage. Then, come back here and click save again. It should work that time and not lose anything.');
+					}
+					]);
 			">Save</button>
 			<button type="button" onclick="
 				var tag = prompt('Name');
 				if(tag !== null)
+				if(presaveValidation(getCurrentEditingHtml()))
 				EditorApi.save(currentlyLoaded.fileId, currentlyLoaded.branchPoint, getCurrentEditingHtml(), tag).
-					get(function(id) {
+					get([function(id) {
 						currentlyLoaded.id = id;
 						currentlyLoaded.branchPoint = id;
 
@@ -92,7 +98,9 @@
 
 						//history.pushState(null, null, EditorApi._apiBase + 'edit?id=' + id);
 						history.pushState(null, null, EditorApi._apiBase + 'edit?fileId=' + currentlyLoaded.fileId + '&amp;branch=' + encodeURIComponent(currentlyLoaded.branchName));
-					});
+					}, function(err) {
+						alert('The save failed, probably because Adam restarted the server or your login expired.\n\nTo fix: click OK, then LEAVE THIS TAB ALONE. Open a *new* tab and go to the editor homepage. Then, come back here and click save again. It should work that time and not lose anything.');
+					}]);
 			">Save As</button>
 
 			<button type="button" onclick="
@@ -127,10 +135,10 @@
 
 
 			<button style="margin-left: 100px; background-color: yellow;" type="button" onclick="
-				if(confirm('Are you sure you want to push to production? It will be immediately visible to users and may overwrite changes there!')) {
+				if(confirm('Are you sure you want to push to production? It will be immediately visible to users and may overwrite changes there! This will go to' + courseNameForBranch(currentlyLoaded.branchName))) {
 					this.textContent = 'Pushing.....';
 					var btn = this;
-					EditorApi.pushToProduction(currentlyLoaded.fileId, getCurrentEditingHtml()).get(function(canvas_url) {
+					EditorApi.pushToProduction(currentlyLoaded.fileId, getCurrentEditingHtml(), courseIdForBranch(currentlyLoaded.branchName)).get(function(canvas_url) {
 						btn.textContent = 'Push to Production';
 						window.open(canvas_url);
 					});
@@ -162,6 +170,7 @@
 			<button type="button" onclick="insertBox();">Insert Box</button>
 			<button type="button" onclick="document.execCommand('insertHTML', false, '<table><tr><th></th></tr></table>')">Insert Table</button>
 			<button type="button" onclick="document.execCommand('insertHTML', false, '<ul class=\'checklist\'><li class=\'correct\'>Checklist</li></ul>')">Insert Checklist</button>
+			<button type="button" onclick="document.execCommand('insertHTML', false, '<ul class=\'radio-list\'><li class=\'correct\'>Radio list</li></ul>')">Insert Radio list</button>
 			<button type="button" onclick="document.execCommand('insertHTML', false, '<input type=\'text\' data-bz-retained=\''+uuidv4()+'\' />')">Insert Magic Field</button>
 			<button type="button" onclick="document.execCommand('insertHTML', false, '<textarea data-bz-retained=\''+uuidv4()+'\'></textarea>')">Insert Magic Textarea</button>
 			<button type="button" onclick="insertDoneButton();">Insert Done Button</button>
