@@ -161,7 +161,7 @@ function addAttributeTextBox(parent, ele, attr) {
 	return input;
 }
 
-function addAttributeSelect(parent, ele, attr, options) {
+function addAttributeSelect(parent, ele, attr, options, moaronchange) {
 	var input = document.createElement("select");
 
 	options.forEach(function(opt) {
@@ -173,6 +173,8 @@ function addAttributeSelect(parent, ele, attr, options) {
 	input.value = ele.getAttribute(attr);
 	input.onchange = function() {
 		ele.setAttribute(attr, input.value);
+		if(moaronchange)
+			moaronchange.apply(ele);
 	};
 	input.refersToInEditor = ele;
 	parent.appendChild(input);
@@ -570,7 +572,11 @@ function getSidebarBox(ele) {
 			"file",
 			"checkbox",
 			"radio"
-		]);
+		], function() {
+			if(this.type == "radio" || this.type == "checkbox") {
+				wrapStuffForEditing(this.parentNode);
+			}
+		});
 		dl.appendChild(dd);
 
 		dt = document.createElement("dt");

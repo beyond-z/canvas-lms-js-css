@@ -292,7 +292,7 @@ class EditorApi : ApiProvider {
 			// trigger the javascript for part hiding
 			document.mainBody.addChild("script", q{ 
 				window.ENV = { WIKI_PAGE: { } }; window.position_magic_field_name = "FIXME";
-				window.openBzBoxPosition = 9;
+				window.openBzBoxPosition = 0;
 
 				// also re-adjust links after everything is loaded for some interaction
 				window.addEventListener("load", function() {
