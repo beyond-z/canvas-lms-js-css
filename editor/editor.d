@@ -2691,8 +2691,6 @@ class EditorApi : ApiProvider {
 			req.result;
 		}
 
-		// FIXME: maybe use the lock_at as a resubmission deadline
-
 		return answer.toString;
 	}
 
@@ -2716,12 +2714,23 @@ class EditorApi : ApiProvider {
 				var o = var.emptyObject;
 				o.assignment_id = aid;
 				o.course_section_id = ts;
+
 				auto due = SysTime.fromISOExtString(
 					cgi.post["assignment_" ~ aid ~ "_due_at_tuesday"]
 						~ "T"
 						~ formatTime(cgi.post["assignment_" ~ aid ~ "_due_at_time"])
 					, tz).toUTC;
 				o.due_at = due.toISOExtString;
+
+				try {
+					auto lock = SysTime.fromISOExtString(
+						cgi.post["assignment_" ~ aid ~ "_lock_at_tuesday"]
+							~ "T"
+							~ formatTime(cgi.post["assignment_" ~ aid ~ "_lock_at_time"])
+						, tz).toUTC;
+					o.lock_at = lock.toISOExtString;
+				} catch(Throwable t) { writeln(t); }
+
 				overridesArray ~= o;
 			}
 			foreach(ts; wednesdaySections) {
@@ -2734,6 +2743,16 @@ class EditorApi : ApiProvider {
 						~ formatTime(cgi.post["assignment_" ~ aid ~ "_due_at_time"])
 					, tz).toUTC;
 				o.due_at = due.toISOExtString;
+
+				try {
+					auto lock = SysTime.fromISOExtString(
+						cgi.post["assignment_" ~ aid ~ "_lock_at_tuesday"]
+							~ "T"
+							~ formatTime(cgi.post["assignment_" ~ aid ~ "_lock_at_time"])
+						, tz).toUTC;
+					o.lock_at = lock.toISOExtString;
+				} catch(Throwable t) { writeln(t); }
+
 				overridesArray ~= o;
 			}
 
@@ -2883,10 +2902,10 @@ class EditorApi : ApiProvider {
 		foreach(section; sectionsReq.result) {
 			auto n = section.name.get!string;
 			auto i = section.id.get!string;
-			if(n.indexOf("(Tu") != -1) {
+			if(n.indexOf("(Tu") != -1 || n.indexOf("Tuesday") != -1) {
 				tuesdayList.addChild("li", n);
 				tuesdaySections ~= i;
-			} else if(n.indexOf("(We") != -1) {
+			} else if(n.indexOf("(We") != -1 || n.indexOf("Wednesday") != -1) {
 				wednesdayList.addChild("li", n);
 				wednesdaySections ~= i;
 			} else {
@@ -2900,14 +2919,15 @@ class EditorApi : ApiProvider {
 		div.addChild("p", "Please note: all times are local time in " ~ std.conv.to!string(timeZone));
 
 		div.addChild("h2", "Module Due Dates");
+		div.addChild("p", "Note the lock date is also known as the resubmission deadline.");
 		auto modulesTable = cast(Table) div.addChild("table");
-		modulesTable.appendHeaderRow("Assignment", "Tuesday Due Date", "Wednesday Due Date", "Due Time");
+		modulesTable.appendHeaderRow("Assignment", "Tuesday Due Date", "Wednesday Due Date", "Due Time", "Tuesday Lock Date", "Wednesday Lock Date", "Lock Time");
 		div.addChild("h2", "Project Due Dates");
 		auto projectsTable = cast(Table) div.addChild("table");
-		projectsTable.appendHeaderRow("Assignment", "Tuesday Due Date", "Wednesday Due Date", "Due Time");
+		projectsTable.appendHeaderRow("Assignment", "Tuesday Due Date", "Wednesday Due Date", "Due Time", "Tuesday Lock Date", "Wednesday Lock Date", "Lock Time");
 		div.addChild("h2", "Other Assignment Due Dates");
 		auto otherAssignmentsTable = cast(Table) div.addChild("table");
-		otherAssignmentsTable.appendHeaderRow("Assignment", "Tuesday Due Date", "Wednesday Due Date", "Due Time");
+		otherAssignmentsTable.appendHeaderRow("Assignment", "Tuesday Due Date", "Wednesday Due Date", "Due Time", "Tuesday Lock Date", "Wednesday Lock Date", "Lock Time");
 
 		foreach(assignment; assignmentsReq.result) {
 			auto name = assignment.name.get!string;
@@ -2918,11 +2938,14 @@ class EditorApi : ApiProvider {
 				table = projectsTable;
 
 			SysTime due = loadExisting ? (assignment.due_at ? SysTime.fromISOExtString(assignment.due_at.get!string, tz) : SysTime.init) : SysTime.init;
+			SysTime lock = loadExisting ? (assignment.lock_at ? SysTime.fromISOExtString(assignment.lock_at.get!string, tz) : SysTime.init) : SysTime.init;
 
 			if(loadExisting)
 			foreach(or; assignment.overrides) {
 				if(or.title.get!string.indexOf("Tu") != -1 && or.due_at) {
 					due = SysTime.fromISOExtString(or.due_at.get!string, tz);
+					if(or.lock_at)
+						lock = SysTime.fromISOExtString(or.lock_at.get!string, tz);
 					break;
 				}
 			}
@@ -2936,6 +2959,10 @@ class EditorApi : ApiProvider {
 				Element.make("input", "assignment_" ~ id ~ "_due_at_tuesday", due == SysTime.init ? "" : (cast(Date)due).toISOExtString).setAttribute("type", "date"),
 				Element.make("input","assignment_" ~  id ~ "_due_at_wednesday", due == SysTime.init ? "" : (cast(Date)due + dur!"days"(1)).toISOExtString).setAttribute("type", "date"),
 				Element.make("input","assignment_" ~ id ~ "_due_at_time", due == SysTime.init ? "" : (cast(TimeOfDay)due).toISOExtString).setAttribute("type", "time"),
+
+				Element.make("input", "assignment_" ~ id ~ "_lock_at_tuesday", lock == SysTime.init ? "" : (cast(Date)lock).toISOExtString).setAttribute("type", "date"),
+				Element.make("input","assignment_" ~  id ~ "_lock_at_wednesday", lock == SysTime.init ? "" : (cast(Date)lock + dur!"days"(1)).toISOExtString).setAttribute("type", "date"),
+				Element.make("input","assignment_" ~ id ~ "_lock_at_time", lock == SysTime.init ? "" : (cast(TimeOfDay)lock).toISOExtString).setAttribute("type", "time"),
 			);
 		}
 
