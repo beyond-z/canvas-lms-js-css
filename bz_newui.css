@@ -58,7 +58,7 @@ th,
 .ic-notification__title,
 .bz-button-pick-up,
 .bz-explain-grade-link a,
-.bz-module .bz-graded-question:before {
+.bz-graded-question:before {
 	font-family: "TradeGothicNo.20-CondBold", "Oswald", sans-serif;
 	text-transform: uppercase;
 	line-height: normal;
@@ -1161,7 +1161,7 @@ input[type='button']:disabled {
 	min-width: 33%;
 }
 
-.bz-module .bz-graded-question:before {
+.bz-graded-question:before {
   content: "MASTERY Q";
   color: #EB3B46;
   margin-right: 0.25em;
@@ -2136,6 +2136,7 @@ table [type="range"] {
 /* Rubrics and assignment review: */
 .bz-retained-field-replaced {
 	background: #FF0;
+	white-space: pre-line; /* important to keep user line breaks visible! */
 }
 
 .bz-ajax-loaded-rubric {
