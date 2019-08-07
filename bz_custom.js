@@ -1032,6 +1032,13 @@ runOnUserContent(function(){
   var isWikiPage = (ENV && ENV["WIKI_PAGE"]);
   if (!isWikiPage) return;
 
+  var nextButton = document.querySelector(".bz-toggle-all-next");
+  if(nextButton) {
+  	// if we have a next button in the content, we want to hide the
+	// default canvas next button
+	document.body.classList.add("hide-next-module-button");
+  }
+
   createBzProgressBar();
 
   var position_magic_field_name = window.position_magic_field_name ? window.position_magic_field_name : ("module_position_" + ENV["WIKI_PAGE"].page_id);
