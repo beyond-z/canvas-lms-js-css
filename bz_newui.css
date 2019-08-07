@@ -2136,6 +2136,7 @@ table [type="range"] {
 /* Rubrics and assignment review: */
 .bz-retained-field-replaced {
 	background: #FF0;
+	white-space: pre-line; /* important to keep user line breaks visible! */
 }
 
 .bz-ajax-loaded-rubric {
