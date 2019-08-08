@@ -1090,6 +1090,11 @@ function createBzProgressBar() {
             ||
             (e.type == "checkbox" && e.getAttribute("data-bz-answer") == "yes" && e.checked)
             ||
+            // in some cases we used yes, in some we used on, allow either as correct
+            (e.type == "checkbox" && e.getAttribute("data-bz-answer") == "on" && e.checked)
+            ||
+            (e.type == "checkbox" && e.getAttribute("data-bz-answer") == "" && !e.checked)
+            ||
             (e.type != "radio" && e.type != "checkbox" && e.value == e.getAttribute("data-bz-answer"))
           ) {
             correct = true;
