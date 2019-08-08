@@ -977,9 +977,7 @@ function collectBoxesBeforeBox(button) {
   return after;
 }
 
-
-// call this BEFORE the function that hides
-// bz-boxes, but after everything else is loaded!
+// the magic fields must be loaded for this to work!
 function createBzProgressBar() {
   var div = document.createElement("div");
   div.setAttribute("id", "bz-progress-bar");
@@ -1159,7 +1157,9 @@ runOnUserContent(function(){
   var isWikiPage = (ENV && ENV["WIKI_PAGE"]);
   if (!isWikiPage) return;
 
-  createBzProgressBar();
+  addOnMagicFieldsLoaded(function() {
+    createBzProgressBar();
+  });
 
   var position_magic_field_name = window.position_magic_field_name ? window.position_magic_field_name : ("module_position_" + ENV["WIKI_PAGE"].page_id);
 
