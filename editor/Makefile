@@ -7,6 +7,7 @@ all:
 		arsd/email.d arsd/htmltotext.d \
 		arsd/http2.d \
 		-version=webd_memory_sessions \
+		-d \
 		-version=embedded_httpd_threads -debug -g \
-		-d
 		# -debug=arsd_http2 \
+		#-version=scgi -debug -g -ofeditor_scgi \

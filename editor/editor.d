@@ -3,6 +3,10 @@
 +/
 module braven.editor;
 
+// FIXME: it is very important to check for repeated things, copy/paste keeps creating it
+// FIXME: unique values for radio boxes and correct group names too
+// FIXME: make sure the h4 isn't extended in other stuff
+
 version=hosted;
 
 // FIXME: insert followed by substitute might be a modified line followed by an insertion
@@ -155,6 +159,10 @@ class EditorApi : ApiProvider {
 	override void _initializePerCall() {
 		if(cgi.host == "localhost:10234") // hack to allow unauthenticated stuff personally for dev
 			return;
+
+		import std.file;
+		ssoService = arsd.cgi.Uri("/sso").basedOn(arsd.cgi.Uri(readText("data/local-url.txt").strip));
+
 		session = new Session(cgi);
 		if(!session.hasKey("user")) {
 			// hack for magic field update cron...
@@ -2608,13 +2616,17 @@ class EditorApi : ApiProvider {
 		return div;
 	}
 
+	private auto createCourseCanvasCredentials() {
+		return productionCredentials();
+	}
+
 	// a courseName is like 2019 Spring Braven Accelerator - RUN
 	// a courseCode is like 2019 Spring RUN
 	@GenericContainerType("utilities")
 	string prepareNewCourse(int sourceCourseId, string courseName, string courseCode, BravenTimezone timeZone, SalesforceCampaign salesforceCampaign) {
 
 		// see: https://docs.google.com/document/d/1jf4ibekXtK7nwgEmAuI63DZYyaNUDLQF91GEH05SdhE/edit#heading=h.483cufevfaq0
-		auto canvas = getCanvasApiClient(stagingCredentials());
+		auto canvas = getCanvasApiClient(createCourseCanvasCredentials());
 
 		// create the course
 		auto courseReq = canvas.rest.
@@ -2681,7 +2693,10 @@ class EditorApi : ApiProvider {
 		auto app = loginToProductionSalesforce();
 		auto answer = app.rest.query._SELF()("q", "SELECT  COUNT(ContactId), Section_Name_In_LMS__c   FROM    CampaignMember  WHERE CampaignId = '"~cast(string) salesforceCampaign~"' AND  Candidate_Status__c = 'Confirmed' GROUP BY Section_Name_In_LMS__c").GET.result;
 
-		auto canvas = getCanvasApiClient(stagingCredentials());
+		auto canvas = getCanvasApiClient(createCourseCanvasCredentials());
+
+		bool tuesdayNeeded = true;
+		bool wednesdayNeeded = true;
 
 		foreach(record; answer.records) {
 			auto req = canvas.rest.
@@ -2689,7 +2704,31 @@ class EditorApi : ApiProvider {
 					"course_section[name]", record.Section_Name_In_LMS__c
 				);
 			req.result;
+			if(record.Section_Name_In_LMS__c.get!string.indexOf("(Tu") != -1)
+				tuesdayNeeded = false;
+			if(record.Section_Name_In_LMS__c.get!string.indexOf("(We") != -1)
+				wednesdayNeeded = false;
 		}
+
+		if(tuesdayNeeded) {
+			string name = salesforceCampaign == SalesforceCampaign.RUNFellows ? "RU-N Fellows (Tu)" : "SJSU Fellows (Tu)";
+			auto req = canvas.rest.
+				courses[courseId].sections.POST(
+					"course_section[name]", name
+				);
+			req.result;
+		}
+
+		if(wednesdayNeeded) {
+			string name = salesforceCampaign == SalesforceCampaign.RUNFellows ? "RU-N Fellows (We)" : "SJSU Fellows (We)";
+			auto req = canvas.rest.
+				courses[courseId].sections.POST(
+					"course_section[name]", name
+				);
+			req.result;
+		}
+
+
 
 		return answer.toString;
 	}
@@ -2706,7 +2745,7 @@ class EditorApi : ApiProvider {
 		import std.datetime;
 		auto tz = PosixTimeZone.getTimeZone(cast(string) timeZone);
 
-		auto canvas = getCanvasApiClient(stagingCredentials());
+		auto canvas = getCanvasApiClient(createCourseCanvasCredentials());
 
 		foreach(aid; assignmentIds) {
 			var overridesArray = var.emptyArray;
@@ -2846,7 +2885,7 @@ class EditorApi : ApiProvider {
 		import std.datetime;
 		auto tz = PosixTimeZone.getTimeZone(cast(string) timeZone);
 
-		auto canvas = getCanvasApiClient(stagingCredentials());
+		auto canvas = getCanvasApiClient(createCourseCanvasCredentials());
 
 		auto sectionsReq = canvas.rest.
 			courses[courseId].sections._SELF()
@@ -4560,9 +4599,9 @@ HttpApiClient!() loginToProductionSalesforce() {
 }
 
 enum SalesforceCampaign : string {
-	SJSUFellows = "7011J000001JjgH",
+	SJSUFellows = "701o0000000AK6p",
 	NLUFellows = "7011J000001JjIF",
-	RUNFellows = "7011J0000011njJ",
+	RUNFellows = "701o0000000ApU4",
 }
 
 enum BravenTimezone : string {

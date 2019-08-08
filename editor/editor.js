@@ -1660,6 +1660,9 @@ function courseNameForBranch(branch) {
 		case "dream-online":
 			return " the dream online pilot course 68";
 		break;
+		case "bravenx":
+			return " the BravenX pilot course 81";
+		break;
 		default:
 			return " the main content library and connected course";
 	}
@@ -1675,6 +1678,9 @@ function courseIdForBranch(branch) {
 		break;
 		case "dream-online":
 			return 68;
+		break;
+		case "bravenx":
+			return 81;
 		break;
 		default:
 			return 1;
