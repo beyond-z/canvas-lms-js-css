@@ -357,7 +357,7 @@ progress[value]::-webkit-progress-bar {
 .student-logged-in div #quiz_show .alert,
 .student-logged-in .question .mce-toolbar-grp,
 .student-logged-in .question .mce-path,
-.hide-next-module-button .module-sequence-footer, /* this one depends on other factors on the page; the hide-next-button will be set by javascript */
+.student-logged-in .module-sequence-footer,
 .student-logged-in #footer,
 .student-logged-in .bz-module-sequence-progress-container,
 .student-logged-in #bz-module-sequence-progress-bar {
@@ -2726,6 +2726,7 @@ table [type="range"] {
 	right: 1em;
 	top: 1em;
 	width: 260px;
+	z-index: 10;
 }
 
 #bz-progress-bar > div {
