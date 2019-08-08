@@ -1079,8 +1079,8 @@ function createBzProgressBar() {
 
         lastName = e.dataset.bzRetained;
 
-        var answered = false;
-        var correct = false;
+        let answered = false;
+        let correct = false;
 
         if(boxPosition < window.openBzBoxPosition) {
           // it is available to be possibly answered...
