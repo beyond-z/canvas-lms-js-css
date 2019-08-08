@@ -2726,6 +2726,7 @@ table [type="range"] {
 	right: 1em;
 	top: 1em;
 	width: 260px;
+	z-index: 10;
 }
 
 #bz-progress-bar > div {
