@@ -1,5 +1,5 @@
 all:
-	dmd -m64 editor.d editor_main.d \
+	dmd -lowmem -m64 editor.d editor_main.d \
 		arsd/web.d arsd/cgi.d arsd/jsvar.d arsd/dom.d arsd/characterencodings.d arsd/html.d \
 		arsd/color.d arsd/sha.d \
 		arsd/database.d arsd/sqlite.d \
@@ -8,6 +8,4 @@ all:
 		arsd/http2.d \
 		-version=webd_memory_sessions \
 		-d \
-		-version=embedded_httpd_threads -debug -g \
-		# -debug=arsd_http2 \
-		#-version=scgi -debug -g -ofeditor_scgi \
+		-version=embedded_httpd_threads -debug -g
