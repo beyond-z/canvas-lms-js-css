@@ -58,7 +58,7 @@ th,
 .ic-notification__title,
 .bz-button-pick-up,
 .bz-explain-grade-link a,
-.bz-module .bz-graded-question:before {
+.bz-graded-question:before {
 	font-family: "TradeGothicNo.20-CondBold", "Oswald", sans-serif;
 	text-transform: uppercase;
 	line-height: normal;
@@ -333,54 +333,6 @@ progress[value]::-webkit-progress-bar {
   box-shadow: none;
 }
 
-
-@media(min-width: 640px) {
-	#bz-progress-bar {
-		position: fixed;
-		z-index: 999;
-		left: 32px;
-		bottom: 64px;
-		width: 100px;
-		background: #f0f0f0;
-		text-align: left;
-		padding: 4px;
-	}
-	#bz-progress-bar::before {
-		content: "Module Progress";
-	}
-	#bz-progress-bar::after {
-		text-align: center;
-		content: attr(data-place) "%";
-	}
-}
-
-@media(max-width: 640px) {
-	#bz-progress-bar {
-		position: fixed;
-		z-index: 999;
-		right: 0;
-		bottom: 0;
-		background: transparent;
-		width: 100vh;
-	    -webkit-transform-origin: top right;
-	       -moz-transform-origin: top right;
-		-ms-transform-origin: top right;
-		 -o-transform-origin: top right;
-		    transform-origin: top right;
-	    -webkit-transform: rotate(90deg);
-	       -moz-transform: rotate(90deg);
-		-ms-transform: rotate(90deg);
-		 -o-transform: rotate(90deg);
-		    transform: rotate(90deg);		
-	}
-}
-
-#bz-progress-bar > div {
-	background-color: #C8141F;
-	height: 4px;
-}
-
-
 /* Styling Canvas notifications */
 .ic-notification__icon {
 	background-color: #9ad7d7;
@@ -405,7 +357,7 @@ progress[value]::-webkit-progress-bar {
 .student-logged-in div #quiz_show .alert,
 .student-logged-in .question .mce-toolbar-grp,
 .student-logged-in .question .mce-path,
-.student-logged-in .module-sequence-footer,
+.hide-next-module-button .module-sequence-footer, /* this one depends on other factors on the page; the hide-next-button will be set by javascript */
 .student-logged-in #footer,
 .student-logged-in .bz-module-sequence-progress-container,
 .student-logged-in #bz-module-sequence-progress-bar {
@@ -990,7 +942,9 @@ html {
 }
 
 .bz-module {
-	margin: 0 auto 200px;
+	margin: 0px;
+	margin-bottom: 200px;
+	/* margin: 0 auto 200px; */
 	position: relative;
 }
 
@@ -1161,7 +1115,7 @@ input[type='button']:disabled {
 	min-width: 33%;
 }
 
-.bz-module .bz-graded-question:before {
+.bz-graded-question:before {
   content: "MASTERY Q";
   color: #EB3B46;
   margin-right: 0.25em;
@@ -2757,3 +2711,112 @@ table [type="range"] {
 }
 
 /* end transfer from old ui } */
+
+#content {
+	overflow: visible !important; /* canvas hiding scroll bars doesnt help anyone */
+}
+
+.pages.show .show-content {
+	overflow-x: visible !important; /* otherwise canvas breaks our sidebar */
+}
+
+#bz-progress-bar {
+	position: sticky;
+	float: right;
+	right: 1em;
+	top: 1em;
+	width: 260px;
+	z-index: 10;
+}
+
+#bz-progress-bar > div {
+	padding: 0.5em;
+	background-color: #f7f7f7;
+	margin-bottom: 1em;
+}
+
+#bz-progress-bar ol {
+	list-style-type: none;
+	counter-reset: mastery-counter;
+	padding: 0px;
+}
+
+#bz-progress-bar ol li {
+	counter-increment: mastery-counter;
+	position: relative;
+	margin: 0.5em 0px;
+	padding-left: 30px;
+}
+
+#bz-progress-bar ol li::before {
+	content: counter(mastery-counter);
+	display: inline-block;
+	text-align: center;
+	color: #adadad;
+	font-weight: bold;
+	font-size: 16px;
+	width: 24px;
+	height: 24px;
+	line-height: 24px;
+	vertical-align: middle;
+
+	position: absolute;
+	left: 0px;
+	top: 0px;
+}
+
+#bz-progress-bar progress {
+	height: 1em;
+	width: 100%;
+
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	border: none;
+}
+
+#bz-progress-bar progress::-webkit-progress-bar {
+	background-color: #e2e2e2;
+	color: #e2e2e2;
+}
+
+/* important note: the prefixed versions for -webkit- and -moz- MUST appear as separate statements or chrome will ignore it! */
+#bz-progress-bar progress::-webkit-progress-value,
+#bz-progress-bar progress::-webkit-progress-bar-value {
+	background: #eb3b46;
+}
+
+#bz-progress-bar progress::-moz-progress-bar {
+	background: #eb3b46;
+}
+
+#bz-progress-bar progress {
+	color: #eb3b46;
+}
+
+#bz-progress-bar .correct-mastery-item,
+#bz-progress-bar .incorrect-mastery-item,
+#bz-progress-bar .unanswered-mastery-item {
+	display: inline-block;
+	width: 24px;
+	height: 24px;
+	border-radius: 12px;
+	font-size: 0px;
+	vertical-align: top;
+	margin-right: 4px;
+	margin-bottom: 4px;
+}
+
+#bz-progress-bar .correct-mastery-item {
+	background-color: #10c46e;
+	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4wgHAxcCGGjrFwAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAACPElEQVRIx61WQWjTUBj+mm6B2i6Ybgw3mmwOCgXFHaKe7M2DUArKEJmelF3qSVDobWNeZBfpQfQyPQh2lw0Gc5fpvKxDUCMULMKKcybbimNtbWl4EjfmoaY2tHvJ032n5OXl//7v/9///89DCDkABRu/SlitfsGmWcZKNd9YjwphhHgRMfE0jnO+Q//3HEagGhqmdzKYL2XhhMvBYSRDlzDYGXRHMFVYQmp7GSwQvD6MSzHc6D5HJ0h8TbvymqbmycnrjXfuKI0DwHwpi6nCUivBYjX338YtpLaXoRqanWDy2wKzISUgQwnIbb9NbC78JXhRfA/dLDMl9O2ZJF4P34XEixC8rcdUrWlQDQ0dAJBpOt9u8HDoKiJd/bj5+Rk1rNM7mbqCN5U118YlXsRIr4KnWyuOOdPNcp2guk9cE0wMxFHZI7ivLzruVWsaOCvbtERKvGjzPqW/cu1Uh1MyHw2Nos8nYiT3GFEhDACY2/3oWrGHEHLQpyapCuZO3QYxf+LHPkGOFDCWf+6agLOk0+J4Jz+DE8dERLr68bKYZaoTznpwKv/V4hoqe4Sp2qNCuE4w1nvBcXNiPY3Z7x+Y6uVaz9k/CvyyowrdLOPexixTVx3sDDb1olC8bcn/CwSvDw8GrtibneKXMS7FjoQgHb7VGKO2OrCmEUso2k01xS/TR6ZqaEisp5k6rBKQMRmK24xTh77Vxmd230GtaVTDoz3nW2axK4Lmq0uOFPDJ2GqsXRQi6OYDbW8SzfgNmcfld30i4sAAAAAASUVORK5CYII=);
+}
+
+#bz-progress-bar .incorrect-mastery-item {
+	background-color: #eb3b46;
+	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4wgHAxY1uc5/WQAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAChklEQVRIx62VMWgTYRTHf3eXXNP0mkWIAVFoEjcl0inUiENpoB0EO9RNoXRoBytIK1IFKVgFU8HqpJMIHXRoSwm0FNxC7SQUOmnS4NbGQUwuTZvL3TmkSRqby0Xb/3b38b3f+977f+8TCoWCSQOZZvm3lviCkUpT2tyqrsnnfEgXzkP3FcRAF4IgYCWhEcBU82gLy5SW4hjZHM0kBf3IYyNIoUutAfTNLYqxV+g7Gf5FzkgYeeIegtJhDSitfWb/xRz/KynoxzU7UwcRj2Z+kuAAenKb/YlHmGq+HmCqeQ6mn3Ma0pPb6O/n6wHawrJtM/+W3B1C7g41XNtfimPulnsommqe0lLctrZnVheQgn4AXAN9eF7HcBx+NzzJ/McyQF/fsM3ezPxEUBTctwZxRsIoU5McrKyx92nRck8xsQGAg28pEADTGmBkc2iJddr6o8jXetCTKXIzs02TMrI5jFQaUUv/aBq8or34atnXikL24ZOW+mTs7NZsaifX9UjtQ1FaA6TSrQHcQzdp64+iJ1Pl+CO37TcJ4HS32wOkoB/3+BjGbobf4w/QEus4Iz2WFq05A4yLQUSrIVWR5/EkAOpMDCObI/fsJaaqordwb0SfF4cY6LKu+0AfUjDAwcoaxa+bVXf8GrpjP2V9XoSzXkTH1TCSz2vhggymqpJ/8/aYBW1LG+2tTdOTTtFjpfF00v7hHYLSUW6yI9qLFLp8agB5dLg6sqsuck1PIXo6TxzcNdCH47A8dQBB6cAVe2rZj5aD37/b/Mk01TzF2Tm0w2HVas3l0eG6zJs++pUXrrS43BQk+bxI0V6cgzeOvcW2gKMnMlJpxO9JtL1C9QKJAT/N7lBFfwCDtAlhOytPuAAAAABJRU5ErkJggg==);
+}
+
+#bz-progress-bar .unanswered-mastery-item {
+	background-color: #e6e6e6;
+}
