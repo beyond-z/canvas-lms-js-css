@@ -313,3 +313,7 @@ form.plain-looking button {
 	padding: 1em;
 	border: solid 1px #ccc;
 }
+
+.bz-module {
+	margin: 0px auto;
+}
