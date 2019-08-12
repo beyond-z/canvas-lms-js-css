@@ -182,6 +182,7 @@ class EditorApi : ApiProvider {
 	/// Group: session_management
 	string sso(string ticket) {
 		import std.uri;
+		import std.file;
 		auto client = new HttpClient();
 		ssoService = arsd.cgi.Uri("/sso").basedOn(arsd.cgi.Uri(readText("data/local-url.txt").strip));
 		auto request = client.navigateTo(arsd.http2.Uri("https://sso.bebraven.org/serviceValidate?ticket="~encodeComponent(ticket)~"&service=" ~ encodeComponent(ssoService)));
