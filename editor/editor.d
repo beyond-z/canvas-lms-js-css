@@ -183,6 +183,7 @@ class EditorApi : ApiProvider {
 	string sso(string ticket) {
 		import std.uri;
 		auto client = new HttpClient();
+		ssoService = arsd.cgi.Uri("/sso").basedOn(arsd.cgi.Uri(readText("data/local-url.txt").strip));
 		auto request = client.navigateTo(arsd.http2.Uri("https://sso.bebraven.org/serviceValidate?ticket="~encodeComponent(ticket)~"&service=" ~ encodeComponent(ssoService)));
 		auto response = request.waitForCompletion();
 		if(response.code == 200) {
