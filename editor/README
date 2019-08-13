@@ -1,0 +1,4 @@
+To compile on the Admin Server, run this first: source ~/dlang/dmd-2.087.1/activate
+Note: the Admin Server has libssl-dev v1.0 but the actual editor server has libssl-dev 1.1 (or newer). If you want to compile directly on the Admin Server, you have to remove the following libe from the Makefile:
+   -version=older_openssl \
+    

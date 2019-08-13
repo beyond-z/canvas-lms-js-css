@@ -7,5 +7,6 @@ all:
 		arsd/email.d arsd/htmltotext.d \
 		arsd/http2.d \
 		-version=webd_memory_sessions \
+		-version=older_openssl \
 		-d \
 		-version=embedded_httpd_threads -debug -g
