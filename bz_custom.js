@@ -977,46 +977,171 @@ function collectBoxesBeforeBox(button) {
   return after;
 }
 
-
-// call this BEFORE the function that hides
-// bz-boxes, but after everything else is loaded!
+// the magic fields must be loaded for this to work!
 function createBzProgressBar() {
-  var input = document.createElement("div");
-  input.setAttribute("id", "bz-progress-bar");
-  var inner = document.createElement("div");
-  input.appendChild(inner);
-  inner.style.width = "0%";
-  input.setAttribute("data-place", "0");
-  document.body.appendChild(input);
+  var div = document.createElement("div");
+  div.setAttribute("id", "bz-progress-bar");
 
-  var height = document.body.scrollHeight;
+  // progress
+  var allContentSavedDiv = document.createElement("div");
+  div.appendChild(allContentSavedDiv);
 
-  var ticking = false;
+  var savedContainer = document.createElement("p");
+  savedContainer.textContent = "";
+  allContentSavedDiv.appendChild(savedContainer);
 
-  window.addEventListener('scroll', function(e) {
-    last_known_scroll_position = window.scrollY;
-    if (!ticking) {
-      window.requestAnimationFrame(function() {
-        // as images load later, it might increase the height;
-        // in that case, we will increase the thing to get a more
-        // accurate percentage
-        var newHeight = document.body.scrollHeight;
-        if(newHeight > height)
-            height = newHeight;
-        var pos = last_known_scroll_position + window.innerHeight;
-        var thing = height > 0 ? Math.floor(pos / height * 100) : 0;
-        if(thing > 100)
-            thing = 100;
-
-        inner.style.width = thing + "%";
-	input.setAttribute("data-place", thing);
-        ticking = false;
-      });
-    }
-    ticking = true;
+  window.addEventListener("magic_fields_saving", function(event) {
+    savedContainer.textContent = "Saving...";
   });
 
-  input.value = Math.ceil((window.scrollY + window.innerHeight) / height * 100);
+  window.addEventListener("magic_fields_saved", function(event) {
+    // the artificial delay here is to ensure they actually get to see
+    // the change before it is overwritten on quick changes; to give the
+    // user the feeling of something actually happening, even if the server
+    // is legit fast.
+    setTimeout(function() {
+      savedContainer.textContent = "All progress saved.";
+    }, 500);
+  });
+
+  var doneButtonCount = document.querySelectorAll(".bz-toggle-all-next").length;
+  if(doneButtonCount == 0)
+    return; // no progress to report!
+
+  var progress = document.createElement("progress");
+  progress.value = window.openBzBoxPosition;
+  progress.max = doneButtonCount;
+  allContentSavedDiv.appendChild(progress);
+
+  var participationScore = document.createElement("p");
+  allContentSavedDiv.appendChild(participationScore);
+
+  function setParticipationScore(score) {
+    participationScore.textContent = "Score so far: " + Math.round(100 * score) / 100 + " / 10";
+  }
+
+  if(typeof window.startingBzParticipationScore != "undefined")
+    setParticipationScore(window.startingBzParticipationScore);
+
+  window.addEventListener("participation_score_changed", function(event) {
+    setParticipationScore(event.detail);
+  });
+
+  // mastery
+  var masteryContainer = document.createElement("div");
+  div.appendChild(masteryContainer);
+  masteryContainer.classList.add("bz-graded-question");
+
+  var list = document.createElement("ol");
+
+  function redrawMastery() {
+      list.innerHTML = "";
+
+      masteryContainer.appendChild(list);
+
+      // the idea here is to just flatten the dom so we can easily count the boxes...
+      var possibilities = document.querySelectorAll("*");
+      var lastBox;
+      var lastName;
+      var li;
+      var boxPosition = 0;
+      for(var i = 0; i < possibilities.length; i++) {
+        let e = possibilities[i];
+
+        if(e.matches(".bz-toggle-all-next"))
+          boxPosition++;
+
+        if(!e.matches("[data-bz-answer]"))
+          continue;
+
+        var box = e;
+
+        if(e.type == "radio" && e.getAttribute("data-bz-answer") != e.value)
+          continue; // skip the wrong answers on radio boxes to simplify the check below
+
+        if(e.dataset.bzRetained == lastName)
+          continue;
+
+        while(box && !box.classList.contains("bz-box"))
+          box = box.parentNode;
+        if(!box) continue;
+        if(box != lastBox) {
+          lastBox = box;
+
+          lastName = e.dataset.bzRetained;
+          li = document.createElement("li");
+          list.appendChild(li);
+        }
+
+        if(!li) continue; // this shouldn't happen but meh
+
+        lastName = e.dataset.bzRetained;
+
+        let answered = false;
+        let correct = false;
+
+        if(boxPosition < window.openBzBoxPosition) {
+          // it is available to be possibly answered...
+          answered = true;
+          if(
+            (e.type == "radio" && e.checked)
+            ||
+            (e.type == "checkbox" && e.getAttribute("data-bz-answer") == "yes" && e.checked)
+            ||
+            // in some cases we used yes, in some we used on, allow either as correct
+            (e.type == "checkbox" && e.getAttribute("data-bz-answer") == "on" && e.checked)
+            ||
+            (e.type == "checkbox" && e.getAttribute("data-bz-answer") == "" && !e.checked)
+            ||
+            (e.type != "radio" && e.type != "checkbox" && e.value == e.getAttribute("data-bz-answer"))
+          ) {
+            correct = true;
+          } else {
+            correct = false;
+          }
+        }
+
+        var item = document.createElement("span");
+        li.appendChild(item);
+        item.addEventListener("click", function() {
+          e.scrollIntoView();
+        });
+        if(answered) {
+          if(correct) {
+              item.setAttribute("title", "Correct");
+              item.textContent = "C ";
+              item.className = "correct-mastery-item";
+          } else {
+              item.setAttribute("title", "Incorrect");
+              item.textContent = "X ";
+              item.className = "incorrect-mastery-item";
+          }
+        } else {
+          item.setAttribute("title", "Unanswered");
+          item.textContent = "U ";
+          item.className = "unanswered-mastery-item";
+        }
+      }
+  }
+
+  redrawMastery();
+
+  window.addEventListener("next_button_pressed", function(event) {
+    progress.value = event.detail;
+    window.openBzBoxPosition = event.detail;
+    redrawMastery();
+  });
+
+  /* the ordered list is just the mastery thing possible, each thing next to it is the number of checklist items actually correct; number of points out of points possible in that section */
+
+  var where = document.querySelector("#module-container h1, .user_content h1");
+  if(where) {
+    // I insert it here because then it takes a nice position below the header,
+    // staying with us thanks to css, while never covering anything up
+    where.parentNode.insertBefore(div, where.nextElementSibling);
+  } else {
+    // actually gonna skip it.
+  }
 }
 
 
@@ -1032,7 +1157,9 @@ runOnUserContent(function(){
   var isWikiPage = (ENV && ENV["WIKI_PAGE"]);
   if (!isWikiPage) return;
 
-  createBzProgressBar();
+  addOnMagicFieldsLoaded(function() {
+    createBzProgressBar();
+  });
 
   var position_magic_field_name = window.position_magic_field_name ? window.position_magic_field_name : ("module_position_" + ENV["WIKI_PAGE"].page_id);
 
@@ -1137,6 +1264,9 @@ runOnUserContent(function(){
 
     if(pos < openPosition)
         return; // no need to update if they clicked done again on a previous button; keep them at the advanced position
+
+    var ce = new CustomEvent("next_button_pressed", {detail: pos});
+    window.dispatchEvent(ce);
 
     var http = new XMLHttpRequest();
     http.open("POST", "/bz/user_retained_data", true);

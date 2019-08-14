@@ -3,6 +3,10 @@
 +/
 module braven.editor;
 
+// FIXME: it is very important to check for repeated things, copy/paste keeps creating it
+// FIXME: unique values for radio boxes and correct group names too
+// FIXME: make sure the h4 isn't extended in other stuff
+
 version=hosted;
 
 // FIXME: insert followed by substitute might be a modified line followed by an insertion
@@ -155,6 +159,10 @@ class EditorApi : ApiProvider {
 	override void _initializePerCall() {
 		if(cgi.host == "localhost:10234") // hack to allow unauthenticated stuff personally for dev
 			return;
+
+		import std.file;
+		ssoService = arsd.cgi.Uri("/sso").basedOn(arsd.cgi.Uri(readText("data/local-url.txt").strip));
+
 		session = new Session(cgi);
 		if(!session.hasKey("user")) {
 			// hack for magic field update cron...
@@ -174,7 +182,9 @@ class EditorApi : ApiProvider {
 	/// Group: session_management
 	string sso(string ticket) {
 		import std.uri;
+		import std.file;
 		auto client = new HttpClient();
+		ssoService = arsd.cgi.Uri("/sso").basedOn(arsd.cgi.Uri(readText("data/local-url.txt").strip));
 		auto request = client.navigateTo(arsd.http2.Uri("https://sso.bebraven.org/serviceValidate?ticket="~encodeComponent(ticket)~"&service=" ~ encodeComponent(ssoService)));
 		auto response = request.waitForCompletion();
 		if(response.code == 200) {
@@ -292,7 +302,7 @@ class EditorApi : ApiProvider {
 			// trigger the javascript for part hiding
 			document.mainBody.addChild("script", q{ 
 				window.ENV = { WIKI_PAGE: { } }; window.position_magic_field_name = "FIXME";
-				window.openBzBoxPosition = 9;
+				window.openBzBoxPosition = 0;
 
 				// also re-adjust links after everything is loaded for some interaction
 				window.addEventListener("load", function() {
@@ -2608,13 +2618,17 @@ class EditorApi : ApiProvider {
 		return div;
 	}
 
+	private auto createCourseCanvasCredentials() {
+		return productionCredentials();
+	}
+
 	// a courseName is like 2019 Spring Braven Accelerator - RUN
 	// a courseCode is like 2019 Spring RUN
 	@GenericContainerType("utilities")
 	string prepareNewCourse(int sourceCourseId, string courseName, string courseCode, BravenTimezone timeZone, SalesforceCampaign salesforceCampaign) {
 
 		// see: https://docs.google.com/document/d/1jf4ibekXtK7nwgEmAuI63DZYyaNUDLQF91GEH05SdhE/edit#heading=h.483cufevfaq0
-		auto canvas = getCanvasApiClient(stagingCredentials());
+		auto canvas = getCanvasApiClient(createCourseCanvasCredentials());
 
 		// create the course
 		auto courseReq = canvas.rest.
@@ -2681,7 +2695,10 @@ class EditorApi : ApiProvider {
 		auto app = loginToProductionSalesforce();
 		auto answer = app.rest.query._SELF()("q", "SELECT  COUNT(ContactId), Section_Name_In_LMS__c   FROM    CampaignMember  WHERE CampaignId = '"~cast(string) salesforceCampaign~"' AND  Candidate_Status__c = 'Confirmed' GROUP BY Section_Name_In_LMS__c").GET.result;
 
-		auto canvas = getCanvasApiClient(stagingCredentials());
+		auto canvas = getCanvasApiClient(createCourseCanvasCredentials());
+
+		bool tuesdayNeeded = true;
+		bool wednesdayNeeded = true;
 
 		foreach(record; answer.records) {
 			auto req = canvas.rest.
@@ -2689,9 +2706,31 @@ class EditorApi : ApiProvider {
 					"course_section[name]", record.Section_Name_In_LMS__c
 				);
 			req.result;
+			if(record.Section_Name_In_LMS__c.get!string.indexOf("(Tu") != -1)
+				tuesdayNeeded = false;
+			if(record.Section_Name_In_LMS__c.get!string.indexOf("(We") != -1)
+				wednesdayNeeded = false;
 		}
 
-		// FIXME: maybe use the lock_at as a resubmission deadline
+		if(tuesdayNeeded) {
+			string name = salesforceCampaign == SalesforceCampaign.RUNFellows ? "RU-N Fellows (Tu)" : "SJSU Fellows (Tu)";
+			auto req = canvas.rest.
+				courses[courseId].sections.POST(
+					"course_section[name]", name
+				);
+			req.result;
+		}
+
+		if(wednesdayNeeded) {
+			string name = salesforceCampaign == SalesforceCampaign.RUNFellows ? "RU-N Fellows (We)" : "SJSU Fellows (We)";
+			auto req = canvas.rest.
+				courses[courseId].sections.POST(
+					"course_section[name]", name
+				);
+			req.result;
+		}
+
+
 
 		return answer.toString;
 	}
@@ -2708,7 +2747,7 @@ class EditorApi : ApiProvider {
 		import std.datetime;
 		auto tz = PosixTimeZone.getTimeZone(cast(string) timeZone);
 
-		auto canvas = getCanvasApiClient(stagingCredentials());
+		auto canvas = getCanvasApiClient(createCourseCanvasCredentials());
 
 		foreach(aid; assignmentIds) {
 			var overridesArray = var.emptyArray;
@@ -2716,12 +2755,23 @@ class EditorApi : ApiProvider {
 				var o = var.emptyObject;
 				o.assignment_id = aid;
 				o.course_section_id = ts;
+
 				auto due = SysTime.fromISOExtString(
 					cgi.post["assignment_" ~ aid ~ "_due_at_tuesday"]
 						~ "T"
 						~ formatTime(cgi.post["assignment_" ~ aid ~ "_due_at_time"])
 					, tz).toUTC;
 				o.due_at = due.toISOExtString;
+
+				try {
+					auto lock = SysTime.fromISOExtString(
+						cgi.post["assignment_" ~ aid ~ "_lock_at_tuesday"]
+							~ "T"
+							~ formatTime(cgi.post["assignment_" ~ aid ~ "_lock_at_time"])
+						, tz).toUTC;
+					o.lock_at = lock.toISOExtString;
+				} catch(Throwable t) { writeln(t); }
+
 				overridesArray ~= o;
 			}
 			foreach(ts; wednesdaySections) {
@@ -2734,6 +2784,16 @@ class EditorApi : ApiProvider {
 						~ formatTime(cgi.post["assignment_" ~ aid ~ "_due_at_time"])
 					, tz).toUTC;
 				o.due_at = due.toISOExtString;
+
+				try {
+					auto lock = SysTime.fromISOExtString(
+						cgi.post["assignment_" ~ aid ~ "_lock_at_tuesday"]
+							~ "T"
+							~ formatTime(cgi.post["assignment_" ~ aid ~ "_lock_at_time"])
+						, tz).toUTC;
+					o.lock_at = lock.toISOExtString;
+				} catch(Throwable t) { writeln(t); }
+
 				overridesArray ~= o;
 			}
 
@@ -2827,7 +2887,7 @@ class EditorApi : ApiProvider {
 		import std.datetime;
 		auto tz = PosixTimeZone.getTimeZone(cast(string) timeZone);
 
-		auto canvas = getCanvasApiClient(stagingCredentials());
+		auto canvas = getCanvasApiClient(createCourseCanvasCredentials());
 
 		auto sectionsReq = canvas.rest.
 			courses[courseId].sections._SELF()
@@ -2883,10 +2943,10 @@ class EditorApi : ApiProvider {
 		foreach(section; sectionsReq.result) {
 			auto n = section.name.get!string;
 			auto i = section.id.get!string;
-			if(n.indexOf("(Tu") != -1) {
+			if(n.indexOf("(Tu") != -1 || n.indexOf("Tuesday") != -1) {
 				tuesdayList.addChild("li", n);
 				tuesdaySections ~= i;
-			} else if(n.indexOf("(We") != -1) {
+			} else if(n.indexOf("(We") != -1 || n.indexOf("Wednesday") != -1) {
 				wednesdayList.addChild("li", n);
 				wednesdaySections ~= i;
 			} else {
@@ -2900,14 +2960,15 @@ class EditorApi : ApiProvider {
 		div.addChild("p", "Please note: all times are local time in " ~ std.conv.to!string(timeZone));
 
 		div.addChild("h2", "Module Due Dates");
+		div.addChild("p", "Note the lock date is also known as the resubmission deadline.");
 		auto modulesTable = cast(Table) div.addChild("table");
-		modulesTable.appendHeaderRow("Assignment", "Tuesday Due Date", "Wednesday Due Date", "Due Time");
+		modulesTable.appendHeaderRow("Assignment", "Tuesday Due Date", "Wednesday Due Date", "Due Time", "Tuesday Lock Date", "Wednesday Lock Date", "Lock Time");
 		div.addChild("h2", "Project Due Dates");
 		auto projectsTable = cast(Table) div.addChild("table");
-		projectsTable.appendHeaderRow("Assignment", "Tuesday Due Date", "Wednesday Due Date", "Due Time");
+		projectsTable.appendHeaderRow("Assignment", "Tuesday Due Date", "Wednesday Due Date", "Due Time", "Tuesday Lock Date", "Wednesday Lock Date", "Lock Time");
 		div.addChild("h2", "Other Assignment Due Dates");
 		auto otherAssignmentsTable = cast(Table) div.addChild("table");
-		otherAssignmentsTable.appendHeaderRow("Assignment", "Tuesday Due Date", "Wednesday Due Date", "Due Time");
+		otherAssignmentsTable.appendHeaderRow("Assignment", "Tuesday Due Date", "Wednesday Due Date", "Due Time", "Tuesday Lock Date", "Wednesday Lock Date", "Lock Time");
 
 		foreach(assignment; assignmentsReq.result) {
 			auto name = assignment.name.get!string;
@@ -2918,11 +2979,14 @@ class EditorApi : ApiProvider {
 				table = projectsTable;
 
 			SysTime due = loadExisting ? (assignment.due_at ? SysTime.fromISOExtString(assignment.due_at.get!string, tz) : SysTime.init) : SysTime.init;
+			SysTime lock = loadExisting ? (assignment.lock_at ? SysTime.fromISOExtString(assignment.lock_at.get!string, tz) : SysTime.init) : SysTime.init;
 
 			if(loadExisting)
 			foreach(or; assignment.overrides) {
 				if(or.title.get!string.indexOf("Tu") != -1 && or.due_at) {
 					due = SysTime.fromISOExtString(or.due_at.get!string, tz);
+					if(or.lock_at)
+						lock = SysTime.fromISOExtString(or.lock_at.get!string, tz);
 					break;
 				}
 			}
@@ -2936,6 +3000,10 @@ class EditorApi : ApiProvider {
 				Element.make("input", "assignment_" ~ id ~ "_due_at_tuesday", due == SysTime.init ? "" : (cast(Date)due).toISOExtString).setAttribute("type", "date"),
 				Element.make("input","assignment_" ~  id ~ "_due_at_wednesday", due == SysTime.init ? "" : (cast(Date)due + dur!"days"(1)).toISOExtString).setAttribute("type", "date"),
 				Element.make("input","assignment_" ~ id ~ "_due_at_time", due == SysTime.init ? "" : (cast(TimeOfDay)due).toISOExtString).setAttribute("type", "time"),
+
+				Element.make("input", "assignment_" ~ id ~ "_lock_at_tuesday", lock == SysTime.init ? "" : (cast(Date)lock).toISOExtString).setAttribute("type", "date"),
+				Element.make("input","assignment_" ~  id ~ "_lock_at_wednesday", lock == SysTime.init ? "" : (cast(Date)lock + dur!"days"(1)).toISOExtString).setAttribute("type", "date"),
+				Element.make("input","assignment_" ~ id ~ "_lock_at_time", lock == SysTime.init ? "" : (cast(TimeOfDay)lock).toISOExtString).setAttribute("type", "time"),
 			);
 		}
 
@@ -4533,9 +4601,9 @@ HttpApiClient!() loginToProductionSalesforce() {
 }
 
 enum SalesforceCampaign : string {
-	SJSUFellows = "7011J000001JjgH",
+	SJSUFellows = "701o0000000AK6p",
 	NLUFellows = "7011J000001JjIF",
-	RUNFellows = "7011J0000011njJ",
+	RUNFellows = "701o0000000ApU4",
 }
 
 enum BravenTimezone : string {
