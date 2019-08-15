@@ -1167,6 +1167,14 @@ runOnUserContent(function(){
   var isWikiPage = (ENV && ENV["WIKI_PAGE"]);
   if (!isWikiPage) return;
 
+  var nextButton = document.querySelector(".bz-toggle-all-next");
+  if(nextButton) {
+  	// if we have a next (aka Done) button in the content, we want to hide the
+	  // default canvas next button b/c this is a module for Fellows using the interactive one page flow.
+    // TAs and others who use modules without this flow want to see Canvas's built-in Next/Prev button.
+	  document.body.classList.add("hide-next-module-button");
+  }
+
   addOnMagicFieldsLoaded(function() {
     createBzProgressBar();
   });
