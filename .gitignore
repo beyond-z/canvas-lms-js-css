@@ -1,7 +1,18 @@
+# Data files
+editor/data
+editor/data.bkup*
+
+# Content Editor tmp files
+editor/nohup.out
+
 # Dreamweaver crap: #
 _notes/
 modules-html/_notes
 images/_notes
+
+# Saved tem files:
+*.save
+*.orig
 
 # Scratch #
 new-ui-sandbox.js

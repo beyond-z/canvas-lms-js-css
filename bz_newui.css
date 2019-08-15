@@ -122,9 +122,9 @@ a:visited {
 	font-size: 27px;
 }
 
-.bz-module .bz-box h5:not(.box-title), 
-.bz-module h6, 
-.bz-module .inner-toc, 
+.bz-module .bz-box h5:not(.box-title),
+.bz-module h6,
+.bz-module .inner-toc,
 .bz-module .main-toc {
  font-size: 16px;
  letter-spacing: 0.1em;
@@ -333,54 +333,6 @@ progress[value]::-webkit-progress-bar {
   box-shadow: none;
 }
 
-
-@media(min-width: 640px) {
-	#bz-progress-bar {
-		position: fixed;
-		z-index: 999;
-		left: 32px;
-		bottom: 64px;
-		width: 100px;
-		background: #f0f0f0;
-		text-align: left;
-		padding: 4px;
-	}
-	#bz-progress-bar::before {
-		content: "Module Progress";
-	}
-	#bz-progress-bar::after {
-		text-align: center;
-		content: attr(data-place) "%";
-	}
-}
-
-@media(max-width: 640px) {
-	#bz-progress-bar {
-		position: fixed;
-		z-index: 999;
-		right: 0;
-		bottom: 0;
-		background: transparent;
-		width: 100vh;
-	    -webkit-transform-origin: top right;
-	       -moz-transform-origin: top right;
-		-ms-transform-origin: top right;
-		 -o-transform-origin: top right;
-		    transform-origin: top right;
-	    -webkit-transform: rotate(90deg);
-	       -moz-transform: rotate(90deg);
-		-ms-transform: rotate(90deg);
-		 -o-transform: rotate(90deg);
-		    transform: rotate(90deg);		
-	}
-}
-
-#bz-progress-bar > div {
-	background-color: #C8141F;
-	height: 4px;
-}
-
-
 /* Styling Canvas notifications */
 .ic-notification__icon {
 	background-color: #9ad7d7;
@@ -409,12 +361,12 @@ progress[value]::-webkit-progress-bar {
 .student-logged-in #footer,
 .student-logged-in .bz-module-sequence-progress-container,
 .student-logged-in #bz-module-sequence-progress-bar {
-	display: none !important;	
+	display: none !important;
 }
-/* 
-   can't just hide breadcrumbs; 
-   need to keep this a certain height 
-   to keep the sidebar from hiding under header 
+/*
+   can't just hide breadcrumbs;
+   need to keep this a certain height
+   to keep the sidebar from hiding under header
 */
 .student-logged-in #breadcrumbs {
 	height: 28px;
@@ -469,7 +421,7 @@ progress[value]::-webkit-progress-bar {
     font-weight: bold;
     font-weight: 700;
     font-size: 1.25em;
-  
+
 }
 
 /*    Grades   */
@@ -501,7 +453,7 @@ progress[value]::-webkit-progress-bar {
 
 #bz-help-button a {
 	display: block;
-	
+
 	transform: rotate(270deg);
 	transform-origin: 100% 100%;
 	-ms-transform: rotate(270deg);
@@ -510,9 +462,9 @@ progress[value]::-webkit-progress-bar {
 	-webkit-transform-origin: 100% 100%;
 	-moz-transform: rotate(270deg);
 	-moz-transform-origin: 100% 100%;
-	
+
 	margin: 0px;
-	
+
 	padding: 0.5em 0.8em;
 	background-color: #EB3B46;
 	/*border-radius: 6px 6px 0px 0px;*/
@@ -521,7 +473,7 @@ progress[value]::-webkit-progress-bar {
 	text-decoration: none;
 	color: white;
 }
-#bz-help-button a:active, 
+#bz-help-button a:active,
 #bz-help-button a:visited,
 #bz-help-button a:link  {
 	color: #FFF;
@@ -529,7 +481,7 @@ progress[value]::-webkit-progress-bar {
 #bz-help-button a:hover,
 .bz-course-part-module-box .bz-button-pick-up:hover {
 	text-decoration: none;
-	background: #C8141F;	
+	background: #C8141F;
 }
 
 .bz-course-part-task-box .todo-details p:nth-of-type(1) {
@@ -891,7 +843,7 @@ progress[value]::-webkit-progress-bar {
 /* Customizing the modules list view */
 /* --------------------------------- */
 #context_modules {
-	font-family: sans-serif;	
+	font-family: sans-serif;
 }
 
 /* Customize modules list to remove ellipsis */
@@ -905,7 +857,7 @@ progress[value]::-webkit-progress-bar {
 	font-size: 1.2em;
 }
 .context_module_item .item_name .title {
-	font-size: 16px !important;	
+	font-size: 16px !important;
 }
 #context_modules .ig-header-title {
 	text-transform: uppercase;
@@ -914,7 +866,7 @@ progress[value]::-webkit-progress-bar {
 	font-size: 1.4em;
 }
 .indent_0 {
-	text-transform:uppercase;	
+	text-transform:uppercase;
 }
 
 /* HEADER NUMBERING */
@@ -990,7 +942,9 @@ html {
 }
 
 .bz-module {
-	margin: 0 auto 200px;
+	margin: 0px;
+	margin-bottom: 200px;
+	/* margin: 0 auto 200px; */
 	position: relative;
 }
 
@@ -1066,7 +1020,7 @@ figcaption {
  color: #FFF;
 }
 
-.show-answers.maybe, 
+.show-answers.maybe,
 ul:not(.instant-feedback) .show-answers.correct:not(.checked) {
   color: #B08833;
 }
@@ -1075,7 +1029,7 @@ ul:not(.instant-feedback) .show-answers.correct:not(.checked) {
  background: #B08833;
 }
 
-.show-answers.incorrect, 
+.show-answers.incorrect,
 ul:not(.instant-feedback) .show-answers.checked:not(.correct) {
   color: #EB3B46;
 }
@@ -1173,7 +1127,7 @@ input[type='button']:disabled {
   font-size: 0.9em;
 }
 
-.user_content table:not([cellpadding]) td, 
+.user_content table:not([cellpadding]) td,
 .mceContentBody table:not([cellpadding]) td {
 	padding: 10px;
 }
@@ -1221,6 +1175,11 @@ figure {
 
 .question {
 	background-image: url('images/lms-icons-04.png');
+}
+
+.question.survey-question {
+	/* Don't want question image on retro survey */
+	background-image: none;
 }
 
 .answer {
@@ -1315,7 +1274,7 @@ li input:not([type="button"]):not([type="radio"]):not([type="checkbox"]), li tex
 	break-inside: avoid;
 }
 
-#wiki_page_show table:not(.no-zebra):not(.sort-to-match) tr:nth-child(even):not(.no-zebra), 
+#wiki_page_show table:not(.no-zebra):not(.sort-to-match) tr:nth-child(even):not(.no-zebra),
 .to-columns li:nth-child(even) {
  background: #F6F6F6;
 }
@@ -1452,7 +1411,7 @@ th {
 	width: 672px;
 	height: 427px;
 	border: 1px #CCC solid;
-	margin-bottom:5px; 
+	margin-bottom:5px;
 	max-width: 100%;
 }
 
@@ -1638,7 +1597,7 @@ table [type="range"] {
     border-bottom: 1px #000 solid !important;
 }
 
-.bz-resume-box .resume-when, 
+.bz-resume-box .resume-when,
 .bz-resume-box .resume-where {
     font-weight: bold;
     font-size: 14px;
@@ -1825,18 +1784,18 @@ table [type="range"] {
 	border: 0;
 	/*border-radius: 0;*/
 }
-.btn-primary, .Button--primary {	
+.btn-primary, .Button--primary {
 	background: #eb3b46;
 }
 .btn-primary:hover, .Button--primary:hover {
-	background: #c8141f; 	
+	background: #c8141f;
 }
 .btn-secondary {
 	background: #9ad7d7;
 }
 
 .btn-secondary:hover {
-	background: #ebf7f7;	
+	background: #ebf7f7;
 }
 
 #questions,
@@ -2053,7 +2012,7 @@ table [type="range"] {
 	float: left;
 	text-align: right;
 }
- .bz-magic-field-assignment .timeline li:nth-child(even) .milestone, 
+ .bz-magic-field-assignment .timeline li:nth-child(even) .milestone,
  .bz-magic-field-submission .timeline li:nth-child(even) .milestone {
  float: right;
 }
@@ -2136,7 +2095,6 @@ table [type="range"] {
 /* Rubrics and assignment review: */
 .bz-retained-field-replaced {
 	background: #FF0;
-	white-space: pre-line; /* important to keep user line breaks visible! */
 }
 
 .bz-ajax-loaded-rubric {
@@ -2319,7 +2277,7 @@ table [type="range"] {
 	}
 	.bz-box.video iframe {
 		width: 100%;
-	}	
+	}
 	.to-columns {
 		-webkit-column-count: 1;
 		-moz-column-count: 1;
@@ -2625,7 +2583,7 @@ table [type="range"] {
   width: 18px;
 }
 
-#bz-announcements-list .remove a:hover, 
+#bz-announcements-list .remove a:hover,
 #bz-announcements-list .remove a:active {
   color: #000;
   text-decoration: none;
@@ -2758,3 +2716,112 @@ table [type="range"] {
 }
 
 /* end transfer from old ui } */
+
+body.pages #content {
+	overflow: visible !important; /* canvas hiding scroll bars doesnt allow sticky progress in module */
+}
+
+.pages.show .show-content {
+	overflow-x: visible !important; /* otherwise canvas breaks our sidebar */
+}
+
+#bz-progress-bar {
+	position: sticky;
+	float: right;
+	right: 1em;
+	top: 1em;
+	width: 260px;
+	z-index: 10;
+}
+
+#bz-progress-bar > div {
+	padding: 0.5em;
+	background-color: #f7f7f7;
+	margin-bottom: 1em;
+}
+
+#bz-progress-bar ol {
+	list-style-type: none;
+	counter-reset: mastery-counter;
+	padding: 0px;
+}
+
+#bz-progress-bar ol li {
+	counter-increment: mastery-counter;
+	position: relative;
+	margin: 0.5em 0px;
+	padding-left: 30px;
+}
+
+#bz-progress-bar ol li::before {
+	content: counter(mastery-counter);
+	display: inline-block;
+	text-align: center;
+	color: #adadad;
+	font-weight: bold;
+	font-size: 16px;
+	width: 24px;
+	height: 24px;
+	line-height: 24px;
+	vertical-align: middle;
+
+	position: absolute;
+	left: 0px;
+	top: 0px;
+}
+
+#bz-progress-bar progress {
+	height: 1em;
+	width: 100%;
+
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	border: none;
+}
+
+#bz-progress-bar progress::-webkit-progress-bar {
+	background-color: #e2e2e2;
+	color: #e2e2e2;
+}
+
+/* important note: the prefixed versions for -webkit- and -moz- MUST appear as separate statements or chrome will ignore it! */
+#bz-progress-bar progress::-webkit-progress-value,
+#bz-progress-bar progress::-webkit-progress-bar-value {
+	background: #eb3b46;
+}
+
+#bz-progress-bar progress::-moz-progress-bar {
+	background: #eb3b46;
+}
+
+#bz-progress-bar progress {
+	color: #eb3b46;
+}
+
+#bz-progress-bar .correct-mastery-item,
+#bz-progress-bar .incorrect-mastery-item,
+#bz-progress-bar .unanswered-mastery-item {
+	display: inline-block;
+	width: 24px;
+	height: 24px;
+	border-radius: 12px;
+	font-size: 0px;
+	vertical-align: top;
+	margin-right: 4px;
+	margin-bottom: 4px;
+}
+
+#bz-progress-bar .correct-mastery-item {
+	background-color: #10c46e;
+	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4wgHAxcCGGjrFwAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAACPElEQVRIx61WQWjTUBj+mm6B2i6Ybgw3mmwOCgXFHaKe7M2DUArKEJmelF3qSVDobWNeZBfpQfQyPQh2lw0Gc5fpvKxDUCMULMKKcybbimNtbWl4EjfmoaY2tHvJ032n5OXl//7v/9///89DCDkABRu/SlitfsGmWcZKNd9YjwphhHgRMfE0jnO+Q//3HEagGhqmdzKYL2XhhMvBYSRDlzDYGXRHMFVYQmp7GSwQvD6MSzHc6D5HJ0h8TbvymqbmycnrjXfuKI0DwHwpi6nCUivBYjX338YtpLaXoRqanWDy2wKzISUgQwnIbb9NbC78JXhRfA/dLDMl9O2ZJF4P34XEixC8rcdUrWlQDQ0dAJBpOt9u8HDoKiJd/bj5+Rk1rNM7mbqCN5U118YlXsRIr4KnWyuOOdPNcp2guk9cE0wMxFHZI7ivLzruVWsaOCvbtERKvGjzPqW/cu1Uh1MyHw2Nos8nYiT3GFEhDACY2/3oWrGHEHLQpyapCuZO3QYxf+LHPkGOFDCWf+6agLOk0+J4Jz+DE8dERLr68bKYZaoTznpwKv/V4hoqe4Sp2qNCuE4w1nvBcXNiPY3Z7x+Y6uVaz9k/CvyyowrdLOPexixTVx3sDDb1olC8bcn/CwSvDw8GrtibneKXMS7FjoQgHb7VGKO2OrCmEUso2k01xS/TR6ZqaEisp5k6rBKQMRmK24xTh77Vxmd230GtaVTDoz3nW2axK4Lmq0uOFPDJ2GqsXRQi6OYDbW8SzfgNmcfld30i4sAAAAAASUVORK5CYII=);
+}
+
+#bz-progress-bar .incorrect-mastery-item {
+	background-color: #eb3b46;
+	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4wgHAxY1uc5/WQAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAChklEQVRIx62VMWgTYRTHf3eXXNP0mkWIAVFoEjcl0inUiENpoB0EO9RNoXRoBytIK1IFKVgFU8HqpJMIHXRoSwm0FNxC7SQUOmnS4NbGQUwuTZvL3TmkSRqby0Xb/3b38b3f+977f+8TCoWCSQOZZvm3lviCkUpT2tyqrsnnfEgXzkP3FcRAF4IgYCWhEcBU82gLy5SW4hjZHM0kBf3IYyNIoUutAfTNLYqxV+g7Gf5FzkgYeeIegtJhDSitfWb/xRz/KynoxzU7UwcRj2Z+kuAAenKb/YlHmGq+HmCqeQ6mn3Ma0pPb6O/n6wHawrJtM/+W3B1C7g41XNtfimPulnsommqe0lLctrZnVheQgn4AXAN9eF7HcBx+NzzJ/McyQF/fsM3ezPxEUBTctwZxRsIoU5McrKyx92nRck8xsQGAg28pEADTGmBkc2iJddr6o8jXetCTKXIzs02TMrI5jFQaUUv/aBq8or34atnXikL24ZOW+mTs7NZsaifX9UjtQ1FaA6TSrQHcQzdp64+iJ1Pl+CO37TcJ4HS32wOkoB/3+BjGbobf4w/QEus4Iz2WFq05A4yLQUSrIVWR5/EkAOpMDCObI/fsJaaqordwb0SfF4cY6LKu+0AfUjDAwcoaxa+bVXf8GrpjP2V9XoSzXkTH1TCSz2vhggymqpJ/8/aYBW1LG+2tTdOTTtFjpfF00v7hHYLSUW6yI9qLFLp8agB5dLg6sqsuck1PIXo6TxzcNdCH47A8dQBB6cAVe2rZj5aD37/b/Mk01TzF2Tm0w2HVas3l0eG6zJs++pUXrrS43BQk+bxI0V6cgzeOvcW2gKMnMlJpxO9JtL1C9QKJAT/N7lBFfwCDtAlhOytPuAAAAABJRU5ErkJggg==);
+}
+
+#bz-progress-bar .unanswered-mastery-item {
+	background-color: #e6e6e6;
+}
