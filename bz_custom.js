@@ -79,12 +79,12 @@ jQuery( document ).ready(function() {
       jQuery(this).parent().toggleClass('collapsed').children().not('.bz-toggle-collapse').slideToggle();
     });
 
-    /* Improve Priorities Quiz */  
+    /* Improve Priorities Quiz */
     jQuery('.context-course_11 #question_482_question_text ol li, .context-course_15 #question_619_question_text ol li, .context-course_23 #question_1918_question_text ol li, .context-course_25 #question_2260_question_text ol li').prepend('<span class="dynamic"></span>');
     jQuery('.context-course_11 #question_481_question_text input, .context-course_15 #question_618_question_text input, .context-course_23 #question_1917_question_text input, .context-course_25 #question_2259_question_text input').each(function(i){
       jQuery(this).change(function(){
         //console.log('changing big rock');
-        var t = jQuery(this).val()+': '; 
+        var t = jQuery(this).val()+': ';
         console.log(t);
         jQuery('.context-course_11 #question_482_question_text ol li, .context-course_15 #question_619_question_text ol li, .context-course_23 #question_1918_question_text ol li, .context-course_25 #question_2260_question_text ol li').eq(i).children('.dynamic').text(t);
       });
@@ -92,10 +92,10 @@ jQuery( document ).ready(function() {
     /**/
     /* Improve SMART Goals quiz: */
     jQuery('#bz-smart-quiz input').css('width', '95%');
-    /**/  
+    /**/
 
     /* Quick Quiz functionality: */
-    
+
     jQuery('.bz-quick-quiz input[type=radio]').change(function() {
       console.log(this.value);
       if (this.value == "correct") {
@@ -108,9 +108,9 @@ jQuery( document ).ready(function() {
     });
     /* Local Navigation UI enhancements */
     bzLocalNavUI();
-    
+
     // Init local selector (hides/shows content based on user's choice of location
-    jQuery('.locale').hide(); 
+    jQuery('.locale').hide();
     jQuery('.locale-chooser').click(function(e){
       e.preventDefault();
       var target = jQuery(this).attr('href');
@@ -118,22 +118,22 @@ jQuery( document ).ready(function() {
         jQuery(target).show();
       });
     });
-    
+
     // Create auto table of contents
     jQuery('#bz-auto-toc').each(function(){bzAutoTOC();});
-  
-    // Enable jQuery UI tooltips that override browser styling/interaction: 
+
+    // Enable jQuery UI tooltips that override browser styling/interaction:
     jQuery(document).tooltip();
-  
+
     // Add character counting tool to pagemapper
     //jQuery('#page-mapper-container').each(function(){bzPageMapperPageCharCount()}).parents('body').addClass('bz-page-mapper-body');
-  
+
     /* In modules view, add a class to items with "after learning lab" in their titles, so we can style them differently: */
     bzAfterLL();
-    
+
     /* Load load any dynamic content, such as rubric criteria or LinkedIn API return URLs */
     bzAjaxLoad();
-    
+
     /* Scrape assignment due date and insert it into assignment text: */
     jQuery('.bz-dynamic-due-date').text(function(){
       var dueDateText = jQuery('.student-assignment-overview .date_text').text();
@@ -143,7 +143,7 @@ jQuery( document ).ready(function() {
         return jQuery(this).text();
       }
     });
-    
+
   });
 
 });
@@ -175,7 +175,7 @@ function bzGiveVerboseFeedback(feedback, answerSpace, feedbackClass) {
 
     For other stuff like change events, set them up below in the bzInitializeNewUi function.
 */
-var bzNewUiHandlers = {  
+var bzNewUiHandlers = {
   // Score a checklist question:
   '.for-checklist' : function(){
     var checklist = jQuery(this).parents('.question').find('.checklist');
@@ -193,7 +193,7 @@ var bzNewUiHandlers = {
         } else {
           falsePositives++;
         }
-      } 
+      }
     });
     var finalScore = (checklistScore-falsePositives)/maxScore;
     var feedbackClass = "";
@@ -236,9 +236,9 @@ var bzNewUiHandlers = {
           feedback = "Oops!";
           feedbackClass = 'incorrect';
         }
-      } 
+      }
     });
-    bzGiveVerboseFeedback(feedback, answerSpace, feedbackClass);    
+    bzGiveVerboseFeedback(feedback, answerSpace, feedbackClass);
   },
 
   // Score a range question:
@@ -387,6 +387,19 @@ function triggerBzNewUiHandler(element) {
     }
 }
 
+function currentRangeVal(e) {
+  var currentVal = jQuery(e).val();
+  jQuery(e).parents('.question').find('.display-value .current-value').text(currentVal);
+  jQuery(e).parents('td').siblings('.current-value').text(currentVal);
+  jQuery(e).parents('td').find('.current-value').text(currentVal);
+};
+
+addOnMagicFieldsLoaded(function() {
+  $( '[type="range"]' ).each(function() {
+    currentRangeVal(this);
+  });
+});
+
 function bzInitializeNewUi() {
     // FIXME
 
@@ -396,10 +409,7 @@ function bzInitializeNewUi() {
 
   // Display current value of a range question:
   jQuery ('[type="range"]').change(function() {
-    var currentVal = jQuery(this).val();
-    jQuery(this).parents('.question').find('.display-value .current-value').text(currentVal);
-    jQuery(this).parents('td').siblings('.current-value').text(currentVal);
-    jQuery(this).parents('td').find('.current-value').text(currentVal);
+    currentRangeVal(this);
   }).change();
 
   // Provide instant feedback when any input on a list is checked:
@@ -422,22 +432,22 @@ function bzInitializeNewUi() {
   jQuery('.reveal-next').click(function(){
     jQuery(this).parent().next().slideToggle();
   });
-  
+
   // Check/uncheck boxes by clicking surrounding table cell
 	/* Disabling this for now. Interferes with magic checkboxes.
-  jQuery(".selectable-cells td").click(function(){ 
+  jQuery(".selectable-cells td").click(function(){
     jQuery(this).toggleClass('inner-checked').find('input').each(function(){
       // toggle the input inside the cell:
-      jQuery(this).prop('checked', !jQuery(this).prop('checked')); 
+      jQuery(this).prop('checked', !jQuery(this).prop('checked'));
     });
   });
   */
- 
+
   // Mix up checklists:
   jQuery('.checklist, .radio-list').not('.dont-mix').each(function(){
     shuffleChildren(this);
   });
-  
+
   // Instant feedback when sliding range input about "how are you feeling":
   jQuery('[data-bz-range-flr]').each(function() {
     var feedback = jQuery(this);
@@ -447,7 +457,7 @@ function bzInitializeNewUi() {
     feedback.parents('tr').prev().find('input').change(function(){
       var rangeValue = jQuery(this).val();
       if ( fbFlr < rangeValue && rangeValue <= fbClg ) {
-        feedback.slideDown().siblings().slideUp();          
+        feedback.slideDown().siblings().slideUp();
       }
     });
   });
@@ -455,7 +465,7 @@ function bzInitializeNewUi() {
 }
 
 runOnUserContent(function() {
-  
+
   /* START NEW UI STUFF: */
 
   bzInitializeNewUi();
@@ -483,8 +493,8 @@ runOnUserContent(function() {
     return Array.prototype.slice.call(all, start, end);
   }
 
-  
-  // Automatically generate a table of contents (TOC) for the top level out of h2 elements, 
+
+  // Automatically generate a table of contents (TOC) for the top level out of h2 elements,
   // and a h2-level TOC out of its nested h3 elements
   jQuery('.bz-module:not(.lc-module)').prepend(function(){
     var tocBox = jQuery('<div class="main-toc"><p class="match-heading-style">The big picture:</p></div>');
@@ -520,13 +530,13 @@ runOnUserContent(function() {
       }
 
        mainToc.append(mainListObj);
-      
+
     });
     tocBox.append(mainToc);
     if (mainHasKids) return tocBox;
   });
 
-  // Create years 
+  // Create years
   jQuery('[data-bz-insert-offset-year]').each(function(){
     var offset = +(jQuery(this).attr('data-bz-insert-offset-year'));
     if( jQuery(this).is('input') && ( '' === jQuery(this).val() ) ){
@@ -539,12 +549,12 @@ runOnUserContent(function() {
       });
     }
   });
-  
+
   // Automatically check the "other" box if text input or textarea is filled, uncheck if cleared:
   jQuery('.checklist-other').bind("keyup blur", function(e) {
     jQuery(this).siblings('[type="checkbox"], [type="radio"]').prop('checked', ( ( jQuery(this).val() ) ? true : false ) );
   }).parent('p').addClass('bz-has-other');
-  
+
   // Create a button to toggle transcripts for videos
   jQuery('.transcript').hide().before(function(){
     var transcript = jQuery(this);
@@ -553,9 +563,9 @@ runOnUserContent(function() {
       transcript.slideToggle();
     });
   });
-  
+
   // Show parent only if the child's bz-retained is populated:
-  jQuery('.conditional-show-source').find('input').each(function(){ 
+  jQuery('.conditional-show-source').find('input').each(function(){
     // init when the page loads:
     showIfMagicIsPopulated(jQuery(this));
   }).change(function(){
@@ -570,7 +580,7 @@ runOnUserContent(function() {
           // If it's a checkbox that's checked, or if it's any other type of field that's not empty:
           jQuery(this).parents('.conditional-show').show();
         } else {
-          // if it's unckecked or empty, hide the whole row:        
+          // if it's unckecked or empty, hide the whole row:
           jQuery(this).parents('.conditional-show').hide();
         }
       });
@@ -593,15 +603,15 @@ runOnUserContent(function() {
 				$('#bz-back-to-top').fadeIn();
 			} else {
 				$('#bz-back-to-top').fadeOut();
-			}		
+			}
 		});
 
-		
+
 	}
-	
+
 
   /* END NEW UI STUFF */
-  
+
 });
 
 
@@ -613,48 +623,48 @@ function bzAutoTOC() {
 }
 
 // this is the actual implementation of the auto table of contents
-function bzAutoTOCImpl() { 
-  var toc = document.getElementById("bz-auto-toc"); 
-  if(toc == null) return; 
+function bzAutoTOCImpl() {
+  var toc = document.getElementById("bz-auto-toc");
+  if(toc == null) return;
 
   if(toc.className == "bz-already-loaded")
     return;
 
-  var data = ENV["module_listing_data"]; 
-  if(data == null) return; 
-  var mid = location.search; 
-  if(mid && mid.length) { 
-    mid = mid.substring(1); 
-    var parts = mid.split("&"); 
-    for(var i = 0; i < parts.length; i++) { 
-      var idx = parts[i].indexOf("="); 
-      if(idx == -1) 
-        idx = parts[i].length; 
-      var name = parts[i].substring(0, idx); 
-      if(name == "module_item_id") { 
-        mid = parts[i].substring(idx + 1)|0; 
-        break; 
-      } 
-    } 
-  } 
-  toc.innerHTML = ""; 
-  var ol = document.createElement("ol"); 
-  for(var i = 0; i < data.length; i++) { 
-    var item = data[i].content_tag; 
-    if(item.indent > 0) 
-      continue; 
-    var li = document.createElement("li"); 
-    if(mid == item.id) 
-      li.className = "bz-toc-current"; 
-    var a = document.createElement("a"); 
-    a.textContent = item.title; 
-    a.href = item.url ? item.url : ("/courses/" + item.context_id + "/modules/items/" + item.id); 
-    li.appendChild(a); 
-    ol.appendChild(li); 
-  } 
-  toc.appendChild(ol); 
+  var data = ENV["module_listing_data"];
+  if(data == null) return;
+  var mid = location.search;
+  if(mid && mid.length) {
+    mid = mid.substring(1);
+    var parts = mid.split("&");
+    for(var i = 0; i < parts.length; i++) {
+      var idx = parts[i].indexOf("=");
+      if(idx == -1)
+        idx = parts[i].length;
+      var name = parts[i].substring(0, idx);
+      if(name == "module_item_id") {
+        mid = parts[i].substring(idx + 1)|0;
+        break;
+      }
+    }
+  }
+  toc.innerHTML = "";
+  var ol = document.createElement("ol");
+  for(var i = 0; i < data.length; i++) {
+    var item = data[i].content_tag;
+    if(item.indent > 0)
+      continue;
+    var li = document.createElement("li");
+    if(mid == item.id)
+      li.className = "bz-toc-current";
+    var a = document.createElement("a");
+    a.textContent = item.title;
+    a.href = item.url ? item.url : ("/courses/" + item.context_id + "/modules/items/" + item.id);
+    li.appendChild(a);
+    ol.appendChild(li);
+  }
+  toc.appendChild(ol);
   toc.className = "bz-already-loaded";
-} 
+}
 
 
 function bzAfterLL(){
@@ -699,7 +709,7 @@ function bzPageMapperPageCharCount() {
       // using *100 below because we want it displayed as percentage)
       deltaavg: Math.floor(pageLength/avgLength * 100),
       deltamax: maxLength-pageLength
-    }); 
+    });
   });
 }
 
@@ -711,7 +721,7 @@ function bzLocalNavUI() {
       return 'collapsed';
     } else {
       return 'expanded';
-    } 
+    }
   }).click(function(e){
     console.log('clicked');
     jQuery(this).toggleClass('expanded collapsed').siblings('.children').children().slideToggle();
@@ -728,7 +738,7 @@ function bzAjaxLoad() {
   var magicFieldElements = [];
   var magicRubricTablesLoadedCount = 0;
   console.log("bzAjaxLoad() begin");
- 
+
   // Processes the magic field values loaded.  Needs to happen after we finish creating the inline rubrics
   var loadExistingMagicValues = function(){
     existingMagicValuesLoaded = true; // Note: we still have a small window where this function could be called twice. Not a big deal if it does happen once in a blue moon.
@@ -809,7 +819,7 @@ function bzAjaxLoad() {
               var inputEl = jQuery('#'+magicFieldName);
               //console.log('Setting input value to: ' + selectedvalue + ' for input element: ' + inputEl.attr('id'));
               inputEl.val(selectedvalue);
-              // Tried triggering the change event to let the normal magic field logic in bz_support.js run, 
+              // Tried triggering the change event to let the normal magic field logic in bz_support.js run,
               // but it wasn't working so just save it directly here.
               BZ_SaveMagicField(magicFieldName, selectedvalue, isOptionalMagicField, "hidden");
            });
@@ -877,10 +887,10 @@ function bzAjaxLoad() {
     console.log("Retreived list of existing magic values for inline rubrics");
     isMagicFieldValuesRetreived = true;
     magicFieldValues = retrievedFieldValues;
-    if (!existingMagicValuesLoaded && magicRubricTablesLoadedCount >= magicFieldNames.length){ 
+    if (!existingMagicValuesLoaded && magicRubricTablesLoadedCount >= magicFieldNames.length){
       // Race condition b/n this function firing and the callback to load the inline rubric <table>s,
       // so both have to try to load the values if the other has run
-      loadExistingMagicValues(); 
+      loadExistingMagicValues();
     }
   });
 }
@@ -1145,7 +1155,7 @@ function createBzProgressBar() {
 }
 
 
-// Logic to unlock all content that has already been unlocked on this Wiki Page and 
+// Logic to unlock all content that has already been unlocked on this Wiki Page and
 // scroll to where you left off.
 
 // NOTE: this should remain near the bottom of the file; it ought to be the
@@ -1156,6 +1166,14 @@ runOnUserContent(function(){
 
   var isWikiPage = (ENV && ENV["WIKI_PAGE"]);
   if (!isWikiPage) return;
+
+  var nextButton = document.querySelector(".bz-toggle-all-next");
+  if(nextButton) {
+  	// if we have a next (aka Done) button in the content, we want to hide the
+	  // default canvas next button b/c this is a module for Fellows using the interactive one page flow.
+    // TAs and others who use modules without this flow want to see Canvas's built-in Next/Prev button.
+	  document.body.classList.add("hide-next-module-button");
+  }
 
   addOnMagicFieldsLoaded(function() {
     createBzProgressBar();
@@ -1684,7 +1702,7 @@ runOnUserContent(function() {
 
 
 // To see the ENV variables, you can use:
-/* 
+/*
 for (var key in ENV) {
   console.log('ENV["' + key + '"] = ' + ENV[key]);
 }
