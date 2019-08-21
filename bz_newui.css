@@ -122,9 +122,9 @@ a:visited {
 	font-size: 27px;
 }
 
-.bz-module .bz-box h5:not(.box-title), 
-.bz-module h6, 
-.bz-module .inner-toc, 
+.bz-module .bz-box h5:not(.box-title),
+.bz-module h6,
+.bz-module .inner-toc,
 .bz-module .main-toc {
  font-size: 16px;
  letter-spacing: 0.1em;
@@ -361,12 +361,12 @@ progress[value]::-webkit-progress-bar {
 .student-logged-in #footer,
 .student-logged-in .bz-module-sequence-progress-container,
 .student-logged-in #bz-module-sequence-progress-bar {
-	display: none !important;	
+	display: none !important;
 }
-/* 
-   can't just hide breadcrumbs; 
-   need to keep this a certain height 
-   to keep the sidebar from hiding under header 
+/*
+   can't just hide breadcrumbs;
+   need to keep this a certain height
+   to keep the sidebar from hiding under header
 */
 .student-logged-in #breadcrumbs {
 	height: 28px;
@@ -421,7 +421,7 @@ progress[value]::-webkit-progress-bar {
     font-weight: bold;
     font-weight: 700;
     font-size: 1.25em;
-  
+
 }
 
 /*    Grades   */
@@ -453,7 +453,7 @@ progress[value]::-webkit-progress-bar {
 
 #bz-help-button a {
 	display: block;
-	
+
 	transform: rotate(270deg);
 	transform-origin: 100% 100%;
 	-ms-transform: rotate(270deg);
@@ -462,9 +462,9 @@ progress[value]::-webkit-progress-bar {
 	-webkit-transform-origin: 100% 100%;
 	-moz-transform: rotate(270deg);
 	-moz-transform-origin: 100% 100%;
-	
+
 	margin: 0px;
-	
+
 	padding: 0.5em 0.8em;
 	background-color: #EB3B46;
 	/*border-radius: 6px 6px 0px 0px;*/
@@ -473,7 +473,7 @@ progress[value]::-webkit-progress-bar {
 	text-decoration: none;
 	color: white;
 }
-#bz-help-button a:active, 
+#bz-help-button a:active,
 #bz-help-button a:visited,
 #bz-help-button a:link  {
 	color: #FFF;
@@ -481,7 +481,7 @@ progress[value]::-webkit-progress-bar {
 #bz-help-button a:hover,
 .bz-course-part-module-box .bz-button-pick-up:hover {
 	text-decoration: none;
-	background: #C8141F;	
+	background: #C8141F;
 }
 
 .bz-course-part-task-box .todo-details p:nth-of-type(1) {
@@ -843,7 +843,7 @@ progress[value]::-webkit-progress-bar {
 /* Customizing the modules list view */
 /* --------------------------------- */
 #context_modules {
-	font-family: sans-serif;	
+	font-family: sans-serif;
 }
 
 /* Customize modules list to remove ellipsis */
@@ -857,7 +857,7 @@ progress[value]::-webkit-progress-bar {
 	font-size: 1.2em;
 }
 .context_module_item .item_name .title {
-	font-size: 16px !important;	
+	font-size: 16px !important;
 }
 #context_modules .ig-header-title {
 	text-transform: uppercase;
@@ -866,7 +866,7 @@ progress[value]::-webkit-progress-bar {
 	font-size: 1.4em;
 }
 .indent_0 {
-	text-transform:uppercase;	
+	text-transform:uppercase;
 }
 
 /* HEADER NUMBERING */
@@ -1020,7 +1020,7 @@ figcaption {
  color: #FFF;
 }
 
-.show-answers.maybe, 
+.show-answers.maybe,
 ul:not(.instant-feedback) .show-answers.correct:not(.checked) {
   color: #B08833;
 }
@@ -1029,7 +1029,7 @@ ul:not(.instant-feedback) .show-answers.correct:not(.checked) {
  background: #B08833;
 }
 
-.show-answers.incorrect, 
+.show-answers.incorrect,
 ul:not(.instant-feedback) .show-answers.checked:not(.correct) {
   color: #EB3B46;
 }
@@ -1127,7 +1127,7 @@ input[type='button']:disabled {
   font-size: 0.9em;
 }
 
-.user_content table:not([cellpadding]) td, 
+.user_content table:not([cellpadding]) td,
 .mceContentBody table:not([cellpadding]) td {
 	padding: 10px;
 }
@@ -1269,7 +1269,7 @@ li input:not([type="button"]):not([type="radio"]):not([type="checkbox"]), li tex
 	break-inside: avoid;
 }
 
-#wiki_page_show table:not(.no-zebra):not(.sort-to-match) tr:nth-child(even):not(.no-zebra), 
+#wiki_page_show table:not(.no-zebra):not(.sort-to-match) tr:nth-child(even):not(.no-zebra),
 .to-columns li:nth-child(even) {
  background: #F6F6F6;
 }
@@ -1406,7 +1406,7 @@ th {
 	width: 672px;
 	height: 427px;
 	border: 1px #CCC solid;
-	margin-bottom:5px; 
+	margin-bottom:5px;
 	max-width: 100%;
 }
 
@@ -1592,7 +1592,7 @@ table [type="range"] {
     border-bottom: 1px #000 solid !important;
 }
 
-.bz-resume-box .resume-when, 
+.bz-resume-box .resume-when,
 .bz-resume-box .resume-where {
     font-weight: bold;
     font-size: 14px;
@@ -1779,18 +1779,18 @@ table [type="range"] {
 	border: 0;
 	/*border-radius: 0;*/
 }
-.btn-primary, .Button--primary {	
+.btn-primary, .Button--primary {
 	background: #eb3b46;
 }
 .btn-primary:hover, .Button--primary:hover {
-	background: #c8141f; 	
+	background: #c8141f;
 }
 .btn-secondary {
 	background: #9ad7d7;
 }
 
 .btn-secondary:hover {
-	background: #ebf7f7;	
+	background: #ebf7f7;
 }
 
 #questions,
@@ -2007,7 +2007,7 @@ table [type="range"] {
 	float: left;
 	text-align: right;
 }
- .bz-magic-field-assignment .timeline li:nth-child(even) .milestone, 
+ .bz-magic-field-assignment .timeline li:nth-child(even) .milestone,
  .bz-magic-field-submission .timeline li:nth-child(even) .milestone {
  float: right;
 }
@@ -2065,11 +2065,56 @@ table [type="range"] {
 /* Drag and drop: */
 
 [draggable] {
- cursor: move;
+	cursor: move;
+	padding: 12px!important;
+	position: relative;
+	padding-left: 38px!important;
+	overflow:hidden;
 }
-
-.inside-dragging {
-	border: dashed 2px black !important;
+[draggable]:before {
+	content: '.. .. ..';
+	position: absolute;
+	left: 12px;
+	top: 50%;
+	line-height: 5px;
+	margin-top: -15px;
+	color: #CCCCCC;
+	font-size: 20px;
+	width:15px;
+}
+.droppable {
+	border-radius: 5px;
+	font-size: 15px;
+	font-family: arial;
+	background: #f3f3f3;
+}
+.droppable div {
+	background: white;
+	box-shadow: 0 2px 2px #d6d6d6;
+	margin:15px;
+}
+#wiki_page_show table.sort-to-match td.droppable{
+	padding: 0!important;
+}
+table.sort-to-match tr {
+	overflow: auto;
+	clear: both;
+	box-sizing: border-box;
+	border-top: 1px solid white;
+	padding: 10px;
+	background: #f3f3f3;
+	border-bottom:1px solid white;
+}
+#wiki_page_show table.sort-to-match td, #wiki_page_show table.sort-to-match th {
+	border: none;
+	padding: 0.3em 0.5em !important;
+	box-sizing: border-box;
+	border:none;
+	margin: 20px;
+}
+.droppable.inside-dragging div {
+	background: rgba(224,224,224,.5);
+	box-shadow: 0 2px 2px #d6d6d6 inset;
 }
  .sort-to-match.show-answers:not(.bz-locked-table) .correct {
 	background: #22B573;
@@ -2272,7 +2317,7 @@ table [type="range"] {
 	}
 	.bz-box.video iframe {
 		width: 100%;
-	}	
+	}
 	.to-columns {
 		-webkit-column-count: 1;
 		-moz-column-count: 1;
@@ -2578,7 +2623,7 @@ table [type="range"] {
   width: 18px;
 }
 
-#bz-announcements-list .remove a:hover, 
+#bz-announcements-list .remove a:hover,
 #bz-announcements-list .remove a:active {
   color: #000;
   text-decoration: none;
