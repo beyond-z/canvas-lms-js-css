@@ -2870,3 +2870,60 @@ body.pages #content {
 #bz-progress-bar .unanswered-mastery-item {
 	background-color: #e6e6e6;
 }
+
+/* Quick Quiz */
+/* ---------- */
+.bz-quick-quiz-container {
+	width: 100%;
+	position: relative;
+	padding: 5px 40px;
+	background: #e1e1e1;
+	left: -40px;
+	bottom: -15px;
+}
+.bz-quick-quiz {
+	background: #fff;
+	margin: 40px auto;
+	width: 67%;
+	padding: 20px;
+	border: 1px solid #ccc;
+}
+
+.bz-quick-quiz li {
+	min-height: 30px;
+	padding: 5px 5px 5px 35px;
+	border-bottom: 1px solid #ccc;
+	position: relative;
+}
+
+.bz-quick-quiz li:first-child {
+	border-top: 1px solid #ccc;
+}
+
+.bz-quick-quiz .success {
+	color: green;
+}
+
+.bz-quick-quiz .fail {
+	color: red;
+}
+
+.bz-quick-quiz .success:before,
+.bz-quick-quiz .fail:before {
+	display: table-cell;
+	vertical-align: middle;
+	font: bold 16px;
+	position: absolute;
+	left: 0;
+	height: 30px;
+	width: 30px;
+	text-align: center;
+}
+
+.bz-quick-quiz .success:before {
+	content: "\2713 ";
+}
+
+.bz-quick-quiz .fail:before {
+	content: "\2718 ";
+}
