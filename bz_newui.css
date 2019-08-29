@@ -2070,11 +2070,56 @@ table [type="range"] {
 /* Drag and drop: */
 
 [draggable] {
- cursor: move;
+	cursor: move;
+	padding: 12px!important;
+	position: relative;
+	padding-left: 38px!important;
+	overflow:hidden;
 }
-
-.inside-dragging {
-	border: dashed 2px black !important;
+[draggable]:before {
+	content: '.. .. ..';
+	position: absolute;
+	left: 12px;
+	top: 50%;
+	line-height: 5px;
+	margin-top: -15px;
+	color: #CCCCCC;
+	font-size: 20px;
+	width:15px;
+}
+.droppable {
+	border-radius: 5px;
+	font-size: 15px;
+	font-family: arial;
+	background: #f3f3f3;
+}
+.droppable div {
+	background: white;
+	box-shadow: 0 2px 2px #d6d6d6;
+	margin:15px;
+}
+#wiki_page_show table.sort-to-match td.droppable{
+	padding: 0!important;
+}
+table.sort-to-match tr {
+	overflow: auto;
+	clear: both;
+	box-sizing: border-box;
+	border-top: 1px solid white;
+	padding: 10px;
+	background: #f3f3f3;
+	border-bottom:1px solid white;
+}
+#wiki_page_show table.sort-to-match td, #wiki_page_show table.sort-to-match th {
+	border: none;
+	padding: 0.3em 0.5em !important;
+	box-sizing: border-box;
+	border:none;
+	margin: 20px;
+}
+.droppable.inside-dragging div {
+	background: rgba(224,224,224,.5);
+	box-shadow: 0 2px 2px #d6d6d6 inset;
 }
  .sort-to-match.show-answers:not(.bz-locked-table) .correct {
 	background: #22B573;
@@ -2824,4 +2869,61 @@ body.pages #content {
 
 #bz-progress-bar .unanswered-mastery-item {
 	background-color: #e6e6e6;
+}
+
+/* Quick Quiz */
+/* ---------- */
+.bz-quick-quiz-container {
+	width: 100%;
+	position: relative;
+	padding: 5px 40px;
+	background: #e1e1e1;
+	left: -40px;
+	bottom: -15px;
+}
+.bz-quick-quiz {
+	background: #fff;
+	margin: 40px auto;
+	width: 67%;
+	padding: 20px;
+	border: 1px solid #ccc;
+}
+
+.bz-quick-quiz li {
+	min-height: 30px;
+	padding: 5px 5px 5px 35px;
+	border-bottom: 1px solid #ccc;
+	position: relative;
+}
+
+.bz-quick-quiz li:first-child {
+	border-top: 1px solid #ccc;
+}
+
+.bz-quick-quiz .success {
+	color: green;
+}
+
+.bz-quick-quiz .fail {
+	color: red;
+}
+
+.bz-quick-quiz .success:before,
+.bz-quick-quiz .fail:before {
+	display: table-cell;
+	vertical-align: middle;
+	font: bold 16px;
+	position: absolute;
+	left: 0;
+	height: 30px;
+	width: 30px;
+	text-align: center;
+}
+
+.bz-quick-quiz .success:before {
+	content: "\2713 ";
+}
+
+.bz-quick-quiz .fail:before {
+	content: "\2718 ";
 }
