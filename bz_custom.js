@@ -146,6 +146,38 @@ jQuery( document ).ready(function() {
 
   });
 
+  /* Application Ritual functionality: */
+  jQuery('tbody').on('change', '.bz-app-ritual-my-week-value', function (e) {
+    if (!e.currentTarget.value) {
+      e.currentTarget.value = 0
+    }
+
+    sum = 0
+    $modules = jQuery(e.delegateTarget).find('tr.bz-app-ritual-module')
+    $modules.each(function (i, week) {
+      $week = jQuery(week)
+      sum += parseInt($week.find('.bz-app-ritual-my-week-value').val() || 0)
+      $week.find('.bz-app-ritual-my-semester').text(sum)
+      if (sum >= parseInt($week.find('.bz-app-ritual-goal').text())) {
+        $week.find('.bz-app-ritual-check').text('✓')
+      } else {
+        $week.find('.bz-app-ritual-check').text('X')
+      }
+    })
+  })
+
+  jQuery('#add-opportiunity').on('click', function() {
+    jQuery(".bz-app-ritual #opportunity-2").show()
+    jQuery(".bz-app-ritual #add-opportiunity").hide()
+  })
+
+  jQuery('.bz-app-ritual-calculate-link').on('click', function() {
+    jQuery(".bz-app-ritual .modal").show()
+  })
+
+  jQuery('span.close').on('click', function() {
+      jQuery(".bz-app-ritual .modal").hide()
+  })
 });
 
 
