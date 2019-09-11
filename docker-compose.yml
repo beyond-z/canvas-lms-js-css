@@ -1,0 +1,17 @@
+######################
+## Custom CSS/JS served using lightweight static web-server
+######################
+version: "3"
+services:
+
+  # Note: go add the following to you /etc/hosts to be able to access http://cssjsweb:3004 in your local browser.
+  # 127.0.0.1     cssjsweb
+  cssjsweb:
+    build:
+      context: .
+    command: static --host-address 0.0.0.0 -p 3004 --gzip
+    ports:
+      - "3004:3004"
+    # Make changes done outside the container reflect inside the container without needing a rebuild by mounting a volume.
+    volumes:
+      - .:/app
