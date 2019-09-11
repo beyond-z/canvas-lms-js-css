@@ -147,7 +147,7 @@ jQuery( document ).ready(function() {
   });
 
   /* Application Ritual functionality: */
-  jQuery('tbody').on('change', '.bz-app-ritual-my-week-value', function (e) {
+  jQuery('.bz-app-ritual tbody').on('change', '.bz-app-ritual-my-week-value', function (e) {
     if (!e.currentTarget.value) {
       e.currentTarget.value = 0
     }
@@ -175,7 +175,7 @@ jQuery( document ).ready(function() {
     jQuery(".bz-app-ritual .modal").show()
   })
 
-  jQuery('span.close').on('click', function() {
+  jQuery('.bz-app-ritual span.close').on('click', function() {
       jQuery(".bz-app-ritual .modal").hide()
   })
 });
