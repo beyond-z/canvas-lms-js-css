@@ -1,7 +1,7 @@
 ######################
 ## Custom CSS/JS served using lightweight static web-server
 ######################
-version: "3"
+version: "3.5"
 services:
 
   # Note: go add the following to you /etc/hosts to be able to access http://cssjsweb:3004 in your local browser.
