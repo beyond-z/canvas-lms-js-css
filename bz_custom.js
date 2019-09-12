@@ -152,10 +152,10 @@ jQuery( document ).ready(function() {
       e.currentTarget.value = 0
     }
 
-    sum = 0
-    $modules = jQuery(e.delegateTarget).find('tr.bz-app-ritual-module')
+    let sum = 0
+    let $modules = jQuery(e.delegateTarget).find('tr.bz-app-ritual-module')
     $modules.each(function (i, week) {
-      $week = jQuery(week)
+      let $week = jQuery(week)
       sum += parseInt($week.find('.bz-app-ritual-my-week-value').val() || 0)
       $week.find('.bz-app-ritual-my-semester').text(sum)
       if (sum >= parseInt($week.find('.bz-app-ritual-goal').text())) {
