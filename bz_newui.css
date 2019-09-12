@@ -2073,7 +2073,8 @@ table [type="range"] {
 	cursor: move;
 	padding: 12px!important;
 	position: relative;
-	padding-left: 38px!important;
+	padding-left: 34px!important;
+	border-left:4px solid white;
 	overflow:hidden;
 }
 [draggable]:before {
@@ -2100,6 +2101,7 @@ table [type="range"] {
 }
 #wiki_page_show table.sort-to-match td.droppable{
 	padding: 0!important;
+	position:relative;
 }
 table.sort-to-match tr {
 	overflow: auto;
@@ -2121,11 +2123,32 @@ table.sort-to-match tr {
 	background: rgba(224,224,224,.5);
 	box-shadow: 0 2px 2px #d6d6d6 inset;
 }
- .sort-to-match.show-answers:not(.bz-locked-table) .correct {
-	background: #22B573;
+
+.sort-to-match.show-answers:not(.bz-locked-table) .incorrect td.droppable:after,
+.sort-to-match.show-answers:not(.bz-locked-table) .correct td.droppable:after{
+	position: absolute;
+    z-index: 1;
+    left: -3px;
+    top: 50%;
+    line-height: 5px;
+    margin-top: -7px;
+    font-size: 15px;
 }
-.sort-to-match.show-answers:not(.bz-locked-table) .incorrect {
-	background: #EB3B46;
+ .sort-to-match.show-answers:not(.bz-locked-table) .correct td.droppable:after {
+    content: "\2714";
+    color: #22B573;
+}
+.sort-to-match.show-answers:not(.bz-locked-table) .incorrect td.droppable:after {
+    content: "\2717";
+    color: #EB3B46;
+}
+
+.sort-to-match.show-answers:not(.bz-locked-table) .correct .droppable div {
+	border-left:4px solid #22B573;
+}
+
+.sort-to-match.show-answers:not(.bz-locked-table) .incorrect .droppable div {
+	border-left:4px solid #EB3B46;
 }
 
 .sort-to-match.show-answers:not(.bz-locked-table) .correct h6,
@@ -2871,6 +2894,62 @@ body.pages #content {
 	background-color: #e6e6e6;
 }
 
+/* Quick Quiz */
+/* ---------- */
+.bz-quick-quiz-container {
+	width: 100%;
+	position: relative;
+	padding: 5px 40px;
+	background: #e1e1e1;
+	left: -40px;
+	bottom: -15px;
+}
+.bz-quick-quiz {
+	background: #fff;
+	margin: 40px auto;
+	width: 67%;
+	padding: 20px;
+	border: 1px solid #ccc;
+}
+
+.bz-quick-quiz li {
+	min-height: 30px;
+	padding: 5px 5px 5px 35px;
+	border-bottom: 1px solid #ccc;
+	position: relative;
+}
+
+.bz-quick-quiz li:first-child {
+	border-top: 1px solid #ccc;
+}
+
+.bz-quick-quiz .success {
+	color: green;
+}
+
+.bz-quick-quiz .fail {
+	color: red;
+}
+
+.bz-quick-quiz .success:before,
+.bz-quick-quiz .fail:before {
+	display: table-cell;
+	vertical-align: middle;
+	font: bold 16px;
+	position: absolute;
+	left: 0;
+	height: 30px;
+	width: 30px;
+	text-align: center;
+}
+
+.bz-quick-quiz .success:before {
+	content: "\2713 ";
+}
+
+.bz-quick-quiz .fail:before {
+	content: "\2718 ";
+}
 
 /* CSS for Application Ritual: */
 /* -------------------- */
