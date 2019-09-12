@@ -6,7 +6,7 @@ RUN npm install -g node-static
 
 RUN mkdir /app
 WORKDIR /app
-ADD . /app
+COPY . /app
 
 # This is run from docker-compose.yml
 #CMD static --host-address 0.0.0.0 -p 3003 --gzip

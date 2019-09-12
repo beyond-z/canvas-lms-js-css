@@ -15,3 +15,12 @@ services:
     # Make changes done outside the container reflect inside the container without needing a rebuild by mounting a volume.
     volumes:
       - .:/app
+    networks:
+      - bravendev
+
+# Note all Braven web app docker dev envs use this same network so they can talk to each other.
+# E.g. the hostname joinweb will resolve inside the ssoweb container if they are on the same docker network.
+networks:
+  bravendev:
+    name: braven_dev_network
+
