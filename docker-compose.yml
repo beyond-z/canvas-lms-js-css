@@ -1,0 +1,26 @@
+######################
+## Custom CSS/JS served using lightweight static web-server
+######################
+version: "3.5"
+services:
+
+  # Note: go add the following to you /etc/hosts to be able to access http://cssjsweb:3004 in your local browser.
+  # 127.0.0.1     cssjsweb
+  cssjsweb:
+    build:
+      context: .
+    command: static --host-address 0.0.0.0 -p 3004 --gzip
+    ports:
+      - "3004:3004"
+    # Make changes done outside the container reflect inside the container without needing a rebuild by mounting a volume.
+    volumes:
+      - .:/app
+    networks:
+      - bravendev
+
+# Note all Braven web app docker dev envs use this same network so they can talk to each other.
+# E.g. the hostname joinweb will resolve inside the ssoweb container if they are on the same docker network.
+networks:
+  bravendev:
+    name: braven_dev_network
+
