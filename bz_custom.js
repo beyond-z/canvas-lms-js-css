@@ -166,9 +166,9 @@ jQuery( document ).ready(function() {
     })
   })
 
-  jQuery('#add-opportiunity').on('click', function() {
-    jQuery(".bz-app-ritual #opportunity-2").show()
-    jQuery(".bz-app-ritual #add-opportiunity").hide()
+  jQuery('#bz-app-ritual-add-opportiunity').on('click', function() {
+    jQuery(".bz-app-ritual #bz-app-ritual-opportunity-2").show()
+    jQuery(".bz-app-ritual #bz-app-ritual-add-opportiunity").hide()
   })
 
   jQuery('.bz-app-ritual-calculate-link').on('click', function() {
