@@ -144,42 +144,40 @@ jQuery( document ).ready(function() {
       }
     });
 
-  });
-
-  /* Application Ritual functionality: */
-  jQuery('.bz-app-ritual tbody').on('change', '.bz-app-ritual-my-week-value', function (e) {
-    if (!e.currentTarget.value) {
-      e.currentTarget.value = 0
-    }
-
-    let sum = 0
-    let $modules = jQuery(e.delegateTarget).find('tr.bz-app-ritual-module')
-    $modules.each(function (i, week) {
-      let $week = jQuery(week)
-      sum += parseInt($week.find('.bz-app-ritual-my-week-value').val() || 0)
-      $week.find('.bz-app-ritual-my-semester').text(sum)
-      if (sum >= parseInt($week.find('.bz-app-ritual-goal').text())) {
-        $week.find('.bz-app-ritual-check').text('✓')
-      } else {
-        $week.find('.bz-app-ritual-check').text('X')
+    /* Application Ritual functionality: */
+    jQuery('.bz-app-ritual tbody').on('change', '.bz-app-ritual-my-week-value', function (e) {
+      if (!e.currentTarget.value) {
+        e.currentTarget.value = 0
       }
+
+      let sum = 0
+      let $modules = jQuery(e.delegateTarget).find('tr.bz-app-ritual-module')
+      $modules.each(function (i, week) {
+        let $week = jQuery(week)
+        sum += parseInt($week.find('.bz-app-ritual-my-week-value').val() || 0)
+        $week.find('.bz-app-ritual-my-semester').text(sum)
+        if (sum >= parseInt($week.find('.bz-app-ritual-goal').text())) {
+          $week.find('.bz-app-ritual-check').text('✓')
+        } else {
+          $week.find('.bz-app-ritual-check').text('X')
+        }
+      })
     })
-  })
 
-  jQuery('#bz-app-ritual-add-opportiunity').on('click', function() {
-    jQuery(".bz-app-ritual #bz-app-ritual-opportunity-2").show()
-    jQuery(".bz-app-ritual #bz-app-ritual-add-opportiunity").hide()
-  })
+    jQuery('#bz-app-ritual-add-opportunity').on('click', function() {
+      jQuery("#bz-app-ritual-opportunity-2").show()
+      jQuery("#bz-app-ritual-add-opportiunity").hide()
+    })
 
-  jQuery('.bz-app-ritual-calculate-link').on('click', function() {
-    jQuery(".bz-app-ritual .modal").show()
-  })
+    jQuery('.bz-app-ritual-calculate-link').on('click', function() {
+      jQuery(".bz-app-ritual .modal").show()
+    })
 
-  jQuery('.bz-app-ritual span.close').on('click', function() {
-      jQuery(".bz-app-ritual .modal").hide()
-  })
+    jQuery('.bz-app-ritual span.close').on('click', function() {
+        jQuery(".bz-app-ritual .modal").hide()
+    })
+  });
 });
-
 
 // Show feedback in an answer following a question:
 function bzGiveVerboseFeedback(feedback, answerSpace, feedbackClass) {
