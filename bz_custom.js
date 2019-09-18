@@ -197,6 +197,11 @@ jQuery( document ).ready(function() {
       jQuery("#bz-app-ritual-score-1").val(score)
       jQuery(".bz-app-ritual .modal").hide()
     })
+
+    // Displays confirmation text when saving opportunity
+    jQuery('.bz-app-ritual-opportunity-save').on('click', function () {
+      jQuery(this).siblings('.bz-app-ritual-confirm').show()
+    })
   });
 });
 
