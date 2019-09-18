@@ -2950,3 +2950,19 @@ body.pages #content {
 .bz-quick-quiz .fail:before {
 	content: "\2718 ";
 }
+
+/* CSS for Application Ritual: */
+/* -------------------- */
+
+.bz-app-ritual input,
+.bz-app-ritual label {
+	display: block;
+}
+
+#bz-app-ritual-opportunity-2 {
+	display: none;
+}
+
+.bz-app-ritual .modal {
+	display: none;
+}
