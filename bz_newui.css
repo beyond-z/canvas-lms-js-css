@@ -2793,6 +2793,11 @@ body.pages #content {
 	overflow-x: visible !important; /* otherwise canvas breaks our sidebar */
 }
 
+.context-course_69 #bz-progress-bar,
+.context-course_79 #bz-progress-bar{
+	display:none;
+}
+
 #bz-progress-bar {
 	position: sticky;
 	float: right;
