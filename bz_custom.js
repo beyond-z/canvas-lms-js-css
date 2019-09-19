@@ -145,6 +145,7 @@ jQuery( document ).ready(function() {
     });
 
     /* Application Ritual functionality: */
+    // Update table when new value is added
     jQuery('.bz-app-ritual tbody').on('change', '.bz-app-ritual-my-week-value', function (e) {
       if (!e.currentTarget.value) {
         e.currentTarget.value = 0
@@ -164,17 +165,42 @@ jQuery( document ).ready(function() {
       })
     })
 
+    // Displays second opportunity
     jQuery('#bz-app-ritual-add-opportunity').on('click', function() {
       jQuery("#bz-app-ritual-opportunity-2").show()
       jQuery("#bz-app-ritual-add-opportiunity").hide()
     })
 
+    // Displays scorecard modal
     jQuery('.bz-app-ritual-calculate-link').on('click', function() {
       jQuery(".bz-app-ritual .modal").show()
     })
 
+    // Closes scorecard modal
     jQuery('.bz-app-ritual span.close').on('click', function() {
         jQuery(".bz-app-ritual .modal").hide()
+    })
+
+    // Update total when slider value is updated
+    jQuery('.modal').on('change', '.slider', function(e) {
+      let $modal = jQuery(e.delegateTarget)
+      let sliders = $modal.find('.slider').toArray()
+      let sum = sliders.reduce(function (total, slider) {
+        return total += parseInt(slider.value)
+      }, 0)
+      $modal.find('.bz-app-ritual-score').text(sum)
+    })
+
+    // Apply score from scorecard into opportunity score 
+    jQuery('.bz-app-ritual-scorecard-apply').on('click', function() {
+      let score = jQuery('.bz-app-ritual-score').text()
+      jQuery("#bz-app-ritual-score-1").val(score)
+      jQuery(".bz-app-ritual .modal").hide()
+    })
+
+    // Displays confirmation text when saving opportunity
+    jQuery('.bz-app-ritual-opportunity-save').on('click', function () {
+      jQuery(this).siblings('.bz-app-ritual-confirm').show()
     })
   });
 });
