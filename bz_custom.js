@@ -165,6 +165,11 @@ jQuery( document ).ready(function() {
       })
     })
 
+    // Toggles display of opportunities
+    jQuery('.bz-app-ritual-secured').on('click', function() {
+      jQuery('.bz-app-ritual-opportunity-container').toggle()
+    })
+    
     // Displays second opportunity
     jQuery('#bz-app-ritual-add-opportunity').on('click', function() {
       jQuery("#bz-app-ritual-opportunity-2").show()
