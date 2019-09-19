@@ -2966,3 +2966,23 @@ body.pages #content {
 .bz-app-ritual .modal {
 	display: none;
 }
+
+.bz-app-ritual .criteria-desc {
+	float:left;
+	margin-bottom:30px;
+	width:40%;
+}
+
+.bz-app-ritual .criteria-slider {
+	float:right;
+	width:60%;
+	position:relative;
+}
+
+.bz-app-ritual .criteria-slider input.slider{
+	width:100%;
+}
+
+.modal-content .container{
+	max-width:100%;
+}
