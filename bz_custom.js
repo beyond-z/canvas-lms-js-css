@@ -155,26 +155,31 @@ jQuery( document ).ready(function() {
       let $modules = jQuery(e.delegateTarget).find('tr.bz-app-ritual-module')
       $modules.each(function (i, week) {
         let $week = jQuery(week)
+        let $semesterInput = $week.find('.bz-app-ritual-my-semester')
+        let $goalInput = $week.find('.bz-app-ritual-check')
         sum += parseInt($week.find('.bz-app-ritual-my-week-value').val() || 0)
-        $week.find('.bz-app-ritual-my-semester').text(sum)
+        $semesterInput.val(sum)
+        BZ_SaveMagicField($semesterInput.attr('data-bz-retained'), $semesterInput.val());
         if (sum >= parseInt($week.find('.bz-app-ritual-goal').text())) {
-          $week.find('.bz-app-ritual-check').text('✓')
+          $goalInput.val('✓')
         } else {
-          $week.find('.bz-app-ritual-check').text('X')
+          $goalInput.val('X')
         }
+        BZ_SaveMagicField($goalInput.attr('data-bz-retained'), $goalInput.val());
       })
     })
 
     // Toggles display of opportunities
-    jQuery('.bz-app-ritual-secured').on('click', function() {
-      jQuery('.bz-app-ritual-opportunity-container').toggle()
-    })
+    // Commenting out for the time being until we decide what to do
+    // jQuery('.bz-app-ritual-secured').on('click', function() {
+    //   jQuery('.bz-app-ritual-opportunity-container').toggle()
+    // })
     
     // Displays second opportunity
-    jQuery('#bz-app-ritual-add-opportunity').on('click', function() {
-      jQuery("#bz-app-ritual-opportunity-2").show()
-      jQuery("#bz-app-ritual-add-opportiunity").hide()
-    })
+    // Commenting out for the time being until we decide what to do
+    // jQuery('#bz-app-ritual-add-opportunity').on('click', function() {
+    //   jQuery("#bz-app-ritual-add-opportiunity").hide()
+    // })
 
     // Displays scorecard modal
     jQuery('.bz-app-ritual-calculate-link').on('click', function() {
@@ -199,7 +204,9 @@ jQuery( document ).ready(function() {
     // Apply score from scorecard into opportunity score 
     jQuery('.bz-app-ritual-scorecard-apply').on('click', function() {
       let score = jQuery('.bz-app-ritual-score').text()
-      jQuery("#bz-app-ritual-score-1").val(score)
+      let $scoreField = jQuery("#bz-app-ritual-score-1")
+      $scoreField.val(score)
+      BZ_SaveMagicField($scoreField.attr('data-bz-retained'), $scoreField.val());
       jQuery(".bz-app-ritual .modal").hide()
     })
 
