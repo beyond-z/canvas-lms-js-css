@@ -2196,8 +2196,8 @@ table.sort-to-match tr {
 	padding-bottom: 2.5em !important;
 	border-left: 1px #DDD solid;
 	font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
-    font-size: 13px;
-    vertical-align: top;
+	font-size: 13px;
+	vertical-align: top;
 }
 
 #content table.bz-ajax-loaded-rubric td.criterion_description {
