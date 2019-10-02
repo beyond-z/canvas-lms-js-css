@@ -217,9 +217,14 @@ jQuery( document ).ready(function() {
       jQuery(this).siblings('.bz-app-ritual-confirm').show()
     })
 
-    // Prevent input of decimals and negative values
+    // Prevent decimals, negative values, and invalid inputs
+    // Reference: https://css-tricks.com/snippets/javascript/javascript-keycodes/
     jQuery('.bz-app-ritual-applications').on('keydown', 'input.bz-app-ritual-my-week-value', function (e) {
-      if (!((e.keyCode == 8) || (e.keyCode > 47 && e.keyCode < 58) || (e.keyCode > 95 && e.keyCode < 106))) {
+      let validKeys = [8, 9, 35, 36];
+      let isNumberKey = e.keyCode > 47 && e.keyCode < 58;
+      let isNumpadKey = e.keyCode > 95 && e.keyCode < 106;
+      let isArrowKey = e.keyCode > 36 && e.keyCode < 41;
+      if (!(validKeys.indexOf(e.keyCode) > -1 || isNumberKey || isNumpadKey || isArrowKey)) {
         e.preventDefault();
         return;
       }
