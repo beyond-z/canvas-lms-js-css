@@ -162,8 +162,10 @@ jQuery( document ).ready(function() {
         BZ_SaveMagicField($semesterInput.attr('data-bz-retained'), $semesterInput.val());
         if (sum >= parseInt($week.find('.bz-app-ritual-goal').text())) {
           $goalInput.val('✓')
+          $goalInput.removeClass('bz-app-ritual-check-unmet')
         } else {
           $goalInput.val('X')
+          $goalInput.addClass('bz-app-ritual-check-unmet')
         }
         BZ_SaveMagicField($goalInput.attr('data-bz-retained'), $goalInput.val());
       })
