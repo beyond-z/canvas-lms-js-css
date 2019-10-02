@@ -216,6 +216,24 @@ jQuery( document ).ready(function() {
     jQuery('.bz-app-ritual-opportunity-save').on('click', function () {
       jQuery(this).siblings('.bz-app-ritual-confirm').show()
     })
+
+    // Prevent input of decimals and negative values
+    jQuery('.bz-app-ritual-applications').on('keydown', 'input.bz-app-ritual-my-week-value', function (e) {
+      if (!(((e.keyCode == 8 || e.keyCode > 47 && e.keyCode < 58) || e.keyCode > 95 && e.keyCode < 106))) {
+        e.preventDefault();
+        return;
+      }
+    })
+
+    // Force value for input to be between 0 - 99
+    jQuery('.bz-app-ritual-applications').on('keyup', 'input.bz-app-ritual-my-week-value', function (e) {
+      let value = parseInt(e.currentTarget.value) || 0;
+      if (value < 0) {
+        e.currentTarget.value = 0;
+      } else if (value > 99) {
+        e.currentTarget.value = 99;
+      }
+    })
   });
 });
 
