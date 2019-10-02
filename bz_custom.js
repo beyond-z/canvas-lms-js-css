@@ -219,7 +219,7 @@ jQuery( document ).ready(function() {
 
     // Prevent input of decimals and negative values
     jQuery('.bz-app-ritual-applications').on('keydown', 'input.bz-app-ritual-my-week-value', function (e) {
-      if (!(((e.keyCode == 8 || e.keyCode > 47 && e.keyCode < 58) || e.keyCode > 95 && e.keyCode < 106))) {
+      if (!((e.keyCode == 8) || (e.keyCode > 47 && e.keyCode < 58) || (e.keyCode > 95 && e.keyCode < 106))) {
         e.preventDefault();
         return;
       }
