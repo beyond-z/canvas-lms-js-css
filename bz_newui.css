@@ -2172,6 +2172,7 @@ table.sort-to-match tr {
 #wiki_page_show table.bz-ajax-loaded-rubric .criterion > td,
 .bz-ajax-loaded-rubric .criterion > td {
 	border: 0;
+	padding: 0!important;
 }
 
 .bz-ajax-loaded-rubric .learning_outcome_flag,
@@ -2190,16 +2191,18 @@ table.sort-to-match tr {
 
 .bz-ajax-loaded-rubric td.rating,
 #wiki_page_show .bz-ajax-loaded-rubric table td.rating {
-	width: 25%;
 	position: relative;
 	padding: 10px !important;
 	padding-bottom: 2.5em !important;
 	border-left: 1px #DDD solid;
+	font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+	font-size: 13px;
+	vertical-align: top;
 }
 
 #content table.bz-ajax-loaded-rubric td.criterion_description {
 	vertical-align: middle;
-	width: 30%;
+	width: 22%;
 }
 
 .bz-ajax-loaded-rubric .nobr {
@@ -2959,6 +2962,38 @@ body.pages #content {
 	display: block;
 }
 
+.bz-app-ritual input.bz-app-ritual-check,
+.bz-app-ritual input.bz-app-ritual-my-semester,
+.bz-app-ritual input.bz-app-ritual-my-semester[type='number']{
+	border: none;
+	display: inline-block;
+	padding: 0 0 0 0;
+	background:transparent;
+	box-shadow: none;
+	-webkit-appearance: none;
+	font-family: inherit;
+	font-size: inherit;
+	color: inherit;
+	cursor: text;
+}
+
+.bz-app-ritual input.bz-app-ritual-check{
+	width: 24px;
+	height: 24px;
+	color: white;
+	background: #30b56c;
+	text-align: center;
+	border-radius: 12px;
+	text-shadow: 1px 2px #1e905a;
+	font-family: inherit;
+	font-size: 14px;
+}
+
+.bz-app-ritual input.bz-app-ritual-check.bz-app-ritual-check-unmet{
+	background: #EB3B46;
+	text-shadow: 1px 2px #af1119;
+}
+
 #bz-app-ritual-opportunity-2 {
 	display: none;
 }
@@ -2968,21 +3003,248 @@ body.pages #content {
 }
 
 .bz-app-ritual .criteria-desc {
-	float:left;
-	margin-bottom:30px;
-	width:40%;
+	float: left;
+	width: 50%;
+	margin-right:10%;
 }
 
 .bz-app-ritual .criteria-slider {
-	float:right;
-	width:60%;
-	position:relative;
+	float: right;
+	width: 40%;
+	position: relative;
 }
 
 .bz-app-ritual .criteria-slider input.slider{
-	width:100%;
+	width: 100%;
 }
 
 .modal-content .container{
-	max-width:100%;
+	max-width: 100%;
+}
+
+.bz-app-ritual-body #bz-progress-bar .bz-graded-question,
+.bz-app-ritual-body #bz-progress-bar div progress{
+	display: none;
+}
+
+.bz-app-ritual-body #bz-progress-bar{
+	width: 100%;
+	top: 0;
+	background-color: #FFFFFF;
+	border-bottom: 1px solid #eee;
+	margin-bottom: 1em;
+	margin-top: -30px;
+}
+
+.bz-app-ritual-body #bz-progress-bar>div{
+	margin-bottom: 1em;
+	text-align: center;
+	background-color: white;
+	padding-bottom: 0;
+	padding: 1em 0 0 0;
+	font-size: 14px;
+}
+
+#wiki_page_show .bz-app-ritual table tr.bz-app-ritual-module td:last-child,
+#wiki_page_show .bz-app-ritual table tr.bz-app-ritual-module-head th:last-child{
+	background: transparent;
+	border-color: transparent;
+}
+
+table.bz-app-ritual-applications,
+form.bz-app-ritual-opportunity,
+.bz-app-ritual-modal{
+	font-weight: normal;
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+	font-size: 16px;
+}
+
+table.bz-app-ritual-applications,
+form.bz-app-ritual-opportunity{
+	margin: 30px 0 40px 0;
+}
+
+table.bz-app-ritual-applications th{
+	font-family: inherit;
+	font-size: inherit;
+	text-transform: inherit;
+}
+
+table.bz-app-ritual-applications th strong{
+	text-transform: uppercase;
+}
+
+input.bz-app-ritual-my-week-value,
+input.bz-app-ritual-my-semester{
+	width:35%;
+	margin-bottom:0;
+}
+
+#wiki_page_show .bz-app-ritual table td, 
+#wiki_page_show .bz-app-ritual table th{
+	border:none;
+}
+
+#wiki_page_show .bz-app-ritual table tr td{
+	background-color: rgba(226,226,226, 0.3);
+	border-bottom: 1px solid #e8e6e6;
+}
+
+.bz-app-ritual-applications .what{
+	font-weight:bold;
+}
+
+.bz-app-ritual-applications .when {
+	display: block;
+	font-weight: normal;
+	text-transform: uppercase;
+	font-size: 80%;
+	margin-top:5px;
+}
+
+.bz-app-ritual-applications .what, 
+.bz-app-ritual-applications .when {
+	white-space: nowrap;
+}
+
+.bz-app-ritual input.bz-app-ritual-my-semester,
+.bz-app-ritual-goal,
+.bz-app-ritual input.bz-app-ritual-my-semester[type='number']{
+	font-style: italic;
+	color: #999999;
+}
+
+table.bz-app-ritual-applications th{
+	text-align:left;
+}
+
+#wiki_page_show .bz-app-ritual table tr.bz-app-ritual-module td:nth-child(2),
+#wiki_page_show .bz-app-ritual table tr.bz-app-ritual-module-head th:nth-child(2){
+	background: rgba(226, 226, 226, 0.63);
+}
+
+#wiki_page_show .bz-app-ritual table tr.bz-app-ritual-module td:nth-child(2){
+	border-bottom: 1px solid #e0dfdf;
+}
+
+table.bz-app-ritual-applications input[type='number'],
+.bz-app-ritual.bz-module .bz-app-ritual-opportunity input{
+	background-color: #FFFFFF;
+	font-family: inherit;
+	font-size: inherit;
+}
+
+table.bz-app-ritual-applications td.bz-app-ritual-module-name{
+	white-space: nowrap;
+}
+
+form.bz-app-ritual-opportunity{
+	padding:20px;
+	background-color: rgba(226,226,226, 0.3);
+	border: 1px solid #e8e6e6;
+}
+
+.bz-app-ritual button{
+	border: none;
+	background: #EB3B46;
+	color: #FFF;
+	font-family: "TradeGothicNo.20-CondBold", "Oswald", sans-serif;
+	text-transform: uppercase;
+	line-height: normal;
+	font-weight: normal;
+	font-size: 1.2em;
+}
+
+form.bz-app-ritual-opportunity a.bz-app-ritual-calculate-link {
+	padding: 10px;
+	display: block;
+	text-transform: uppercase;
+}
+
+.bz-app-ritual-opportunity small {
+	color: #777777;
+	font-size: inherit;
+}
+
+.bz-app-ritual-opportunity section{
+	overflow: auto;
+}
+
+.bz-app-ritual.bz-module input[name='score']{
+	width: 50px;
+	float: left;
+	min-width: auto;
+	margin-right: 10px;
+}
+
+.bz-app-ritual-modal h6{
+	color: #000000;
+}
+
+.bz-app-ritual-modal section.sense-check-container h6{
+	color: #378383;
+}
+
+.bz-app-ritual-modal section:not(.fixed-position-container) section{
+	padding: 20px;
+	box-sizing: border-box;
+	background: rgba(226,226,226, 0.3);
+	margin-bottom: 5px;
+	overflow: auto;
+}
+
+.bz-app-ritual-modal section.sense-check-container section{
+	background: #D7EFEF;
+}
+
+.bz-app-ritual-modal section.fixed-position-container section{
+	float: right;
+}
+
+.bz-app-ritual-modal .fixed-position-container{
+	background: white;
+	position: fixed;
+	left: 10%;
+	right: 10%;
+	bottom: 10%;
+	width: auto;
+	padding: 1em;
+	border-top: 1px solid #eeeeee;
+	box-shadow: 0 -4px 10px #3333331a;
+}
+
+.bz-app-ritual-modal .fixed-position-container span{
+	font-family: "TradeGothicNo.20-CondBold", "Oswald", sans-serif;
+	font-size: 1.2em;
+	margin-right: 10px;
+}
+
+.bz-app-ritual-modal .fixed-position-container button{
+	font-size: 1.4em;
+}
+
+.bz-app-ritual-modal .sense-check-container {
+	margin-bottom: 80px;
+}
+
+.bz-app-ritual-score:after{
+	content: "/60";
+}
+
+.bz-app-ritual-score{
+	color: #EB3B46;
+}
+
+.bz-app-ritual-modal .fixed-position-container p{
+	float: left;
+	margin-bottom: 0;
+}
+
+.bz-app-ritual-opportunity .bz-app-ritual-confirm p:first-child{
+	text-transform: uppercase;
+	color: #30b56c;
+	font-family: "TradeGothicNo.20-CondBold", "Oswald", sans-serif;
+	font-size: 1.3em;
+	margin-top: 10px;
+	margin-bottom: 0;
 }
