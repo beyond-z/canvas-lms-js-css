@@ -162,8 +162,10 @@ jQuery( document ).ready(function() {
         BZ_SaveMagicField($semesterInput.attr('data-bz-retained'), $semesterInput.val());
         if (sum >= parseInt($week.find('.bz-app-ritual-goal').text())) {
           $goalInput.val('✓')
+          $goalInput.removeClass('bz-app-ritual-check-unmet')
         } else {
           $goalInput.val('X')
+          $goalInput.addClass('bz-app-ritual-check-unmet')
         }
         BZ_SaveMagicField($goalInput.attr('data-bz-retained'), $goalInput.val());
       })
@@ -198,7 +200,7 @@ jQuery( document ).ready(function() {
       let sum = sliders.reduce(function (total, slider) {
         return total += parseInt(slider.value)
       }, 0)
-      $modal.find('.bz-app-ritual-score').text(sum)
+      $modal.find('.bz-app-ritual-score').val(sum)
     })
 
     // Apply score from scorecard into opportunity score 
@@ -213,6 +215,29 @@ jQuery( document ).ready(function() {
     // Displays confirmation text when saving opportunity
     jQuery('.bz-app-ritual-opportunity-save').on('click', function () {
       jQuery(this).siblings('.bz-app-ritual-confirm').show()
+    })
+
+    // Prevent decimals, negative values, and invalid inputs
+    // Reference: https://css-tricks.com/snippets/javascript/javascript-keycodes/
+    jQuery('.bz-app-ritual-applications').on('keydown', 'input.bz-app-ritual-my-week-value', function (e) {
+      let validKeys = [8, 9, 35, 36];
+      let isNumberKey = e.keyCode > 47 && e.keyCode < 58;
+      let isNumpadKey = e.keyCode > 95 && e.keyCode < 106;
+      let isArrowKey = e.keyCode > 36 && e.keyCode < 41;
+      if (!(validKeys.indexOf(e.keyCode) > -1 || isNumberKey || isNumpadKey || isArrowKey)) {
+        e.preventDefault();
+        return;
+      }
+    })
+
+    // Force value for input to be between 0 - 99
+    jQuery('.bz-app-ritual-applications').on('keyup', 'input.bz-app-ritual-my-week-value', function (e) {
+      let value = parseInt(e.currentTarget.value) || 0;
+      if (value < 0) {
+        e.currentTarget.value = 0;
+      } else if (value > 99) {
+        e.currentTarget.value = 99;
+      }
     })
   });
 });
