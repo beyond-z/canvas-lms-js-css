@@ -2972,8 +2972,8 @@ body.pages #content {
 	box-shadow: none;
 	-webkit-appearance: none;
 	font-family: inherit;
-    font-size: inherit;
-    color: inherit;
+	font-size: inherit;
+	color: inherit;
 	cursor: text;
 }
 
@@ -3029,20 +3029,20 @@ body.pages #content {
 
 .bz-app-ritual-body #bz-progress-bar{
 	width: 100%;
-    top: 0;
-    background-color: #FFFFFF;
-    border-bottom: 1px solid #eee;
-    margin-bottom: 1em;
-    margin-top: -30px;
+	top: 0;
+	background-color: #FFFFFF;
+	border-bottom: 1px solid #eee;
+	margin-bottom: 1em;
+	margin-top: -30px;
 }
 
 .bz-app-ritual-body #bz-progress-bar>div{
-    margin-bottom: 1em;
-    text-align: center;
-    background-color: white;
-    padding-bottom: 0;
-    padding: 1em 0 0 0;
-    font-size: 14px;
+	margin-bottom: 1em;
+	text-align: center;
+	background-color: white;
+	padding-bottom: 0;
+	padding: 1em 0 0 0;
+	font-size: 14px;
 }
 
 #wiki_page_show .bz-app-ritual table tr.bz-app-ritual-module td:last-child,
@@ -3055,7 +3055,7 @@ table.bz-app-ritual-applications,
 form.bz-app-ritual-opportunity,
 .bz-app-ritual-modal{
 	font-weight: normal;
-    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 	font-size: 16px;
 }
 
@@ -3066,8 +3066,8 @@ form.bz-app-ritual-opportunity{
 
 table.bz-app-ritual-applications th{
 	font-family: inherit;
-    font-size: inherit;
-    text-transform: inherit;
+	font-size: inherit;
+	text-transform: inherit;
 }
 
 table.bz-app-ritual-applications th strong{
@@ -3095,16 +3095,16 @@ input.bz-app-ritual-my-semester{
 }
 
 .bz-app-ritual-applications .when {
-    display: block;
-    font-weight: normal;
-    text-transform: uppercase;
-    font-size: 80%;
+	display: block;
+	font-weight: normal;
+	text-transform: uppercase;
+	font-size: 80%;
 	margin-top:5px;
 }
 
 .bz-app-ritual-applications .what, 
 .bz-app-ritual-applications .when {
-    white-space: nowrap;
+	white-space: nowrap;
 }
 
 .bz-app-ritual input.bz-app-ritual-my-semester,
@@ -3131,7 +3131,7 @@ table.bz-app-ritual-applications input[type='number'],
 .bz-app-ritual.bz-module .bz-app-ritual-opportunity input{
 	background-color: #FFFFFF;
 	font-family: inherit;
-    font-size: inherit;
+	font-size: inherit;
 }
 
 table.bz-app-ritual-applications td.bz-app-ritual-module-name{
@@ -3140,24 +3140,24 @@ table.bz-app-ritual-applications td.bz-app-ritual-module-name{
 
 form.bz-app-ritual-opportunity{
 	padding:20px;
-    background-color: rgba(226,226,226, 0.3);
-    border: 1px solid #e8e6e6;
+	background-color: rgba(226,226,226, 0.3);
+	border: 1px solid #e8e6e6;
 }
 
 .bz-app-ritual button{
-    border: none;
-    background: #EB3B46;
-    color: #FFF;
-    font-family: "TradeGothicNo.20-CondBold", "Oswald", sans-serif;
-    text-transform: uppercase;
-    line-height: normal;
-    font-weight: normal;
-    font-size: 1.2em;
+	border: none;
+	background: #EB3B46;
+	color: #FFF;
+	font-family: "TradeGothicNo.20-CondBold", "Oswald", sans-serif;
+	text-transform: uppercase;
+	line-height: normal;
+	font-weight: normal;
+	font-size: 1.2em;
 }
 
 form.bz-app-ritual-opportunity a.bz-app-ritual-calculate-link {
 	padding: 10px;
-    display: block;
+	display: block;
 	text-transform: uppercase;
 }
 
@@ -3203,13 +3203,13 @@ form.bz-app-ritual-opportunity a.bz-app-ritual-calculate-link {
 
 .bz-app-ritual-modal .fixed-position-container{
 	background: white;
-    position: fixed;
-    left: 10%;
-    right: 10%;
-    bottom: 10%;
-    width: auto;
-    padding: 1em;
-    border-top: 1px solid #eeeeee;
+	position: fixed;
+	left: 10%;
+	right: 10%;
+	bottom: 10%;
+	width: auto;
+	padding: 1em;
+	border-top: 1px solid #eeeeee;
 	box-shadow: 0 -4px 10px #3333331a;
 }
 
@@ -3224,7 +3224,7 @@ form.bz-app-ritual-opportunity a.bz-app-ritual-calculate-link {
 }
 
 .bz-app-ritual-modal .sense-check-container {
-    margin-bottom: 80px;
+	margin-bottom: 80px;
 }
 
 .bz-app-ritual-score:after{
@@ -3242,9 +3242,9 @@ form.bz-app-ritual-opportunity a.bz-app-ritual-calculate-link {
 
 .bz-app-ritual-opportunity .bz-app-ritual-confirm p:first-child{
 	text-transform: uppercase;
-    color: #30b56c;
-    font-family: "TradeGothicNo.20-CondBold", "Oswald", sans-serif;
-    font-size: 1.3em;
-    margin-top: 10px;
+	color: #30b56c;
+	font-family: "TradeGothicNo.20-CondBold", "Oswald", sans-serif;
+	font-size: 1.3em;
+	margin-top: 10px;
 	margin-bottom: 0;
 }
