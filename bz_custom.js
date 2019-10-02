@@ -210,7 +210,7 @@ jQuery( document ).ready(function() {
 
     // Apply score from scorecard into opportunity score 
     jQuery('.bz-app-ritual-scorecard-apply').on('click', function() {
-      let score = jQuery('.bz-app-ritual-score').text()
+      let score = jQuery('.bz-app-ritual-score').val()
       let $scoreField = jQuery("#bz-app-ritual-score-1")
       $scoreField.val(score)
       BZ_SaveMagicField($scoreField.attr('data-bz-retained'), $scoreField.val());
