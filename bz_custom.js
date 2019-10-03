@@ -211,6 +211,7 @@ jQuery( document ).ready(function() {
         return total += parseInt(slider.value)
       }, 0)
       $totalScore.val(sum)
+      jQuery('.bz-app-ritual-score-text').text(sum)
       BZ_SaveMagicField($totalScore.attr('data-bz-retained'), $totalScore.val());
     })
 
