@@ -2977,7 +2977,7 @@ body.pages #content {
 	cursor: text;
 }
 
-.bz-app-ritual input.bz-app-ritual-check{
+.bz-app-ritual input.bz-app-ritual-check.bz-app-ritual-check-validated{
 	width: 24px;
 	height: 24px;
 	color: white;
@@ -2994,11 +2994,15 @@ body.pages #content {
 	text-shadow: 1px 2px #af1119;
 }
 
-#bz-app-ritual-opportunity-2 {
-	display: none;
+.bz-app-ritual input.bz-app-ritual-check{
+	background: transparent;
+	text-shadow: none;
 }
 
-.bz-app-ritual .modal {
+#bz-app-ritual-opportunity-2,
+.bz-app-ritual .modal,
+.bz-app-ritual-body #bz-progress-bar .bz-graded-question,
+.bz-app-ritual-body #bz-progress-bar div progress{
 	display: none;
 }
 
@@ -3020,11 +3024,6 @@ body.pages #content {
 
 .modal-content .container{
 	max-width: 100%;
-}
-
-.bz-app-ritual-body #bz-progress-bar .bz-graded-question,
-.bz-app-ritual-body #bz-progress-bar div progress{
-	display: none;
 }
 
 .bz-app-ritual-body #bz-progress-bar{
@@ -3227,17 +3226,38 @@ form.bz-app-ritual-opportunity a.bz-app-ritual-calculate-link {
 	margin-bottom: 80px;
 }
 
-.bz-app-ritual-score:after{
+.bz-app-ritual-modal .close{
+	position: fixed;
+	top: 12%;
+	right: 11%;
+    background: white;
+    height: 28px;
+    width: 28px;
+    border-radius: 14px;
+    text-align: center;
+    line-height: 22px;
+    border: 1px solid #eeeeee;
+    box-shadow: 0 0 10px #3333331a;
+    z-index: 1;
+    opacity: 1;
+    font-size: 22px;
+}
+
+.bz-app-ritual-modal .bz-app-ritual-score-text:after{
 	content: "/60";
 }
 
-.bz-app-ritual-score{
+.bz-app-ritual-modal .bz-app-ritual-score-text{
 	color: #EB3B46;
 }
 
 .bz-app-ritual-modal .fixed-position-container p{
-	float: left;
+	display: inline;
 	margin-bottom: 0;
+}
+
+.bz-app-ritual-modal .fixed-position-container section>span{
+	float: left;
 }
 
 .bz-app-ritual-opportunity .bz-app-ritual-confirm p:first-child{
