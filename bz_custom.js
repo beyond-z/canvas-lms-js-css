@@ -155,17 +155,22 @@ jQuery( document ).ready(function() {
       let $modules = jQuery(e.delegateTarget).find('tr.bz-app-ritual-module')
       $modules.each(function (i, week) {
         let $week = jQuery(week)
+        let $weekValue = $week.find('.bz-app-ritual-my-week-value')
         let $semesterInput = $week.find('.bz-app-ritual-my-semester')
         let $goalInput = $week.find('.bz-app-ritual-check')
-        sum += parseInt($week.find('.bz-app-ritual-my-week-value').val() || 0)
+        sum += parseInt($weekValue.val() || 0)
         $semesterInput.val(sum)
         BZ_SaveMagicField($semesterInput.attr('data-bz-retained'), $semesterInput.val());
-        if (sum >= parseInt($week.find('.bz-app-ritual-goal').text())) {
+        if ($weekValue.val() == "") {
+          $goalInput.val('')
+        } else if (sum >= parseInt($week.find('.bz-app-ritual-goal').text())) {
           $goalInput.val('✓')
           $goalInput.removeClass('bz-app-ritual-check-unmet')
+          $goalInput.addClass('bz-app-ritual-check-validated')
         } else {
           $goalInput.val('X')
           $goalInput.addClass('bz-app-ritual-check-unmet')
+          $goalInput.addClass('bz-app-ritual-check-validated')
         }
         BZ_SaveMagicField($goalInput.attr('data-bz-retained'), $goalInput.val());
       })
@@ -182,6 +187,10 @@ jQuery( document ).ready(function() {
     // jQuery('#bz-app-ritual-add-opportunity').on('click', function() {
     //   jQuery("#bz-app-ritual-add-opportiunity").hide()
     // })
+	  
+    //hide the score input field and add score text
+    jQuery(".bz-app-ritual-score").hide()
+    jQuery(".bz-app-ritual-score").after('<span class="bz-app-ritual-score-text">40</span>')
 
     // Displays scorecard modal
     jQuery('.bz-app-ritual-calculate-link').on('click', function() {
@@ -197,15 +206,18 @@ jQuery( document ).ready(function() {
     jQuery('.modal').on('change', '.slider', function(e) {
       let $modal = jQuery(e.delegateTarget)
       let sliders = $modal.find('.slider').toArray()
+      let $totalScore = $modal.find('.bz-app-ritual-score')
       let sum = sliders.reduce(function (total, slider) {
         return total += parseInt(slider.value)
       }, 0)
-      $modal.find('.bz-app-ritual-score').val(sum)
+      $totalScore.val(sum)
+      jQuery('.bz-app-ritual-score-text').text(sum)
+      BZ_SaveMagicField($totalScore.attr('data-bz-retained'), $totalScore.val());
     })
 
     // Apply score from scorecard into opportunity score 
     jQuery('.bz-app-ritual-scorecard-apply').on('click', function() {
-      let score = jQuery('.bz-app-ritual-score').text()
+      let score = jQuery('.bz-app-ritual-score').val()
       let $scoreField = jQuery("#bz-app-ritual-score-1")
       $scoreField.val(score)
       BZ_SaveMagicField($scoreField.attr('data-bz-retained'), $scoreField.val());
@@ -218,9 +230,10 @@ jQuery( document ).ready(function() {
     })
 
     // Prevent decimals, negative values, and invalid inputs
+    // Conditions are in conjunction with filters when using input type number
     // Reference: https://css-tricks.com/snippets/javascript/javascript-keycodes/
     jQuery('.bz-app-ritual-applications').on('keydown', 'input.bz-app-ritual-my-week-value', function (e) {
-      let validKeys = [8, 9, 35, 36];
+      let validKeys = [8, 9, 35, 36, 46];
       let isNumberKey = e.keyCode > 47 && e.keyCode < 58;
       let isNumpadKey = e.keyCode > 95 && e.keyCode < 106;
       let isArrowKey = e.keyCode > 36 && e.keyCode < 41;
