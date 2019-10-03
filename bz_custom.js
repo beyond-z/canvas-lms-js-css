@@ -163,11 +163,11 @@ jQuery( document ).ready(function() {
         if (sum >= parseInt($week.find('.bz-app-ritual-goal').text())) {
           $goalInput.val('✓')
           $goalInput.removeClass('bz-app-ritual-check-unmet')
-		  $goalInput.addClass('bz-app-ritual-check-validated')
+          $goalInput.addClass('bz-app-ritual-check-validated')
         } else {
           $goalInput.val('X')
           $goalInput.addClass('bz-app-ritual-check-unmet')
-		  $goalInput.addClass('bz-app-ritual-check-validated')
+          $goalInput.addClass('bz-app-ritual-check-validated')
         }
         BZ_SaveMagicField($goalInput.attr('data-bz-retained'), $goalInput.val());
       })
