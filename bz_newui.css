@@ -155,8 +155,19 @@ a:visited {
 }
 
 .bz-module .main-toc ol,
-.bz-module .main-toc li {
-	margin: 0.5em 0 0 10px;
+.bz-module .main-toc li{
+	margin: 0.5em 0;
+	list-style:none;
+	line-height:1.2em;
+}
+
+.bz-module ol.inner-toc {
+	margin-left:0;
+	list-style:none;
+}
+
+.bz-module .main-toc ol ol{
+	margin-left: 1.2em;
 }
 
 .bz-module .box-title {
@@ -867,34 +878,6 @@ progress[value]::-webkit-progress-bar {
 }
 .indent_0 {
 	text-transform:uppercase;
-}
-
-/* HEADER NUMBERING */
-.bz-module:not(.lc-module) {
-	counter-reset: bzh2counter;
-}
-
-.bz-module:not(.lc-module) h2:not(.box-title):before {
-	content: counter(bzh2counter) ".\0000a0\0000a0";
-	counter-increment: bzh2counter;
-}
-
-.bz-module:not(.lc-module) h2:not(.box-title) {
-	counter-reset: bzh3counter;
-}
-
-.bz-module:not(.lc-module) h3:not(.box-title):before {
-	content: counter(bzh2counter) "." counter(bzh3counter) ".\0000a0\0000a0";
-	counter-increment: bzh3counter;
-}
-
-.bz-module:not(.lc-module) h3:not(.box-title) {
-	counter-reset: bzh4counter;
-}
-
-.bz-module:not(.lc-module) h4:not(.box-title):before {
-	content: counter(bzh2counter) "." counter(bzh3counter) "." counter(bzh4counter) ".\0000a0\0000a0";
-	counter-increment: bzh4counter;
 }
 
 /* TOOLTIP: */
@@ -3230,17 +3213,17 @@ form.bz-app-ritual-opportunity a.bz-app-ritual-calculate-link {
 	position: fixed;
 	top: 12%;
 	right: 11%;
-	background: white;
-	height: 28px;
-	width: 28px;
-	border-radius: 14px;
-	text-align: center;
-	line-height: 22px;
-	border: 1px solid #eeeeee;
-	box-shadow: 0 0 10px #3333331a;
-	z-index: 1;
-	opacity: 1;
-	font-size: 22px;
+    background: white;
+    height: 28px;
+    width: 28px;
+    border-radius: 14px;
+    text-align: center;
+    line-height: 22px;
+    border: 1px solid #eeeeee;
+    box-shadow: 0 0 10px #3333331a;
+    z-index: 1;
+    opacity: 1;
+    font-size: 22px;
 }
 
 .bz-app-ritual-modal .bz-app-ritual-score-text:after{
