@@ -3213,17 +3213,17 @@ form.bz-app-ritual-opportunity a.bz-app-ritual-calculate-link {
 	position: fixed;
 	top: 12%;
 	right: 11%;
-    background: white;
-    height: 28px;
-    width: 28px;
-    border-radius: 14px;
-    text-align: center;
-    line-height: 22px;
-    border: 1px solid #eeeeee;
-    box-shadow: 0 0 10px #3333331a;
-    z-index: 1;
-    opacity: 1;
-    font-size: 22px;
+	background: white;
+	height: 28px;
+	width: 28px;
+	border-radius: 14px;
+	text-align: center;
+	line-height: 22px;
+	border: 1px solid #eeeeee;
+	box-shadow: 0 0 10px #3333331a;
+	z-index: 1;
+	opacity: 1;
+	font-size: 22px;
 }
 
 .bz-app-ritual-modal .bz-app-ritual-score-text:after{
