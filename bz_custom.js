@@ -155,12 +155,15 @@ jQuery( document ).ready(function() {
       let $modules = jQuery(e.delegateTarget).find('tr.bz-app-ritual-module')
       $modules.each(function (i, week) {
         let $week = jQuery(week)
+        let $weekValue = $week.find('.bz-app-ritual-my-week-value')
         let $semesterInput = $week.find('.bz-app-ritual-my-semester')
         let $goalInput = $week.find('.bz-app-ritual-check')
-        sum += parseInt($week.find('.bz-app-ritual-my-week-value').val() || 0)
+        sum += parseInt($weekValue.val() || 0)
         $semesterInput.val(sum)
         BZ_SaveMagicField($semesterInput.attr('data-bz-retained'), $semesterInput.val());
-        if (sum >= parseInt($week.find('.bz-app-ritual-goal').text())) {
+        if ($weekValue.val() == "") {
+          $goalInput.val('')
+        } else if (sum >= parseInt($week.find('.bz-app-ritual-goal').text())) {
           $goalInput.val('✓')
           $goalInput.removeClass('bz-app-ritual-check-unmet')
           $goalInput.addClass('bz-app-ritual-check-validated')
@@ -203,17 +206,17 @@ jQuery( document ).ready(function() {
     jQuery('.modal').on('change', '.slider', function(e) {
       let $modal = jQuery(e.delegateTarget)
       let sliders = $modal.find('.slider').toArray()
+      let $totalScore = $modal.find('.bz-app-ritual-score')
       let sum = sliders.reduce(function (total, slider) {
         return total += parseInt(slider.value)
       }, 0)
       $totalScore.val(sum)
       BZ_SaveMagicField($totalScore.attr('data-bz-retained'), $totalScore.val());
-      $modal.find('.bz-app-ritual-score-text').text(sum)
     })
 
     // Apply score from scorecard into opportunity score 
     jQuery('.bz-app-ritual-scorecard-apply').on('click', function() {
-      let score = jQuery('.bz-app-ritual-score').text()
+      let score = jQuery('.bz-app-ritual-score').val()
       let $scoreField = jQuery("#bz-app-ritual-score-1")
       $scoreField.val(score)
       BZ_SaveMagicField($scoreField.attr('data-bz-retained'), $scoreField.val());
