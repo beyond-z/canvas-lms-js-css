@@ -122,35 +122,35 @@ jQuery( document ).ready(function() {
     // Create auto table of contents
     jQuery('#bz-auto-toc').each(function(){bzAutoTOC();});
 	  
-	// Counting H tags
-	var indices = [];
+    // Counting H tags
+    var indices = [];
 
-	function addIndex() {
-	// jQuery will give all the HNs in document order
+    function addIndex() {
+    // jQuery will give all the HNs in document order
       $('h2:not(".box-title"),h3:not(".box-title"),h4:not(".box-title")', $('.bz-module:not(.lc-module)')).each(function(i,e) {
-		  var hIndex = parseInt(this.nodeName.substring(1)) - 2;
-		  // just found a levelUp event
-		  if (indices.length - 1 > hIndex) {
-			indices= indices.slice(0, hIndex + 1 );
-		  }
+        var hIndex = parseInt(this.nodeName.substring(1)) - 2;
+        // just found a levelUp event
+        if (indices.length - 1 > hIndex) {
+          indices= indices.slice(0, hIndex + 1 );
+        }
 
-		  // just found a levelDown event
-		  if (indices[hIndex] == undefined) {
-			 indices[hIndex] = 0;
-		  }
+        // just found a levelDown event
+        if (indices[hIndex] == undefined) {
+          indices[hIndex] = 0;
+        }
 
-		  // count + 1 at current level
-		  indices[hIndex]++;
+        // count + 1 at current level
+        indices[hIndex]++;
 
-		  // display the full position in the hierarchy
-		  jQuery(this).prepend(indices.join(".")+". ");
+        // display the full position in the hierarchy
+        jQuery(this).prepend(indices.join(".")+". ");
 
       });
-	}
+    }
 
-	jQuery(document).ready(function() {
-	  addIndex();
-	});
+    jQuery(document).ready(function() {
+      addIndex();
+    });
 
     // Enable jQuery UI tooltips that override browser styling/interaction:
     jQuery(document).tooltip();
