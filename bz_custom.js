@@ -166,9 +166,11 @@ jQuery( document ).ready(function() {
         } else if (sum >= parseInt($week.find('.bz-app-ritual-goal').text())) {
           $goalInput.val('✓')
           $goalInput.removeClass('bz-app-ritual-check-unmet')
+          $goalInput.addClass('bz-app-ritual-check-validated')
         } else {
           $goalInput.val('X')
           $goalInput.addClass('bz-app-ritual-check-unmet')
+          $goalInput.addClass('bz-app-ritual-check-validated')
         }
         BZ_SaveMagicField($goalInput.attr('data-bz-retained'), $goalInput.val());
       })
@@ -185,6 +187,10 @@ jQuery( document ).ready(function() {
     // jQuery('#bz-app-ritual-add-opportunity').on('click', function() {
     //   jQuery("#bz-app-ritual-add-opportiunity").hide()
     // })
+	  
+    //hide the score input field and add score text
+    jQuery(".bz-app-ritual-score").hide()
+    jQuery(".bz-app-ritual-score").after('<span class="bz-app-ritual-score-text">40</span>')
 
     // Displays scorecard modal
     jQuery('.bz-app-ritual-calculate-link').on('click', function() {
