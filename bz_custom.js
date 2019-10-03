@@ -230,9 +230,10 @@ jQuery( document ).ready(function() {
     })
 
     // Prevent decimals, negative values, and invalid inputs
+    // Conditions are in conjunction with filters when using input type number
     // Reference: https://css-tricks.com/snippets/javascript/javascript-keycodes/
     jQuery('.bz-app-ritual-applications').on('keydown', 'input.bz-app-ritual-my-week-value', function (e) {
-      let validKeys = [8, 9, 35, 36];
+      let validKeys = [8, 9, 35, 36, 46];
       let isNumberKey = e.keyCode > 47 && e.keyCode < 58;
       let isNumpadKey = e.keyCode > 95 && e.keyCode < 106;
       let isArrowKey = e.keyCode > 36 && e.keyCode < 41;
