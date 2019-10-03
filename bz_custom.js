@@ -206,8 +206,9 @@ jQuery( document ).ready(function() {
       let sum = sliders.reduce(function (total, slider) {
         return total += parseInt(slider.value)
       }, 0)
-      $modal.find('.bz-app-ritual-score').val(sum)
-	  $modal.find('.bz-app-ritual-score-text').text(sum)
+      $totalScore.val(sum)
+      BZ_SaveMagicField($totalScore.attr('data-bz-retained'), $totalScore.val());
+      $modal.find('.bz-app-ritual-score-text').text(sum)
     })
 
     // Apply score from scorecard into opportunity score 
