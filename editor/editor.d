@@ -2491,7 +2491,7 @@ class EditorApi : ApiProvider {
 		auto canvas = getCanvasApiClient(productionCredentials());
 
 		// live things
-		auto req = canvas.httpClient.navigateTo(arsd.http2.Uri("https://portal.bebraven.org/bz/course_cohort_information?course_ids[]=56&course_ids[]=62&course_ids[]=57&course_ids[]=58&course_ids[]=71&course_ids[]=73&course_ids[]=81&access_token=" ~ canvas.oauth2Token));
+		auto req = canvas.httpClient.navigateTo(arsd.http2.Uri("https://portal.bebraven.org/bz/course_cohort_information?course_ids[]=71&course_ids[]=73&course_ids[]=81&access_token=" ~ canvas.oauth2Token));
 
 		// lc playbooks
 		//auto req = canvas.httpClient.navigateTo(arsd.http2.Uri("https://portal.bebraven.org/bz/course_cohort_information?course_ids[]=59&course_ids[]=60&course_ids[]=61&access_token=" ~ canvas.oauth2Token));
