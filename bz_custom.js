@@ -166,9 +166,11 @@ jQuery( document ).ready(function() {
         } else if (sum >= parseInt($week.find('.bz-app-ritual-goal').text())) {
           $goalInput.val('✓')
           $goalInput.removeClass('bz-app-ritual-check-unmet')
+          $goalInput.addClass('bz-app-ritual-check-validated')
         } else {
           $goalInput.val('X')
           $goalInput.addClass('bz-app-ritual-check-unmet')
+          $goalInput.addClass('bz-app-ritual-check-validated')
         }
         BZ_SaveMagicField($goalInput.attr('data-bz-retained'), $goalInput.val());
       })
@@ -185,6 +187,10 @@ jQuery( document ).ready(function() {
     // jQuery('#bz-app-ritual-add-opportunity').on('click', function() {
     //   jQuery("#bz-app-ritual-add-opportiunity").hide()
     // })
+	  
+    //hide the score input field and add score text
+    jQuery(".bz-app-ritual-score").hide()
+    jQuery(".bz-app-ritual-score").after('<span class="bz-app-ritual-score-text">40</span>')
 
     // Displays scorecard modal
     jQuery('.bz-app-ritual-calculate-link').on('click', function() {
@@ -205,6 +211,7 @@ jQuery( document ).ready(function() {
         return total += parseInt(slider.value)
       }, 0)
       $totalScore.val(sum)
+      jQuery('.bz-app-ritual-score-text').text(sum)
       BZ_SaveMagicField($totalScore.attr('data-bz-retained'), $totalScore.val());
     })
 
@@ -223,9 +230,10 @@ jQuery( document ).ready(function() {
     })
 
     // Prevent decimals, negative values, and invalid inputs
+    // Conditions are in conjunction with filters when using input type number
     // Reference: https://css-tricks.com/snippets/javascript/javascript-keycodes/
     jQuery('.bz-app-ritual-applications').on('keydown', 'input.bz-app-ritual-my-week-value', function (e) {
-      let validKeys = [8, 9, 35, 36];
+      let validKeys = [8, 9, 35, 36, 46];
       let isNumberKey = e.keyCode > 47 && e.keyCode < 58;
       let isNumpadKey = e.keyCode > 95 && e.keyCode < 106;
       let isArrowKey = e.keyCode > 36 && e.keyCode < 41;
