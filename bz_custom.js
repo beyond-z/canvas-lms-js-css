@@ -148,9 +148,7 @@ jQuery( document ).ready(function() {
       });
     }
 
-    jQuery(document).ready(function() {
-      addIndex();
-    });
+    addIndex();
 
     // Enable jQuery UI tooltips that override browser styling/interaction:
     jQuery(document).tooltip();
