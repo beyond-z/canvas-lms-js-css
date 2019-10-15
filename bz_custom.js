@@ -1171,11 +1171,14 @@ function createBzProgressBar() {
   progress.max = doneButtonCount;
   allContentSavedDiv.appendChild(progress);
 
-  var participationScore = document.createElement("p");
+  var participationScore = document.createElement("h4");
+  var participationScoreContext = document.createElement("p");
   allContentSavedDiv.appendChild(participationScore);
+  allContentSavedDiv.appendChild(participationScoreContext);
 
   function setParticipationScore(score) {
     participationScore.textContent = "Score so far: " + Math.round(100 * score) / 100 + " / 10";
+	participationScoreContext.textContent = "This score is a combination of how you do on Mastery Questions and your full participation in the module.";
   }
 
   if(typeof window.startingBzParticipationScore != "undefined")
