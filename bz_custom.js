@@ -209,13 +209,13 @@ jQuery( document ).ready(function() {
     // jQuery('.bz-app-ritual-secured').on('click', function() {
     //   jQuery('.bz-app-ritual-opportunity-container').toggle()
     // })
-    
+
     // Displays second opportunity
     // Commenting out for the time being until we decide what to do
     // jQuery('#bz-app-ritual-add-opportunity').on('click', function() {
     //   jQuery("#bz-app-ritual-add-opportiunity").hide()
     // })
-	  
+
     //hide the score input field and add score text
     jQuery(".bz-app-ritual-score").hide()
     jQuery(".bz-app-ritual-score").after('<span class="bz-app-ritual-score-text">40</span>')
@@ -280,6 +280,20 @@ jQuery( document ).ready(function() {
         e.currentTarget.value = 99;
       }
     })
+
+    // Add CSS validation to checks after BZ Retained Data is loaded
+    addOnMagicFieldsLoaded(function() {
+      jQuery('input.bz-app-ritual-check').not('[value=""]').each(function (i, c) {
+        $c = jQuery(c)
+        if($c.val() == '✓') {
+          $c.addClass('bz-app-ritual-check-validated')
+        } else if($c.val() == 'X') {
+          $c.addClass('bz-app-ritual-check-unmet')
+          $c.addClass('bz-app-ritual-check-validated')
+        }
+      })
+    });
+
   });
 });
 
