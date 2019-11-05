@@ -171,6 +171,11 @@ jQuery( document ).ready(function() {
         return jQuery(this).text();
       }
     });
+      
+    /* Hide Mastery Questions Progress Sidebar when there aren't any questions on the page */
+    if ($(".bz-graded-question ol li").length === 0){
+      jQuery("#bz-progress-bar .bz-graded-question").hide();
+    }
 
     /* Application Ritual functionality: */
     // Update table when new value is added
