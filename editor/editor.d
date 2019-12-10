@@ -170,7 +170,7 @@ class EditorApi : ApiProvider {
 				import std.uri;
 				session.comingFrom = cgi.getCurrentCompleteUri();
 				session.commit();
-				redirect("https://sso.bebraven.org/login?service=" ~ encodeComponent(ssoService));
+				redirect("https://platform.bebraven.org/cas/login?service=" ~ encodeComponent(ssoService));
 				throw new Exception("not logged in");
 			}
 		}
@@ -178,14 +178,14 @@ class EditorApi : ApiProvider {
 
 	export:
 
-	/// Log in via sso.bebraven.org
+	/// Log in via platform.bebraven.org/cas
 	/// Group: session_management
 	string sso(string ticket) {
 		import std.uri;
 		import std.file;
 		auto client = new HttpClient();
 		ssoService = arsd.cgi.Uri("/sso").basedOn(arsd.cgi.Uri(readText("data/local-url.txt").strip));
-		auto request = client.navigateTo(arsd.http2.Uri("https://sso.bebraven.org/serviceValidate?ticket="~encodeComponent(ticket)~"&service=" ~ encodeComponent(ssoService)));
+		auto request = client.navigateTo(arsd.http2.Uri("https://platform.bebraven.org/cas/serviceValidate?ticket="~encodeComponent(ticket)~"&service=" ~ encodeComponent(ssoService)));
 		auto response = request.waitForCompletion();
 		if(response.code == 200) {
 			auto xml = new XmlDocument(response.contentText);
