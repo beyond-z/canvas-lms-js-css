@@ -877,120 +877,164 @@ function bzLocalNavUI() {
   jQuery('#bz-module-nav ul.active-parent').parent().siblings('li').addClass('active-uncles').show();
 }
 
-/* Ajax Load dynamic content, like rubric criterion (bypassing sanitizer) and LinkedIn API URLs */
-function bzAjaxLoad() {
-  var magicFieldNames = [];
-  var magicFieldValues = {}; // Will be set to return value of JSON.parse('{"key1":"value1","key2":"value2"}')
-  var isMagicFieldValuesRetreived = false;
-  var existingMagicValuesLoaded = false;
-  var magicFieldElements = [];
-  var magicRubricTablesLoadedCount = 0;
-  console.log("bzAjaxLoad() begin");
+/* 
+  Replace elements like: <a class="bz-ajax-replace" href="/courses/1/rubrics/55#criterion_43_153" target="_blank">Click to open 4.8.</a>
+  with inline rubrics. This has to run after the full rubric table has been ajax requested and returned AND
+  after the existing magic field values for those that are clickable have been retrieved.
+  Sample params: 
+   - queuedInlineRubricsToReplace = [ jQuery('.bz-ajax-replace'), '/courses/1/rubrics/55', '#criterion_43_153'] 
+   - loadedFullRubricTables = { '/courses/1/rubrics/55' : jQuery('<html>...<tr id="criterion_43_153"/>...</html>') }
+   - loadedMagicFieldValues = JSON.parse('{"key1":"value1","key2":"value2"}')
+*/
+function bzReplaceInlineRubrics(queuedInlineRubricsToReplace, loadedFullRubricTables, loadedMagicFieldValues){
 
-  // Processes the magic field values loaded.  Needs to happen after we finish creating the inline rubrics
-  var loadExistingMagicValues = function(){
-    existingMagicValuesLoaded = true; // Note: we still have a small window where this function could be called twice. Not a big deal if it does happen once in a blue moon.
-    console.log("loadExistingMagicValues into rubrics");
-    for(var i = 0; i < magicFieldNames.length; i++) {
-      var name = magicFieldNames[i];
-      var el = magicFieldElements[i];
-      var value = magicFieldValues[name];
-      //console.log('Setting magic field, name = ' + name + ', value = ' + value);
-      if (value){ // Happens on first load where no value is set yet
-        el.val(value);
-        $('td#' + value).addClass('selected');
+  while (queuedInlineRubricsToReplace.length > 0){
+    let val = queuedInlineRubricsToReplace.shift();
+    let el = val[0];
+    let rubricURL = val[1];
+    let criterion_selector = val[2];
+    console.log('Replacing <a class="bz-ajax-replace" href="' + rubricURL + criterion_selector + '">' + el.html() + '</a> with inline rubric');
+    
+    let fullRubricTable = loadedFullRubricTables[rubricURL];
+    if (!fullRubricTable) {
+      // If there are multiple rubrics inlined on this page, we may be calling this when one is 
+      // loaded but not the other. The logic here should be queue it up again and move on. FIXME.
+      console.log('Error: replacing rubric. It hasnt been fetched yet. Maybe there is a mix and match of rubrics on this page?');  
+      continue;
+    }
+
+    let tableEl = jQuery('<table class="bz-ajax-loaded-rubric bz-ajax-loaded" />').html(fullRubricTable.find(criterion_selector));
+    //console.log('pulled the following rubric row out of the full table: ' + tableEl.html());
+
+    // If the inline rubric looks something like the following, set it up as a magic field backed table where the selected
+    // cell is remembered:
+    // <a class="bz-ajax-replace" href="/courses/1/rubrics/55#criterion_43_153" data-bz-retained="h2cb-rubric-43_153">Click to open 4.8.</a>
+    let magicFieldName= el.attr('data-bz-retained');
+    let isOptionalMagicField = el.hasClass('bz-optional-magic-field');
+    if (magicFieldName){
+      // Wire up magic field backed rubrics. The <table> initially looks something like this:
+      //
+      //<table><tbody><tr id="criterion_43_4821" class="criterion">
+      //  <td class="criterion_description hover-container">...description of criterion...</td>
+      //  <td>
+      //    <table class="ratings">
+      //      <tbody><tr>
+      //        <td id="rating_43_1347" class="rating edge_rating">...rating description and point value...</td>
+      //        <td id="rating_43_627" class="rating ">...rating description and point value...</td>
+      //        <td id="rating_43_7871" class="rating ">...rating description and point value...</td>
+      //      </tr></tbody>
+      //    </table>
+      //  </td>
+      //</tr></tbody></table>
+      //
+      let ratingsTable = tableEl.find('.ratings');
+      if (ratingsTable){
+        tableEl.addClass('bz-clickable-rubric');
+        ratingsTable.on('click', 'td', function(){
+          let ratingsCell = jQuery(this);
+          ratingsTable.find('td').removeClass('selected');
+          ratingsCell.addClass('selected');
+          let selectedvalue = ratingsCell.attr('id');
+          let inputEl = jQuery('#'+magicFieldName);
+          //console.log('Setting input value to: ' + selectedvalue + ' for input element: ' + inputEl.attr('id'));
+          inputEl.val(selectedvalue);
+          // Tried triggering the change event to let the normal magic field logic in bz_support.js run,
+          // but it wasn't working so just save it directly here.
+          BZ_SaveMagicField(magicFieldName, selectedvalue, isOptionalMagicField, "hidden");
+       });
+      } else {
+         console.log('Error: Failed finding <table class="ratings"/> for magic rubric: ' + magicFieldName);
+      }
+      
+      // insert hidden <input> element that we'll setup as a magic field and change
+      // the value when the table cells are clicked
+      // We give the element a bz-retained-field-setup class to prevent the magic field
+      // setup logic in public/bz_support.js from running on these since we just save the values
+      // directly here (b/c i couldn't get it wired up and working properly from there)
+      let classes = "bz-clickable-rubric-data bz-retained-field-setup";
+      if (isOptionalMagicField){
+        classes += ' bz-optional-magic-field';
+      }
+      let hiddenInputEl = $('<input type="hidden" id='+magicFieldName+' class="'+classes+'" value="" data-bz-retained="'+magicFieldName+'" />').insertAfter(el);
+      // Note: this commit changed to the returned objects per name to be: {value: val, timestamp: ts} instead of just the value.
+      // I *should* fix it up to be a bit cleaner: https://github.com/beyond-z/canvas-lms/commit/8c25d9687ba405cacd5c9ea9f02834bbf302d782#diff-e37ca7733a2b3082659beb7b71fe4e6f
+      let obj = loadedMagicFieldValues[magicFieldName];
+      if (obj && obj.value && obj.value != 'undefined'){ // On first load, there may not be a value set yet.
+        let magicValue = obj.value;
+        hiddenInputEl.val(magicValue);
+        let selectedCell = tableEl.find('td#' + magicValue);
+        if (selectedCell) selectedCell.addClass('selected');
+        else console.log('Error: Failed finding td#' + magicValue + ' to set as selected cell for magic rubric');
       }
     }
-  };
+
+    el.replaceWith(tableEl);
+
+    el.click(function(e){
+      e.preventDefault();
+    });
+  }
+}
+
+/* Ajax Load dynamic content, like rubric criterion (bypassing sanitizer) and LinkedIn API URLs */
+function bzAjaxLoad() {
+  console.log("bzAjaxLoad() begin");
+  // For each clickable rubric, we need to load the existing value of the clicked cell. 
+  // Will be set to return value of JSON.parse('{"key1":"value1","key2":"value2"}')
+  let loadedExistingRubricValues = {}; 
+  let queuedExistingRubricValues = [];
+  let loadedFullRubricTables = {}; // For each rubric, load the whole table once and store it here.
+  let queuedFullRubricTables = new Set(); // Each time we encounter a new rubric not already loaded, queue it here when we ajax request it and remove once loaded
+  let queuedInlineRubricsToReplace = []; // Queue up individual <a class="bz-ajax-replace" href="/courses/1/rubrics/55#criterion_43_153"/> elements to process once everything is loaded.
 
   jQuery('.bz-ajax-replace').each(function(e){
     var el = jQuery(this);
-    var replaceURL = jQuery(this).attr('href');
-    if (replaceURL.indexOf('rubric') >= 0){
+    let replaceURL = jQuery(this).attr('href');
 
+    if (replaceURL.indexOf('rubric') >= 0){
       // This will replace elements like this with a <table> holding that part of the rubric:
       // <a class="bz-ajax-replace" href="/courses/1/rubrics/55#criterion_43_153" target="_blank">Click to open 4.8.</a>
+      //
+      // Overview of the logic:
+      // 1) Loop through each inline rubric and queue it up to be replaced. 
+      // 2) If the full rubric table hasn't been ajax requested yet, queue that up.
+      // 3) If the inline rubric is clickable, add the magic field to the list to be fetched.
+      // 4) When the full rubric table AND the list of magic field values come back, go through and
+      //    actually do the replace
+      let rubricURL = '';
+      let criterion_selector = '';
+
       if (replaceURL.indexOf('#')){
-        var rb = replaceURL.split('#');
-        replaceURL = rb[0]+' #'+rb[1];
+        let rb = replaceURL.split('#');
+        criterion_selector = '#'+rb[1];
+        rubricURL = rb[0];
       }
 
-      // If the inline rubric looks something like the following, set it up as a magic field backed table where the selected
-      // cell is remembered:
-      // <a class="bz-ajax-replace" href="/courses/1/rubrics/55#criterion_43_153" target="_blank" data-bz-retained="h2cb-rubric-43_153">Click to open 4.8.</a>
-      var magicFieldName= jQuery(this).attr('data-bz-retained');
-      var isOptionalMagicField = jQuery(this).hasClass('bz-optional-magic-field');
+      queuedInlineRubricsToReplace.push([el, rubricURL, criterion_selector]);
+
+      let magicFieldName= el.attr('data-bz-retained');
       if (magicFieldName){
-        // insert hidden <input> element that we'll setup as a magic field and change
-        // the value when the table cells are clicked
-        // We give the element a bz-retained-field-setup class to prevent the magic field
-        // setup logic in public/bz_support.js from running on these since we just save the values
-        // directly here (b/c i couldn't get it wired up and working properly from there)
-        var classes = "bz-clickable-rubric-data bz-retained-field-setup";
-        if (isOptionalMagicField){
-          classes += ' bz-optional-magic-field';
-        }
-        var hiddenInputEl = $('<input type="hidden" id='+magicFieldName+' class="'+classes+'" value="" data-bz-retained="'+magicFieldName+'" />').insertAfter(el);
-        magicFieldNames.push(magicFieldName);
-        magicFieldElements.push(hiddenInputEl);
+        queuedExistingRubricValues.push(magicFieldName);
       }
 
-      console.log('Loading ' + replaceURL + ' into ' + jQuery(this).attr('class'));
-
-      el.replaceWith(jQuery('<table />').load(replaceURL, function() {
-        var tableEl = jQuery(this);
-        tableEl.addClass('bz-ajax-loaded-rubric bz-ajax-loaded');
-        if (magicFieldName){
-          // Wire up magic field backed rubrics. The <table> initially looks something like this:
-          /**
-          <table><tbody><tr id="criterion_43_4821" class="criterion">
-            <td class="criterion_description hover-container">...description of criterion...</td>
-            <td>
-              <table class="ratings">
-                <tbody><tr>
-                  <td id="rating_43_1347" class="rating edge_rating">...rating description and point value...</td>
-                  <td id="rating_43_627" class="rating ">...rating description and point value...</td>
-                  <td id="rating_43_7871" class="rating ">...rating description and point value...</td>
-                </tr></tbody>
-              </table>
-            </td>
-          </tr></tbody></table>
-          */
-          var ratingsTable = jQuery(this).find('.ratings');
-          if (ratingsTable){
-            tableEl.addClass('bz-clickable-rubric');
-            ratingsTable.on('click', 'td', function(){
-              var ratingsCell = jQuery(this);
-              ratingsTable.find('td').removeClass('selected');
-              ratingsCell.addClass('selected');
-              var selectedvalue = ratingsCell.attr('id');
-              var inputEl = jQuery('#'+magicFieldName);
-              //console.log('Setting input value to: ' + selectedvalue + ' for input element: ' + inputEl.attr('id'));
-              inputEl.val(selectedvalue);
-              // Tried triggering the change event to let the normal magic field logic in bz_support.js run,
-              // but it wasn't working so just save it directly here.
-              BZ_SaveMagicField(magicFieldName, selectedvalue, isOptionalMagicField, "hidden");
-           });
-          } else {
-             console.log('Error: Failed finding <table class="ratings"/> for magic rubric: ' + magicFieldName);
-          }
-          magicRubricTablesLoadedCount += 1;
-          if (magicRubricTablesLoadedCount >= magicFieldNames.length)
-          {
-            console.log("Finished loading all magic inline rubric tables");
-            if (!existingMagicValuesLoaded && isMagicFieldValuesRetreived){
-              // Race condition b/n these callbacks loading the inline rubric <table>s,
-              // and the existing values being retrieved, so both have to try to load the values if the other has run
-              loadExistingMagicValues();
+      if (!queuedFullRubricTables.has(rubricURL) && !loadedFullRubricTables.hasOwnProperty(rubricURL)) {
+        queuedFullRubricTables.add(rubricURL); 
+        console.log('Loading full rubric table (one time): ' + rubricURL);
+        $.ajax({
+          url: rubricURL,
+          success: function (data) { 
+            console.log('Done loading full rubric table for: ' + rubricURL);
+            var loadedFullRubricTable = $(data);
+            //console.dir(loadedFullRubricTable);
+            loadedFullRubricTables[rubricURL] = loadedFullRubricTable;
+            queuedFullRubricTables.delete(rubricURL);
+            // Race condition with magic fields being loaded. Second to finish actually runs the replace.
+            if (queuedExistingRubricValues.length <= 0) {
+              bzReplaceInlineRubrics(queuedInlineRubricsToReplace, loadedFullRubricTables, loadedExistingRubricValues);
             }
           }
-        }
-      }));
-      //jQuery('#wiki_page_show').replaceWith(jQuery('table').load('/courses/10/rubrics/9 #criterion_9_7861'));
-
-      jQuery(this).click(function(e){
-        e.preventDefault();
-      });
+        });
+      }
     }
     else if (replaceURL.indexOf('service=linked_in') >= 0){
 
@@ -1031,16 +1075,19 @@ function bzAjaxLoad() {
     }
   });
 
-  BZ_LoadMagicFields(magicFieldNames, function(retrievedFieldValues) {
-    console.log("Retreived list of existing magic values for inline rubrics");
-    isMagicFieldValuesRetreived = true;
-    magicFieldValues = retrievedFieldValues;
-    if (!existingMagicValuesLoaded && magicRubricTablesLoadedCount >= magicFieldNames.length){
-      // Race condition b/n this function firing and the callback to load the inline rubric <table>s,
-      // so both have to try to load the values if the other has run
-      loadExistingMagicValues();
-    }
-  });
+  // If there are clickable rubrics, go load their clicked values.
+  if (queuedExistingRubricValues.length > 0) {
+    BZ_LoadMagicFields(queuedExistingRubricValues, function(retrievedFieldValues) {
+      console.log("Retreived list of existing magic values for inline rubrics");
+      loadedExistingRubricValues = retrievedFieldValues;
+      queuedExistingRubricValues.length = 0;
+      // Race condition b/n this callback and the ajax callback to fetch and replace the rubric
+      // Second one to be called actually runs.
+      if (queuedFullRubricTables.size <= 0) {
+       bzReplaceInlineRubrics(queuedInlineRubricsToReplace, loadedFullRubricTables, loadedExistingRubricValues);
+      }
+    });
+  }
 }
 
 // the Canvas built in thing strips scripts out of the editor, but
