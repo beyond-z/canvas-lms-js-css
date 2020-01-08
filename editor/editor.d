@@ -3,6 +3,7 @@
 +/
 module braven.editor;
 
+
 // FIXME: it is very important to check for repeated things, copy/paste keeps creating it
 // FIXME: unique values for radio boxes and correct group names too
 // FIXME: make sure the h4 isn't extended in other stuff
@@ -186,6 +187,7 @@ class EditorApi : ApiProvider {
 		auto client = new HttpClient();
 		ssoService = arsd.cgi.Uri("/sso").basedOn(arsd.cgi.Uri(readText("data/local-url.txt").strip));
 		auto request = client.navigateTo(arsd.http2.Uri("https://sso.bebraven.org/serviceValidate?ticket="~encodeComponent(ticket)~"&service=" ~ encodeComponent(ssoService)));
+                request.requestParameters.headers = ["Connection: keep-alive"]; // Heroku assumes connection close. This forces it to allow reusing connections.
 		auto response = request.waitForCompletion();
 		if(response.code == 200) {
 			auto xml = new XmlDocument(response.contentText);
@@ -1972,11 +1974,11 @@ class EditorApi : ApiProvider {
 		if(canvasUrl.length == 0)
 			return null;
 
-		if(canvasUrl.startsWith("https://portal.bebraven.org/api/v1/courses/1/pages/"))
-			canvasUrl = canvasUrl["https://portal.bebraven.org/api/v1/courses/1/pages/".length .. $];
+		if(canvasUrl.startsWith("http://portal.bebraven.org/api/v1/courses/1/pages/"))
+			canvasUrl = canvasUrl["http://portal.bebraven.org/api/v1/courses/1/pages/".length .. $];
 
-		if(canvasUrl.startsWith("https://portal.bebraven.org/api/v1/courses/1/assignments/"))
-			canvasUrl = canvasUrl["https://portal.bebraven.org/api/v1/courses/1/assignments/".length .. $];
+		if(canvasUrl.startsWith("http://portal.bebraven.org/api/v1/courses/1/assignments/"))
+			canvasUrl = canvasUrl["http://portal.bebraven.org/api/v1/courses/1/assignments/".length .. $];
 
 		// then update it
 		auto canvas = getCanvasApiClient(stagingCredentials());
@@ -1987,7 +1989,7 @@ class EditorApi : ApiProvider {
 			fix["assignment"]["description"] = html;
 
 			auto result = canvas.rest.courses[courseId].assignments[canvasUrl].PUT(fix).result;
-			return "https://stagingportal.bebraven.org/courses/"~to!string(courseId)~"/assignments/" ~ canvasUrl;
+			return "http://stagingportal.bebraven.org/courses/"~to!string(courseId)~"/assignments/" ~ canvasUrl;
 		} else {
 			var fix = var.emptyObject;
 			fix["wiki_page"] = var.emptyObject;
@@ -1995,7 +1997,7 @@ class EditorApi : ApiProvider {
 
 			auto result = canvas.rest.courses[courseId].pages[canvasUrl].PUT(fix).result;
 			// then return the URL of the new page on Canvas
-			return "https://stagingportal.bebraven.org/courses/"~to!string(courseId)~"/pages/" ~ canvasUrl;
+			return "http://stagingportal.bebraven.org/courses/"~to!string(courseId)~"/pages/" ~ canvasUrl;
 		}
 	}
 
@@ -2030,11 +2032,11 @@ class EditorApi : ApiProvider {
 		if(canvasUrl.length == 0)
 			return null;
 
-		if(canvasUrl.startsWith("https://portal.bebraven.org/api/v1/courses/1/pages/"))
-			canvasUrl = canvasUrl["https://portal.bebraven.org/api/v1/courses/1/pages/".length .. $];
+		if(canvasUrl.startsWith("http://portal.bebraven.org/api/v1/courses/1/pages/"))
+			canvasUrl = canvasUrl["http://portal.bebraven.org/api/v1/courses/1/pages/".length .. $];
 
-		if(canvasUrl.startsWith("https://portal.bebraven.org/api/v1/courses/1/assignments/"))
-			canvasUrl = canvasUrl["https://portal.bebraven.org/api/v1/courses/1/assignments/".length .. $];
+		if(canvasUrl.startsWith("http://portal.bebraven.org/api/v1/courses/1/assignments/"))
+			canvasUrl = canvasUrl["http://portal.bebraven.org/api/v1/courses/1/assignments/".length .. $];
 
 		// then update it
 		auto canvas = getCanvasApiClient(productionCredentials());
@@ -2054,7 +2056,7 @@ class EditorApi : ApiProvider {
 			}
 
 			// then return the URL of the new page on Canvas
-			return "https://portal.bebraven.org/courses/"~to!string(courseId)~"/assignments/" ~ canvasUrl;
+			return "http://portal.bebraven.org/courses/"~to!string(courseId)~"/assignments/" ~ canvasUrl;
 		} else {
 			var fix = var.emptyObject;
 			fix["wiki_page"] = var.emptyObject;
@@ -2070,7 +2072,7 @@ class EditorApi : ApiProvider {
 			}
 
 			// then return the URL of the new page on Canvas
-			return "https://portal.bebraven.org/courses/"~to!string(courseId)~"/pages/" ~ canvasUrl;
+			return "http://portal.bebraven.org/courses/"~to!string(courseId)~"/pages/" ~ canvasUrl;
 		}
 	}
 
@@ -2132,7 +2134,7 @@ class EditorApi : ApiProvider {
 				id = r[0].to!int + 1;
 
 			bdb.query("INSERT INTO files (id, name, module_number, subnumber, latest_production_commit, canvas_page_name) VALUES (?, ?, ?, ?, ?, ?)",
-				id, assignment.name.get!string, 1000, ++partNum, "", "https://portal.bebraven.org/api/v1/courses/1/assignments/" ~ assignment.id.get!string);
+				id, assignment.name.get!string, 1000, ++partNum, "", "http://portal.bebraven.org/api/v1/courses/1/assignments/" ~ assignment.id.get!string);
 			*/
 
 			// for updating existing
@@ -2459,8 +2461,8 @@ class EditorApi : ApiProvider {
 
 		return
 			UploadedFileInfo(
-			//"https://stagingportal.bebraven.org/courses/1/files/"~canvasObject.id.get!string~"/preview",
-			"https://portal.bebraven.org/courses/1/files/"~canvasObject.id.get!string~"/preview",
+			//"http://stagingportal.bebraven.org/courses/1/files/"~canvasObject.id.get!string~"/preview",
+			"http://portal.bebraven.org/courses/1/files/"~canvasObject.id.get!string~"/preview",
 			file.contentType,
 			description);
 	}
@@ -2491,10 +2493,10 @@ class EditorApi : ApiProvider {
 		auto canvas = getCanvasApiClient(productionCredentials());
 
 		// live things
-		auto req = canvas.httpClient.navigateTo(arsd.http2.Uri("https://portal.bebraven.org/bz/course_cohort_information?course_ids[]=71&course_ids[]=73&course_ids[]=81&access_token=" ~ canvas.oauth2Token));
+		auto req = canvas.httpClient.navigateTo(arsd.http2.Uri("http://portal.bebraven.org/bz/course_cohort_information?course_ids[]=71&course_ids[]=73&course_ids[]=81&access_token=" ~ canvas.oauth2Token));
 
 		// lc playbooks
-		//auto req = canvas.httpClient.navigateTo(arsd.http2.Uri("https://portal.bebraven.org/bz/course_cohort_information?course_ids[]=59&course_ids[]=60&course_ids[]=61&access_token=" ~ canvas.oauth2Token));
+		//auto req = canvas.httpClient.navigateTo(arsd.http2.Uri("http://portal.bebraven.org/bz/course_cohort_information?course_ids[]=59&course_ids[]=60&course_ids[]=61&access_token=" ~ canvas.oauth2Token));
 
 		auto response = req.waitForCompletion;
 		var obj = var.fromJson(response.contentText);//["while(1);".length .. $]);
@@ -3264,7 +3266,7 @@ class EditorApi : ApiProvider {
 
 		auto accessToken = productionCredentials().apiToken;
 
-		auto updateJson = getText("https://portal.bebraven.org/bz/magic_field_dump?since="~lastUpdate~"&access_token=" ~ accessToken);
+		auto updateJson = getText("http://portal.bebraven.org/bz/magic_field_dump?since="~lastUpdate~"&access_token=" ~ accessToken);
 
 		import std.file, arsd.jsvar;
 		var json = var.fromJson(updateJson);
