@@ -564,7 +564,16 @@ function bzInitializeNewUi() {
   jQuery('.instant-feedback').find('input').change(function(){
     if ( jQuery(this).is('[type="radio"]') || jQuery(this).is('[type="checkbox"]') ) {
       if(this.checked) {
-        var liParent = jQuery(this).parents('li, td').addClass('show-answers');
+        var liParent = jQuery(this).parents('li, td')
+        if( liParent.is('.correct,.incorrect') ) {
+          liParent.addClass('show-answers');
+        } else {
+          if( jQuery(this).hasClass('correct') ) {
+            liParent.addClass('show-answers correct');
+          } else if ( jQuery(this).hasClass('incorrect')) {
+            liParent.addClass('show-answers incorrect');
+          }
+        }
         if ( jQuery(this).is('[type="radio"]') ) {
           liParent.siblings().removeClass('show-answers');
         }
