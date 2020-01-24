@@ -565,9 +565,13 @@ function bzInitializeNewUi() {
     if ( jQuery(this).is('[type="radio"]') || jQuery(this).is('[type="checkbox"]') ) {
       if(this.checked) {
         var liParent = jQuery(this).parents('li, td')
+        //Check to see if parent has correct/incorrect
         if( liParent.is('.correct,.incorrect') ) {
+          // If it does, follow original logic
           liParent.addClass('show-answers');
         } else {
+          // Otherwise, check to see if input has correct/incorrect
+          // and add it to the parent
           if( jQuery(this).hasClass('correct') ) {
             liParent.addClass('show-answers correct');
           } else if ( jQuery(this).hasClass('incorrect')) {
