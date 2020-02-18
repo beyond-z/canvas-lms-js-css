@@ -561,18 +561,35 @@ function bzInitializeNewUi() {
   }).change();
 
   // Provide instant feedback when any input on a list is checked:
-  jQuery('.instant-feedback').find('input').change(function(){
-    if ( jQuery(this).is('[type="radio"]') || jQuery(this).is('[type="checkbox"]') ) {
+  jQuery('.instant-feedback,[data-instant-feedback="true"]').find('input').change(function(){
+    if (jQuery(this).is('[type="radio"],[type="checkbox"]')) {
+      var answerCorrectness = jQuery(this).attr('data-correctness')
+      var answerParent = jQuery(this).parents('li, td')
+      var answerLabel = jQuery(this).siblings('label')
+
       if(this.checked) {
-        var liParent = jQuery(this).parents('li, td').addClass('show-answers');
-        if ( jQuery(this).is('[type="radio"]') ) {
-          liParent.siblings().removeClass('show-answers');
+        if(answerParent) {
+          if(answerCorrectness == "correct") {
+            answerParent.addClass('show-answers correct');
+          } else if (answerCorrectness == "incorrect") {
+            answerParent.addClass('show-answers incorrect');
+          }
+          if(jQuery(this).is('[type="radio"]')) {
+            answerParent.siblings().removeClass('show-answers incorrect correct');
+          }
+        }
+        if(answerLabel) {
+          if(answerCorrectness == "correct") {
+            answerLabel.addClass('show-answers correct');
+          } else if (answerCorrectness == "incorrect") {
+            answerLabel.addClass('show-answers incorrect');
+          }
         }
       } else {
-        jQuery(this).parents('li, td').removeClass('show-answers');
+        answerParent.removeClass('show-answers incorrect correct');
       }
     } else {
-      var liParent = jQuery(this).parents('li, td').addClass('show-answers');
+      answerParent.addClass('show-answers');
     }
   });
 
