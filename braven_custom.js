@@ -584,6 +584,9 @@ function bzInitializeNewUi() {
           } else if (answerCorrectness == "incorrect") {
             answerLabel.addClass('show-answers incorrect');
           }
+          if(jQuery(this).is('[type="radio"]')) {
+            answerLabel.parents('.module-radio-div').siblings().find('label').removeClass('show-answers incorrect correct');
+          }
         }
       } else {
         answerParent.removeClass('show-answers incorrect correct');
