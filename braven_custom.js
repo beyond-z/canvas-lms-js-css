@@ -326,10 +326,10 @@ function bzGiveVerboseFeedback(feedback, answerSpace, feedbackClass) {
 var bzNewUiHandlers = {
   // Score a checklist question:
   '.for-checklist' : function(){
-    var checklist = jQuery(this).parents('.question').find('.checklist');
-    var maxScore = checklist.find('.correct').length;
+    var checklist = jQuery(this).parents('.question').find('fieldset');
+    var maxScore = checklist.find('[data-correctness="correct"]').length;
     if(maxScore == 0)
-    	return;
+      return;
     var checklistScore = 0;
     var falsePositives = 0;
     checklist.children().each(function(){
@@ -369,7 +369,7 @@ var bzNewUiHandlers = {
 
   // Score a radio-list question and return feedback:
   '.for-radio-list' : function(){
-    var list = jQuery(this).parents('.question').find('.radio-list');
+    var list = jQuery(this).parents('.question').find('fieldset');
     var feedback = "";
     var feedbackClass = "";
     var answerSpace = list.parents('.question').next('.answer');
@@ -421,7 +421,7 @@ var bzNewUiHandlers = {
 
   // Show feedback on sort-to-match questions:
   '.for-match' : function(){
-    jQuery(this).parents('.bz-box').find('.sort-to-match').addClass('show-answers');
+    jQuery(this).parents('.content-section').find('.sort-to-match').addClass('show-answers');
   },
 
     // Generate self-evaluation results list:
@@ -429,7 +429,7 @@ var bzNewUiHandlers = {
     var evalarray = [];
     var results = "<ul>";
     // collect all checked inputs' values into an array:
-    jQuery(this).parents('.bz-box').find('input:checked').each(function(){
+    jQuery(this).parents('.content-section').find('input:checked').each(function(){
       evalarray.push(jQuery(this).val());
     });
     // Now let's sort and count what we've collected:
@@ -453,25 +453,25 @@ var bzNewUiHandlers = {
     }
     //close the list:
     results+= '</ul>';
-    jQuery(this).parents('.bz-box').next().children('.box-title').after(results);
+    jQuery(this).parents('.content-section').next().children('.box-title').after(results);
   },
 
   '.for-eval-sum' : function(){
     var results = 0;
     // sum all checked inputs' values
-    jQuery(this).parents('.bz-box').find('input:checked').each(function(){
+    jQuery(this).parents('.content-section').find('input:checked').each(function(){
       results+= Number(jQuery(this).val());
     });
     // calculate max assuming 10 is high score per rubric criterion:
-    var max = 10 * jQuery(this).parents('.bz-box').find('.criterion').length;
+    var max = 10 * jQuery(this).parents('.content-section').find('.criterion').length;
     // return results
-    jQuery(this).parents('.bz-box').next().find('.bz-show-eval-sum').text(String(results));
-    jQuery(this).parents('.bz-box').next().find('.bz-show-eval-max').text(String(max));
+    jQuery(this).parents('.content-section').next().find('.bz-show-eval-sum').text(String(results));
+    jQuery(this).parents('.content-section').next().find('.bz-show-eval-max').text(String(max));
   },
 
   '.for-compare-scores'  : function(){
     // add '.show-answers' to the table, then run through each row where there's a spot to display comparison results:
-    jQuery(this).parents('.bz-box').next('.bz-box').find('.bz-compare-scores-result').text(function(){
+    jQuery(this).parents('.content-section').next('.content-section').find('.bz-compare-scores-result').text(function(){
       var row = jQuery(this).parents('tr');
       var after = 0;
       var before = 0;
@@ -552,7 +552,7 @@ function bzInitializeNewUi() {
     // FIXME
 
   // Show an asterisk indicating which questions are counted towards your mastery grade
-  jQuery('.bz-check-answers').parents('.bz-box').find('.box-title').next().addClass('bz-graded-question');
+  jQuery('.bz-check-answers').parents('.content-section').find('.box-title').next().addClass('bz-graded-question');
 
 
   // Display current value of a range question:
@@ -561,10 +561,10 @@ function bzInitializeNewUi() {
   }).change();
 
   // Provide instant feedback when any input on a list is checked:
-  jQuery('.instant-feedback,[data-instant-feedback="true"]').find('input').change(function(){
+  jQuery('[data-instant-feedback="true"]').find('input').change(function(){
+    var answerParent = jQuery(this).parents('td')
     if (jQuery(this).is('[type="radio"],[type="checkbox"]')) {
       var answerCorrectness = jQuery(this).attr('data-correctness')
-      var answerParent = jQuery(this).parents('li, td')
       var answerLabel = jQuery(this).siblings('label')
 
       if(this.checked) {
@@ -1138,7 +1138,7 @@ function collectStuffAfterBox(button) {
 
     <div class="show-content">
       <div wrappers>
-        <div class="bz-box">
+        <div class="content-section">
           // stuff
           <button here>
         </div>
@@ -1152,7 +1152,7 @@ function collectStuffAfterBox(button) {
     return [];
 
   var box = button;
-  while(!box.classList.contains('bz-box')) {
+  while(!box.classList.contains('content-section')) {
     box = box.parentNode;
   }
 
@@ -1184,7 +1184,7 @@ function collectBoxesBeforeBox(button) {
     return [];
 
   var box = button;
-  while(!box.classList.contains('bz-box')) {
+  while(!box.classList.contains('content-section')) {
     box = box.parentNode;
   }
 
@@ -1229,7 +1229,7 @@ function createBzProgressBar() {
     }, 500);
   });
 
-  var doneButtonCount = document.querySelectorAll(".bz-toggle-all-next").length;
+  var doneButtonCount = document.querySelectorAll(".done-button").length;
   if(doneButtonCount == 0)
     return; // no progress to report!
 
@@ -1276,7 +1276,7 @@ function createBzProgressBar() {
       for(var i = 0; i < possibilities.length; i++) {
         let e = possibilities[i];
 
-        if(e.matches(".bz-toggle-all-next"))
+        if(e.matches(".done-button"))
           boxPosition++;
 
         if(!e.matches("[data-bz-answer]"))
@@ -1290,7 +1290,7 @@ function createBzProgressBar() {
         if(e.dataset.bzRetained == lastName)
           continue;
 
-        while(box && !box.classList.contains("bz-box"))
+        while(box && !box.classList.contains("content-section"))
           box = box.parentNode;
         if(!box) continue;
         if(box != lastBox) {
@@ -1385,7 +1385,7 @@ runOnUserContent(function(){
   var isWikiPage = (ENV && ENV["WIKI_PAGE"]);
   if (!isWikiPage) return;
 
-  var nextButton = document.querySelector(".bz-toggle-all-next");
+  var nextButton = document.querySelector(".done-button");
   if(nextButton) {
   	// if we have a next (aka Done) button in the content, we want to hide the
 	  // default canvas next button b/c this is a module for Fellows using the interactive one page flow.
@@ -1420,16 +1420,16 @@ runOnUserContent(function(){
     var n = collectStuffAfterBox(obj);
     for(var i = 0; i < n.length; i++) {
       $(n[i]).slideDown();
-      if(n[i].querySelector(".bz-toggle-all-next"))
+      if(n[i].querySelector(".done-button"))
         break;
     }
   }
 
   var allBoxesWithStoppingPoints = [];
   // only ones with a button are actually stopping points
-  var start = document.querySelectorAll(".bz-box");
+  var start = document.querySelectorAll(".content-section");
   for(var a = 0; a < start.length; a++)
-    if(start[a].querySelector(".bz-toggle-all-next"))
+    if(start[a].querySelector(".done-button"))
         allBoxesWithStoppingPoints.push(start[a]);
 
   // no boxes on page, nothing else to do (old content or edit page perhaps)
@@ -1446,7 +1446,7 @@ runOnUserContent(function(){
 
   // anything before this, already open, should show the feedback from
   // last time a nd not shuffle, etc.
-  var first = openPosition == allBoxesWithStoppingPoints.length ? null : allBoxesWithStoppingPoints[openPosition].querySelector(".bz-toggle-all-next");
+  var first = openPosition == allBoxesWithStoppingPoints.length ? null : allBoxesWithStoppingPoints[openPosition].querySelector(".done-button");
   var listOfShowingBoxes = first == null ? allBoxesWithStoppingPoints : collectBoxesBeforeBox(first);
   for(var i = 0; i < listOfShowingBoxes.length; i++) {
     listOfShowingBoxes[i].className += ' has-preshowing-box';
@@ -1454,10 +1454,10 @@ runOnUserContent(function(){
   addOnMagicFieldsLoaded(function() {
     var list = listOfShowingBoxes;
     for(var i = 0; i < list.length; i++) {
-      if(list[i].classList.contains("bz-box")) {
+      if(list[i].classList.contains("content-section")) {
           // simulate the click of old buttons in order to catch up on display
           console.log(list[i]);
-          var button = list[i].querySelector(".bz-toggle-all-next");
+          var button = list[i].querySelector(".done-button");
           if(button)
             triggerBzNewUiHandler(button);
 
@@ -1477,9 +1477,9 @@ runOnUserContent(function(){
     $(list[i]).hide();
   }
 
-  jQuery('.bz-toggle-all-next').click(function(e){
+  jQuery('.done-button').click(function(e){
     var parentBox = this;
-    while(parentBox && !parentBox.classList.contains("bz-box"))
+    while(parentBox && !parentBox.classList.contains("content-section"))
     	parentBox = parentBox.parentNode;
     // make sure instant feedback is actually showing before we next on those.
     // want to ensure the users actually interact somehow
@@ -1498,7 +1498,7 @@ runOnUserContent(function(){
 
     triggerBzNewUiHandler(this);
 
-    var pos = $(this).parents('.bz-box').attr("data-box-sequence");
+    var pos = $(this).parents('.content-section').attr("data-box-sequence");
     pos |= 0;
     pos += 1; // they just advanced!
 
@@ -1514,7 +1514,7 @@ runOnUserContent(function(){
     http.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     http.send(data);
 
-  }).parents('.bz-box').addClass('bz-has-toggle-btn');
+  }).parents('.content-section').addClass('bz-has-toggle-btn');
 
   if(location.hash.length) {
     var where = document.getElementById(location.hash.substring(1));
@@ -1756,7 +1756,7 @@ runOnUserContent(function() {
 
       var parentBox = table.parentNode;
       while(parentBox) {
-        if(parentBox.classList.contains("bz-box"))
+        if(parentBox.classList.contains("content-section"))
             break;
         parentBox = parentBox.parentNode;
       }
@@ -1880,7 +1880,7 @@ runOnUserContent(function() {
   var last_known_scroll_position = 0;
   var ticking = false;
 
-  var sections = document.querySelectorAll(".bz-box");
+  var sections = document.querySelectorAll(".content-section");
   if(sections.length == 0)
     return;
 
