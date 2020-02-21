@@ -565,7 +565,6 @@ function bzInitializeNewUi() {
     var answerParent = jQuery(this).parents('td,.module-checkbox-div,.module-radio-div')
     if (jQuery(this).is('[type="radio"],[type="checkbox"]')) {
       var answerCorrectness = jQuery(this).attr('data-correctness')
-      var answerParent = jQuery(this).parents('li, td')
       var answerLabel = jQuery(this).siblings('label')
 
       if(this.checked) {
