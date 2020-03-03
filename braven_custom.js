@@ -1400,6 +1400,14 @@ runOnUserContent(function(){
     if ($(".bz-graded-question ol li").length === 0){
       jQuery("#bz-progress-bar .bz-graded-question").hide();
     }
+
+    // Remove empty inline feedback
+    jQuery('.inline.feedback').each(function(_, e) { 
+      let $feedback = jQuery(e);
+      if(!$feedback.text().trim()) {
+        $feedback.remove();
+      }
+    })
   });
 
   var position_magic_field_name = window.position_magic_field_name ? window.position_magic_field_name : ("module_position_" + ENV["WIKI_PAGE"].page_id);
