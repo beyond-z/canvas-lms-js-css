@@ -325,7 +325,7 @@ function bzGiveVerboseFeedback(feedback, answerSpace, feedbackClass) {
 */
 var bzNewUiHandlers = {
   // Score a checklist question:
-  '.for-checklist' : function(){
+  '.module-block-checkbox .done-button' : function() {
     var checklist = jQuery(this).parents('.question').find('fieldset');
     var maxScore = checklist.find('[data-correctness="correct"]').length;
     if(maxScore == 0)
@@ -333,10 +333,11 @@ var bzNewUiHandlers = {
     var checklistScore = 0;
     var falsePositives = 0;
     checklist.children().each(function(){
-      jQuery(this).addClass('show-answers');
-      if( jQuery(this).children('input').is(':checked') ) {
-        jQuery(this).addClass('checked');
-        if ( jQuery(this).is('.correct') || jQuery(this).parents('li').is('.correct') ) {
+      let $option = jQuery(this)
+      $option.addClass('show-answers');
+      if( $option.children('input').is(':checked') ) {
+        $option.addClass('checked');
+        if ( $option.find('input').is('[data-correctness="correct"]') || $option.parents('.module-checkbox-div').is('.correct') ) {
           checklistScore++;
         } else {
           falsePositives++;
@@ -368,16 +369,17 @@ var bzNewUiHandlers = {
   },
 
   // Score a radio-list question and return feedback:
-  '.for-radio-list' : function(){
-    var list = jQuery(this).parents('.question').find('fieldset');
+  '.module-block-radio .done-button' : function() {
+    var radiolist = jQuery(this).parents('.question').find('fieldset');
     var feedback = "";
     var feedbackClass = "";
-    var answerSpace = list.parents('.question').next('.answer');
-    list.children().each(function(){
-      jQuery(this).addClass('show-answers');
-      if( jQuery(this).children('input').is(':checked') ) {
-        jQuery(this).addClass('checked');
-        if ( jQuery(this).is('.correct') || jQuery(this).parents('li').is('.correct') ) {
+    var answerSpace = radiolist.parents('.question').next('.answer');
+    radiolist.children().each(function() {
+      let $option = jQuery(this)
+      $option.addClass('show-answers');
+      if( $option.children('input').is(':checked') ) {
+        $option.addClass('checked');
+        if ( $option.find('input').is('[data-correctness="correct"]') || $option.parents('.module-radio-div').is('.correct') ) {
           feedback = "Good job!";
           feedbackClass = 'correct';
         } else {
@@ -390,9 +392,8 @@ var bzNewUiHandlers = {
   },
 
   // Score a range question:
-  '.for-range' : function() {
+  '.module-block-range .done-button' : function() {
     var range = jQuery(this).parents('.question').find('[data-bz-range-answer]');
-    var falsePositives = 0;
     var currentVal = jQuery(range ).val();
     var correctVal = jQuery(range ).attr('data-bz-range-answer');
     var min = jQuery(range).attr('min');
@@ -401,7 +402,6 @@ var bzNewUiHandlers = {
     var feedbackClass = "";
     // The following calculates the relative distance between the user's choice and the correct answer, and returns a rounded down value between 0 and max score.
     var rangeScore = max - (max * Math.abs(correctVal - currentVal) / (max - min));
-    //console.log(rangeScore);
     if ( max <= rangeScore) {
       feedback = "Amazing! You got it exactly right!";
       feedbackClass = 'correct';
@@ -420,7 +420,7 @@ var bzNewUiHandlers = {
   },
 
   // Show feedback on sort-to-match questions:
-  '.for-match' : function(){
+  '.module-block-matching .done-button' : function(){
     jQuery(this).parents('.content-section').find('.sort-to-match').addClass('show-answers');
   },
 
@@ -613,7 +613,7 @@ function bzInitializeNewUi() {
   */
 
   // Mix up checklists:
-  jQuery('.checklist, .radio-list').not('.dont-mix').each(function(){
+  jQuery('fieldset').not('.dont-mix').each(function(){
     shuffleChildren(this);
   });
 
