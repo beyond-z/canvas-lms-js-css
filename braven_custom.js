@@ -325,7 +325,7 @@ function bzGiveVerboseFeedback(feedback, answerSpace, feedbackClass) {
 */
 var bzNewUiHandlers = {
   // Score a checklist question:
-  '.module-block-checkbox .done-button' : function() {
+  '.module-block-checkbox .done-button,.module-block-key .done-button,.module-block-reflection .done-button' : function() {
     var checklist = jQuery(this).parents('.question').find('fieldset');
     var maxScore = checklist.find('[data-correctness="correct"]').length;
     if(maxScore == 0)
@@ -420,12 +420,12 @@ var bzNewUiHandlers = {
   },
 
   // Show feedback on sort-to-match questions:
-  '.module-block-matching .done-button' : function(){
+  '.module-block-matching .done-button' : function() {
     jQuery(this).parents('.content-section').find('.sort-to-match').addClass('show-answers');
   },
 
     // Generate self-evaluation results list:
-  '.for-eval' : function(){
+  '.for-eval' : function() {
     var evalarray = [];
     var results = "<ul>";
     // collect all checked inputs' values into an array:
@@ -456,7 +456,7 @@ var bzNewUiHandlers = {
     jQuery(this).parents('.content-section').next().children('.box-title').after(results);
   },
 
-  '.for-eval-sum' : function(){
+  '.for-eval-sum' : function() {
     var results = 0;
     // sum all checked inputs' values
     jQuery(this).parents('.content-section').find('input:checked').each(function(){
@@ -469,7 +469,7 @@ var bzNewUiHandlers = {
     jQuery(this).parents('.content-section').next().find('.bz-show-eval-max').text(String(max));
   },
 
-  '.for-compare-scores'  : function(){
+  '.for-compare-scores'  : function() {
     // add '.show-answers' to the table, then run through each row where there's a spot to display comparison results:
     jQuery(this).parents('.content-section').next('.content-section').find('.bz-compare-scores-result').text(function(){
       var row = jQuery(this).parents('tr');
