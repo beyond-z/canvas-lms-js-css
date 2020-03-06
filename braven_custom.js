@@ -1159,8 +1159,14 @@ function collectStuffAfterBox(button) {
 
   var after = [];
   while(!box.classList.contains('show-content')) {
+    if(box.querySelector('.answer')) {
+      after.push(box.querySelector('.answer'))
+    }
     var next = box.nextElementSibling;
     while(next) {
+      if(next.querySelector('.answer')) {
+        after.push(next.querySelector('.answer'))
+      }
       after.push(next);
       next = next.nextElementSibling;
     }
@@ -1428,6 +1434,9 @@ runOnUserContent(function(){
   function unhideNext(obj) {
     var n = collectStuffAfterBox(obj);
     for(var i = 0; i < n.length; i++) {
+      if(n[i].querySelector(".answer")) {
+        continue
+      }
       $(n[i]).slideDown();
       if(n[i].querySelector(".done-button"))
         break;
