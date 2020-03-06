@@ -1158,6 +1158,9 @@ function collectStuffAfterBox(button) {
   }
 
   var after = [];
+  if(box.querySelector('.answer')) {
+    after.push(box.querySelector('.answer'))
+  }
   while(!box.classList.contains('show-content')) {
     var next = box.nextElementSibling;
     while(next) {
