@@ -3319,15 +3319,12 @@ blockquote {
     margin-top: 4px
 }
 
-.bz-module input[data-correctness="correct"] + label {
-    color: green;
+.show-answers input[data-correctness="correct"]:checked + label {
+    color: #22B573;
 }
-
-.bz-module input[data-correctness="incorrect"] + label {
-    color: red;
+.show-answers input[data-correctness="correct"]:not(:checked) + label {
+    color: #B08833;
 }
-
-.bz-module input[data-correctness="maybe"] + label,
-.bz-module input[data-correctness=""] + label {
-    color: #a54c2a;
+.show-answers input[data-correctness="incorrect"] + label {
+    color: #EB3B46;
 }
