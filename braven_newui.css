@@ -364,7 +364,7 @@ progress[value]::-webkit-progress-bar {
 .student-logged-in #menu #grades_menu_item,
 .student-logged-in #quiz-attributes-student,
 .student-logged-in #quiz_student_details,
-.student-logged-in div #quiz_show .alert,
+.student-logged-in div #quiz_show .module-block-alert > div.content
 .student-logged-in .question .mce-toolbar-grp,
 .student-logged-in .question .mce-path,
 .hide-next-module-button .module-sequence-footer, /* this one depends on other factors on the page; the hide-next-button will be set by javascript */
@@ -897,7 +897,7 @@ progress[value]::-webkit-progress-bar {
 	margin-right: auto;
 }
 
-.bz-has-tooltip {
+.has-tooltip {
 	border-bottom: 2px dotted #5bbbba;
 	cursor: pointer; /* fallback */
 	cursor: help;
@@ -1121,26 +1121,24 @@ input[type='button'].add-other-field {
 }
 */
 
-.question,
-.answer,
-.reflection,
-.video,
-.pulse,
-.alert,
-.key,
-.action,
-.values,
-.read,
-.video .box-title,
-.flush .box-title {
+.module-block-reflection > div.content,
+.module-block-video > div.content,
+.module-block-pulse > div.content,
+.module-block-alert > div.content,
+.module-block-key > div.content,
+.module-block-action > div.content,
+.module-block-values > div.content,
+.module-block-read > div.content,
+.module-block-video > div.content h5,
+.module-block-flush > div.content h5 {
 	padding-left: 60px;
 	background: 0px 50px no-repeat;
 	position: relative;
 	color: inherit;
 }
 
-.video,
-.flush {
+.module-block-video > div.content,
+.module-block-flush > div.content {
 	padding-left: 0;
 }
 
@@ -1184,35 +1182,35 @@ figure {
 	color: #C1272D;
 }
 
-.reflection {
+.module-block-reflection > div.content {
 	background-image: url('images/lms-icons-14.png');
 }
 
-.video {
+.module-block-video > div.content {
 	background-image: url('images/lms-icons-23.png');
 }
 
-.pulse {
+.module-block-pulse > div.content {
 	background-image: url('images/lms-icons-30.png');
 }
 
-.alert {
+.module-block-alert > div.content {
 	background-image: url('images/lms-icons-11.png');
 }
 
-.key {
+.module-block-key > div.content {
 	background-image: url('images/lms-icons-33.png');
 }
 
-.action {
+.module-block-action > div.content {
 	background-image: url('images/lms-icons-41.png');
 }
 
-.values {
+.module-block-values > div.content {
 	background-image: url('images/lms-icons-47.png');
 }
 
-.read {
+.module-block-read > div.content {
 	background-image: url('images/lms-icons-read-56.png');
 }
 li input:not([type="button"]):not([type="radio"]):not([type="checkbox"]), li textarea {
@@ -2328,7 +2326,7 @@ table.sort-to-match tr {
 		width: 100%;
 		padding: 5px;
 	}
-	.module-block.video iframe {
+  	.module-block.module-block-video > div.content iframe {
 		width: 100%;
 	}
 	.to-columns {
@@ -2552,31 +2550,31 @@ table.sort-to-match tr {
 	display: none;
 }
 
-.slider-container.likert-style {
+.slider-container.range {
 	display: table;
 	width: 100%;
 	border-spacing: 6px;
 }
 
-.slider-container.likert-style > * {
+.slider-container.range > * {
 	display: table-cell;
 	width: 50%;
 	vertical-align: middle;
 }
 
-.slider-container.likert-style > span {
+.slider-container.range > span {
 	width: 25%;
 }
 
-.slider-container.likert-style > span:first-child {
+.slider-container.range > span:first-child {
 	text-align: right;
 }
 
-.slider-container.likert-style > span:last-child {
+.slider-container.range > span:last-child {
 	text-align: left;
 }
 
-.slider-container.likert-style input[type=range] {
+.slider-container.range input[type=range] {
 	margin: auto;
 	width: 100%;
 }
@@ -3253,16 +3251,12 @@ form.bz-app-ritual-opportunity a.bz-app-ritual-calculate-link {
 
 
 /* New CSS */
-.module-checkbox-div {
+.module-checkbox-div,
+.module-radio-div {
     padding-left: 2em;
     position: relative;
     /* vertical-align: middle; */
     margin: 0.5em 0;
-}
-
-input.module-checkbox-div {
-    position: absolute;
-    left: 0;
 }
 
 .module-checkbox-div input {
@@ -3272,8 +3266,6 @@ input.module-checkbox-div {
 
 .question {
     background-image: url('images/lms-icons-04.png');
-    /* background-repeat: no-repeat; */
-    /* background: 0px 50px no-repeat; */
 }
 
 .module-block > div {
@@ -3322,9 +3314,11 @@ blockquote {
 .show-answers input[data-correctness="correct"]:checked + label {
     color: #22B573;
 }
+
 .show-answers input[data-correctness="correct"]:not(:checked) + label {
     color: #B08833;
 }
+
 .show-answers input[data-correctness="incorrect"] + label {
     color: #EB3B46;
 }
