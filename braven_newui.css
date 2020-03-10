@@ -228,8 +228,8 @@ blockquote {
 	border: 0;
 }
 
-.bz-module > div[data-replaced-with-page] > blockquote,
-.bz-module > blockquote {
+.bz-module div[data-replaced-with-page] blockquote,
+.bz-module blockquote {
 	background: bottom center no-repeat #D1AB5C;
 	background-image: url('images/bkg700-03.jpg');
 	position: relative;
@@ -242,13 +242,13 @@ blockquote {
 	color: #FFF;
 }
 
-.bz-module > div[data-replaced-with-page] > blockquote:nth-of-type(3n+0),
-.bz-module > blockquote:nth-of-type(3n+0) {
+.bz-module div[data-replaced-with-page] blockquote:nth-of-type(3n+0),
+.bz-module blockquote:nth-of-type(3n+0) {
 	background-image: url('images/bkg700-02.jpg');
 }
 
-.bz-module > div[data-replaced-with-page] > blockquote:nth-of-type(3n+1),
-.bz-module > blockquote:nth-of-type(3n+1) {
+.bz-module div[data-replaced-with-page] blockquote:nth-of-type(3n+1),
+.bz-module blockquote:nth-of-type(3n+1) {
 	background-image: url('images/bkg700-01.jpg');
 }
 blockquote.special:nth-of-type(5n+0) {
@@ -364,7 +364,8 @@ progress[value]::-webkit-progress-bar {
 .student-logged-in #menu #grades_menu_item,
 .student-logged-in #quiz-attributes-student,
 .student-logged-in #quiz_student_details,
-.student-logged-in div #quiz_show .module-block-alert > div.content
+.student-logged-in div #quiz_show .module-block-alert > div.content,
+.student-logged-in div #quiz_show .module-block-alert > div.question,
 .student-logged-in .question .mce-toolbar-grp,
 .student-logged-in .question .mce-path,
 .hide-next-module-button .module-sequence-footer, /* this one depends on other factors on the page; the hide-next-button will be set by javascript */
@@ -1121,6 +1122,8 @@ input[type='button'].add-other-field {
 }
 */
 
+.module-block > div.question,
+.module-block > div.answer,
 .module-block-reflection > div.content,
 .module-block-video > div.content,
 .module-block-pulse > div.content,
@@ -1130,7 +1133,17 @@ input[type='button'].add-other-field {
 .module-block-values > div.content,
 .module-block-read > div.content,
 .module-block-video > div.content h5,
-.module-block-flush > div.content h5 {
+.module-block-flush > div.content h5,
+.module-block-reflection > div.question,
+.module-block-video > div.question,
+.module-block-pulse > div.question,
+.module-block-alert > div.question,
+.module-block-key > div.question,
+.module-block-action > div.question,
+.module-block-values > div.question,
+.module-block-read > div.question,
+.module-block-video > div.question h5,
+.module-block-flush > div.question h5 {
 	padding-left: 60px;
 	background: 0px 50px no-repeat;
 	position: relative;
@@ -1138,7 +1151,9 @@ input[type='button'].add-other-field {
 }
 
 .module-block-video > div.content,
-.module-block-flush > div.content {
+.module-block-flush > div.content,
+.module-block-video > div.question,
+.module-block-flush > div.question {
 	padding-left: 0;
 }
 
@@ -1182,37 +1197,46 @@ figure {
 	color: #C1272D;
 }
 
-.module-block-reflection > div.content {
+.module-block-reflection > div.content,
+.module-block-reflection > div.question {
 	background-image: url('images/lms-icons-14.png');
 }
 
-.module-block-video > div.content {
+.module-block-video > div.content,
+.module-block-video > div.question {
 	background-image: url('images/lms-icons-23.png');
 }
 
-.module-block-pulse > div.content {
+.module-block-pulse > div.content,
+.module-block-pulse > div.question {
 	background-image: url('images/lms-icons-30.png');
 }
 
-.module-block-alert > div.content {
+.module-block-alert > div.content,
+.module-block-alert > div.question {
 	background-image: url('images/lms-icons-11.png');
 }
 
-.module-block-key > div.content {
+.module-block-key > div.content,
+.module-block-key > div.question {
 	background-image: url('images/lms-icons-33.png');
 }
 
-.module-block-action > div.content {
+.module-block-action > div.content,
+.module-block-action > div.question {
 	background-image: url('images/lms-icons-41.png');
 }
 
-.module-block-values > div.content {
+.module-block-values > div.content,
+.module-block-values > div.question {
 	background-image: url('images/lms-icons-47.png');
 }
 
-.module-block-read > div.content {
+.module-block-read > div.content,
+.module-block-read > div.question {
 	background-image: url('images/lms-icons-read-56.png');
 }
+
 li input:not([type="button"]):not([type="radio"]):not([type="checkbox"]), li textarea {
  margin: 0.5em;
 }
@@ -2326,7 +2350,8 @@ table.sort-to-match tr {
 		width: 100%;
 		padding: 5px;
 	}
-  	.module-block.module-block-video > div.content iframe {
+  	.module-block.module-block-video > div.content iframe,
+  	.module-block.module-block-video > div.question iframe {
 		width: 100%;
 	}
 	.to-columns {
@@ -3268,7 +3293,7 @@ form.bz-app-ritual-opportunity a.bz-app-ritual-calculate-link {
     background-image: url('images/lms-icons-04.png');
 }
 
-.module-block > div {
+.module-block:not(.module-block-quote) > div {
     padding: 60px;
     padding-right: 0;
     border-top: 1px solid #CCC;
@@ -3276,28 +3301,12 @@ form.bz-app-ritual-opportunity a.bz-app-ritual-calculate-link {
     margin-bottom: -1px;
 }
 
-.module-block.module-block-quote > div {
-    background: bottom center no-repeat #D1AB5C;
-    background-image: url(images/bkg700-01.jpg);
-    position: relative;
-    margin: 3em 0;
-    width: calc( 100% - 6em );
-    padding: 3em;
-    font-style: italic;
-    font-size: 1.2em;
-    text-align: center;
-    color: #FFF;
-}
-
 blockquote small {
     display: block;
     line-height: 20px;
     margin: 1em 0;
     font-size: 75%;
-}
-
-blockquote {
-    margin: 0 0 20px;
+    color: #FFF;
 }
 
 .bz-module .answer.correct h5 {
