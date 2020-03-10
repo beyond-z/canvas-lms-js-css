@@ -67,6 +67,7 @@ th,
 }
 
 .bz-module,
+.bz-module label,
 .assignment .description {
 	font-size: 18px;
 	line-height: 1.25;
@@ -943,15 +944,16 @@ html {
 	left: -60px;
 }
 
-/*.module-block {
-	padding: 60px;
-	padding-right: 0;
-	border-top: 1px solid #CCC;
-	border-bottom: 1px solid #CCC;
-	margin-bottom:-1px;
-}*/
+.module-block:not(.module-block-quote) > div {
+    padding: 60px;
+    padding-right: 0;
+    border-top: 1px solid #CCC;
+    border-bottom: 1px solid #CCC;
+    margin-bottom: -1px;
+}
 
-.bz-module  .module-block h3 {
+.bz-module .module-block h3,
+.bz-module .module-block h5 {
 	margin-top:0;
 }
 
@@ -1032,16 +1034,16 @@ tr:not(.suppress-answers) td.show-answers.incorrect {
 	text-align: center;
 }
 
-.checklist,
-.radio-list {
+.question fieldset {
 	padding-left: 0;
 }
 
-.checklist li,
-.radio-list li {
+.question div.module-checkbox-div,
+.question div.module-radio-div {
 	position: relative;
 	margin: 0.5em 0;
 	padding-left: 2em;
+	line-height: normal;
 }
 
 .checklist [type='checkbox'],
@@ -1157,6 +1159,13 @@ input[type='button'].add-other-field {
 	padding-left: 0;
 }
 
+.module-block-video > div.content > div,
+.module-block-flush > div.content > div,
+.module-block-video > div.question > div,
+.module-block-flush > div.question > div {
+        padding-top: 30px;
+}
+
 figure {
 	margin: 30px 0;
 	text-align: center;
@@ -1168,7 +1177,7 @@ figure {
 	margin: 10px;
 }
 
-.question {
+.module-block > div.question {
 	background-image: url('images/lms-icons-04.png');
 }
 
@@ -1177,23 +1186,23 @@ figure {
 	background-image: none;
 }
 
-.answer {
+.module-block > div.answer {
 	background-image: url('images/lms-icons-100.png');
 }
 
-.answer.correct {
+.module-block > .answer.correct {
 	background-image: url('images/lms-icons-99.png');
 }
 
-.bz-module .answer.correct .box-title {
+.module-block > .answer.correct h5 {
 	color: #22B573;
 }
 
-.answer.incorrect {
+.module-block > .answer.incorrect {
 	background-image: url('images/lms-icons-98.png');
 }
 
-.bz-module .answer.incorrect .box-title {
+.module-block > .answer.incorrect h5 {
 	color: #C1272D;
 }
 
@@ -3280,10 +3289,10 @@ form.bz-app-ritual-opportunity a.bz-app-ritual-calculate-link {
 .module-radio-div {
     padding-left: 2em;
     position: relative;
-    /* vertical-align: middle; */
     margin: 0.5em 0;
 }
 
+.module-radio-div input,
 .module-checkbox-div input {
     position: absolute;
     left: 0;
@@ -3291,14 +3300,6 @@ form.bz-app-ritual-opportunity a.bz-app-ritual-calculate-link {
 
 .question {
     background-image: url('images/lms-icons-04.png');
-}
-
-.module-block:not(.module-block-quote) > div {
-    padding: 60px;
-    padding-right: 0;
-    border-top: 1px solid #CCC;
-    border-bottom: 1px solid #CCC;
-    margin-bottom: -1px;
 }
 
 blockquote small {
