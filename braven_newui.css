@@ -67,6 +67,7 @@ th,
 }
 
 .bz-module,
+.bz-module label,
 .assignment .description {
 	font-size: 18px;
 	line-height: 1.25;
@@ -228,8 +229,8 @@ blockquote {
 	border: 0;
 }
 
-.bz-module > div[data-replaced-with-page] > blockquote,
-.bz-module > blockquote {
+.bz-module div[data-replaced-with-page] blockquote,
+.bz-module blockquote {
 	background: bottom center no-repeat #D1AB5C;
 	background-image: url('images/bkg700-03.jpg');
 	position: relative;
@@ -242,13 +243,13 @@ blockquote {
 	color: #FFF;
 }
 
-.bz-module > div[data-replaced-with-page] > blockquote:nth-of-type(3n+0),
-.bz-module > blockquote:nth-of-type(3n+0) {
+.bz-module div[data-replaced-with-page] blockquote:nth-of-type(3n+0),
+.bz-module blockquote:nth-of-type(3n+0) {
 	background-image: url('images/bkg700-02.jpg');
 }
 
-.bz-module > div[data-replaced-with-page] > blockquote:nth-of-type(3n+1),
-.bz-module > blockquote:nth-of-type(3n+1) {
+.bz-module div[data-replaced-with-page] blockquote:nth-of-type(3n+1),
+.bz-module blockquote:nth-of-type(3n+1) {
 	background-image: url('images/bkg700-01.jpg');
 }
 blockquote.special:nth-of-type(5n+0) {
@@ -364,7 +365,8 @@ progress[value]::-webkit-progress-bar {
 .student-logged-in #menu #grades_menu_item,
 .student-logged-in #quiz-attributes-student,
 .student-logged-in #quiz_student_details,
-.student-logged-in div #quiz_show .alert,
+.student-logged-in div #quiz_show .module-block-alert > div.content,
+.student-logged-in div #quiz_show .module-block-alert > div.question,
 .student-logged-in .question .mce-toolbar-grp,
 .student-logged-in .question .mce-path,
 .hide-next-module-button .module-sequence-footer, /* this one depends on other factors on the page; the hide-next-button will be set by javascript */
@@ -897,7 +899,7 @@ progress[value]::-webkit-progress-bar {
 	margin-right: auto;
 }
 
-.bz-has-tooltip {
+.has-tooltip {
 	border-bottom: 2px dotted #5bbbba;
 	cursor: pointer; /* fallback */
 	cursor: help;
@@ -942,15 +944,16 @@ html {
 	left: -60px;
 }
 
-/*.module-block {
-	padding: 60px;
-	padding-right: 0;
-	border-top: 1px solid #CCC;
-	border-bottom: 1px solid #CCC;
-	margin-bottom:-1px;
-}*/
+.module-block:not(.module-block-quote) > div {
+    padding: 60px;
+    padding-right: 0;
+    border-top: 1px solid #CCC;
+    border-bottom: 1px solid #CCC;
+    margin-bottom: -1px;
+}
 
-.bz-module  .module-block h3 {
+.bz-module .module-block h3,
+.bz-module .module-block h5 {
 	margin-top:0;
 }
 
@@ -1031,16 +1034,16 @@ tr:not(.suppress-answers) td.show-answers.incorrect {
 	text-align: center;
 }
 
-.checklist,
-.radio-list {
+.question fieldset {
 	padding-left: 0;
 }
 
-.checklist li,
-.radio-list li {
+.question div.module-checkbox-div,
+.question div.module-radio-div {
 	position: relative;
 	margin: 0.5em 0;
 	padding-left: 2em;
+	line-height: normal;
 }
 
 .checklist [type='checkbox'],
@@ -1121,27 +1124,46 @@ input[type='button'].add-other-field {
 }
 */
 
-.question,
-.answer,
-.reflection,
-.video,
-.pulse,
-.alert,
-.key,
-.action,
-.values,
-.read,
-.video .box-title,
-.flush .box-title {
+.module-block > div.question,
+.module-block > div.answer,
+.module-block-reflection > div.content,
+.module-block-video > div.content,
+.module-block-pulse > div.content,
+.module-block-alert > div.content,
+.module-block-key > div.content,
+.module-block-action > div.content,
+.module-block-values > div.content,
+.module-block-read > div.content,
+.module-block-video > div.content h5,
+.module-block-flush > div.content h5,
+.module-block-reflection > div.question,
+.module-block-video > div.question,
+.module-block-pulse > div.question,
+.module-block-alert > div.question,
+.module-block-key > div.question,
+.module-block-action > div.question,
+.module-block-values > div.question,
+.module-block-read > div.question,
+.module-block-video > div.question h5,
+.module-block-flush > div.question h5 {
 	padding-left: 60px;
 	background: 0px 50px no-repeat;
 	position: relative;
 	color: inherit;
 }
 
-.video,
-.flush {
+.module-block-video > div.content,
+.module-block-flush > div.content,
+.module-block-video > div.question,
+.module-block-flush > div.question {
 	padding-left: 0;
+}
+
+.module-block-video > div.content > div,
+.module-block-flush > div.content > div,
+.module-block-video > div.question > div,
+.module-block-flush > div.question > div {
+        padding-top: 30px;
 }
 
 figure {
@@ -1155,7 +1177,7 @@ figure {
 	margin: 10px;
 }
 
-.question {
+.module-block > div.question {
 	background-image: url('images/lms-icons-04.png');
 }
 
@@ -1164,57 +1186,66 @@ figure {
 	background-image: none;
 }
 
-.answer {
+.module-block > div.answer {
 	background-image: url('images/lms-icons-100.png');
 }
 
-.answer.correct {
+.module-block > .answer.correct {
 	background-image: url('images/lms-icons-99.png');
 }
 
-.bz-module .answer.correct .box-title {
+.module-block > .answer.correct h5 {
 	color: #22B573;
 }
 
-.answer.incorrect {
+.module-block > .answer.incorrect {
 	background-image: url('images/lms-icons-98.png');
 }
 
-.bz-module .answer.incorrect .box-title {
+.module-block > .answer.incorrect h5 {
 	color: #C1272D;
 }
 
-.reflection {
+.module-block-reflection > div.content,
+.module-block-reflection > div.question {
 	background-image: url('images/lms-icons-14.png');
 }
 
-.video {
+.module-block-video > div.content,
+.module-block-video > div.question {
 	background-image: url('images/lms-icons-23.png');
 }
 
-.pulse {
+.module-block-pulse > div.content,
+.module-block-pulse > div.question {
 	background-image: url('images/lms-icons-30.png');
 }
 
-.alert {
+.module-block-alert > div.content,
+.module-block-alert > div.question {
 	background-image: url('images/lms-icons-11.png');
 }
 
-.key {
+.module-block-key > div.content,
+.module-block-key > div.question {
 	background-image: url('images/lms-icons-33.png');
 }
 
-.action {
+.module-block-action > div.content,
+.module-block-action > div.question {
 	background-image: url('images/lms-icons-41.png');
 }
 
-.values {
+.module-block-values > div.content,
+.module-block-values > div.question {
 	background-image: url('images/lms-icons-47.png');
 }
 
-.read {
+.module-block-read > div.content,
+.module-block-read > div.question {
 	background-image: url('images/lms-icons-read-56.png');
 }
+
 li input:not([type="button"]):not([type="radio"]):not([type="checkbox"]), li textarea {
  margin: 0.5em;
 }
@@ -2328,7 +2359,8 @@ table.sort-to-match tr {
 		width: 100%;
 		padding: 5px;
 	}
-	.module-block.video iframe {
+  	.module-block.module-block-video > div.content iframe,
+  	.module-block.module-block-video > div.question iframe {
 		width: 100%;
 	}
 	.to-columns {
@@ -2552,31 +2584,31 @@ table.sort-to-match tr {
 	display: none;
 }
 
-.slider-container.likert-style {
+.slider-container.range {
 	display: table;
 	width: 100%;
 	border-spacing: 6px;
 }
 
-.slider-container.likert-style > * {
+.slider-container.range > * {
 	display: table-cell;
 	width: 50%;
 	vertical-align: middle;
 }
 
-.slider-container.likert-style > span {
+.slider-container.range > span {
 	width: 25%;
 }
 
-.slider-container.likert-style > span:first-child {
+.slider-container.range > span:first-child {
 	text-align: right;
 }
 
-.slider-container.likert-style > span:last-child {
+.slider-container.range > span:last-child {
 	text-align: left;
 }
 
-.slider-container.likert-style input[type=range] {
+.slider-container.range input[type=range] {
 	margin: auto;
 	width: 100%;
 }
@@ -3253,18 +3285,14 @@ form.bz-app-ritual-opportunity a.bz-app-ritual-calculate-link {
 
 
 /* New CSS */
-.module-checkbox-div {
+.module-checkbox-div,
+.module-radio-div {
     padding-left: 2em;
     position: relative;
-    /* vertical-align: middle; */
     margin: 0.5em 0;
 }
 
-input.module-checkbox-div {
-    position: absolute;
-    left: 0;
-}
-
+.module-radio-div input,
 .module-checkbox-div input {
     position: absolute;
     left: 0;
@@ -3272,29 +3300,6 @@ input.module-checkbox-div {
 
 .question {
     background-image: url('images/lms-icons-04.png');
-    /* background-repeat: no-repeat; */
-    /* background: 0px 50px no-repeat; */
-}
-
-.module-block > div {
-    padding: 60px;
-    padding-right: 0;
-    border-top: 1px solid #CCC;
-    border-bottom: 1px solid #CCC;
-    margin-bottom: -1px;
-}
-
-.module-block.module-block-quote > div {
-    background: bottom center no-repeat #D1AB5C;
-    background-image: url(images/bkg700-01.jpg);
-    position: relative;
-    margin: 3em 0;
-    width: calc( 100% - 6em );
-    padding: 3em;
-    font-style: italic;
-    font-size: 1.2em;
-    text-align: center;
-    color: #FFF;
 }
 
 blockquote small {
@@ -3302,10 +3307,7 @@ blockquote small {
     line-height: 20px;
     margin: 1em 0;
     font-size: 75%;
-}
-
-blockquote {
-    margin: 0 0 20px;
+    color: #FFF;
 }
 
 .bz-module .answer.correct h5 {
@@ -3322,9 +3324,11 @@ blockquote {
 .show-answers input[data-correctness="correct"]:checked + label {
     color: #22B573;
 }
+
 .show-answers input[data-correctness="correct"]:not(:checked) + label {
     color: #B08833;
 }
+
 .show-answers input[data-correctness="incorrect"] + label {
     color: #EB3B46;
 }
