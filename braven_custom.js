@@ -325,7 +325,7 @@ function bzGiveVerboseFeedback(feedback, answerSpace, feedbackClass) {
 */
 var bzNewUiHandlers = {
   // Score a checklist question:
-  '.module-block-checkbox .done-button,.module-block-key .done-button,.module-block-reflection .done-button' : function() {
+  '[data-grade-as="checklist"] .done-button' : function() {
     var checklist = jQuery(this).parents('.question').find('fieldset');
     var maxScore = checklist.find('[data-correctness="correct"]').length;
     if(maxScore == 0)
@@ -369,7 +369,7 @@ var bzNewUiHandlers = {
   },
 
   // Score a radio-list question and return feedback:
-  '.module-block-radio .done-button' : function() {
+  '[data-grade-as="radio"] .done-button' : function() {
     var radiolist = jQuery(this).parents('.question').find('fieldset');
     var feedback = "";
     var feedbackClass = "";
@@ -392,7 +392,7 @@ var bzNewUiHandlers = {
   },
 
   // Score a range question:
-  '.module-block-range .done-button' : function() {
+  '[data-grade-as="range"] .done-button' : function() {
     var range = jQuery(this).parents('.question').find('[data-bz-range-answer]');
     var currentVal = jQuery(range ).val();
     var correctVal = jQuery(range ).attr('data-bz-range-answer');
@@ -420,7 +420,7 @@ var bzNewUiHandlers = {
   },
 
   // Show feedback on sort-to-match questions:
-  '.module-block-matching .done-button' : function() {
+  '[data-grade-as="matching"] .done-button' : function() {
     jQuery(this).parents('.content-section').find('.sort-to-match').addClass('show-answers');
   },
 
