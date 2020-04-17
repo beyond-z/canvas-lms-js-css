@@ -299,7 +299,7 @@ jQuery( document ).ready(function() {
 
 // Show feedback in an answer following a question:
 function bzGiveVerboseFeedback(feedback, answerSpace, feedbackClass) {
-  jQuery(answerSpace).addClass(feedbackClass).find('.box-title').text(feedback);
+  jQuery(answerSpace).addClass(feedbackClass).find('h5').text(feedback);
 }
 
 /*
