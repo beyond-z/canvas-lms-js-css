@@ -1206,41 +1206,49 @@ figure {
 	color: #C1272D;
 }
 
+.module-block[icon="module-block-reflection"] > div.question,
 .module-block-reflection > div.content,
 .module-block-reflection > div.question {
 	background-image: url('images/lms-icons-14.png');
 }
 
+.module-block[icon="module-block-video"] > div.question,
 .module-block-video > div.content,
 .module-block-video > div.question {
 	background-image: url('images/lms-icons-23.png');
 }
 
+.module-block[icon="module-block-pulse"] > div.question,
 .module-block-pulse > div.content,
 .module-block-pulse > div.question {
 	background-image: url('images/lms-icons-30.png');
 }
 
+.module-block[icon="module-block-alert"] > div.question,
 .module-block-alert > div.content,
 .module-block-alert > div.question {
 	background-image: url('images/lms-icons-11.png');
 }
 
+.module-block[icon="module-block-key"] > div.question,
 .module-block-key > div.content,
 .module-block-key > div.question {
 	background-image: url('images/lms-icons-33.png');
 }
 
+.module-block[icon="module-block-action"] > div.question,
 .module-block-action > div.content,
 .module-block-action > div.question {
 	background-image: url('images/lms-icons-41.png');
 }
 
+.module-block[icon="module-block-values"] > div.question,
 .module-block-values > div.content,
 .module-block-values > div.question {
 	background-image: url('images/lms-icons-47.png');
 }
 
+.module-block[icon="module-block-read"] > div.question,
 .module-block-read > div.content,
 .module-block-read > div.question {
 	background-image: url('images/lms-icons-read-56.png');
