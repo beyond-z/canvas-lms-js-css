@@ -1124,8 +1124,11 @@ input[type='button'].add-other-field {
 }
 */
 
-.module-block > div.question,
+.module-block[data-icon="module-block-video"] > div.content h5,
+.module-block[data-icon="module-block-video"] > div.question h5,
 .module-block > div.answer,
+.module-block > div.content,
+.module-block > div.question,
 .module-block-reflection > div.content,
 .module-block-video > div.content,
 .module-block-pulse > div.content,
@@ -1152,6 +1155,8 @@ input[type='button'].add-other-field {
 	color: inherit;
 }
 
+.module-block[data-icon="module-block-video"] > div.content,
+.module-block[data-icon="module-block-video"] > div.question,
 .module-block-video > div.content,
 .module-block-flush > div.content,
 .module-block-video > div.question,
@@ -1159,11 +1164,13 @@ input[type='button'].add-other-field {
 	padding-left: 0;
 }
 
+.module-block[data-icon="module-block-video"] > div.content > div,
+.module-block[data-icon="module-block-video"] > div.question > div,
 .module-block-video > div.content > div,
 .module-block-flush > div.content > div,
 .module-block-video > div.question > div,
 .module-block-flush > div.question > div {
-        padding-top: 30px;
+	padding-top: 30px;
 }
 
 figure {
@@ -2375,6 +2382,8 @@ table.sort-to-match tr {
 		width: 100%;
 		padding: 5px;
 	}
+	.module-block[data-icon="module-block-video"] > div.content iframe,
+	.module-block[data-icon="module-block-video"] > div.question iframe,
   	.module-block.module-block-video > div.content iframe,
   	.module-block.module-block-video > div.question iframe {
 		width: 100%;
