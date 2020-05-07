@@ -1124,6 +1124,10 @@ input[type='button'].add-other-field {
 }
 */
 
+.module-block.module-block-quote > div.content {
+	padding-left: 0px;
+}
+
 .module-block[data-icon="module-block-video"] > div.content h5,
 .module-block[data-icon="module-block-video"] > div.question h5,
 .module-block > div.answer,
