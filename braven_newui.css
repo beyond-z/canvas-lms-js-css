@@ -944,7 +944,7 @@ html {
 	left: -60px;
 }
 
-.module-block:not(.module-block-quote) > div {
+.module-block:not(.block-quote-bg) > div {
     padding: 60px;
     padding-right: 0;
     border-top: 1px solid #CCC;
@@ -1123,6 +1123,10 @@ input[type='button'].add-other-field {
 	padding: 5px 8px;
 }
 */
+
+.module-block.block-quote-bg > div.content {
+	padding-left: 0px;
+}
 
 .module-block[data-icon="module-block-video"] > div.content h5,
 .module-block[data-icon="module-block-video"] > div.question h5,
