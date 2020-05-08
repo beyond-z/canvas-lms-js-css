@@ -944,7 +944,7 @@ html {
 	left: -60px;
 }
 
-.module-block:not(.module-block-quote) > div {
+.module-block:not(.block-quote-bg) > div {
     padding: 60px;
     padding-right: 0;
     border-top: 1px solid #CCC;
@@ -1124,8 +1124,15 @@ input[type='button'].add-other-field {
 }
 */
 
-.module-block > div.question,
+.module-block.block-quote-bg > div.content {
+	padding-left: 0px;
+}
+
+.module-block[data-icon="module-block-video"] > div.content h5,
+.module-block[data-icon="module-block-video"] > div.question h5,
 .module-block > div.answer,
+.module-block > div.content,
+.module-block > div.question,
 .module-block-reflection > div.content,
 .module-block-video > div.content,
 .module-block-pulse > div.content,
@@ -1152,6 +1159,8 @@ input[type='button'].add-other-field {
 	color: inherit;
 }
 
+.module-block[data-icon="module-block-video"] > div.content,
+.module-block[data-icon="module-block-video"] > div.question,
 .module-block-video > div.content,
 .module-block-flush > div.content,
 .module-block-video > div.question,
@@ -1159,11 +1168,13 @@ input[type='button'].add-other-field {
 	padding-left: 0;
 }
 
+.module-block[data-icon="module-block-video"] > div.content > div,
+.module-block[data-icon="module-block-video"] > div.question > div,
 .module-block-video > div.content > div,
 .module-block-flush > div.content > div,
 .module-block-video > div.question > div,
 .module-block-flush > div.question > div {
-        padding-top: 30px;
+	padding-top: 30px;
 }
 
 figure {
@@ -1206,41 +1217,57 @@ figure {
 	color: #C1272D;
 }
 
+.module-block[data-icon="module-block-reflection"] > div.content,
+.module-block[data-icon="module-block-reflection"] > div.question,
 .module-block-reflection > div.content,
 .module-block-reflection > div.question {
 	background-image: url('images/lms-icons-14.png');
 }
 
+.module-block[data-icon="module-block-video"] > div.content,
+.module-block[data-icon="module-block-video"] > div.question,
 .module-block-video > div.content,
 .module-block-video > div.question {
 	background-image: url('images/lms-icons-23.png');
 }
 
+.module-block[data-icon="module-block-pulse"] > div.content,
+.module-block[data-icon="module-block-pulse"] > div.question,
 .module-block-pulse > div.content,
 .module-block-pulse > div.question {
 	background-image: url('images/lms-icons-30.png');
 }
 
+.module-block[data-icon="module-block-alert"] > div.content,
+.module-block[data-icon="module-block-alert"] > div.question,
 .module-block-alert > div.content,
 .module-block-alert > div.question {
 	background-image: url('images/lms-icons-11.png');
 }
 
+.module-block[data-icon="module-block-key"] > div.content,
+.module-block[data-icon="module-block-key"] > div.question,
 .module-block-key > div.content,
 .module-block-key > div.question {
 	background-image: url('images/lms-icons-33.png');
 }
 
+.module-block[data-icon="module-block-action"] > div.content,
+.module-block[data-icon="module-block-action"] > div.question,
 .module-block-action > div.content,
 .module-block-action > div.question {
 	background-image: url('images/lms-icons-41.png');
 }
 
+.module-block[data-icon="module-block-values"] > div.content,
+.module-block[data-icon="module-block-values"] > div.question,
 .module-block-values > div.content,
 .module-block-values > div.question {
 	background-image: url('images/lms-icons-47.png');
 }
 
+.module-block[data-icon="module-block-read"] > div.content,
+.module-block[data-icon="module-block-read"] > div.question,
 .module-block-read > div.content,
 .module-block-read > div.question {
 	background-image: url('images/lms-icons-read-56.png');
@@ -2359,6 +2386,8 @@ table.sort-to-match tr {
 		width: 100%;
 		padding: 5px;
 	}
+	.module-block[data-icon="module-block-video"] > div.content iframe,
+	.module-block[data-icon="module-block-video"] > div.question iframe,
   	.module-block.module-block-video > div.content iframe,
   	.module-block.module-block-video > div.question iframe {
 		width: 100%;

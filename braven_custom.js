@@ -299,7 +299,7 @@ jQuery( document ).ready(function() {
 
 // Show feedback in an answer following a question:
 function bzGiveVerboseFeedback(feedback, answerSpace, feedbackClass) {
-  jQuery(answerSpace).addClass(feedbackClass).find('.box-title').text(feedback);
+  jQuery(answerSpace).addClass(feedbackClass).find('h5').text(feedback);
 }
 
 /*
@@ -421,15 +421,18 @@ var bzNewUiHandlers = {
 
   // Show feedback on sort-to-match questions:
   '[data-grade-as="matching"] .done-button' : function() {
-    jQuery(this).parents('.content-section').find('.sort-to-match').addClass('show-answers');
+    jQuery(this).parents('.module-block').find('.sort-to-match').addClass('show-answers');
   },
 
-    // Generate self-evaluation results list:
+  /* The following three functions are probably broken.
+     We should check to see if we still need them, and if not, remove them. */
+
+  // Generate self-evaluation results list:
   '.for-eval' : function() {
     var evalarray = [];
     var results = "<ul>";
     // collect all checked inputs' values into an array:
-    jQuery(this).parents('.content-section').find('input:checked').each(function(){
+    jQuery(this).parents('.module-block').find('input:checked').each(function(){
       evalarray.push(jQuery(this).val());
     });
     // Now let's sort and count what we've collected:
@@ -552,7 +555,7 @@ function bzInitializeNewUi() {
     // FIXME
 
   // Show an asterisk indicating which questions are counted towards your mastery grade
-  jQuery('.bz-check-answers').parents('.content-section').find('.box-title').next().addClass('bz-graded-question');
+  jQuery('.bz-check-answers').parents('.module-block').find('.box-title').next().addClass('bz-graded-question');
 
 
   // Display current value of a range question:
@@ -1139,13 +1142,14 @@ function collectStuffAfterBox(button) {
 
     <div class="show-content">
       <div wrappers>
-        <div class="content-section">
-          // stuff
-          <button here>
-        </div>
+        <section class="content-section">
+          <div class="module-block">
+            // stuff
+            <button nested inside here somwhere>
+          </div>
+        </section>
         // more stuff - should be hidden (1)
       </div>
-      // more stuff - should be hidden (2)
     </div>
   */
 
@@ -1153,20 +1157,18 @@ function collectStuffAfterBox(button) {
     return [];
 
   var box = button;
-  while(!box.classList.contains('content-section')) {
+  while(!box.classList.contains('module-block')) {
     box = box.parentNode;
   }
 
   var after = [];
+  // Explicitly hide this block's answer, if it has one.
+  if(box.querySelector('.answer')) {
+    after.push(box.querySelector('.answer'))
+  }
   while(!box.classList.contains('show-content')) {
-    if(box.querySelector('.answer')) {
-      after.push(box.querySelector('.answer'))
-    }
     var next = box.nextElementSibling;
     while(next) {
-      if(next.querySelector('.answer')) {
-        after.push(next.querySelector('.answer'))
-      }
       after.push(next);
       next = next.nextElementSibling;
     }
@@ -1191,22 +1193,21 @@ function collectBoxesBeforeBox(button) {
     return [];
 
   var box = button;
-  while(!box.classList.contains('content-section')) {
+  while(!box.classList.contains('module-block')) {
     box = box.parentNode;
   }
 
-  var after = [];
+  var before = [];
   while(!box.classList.contains('show-content')) {
-    var next = box;
-    next = next.previousElementSibling;
-    while(next) {
-      after.push(next);
-      next = next.previousElementSibling;
+    var previous = box.previousElementSibling;
+    while(previous) {
+      before.push(previous);
+      previous = previous.previousElementSibling;
     }
     box = box.parentNode;
   }
 
-  return after;
+  return before;
 }
 
 // the magic fields must be loaded for this to work!
@@ -1394,8 +1395,8 @@ runOnUserContent(function(){
 
   var nextButton = document.querySelector(".done-button");
   if(nextButton) {
-  	// if we have a next (aka Done) button in the content, we want to hide the
-	  // default canvas next button b/c this is a module for Fellows using the interactive one page flow.
+    // if we have a next (aka Done) button in the content, we want to hide the
+    // default canvas next button b/c this is a module for Fellows using the interactive one page flow.
     // TAs and others who use modules without this flow want to see Canvas's built-in Next/Prev button.
 	  document.body.classList.add("hide-next-module-button");
   }
@@ -1434,10 +1435,17 @@ runOnUserContent(function(){
   function unhideNext(obj) {
     var n = collectStuffAfterBox(obj);
     for(var i = 0; i < n.length; i++) {
-      if(n[i].querySelector(".answer")) {
-        continue
-      }
+      // Unhide the next element.
       $(n[i]).slideDown();
+      // Re-hide answers. Note, this won't apply to the answer
+      // immediately following the button we clicked.
+      // Because we stop at the next done-button, this should only
+      // ever re-hide one answer box: the one immediately after the
+      // done-button we stop on.
+      if(n[i].querySelector(".answer")) {
+        $(n[i].querySelector(".answer")).hide();
+      }
+      // Stop at the first done button.
       if(n[i].querySelector(".done-button"))
         break;
     }
@@ -1445,7 +1453,7 @@ runOnUserContent(function(){
 
   var allBoxesWithStoppingPoints = [];
   // only ones with a button are actually stopping points
-  var start = document.querySelectorAll(".content-section");
+  var start = document.querySelectorAll(".module-block");
   for(var a = 0; a < start.length; a++)
     if(start[a].querySelector(".done-button"))
         allBoxesWithStoppingPoints.push(start[a]);
@@ -1472,7 +1480,7 @@ runOnUserContent(function(){
   addOnMagicFieldsLoaded(function() {
     var list = listOfShowingBoxes;
     for(var i = 0; i < list.length; i++) {
-      if(list[i].classList.contains("content-section")) {
+      if(list[i].classList.contains("module-block")) {
           // simulate the click of old buttons in order to catch up on display
           console.log(list[i]);
           var button = list[i].querySelector(".done-button");
@@ -1497,11 +1505,11 @@ runOnUserContent(function(){
 
   jQuery('.done-button').click(function(e){
     var parentBox = this;
-    while(parentBox && !parentBox.classList.contains("content-section"))
+    while(parentBox && !parentBox.classList.contains("module-block"))
     	parentBox = parentBox.parentNode;
     // make sure instant feedback is actually showing before we next on those.
     // want to ensure the users actually interact somehow
-    if(parentBox.querySelector(".instant-feedback") && !parentBox.querySelector(".show-answers")) {
+    if(parentBox.querySelector('[data-instant-feedback="true"]') && !parentBox.querySelector(".show-answers")) {
     	if(!parentBox.classList.contains("clicked-at-least-once")) {
           alert("Please interact with the module before you advance.");
 	  // if you double click the next button, it goes easy on you and lets you advance
@@ -1516,7 +1524,7 @@ runOnUserContent(function(){
 
     triggerBzNewUiHandler(this);
 
-    var pos = $(this).parents('.content-section').attr("data-box-sequence");
+    var pos = $(this).parents('.module-block').attr("data-box-sequence");
     pos |= 0;
     pos += 1; // they just advanced!
 
@@ -1532,7 +1540,7 @@ runOnUserContent(function(){
     http.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     http.send(data);
 
-  }).parents('.content-section').addClass('bz-has-toggle-btn');
+  }).parents('.module-block').addClass('bz-has-toggle-btn');
 
   if(location.hash.length) {
     var where = document.getElementById(location.hash.substring(1));
@@ -1774,7 +1782,7 @@ runOnUserContent(function() {
 
       var parentBox = table.parentNode;
       while(parentBox) {
-        if(parentBox.classList.contains("content-section"))
+        if(parentBox.classList.contains("module-block"))
             break;
         parentBox = parentBox.parentNode;
       }
@@ -1898,7 +1906,7 @@ runOnUserContent(function() {
   var last_known_scroll_position = 0;
   var ticking = false;
 
-  var sections = document.querySelectorAll(".content-section");
+  var sections = document.querySelectorAll(".module-block");
   if(sections.length == 0)
     return;
 
