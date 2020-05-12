@@ -286,6 +286,16 @@ blockquote .bz-hashtag {
 	content:"\2014 \00a0";
 }
 
+div.module-block:not(.block-quote-bg) blockquote {
+        padding: 0 1.5em;
+        margin: 0;
+        border-left: none;
+        width: 100%;
+        background: none;
+        color: black;
+        font-size: 18px;
+}
+
 .bz-module > div[data-replaced-with-page] > p:not(.match-heading-style),
 .bz-module > p:not(.match-heading-style) {
 	margin: 3em 0;
