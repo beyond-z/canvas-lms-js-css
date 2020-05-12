@@ -1287,7 +1287,7 @@ function createBzProgressBar() {
         if(e.matches(".done-button"))
           boxPosition++;
 
-        if(!e.matches("[data-bz-answer]"))
+        if(!e.matches("[data-bz-answer]") || !e.closest('[data-mastery="true"]'))
           continue;
 
         var box = e;
