@@ -1099,6 +1099,32 @@ function bzAjaxLoad() {
     }
   });
 
+  // Custom loader for the LinkedIn button as used by NCE.
+  // The ImageLink plugin doesn't support <a class> so we can't look for class="bz-ajax-replace".
+  // Fortunately we only use this in one place, so we can just look for the linkedin link.
+  jQuery('a[href*="/oauth?service=linked_in&return_to=RETURN_TO_TOKEN"]').each(function(e){
+    var el = jQuery(this);
+    let replaceURL = jQuery(this).attr('href');
+
+    if (replaceURL.indexOf('service=linked_in') >= 0){
+
+      // This will replace the RETURN_TO_TOKEN with the current URLin an element like this:
+      // <a class="bj-ajax-replace btn btn-primary"
+      //    href="/oauth?service=linked_in&amp;return_to=RETURN_TO_TOKEN">
+      //   Authorize
+      // </a>
+      var currentPath = window.location.href;
+      if (ENV["WIKI_PAGE"] || ENV["ASSIGNMENT_ID"]){
+        this.href = replaceURL.replace(/RETURN_TO_TOKEN/, encodeURIComponent(currentPath));
+        console.log('Dynamically replaced RETURN_TO_TOKEN in this LinkedIn Authorize button URL: ' + replaceURL + ' with: ' + this.href);
+      } else {
+        console.log('LinkedIn API authorization only works on assignments and wiki pages.  Returning.');
+        return;
+      }
+      jQuery(this).addClass('bz-ajax-loaded-linkedin bz-ajax-loaded');
+    }
+  });
+
   // If there are clickable rubrics, go load their clicked values.
   if (queuedExistingRubricValues.length > 0) {
     BZ_LoadMagicFields(queuedExistingRubricValues, function(retrievedFieldValues) {
