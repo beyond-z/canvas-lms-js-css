@@ -615,8 +615,13 @@ function bzInitializeNewUi() {
   });
   */
 
-  // Mix up checklists:
-  jQuery('fieldset').not('.dont-mix').each(function(){
+  // Mix up radio and checklists unless marked dont-mix
+  jQuery('fieldset').not('.dont-mix').each(function() {
+    var fieldset = jQuery(this);
+    var validChildren = fieldset.children('.module-checkbox-div, .module-radio-div');
+    if (validChildren.length != fieldset.children().length) {
+      return; // there's a non-checkbox or non-radio in the fieldset, don't shuffle
+    }
     shuffleChildren(this);
   });
 
