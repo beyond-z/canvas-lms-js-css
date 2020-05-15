@@ -2652,6 +2652,13 @@ table.sort-to-match tr {
 	width: 100%;
 }
 
+.module-block > div.question input[type=range] {
+	width: 66%;
+	height: auto;
+	margin: 2em 17%;
+	text-align: center;
+}
+
 .bz-explain-grade-link {
   position: absolute;
   display: block;
