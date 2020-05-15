@@ -2643,8 +2643,10 @@ table.sort-to-match tr {
 }
 
 .module-block > div.question input[type=range] {
-	margin: auto;
-	width: 100%;
+	width: 66%;
+	height: auto;
+	margin: 2em 17%;
+	text-align: center;
 }
 
 .bz-explain-grade-link {
