@@ -1976,7 +1976,18 @@ document.body.addEventListener("click", function(event) {
 			thing.style.display = "";
 			activeModal = thing;
 		}
-	} else if(ele.classList.contains("modal")) {
+	} else if(ele.parentElement && ele.parentElement.getAttribute("data-toggle") && ele.parentElement.hasAttribute("data-target")) {
+    if(activeModal) {
+      activeModal.style.display = "none";
+      activeModal = null;
+    }
+
+    var thing = document.querySelector(ele.parentElement.getAttribute("data-target"));
+    if(thing) {
+      thing.style.display = "";
+      activeModal = thing;
+    }
+  } else if(ele.classList.contains("modal")) {
 		if(activeModal) {
 			activeModal.style.display = "none";
 			activeModal = null;
