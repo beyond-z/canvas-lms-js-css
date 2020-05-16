@@ -1964,34 +1964,58 @@ for (var key in ENV) {
 var activeModal = null;
 
 document.body.addEventListener("click", function(event) {
-	var ele = event.target;
-	if(ele.getAttribute("data-toggle") == "modal" && ele.hasAttribute("data-target")) {
-		if(activeModal) {
-			activeModal.style.display = "none";
-			activeModal = null;
-		}
 
-		var thing = document.querySelector(ele.getAttribute("data-target"));
-		if(thing) {
-			thing.style.display = "";
-			activeModal = thing;
-		}
-	} else if(ele.parentElement && ele.parentElement.getAttribute("data-toggle") && ele.parentElement.hasAttribute("data-target")) {
-    if(activeModal) {
+  // Returns true iff the element has the attributes we need to launch a modal
+  function hasModalAttributes(element) {
+    return (element
+      && element.getAttribute("data-toggle") == "modal"
+      && element.hasAttribute("data-target")
+    );
+  }
+
+  // Returns the ID of the modal associated with the element
+  function getTargetModal(element) {
+    if (hasModalAttributes(element)) {
+      return element.getAttribute("data-target");
+    }
+
+    if (hasModalAttributes(element.parentElement)) {
+      return element.parentElement.getAttribute("data-target");
+    }
+
+    return null;
+  }
+
+  // Hides the current modal
+  function deactivateModal() {
+    if (activeModal) {
       activeModal.style.display = "none";
       activeModal = null;
     }
+  }
 
-    var thing = document.querySelector(ele.parentElement.getAttribute("data-target"));
-    if(thing) {
-      thing.style.display = "";
-      activeModal = thing;
+  // Shows the specified modal
+  function displayModal(modalId) {
+    var modal = document.querySelector(modalId);
+    if (!modal) {
+      return;
     }
-  } else if(ele.classList.contains("modal")) {
-		if(activeModal) {
-			activeModal.style.display = "none";
-			activeModal = null;
-		}
-	}
+    modal.style.display = "";
+    activeModal = modal;
+  }
+
+  // Clicked on something that launches a modal
+  var targetModal = getTargetModal(event.target);
+  if (targetModal) {
+    deactivateModal();
+    displayModal(targetModal);
+    return; 
+  }
+
+  // Assume we're clicking out of the modal and hide it
+  if (event.target.classList.contains("modal")) {
+    deactivateModal();
+  }
+
 });
 })();
