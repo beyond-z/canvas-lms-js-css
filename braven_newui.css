@@ -2544,13 +2544,24 @@ table.sort-to-match tr {
 	border-bottom: dashed 1px #ccc;
 }
 
-/* This is clearfix: https://css-tricks.com/all-about-floats/#article-header-id-3*/
+/* These are clearfix: https://css-tricks.com/all-about-floats/#article-header-id-3 */
+
+/* Clearfix after every inline resume snippet */
 .partial-html-document:after { 
-   content: "."; 
-   visibility: hidden; 
-   display: block; 
-   height: 0; 
-   clear: both;
+	content: "."; 
+	visibility: hidden; 
+	display: block; 
+	height: 0; 
+	clear: both;
+}
+
+/* Clearfix before each div in the resume snippet */
+.partial-html-document > div:before {
+	content: "."; 
+	visibility: hidden; 
+	display: block; 
+	height: 0; 
+	clear: both;
 }
 
 .modal {
