@@ -1129,6 +1129,12 @@ function bzAjaxLoad() {
       jQuery(this).addClass('bz-ajax-loaded-linkedin bz-ajax-loaded');
     }
   });
+  // Fill out the text input below the button with the user's LinkedIn URL.
+  jQuery.get('/bz/user_linkedin_url?' + Math.random()).success(function(ajaxResponse) {
+    var evt = document.createEvent('HTMLEvents');
+    evt.initEvent('change', true, true);
+    jQuery('.bz-user-linkedin-profile').val(ajaxResponse.linkedin_url)[0].dispatchEvent(evt);
+  });
 
   // If there are clickable rubrics, go load their clicked values.
   if (queuedExistingRubricValues.length > 0) {
