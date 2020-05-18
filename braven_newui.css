@@ -233,6 +233,7 @@ blockquote {
 .bz-module blockquote {
 	background: bottom center no-repeat #D1AB5C;
 	background-image: url('images/bkg700-03.jpg');
+	background-size: cover;
 	position: relative;
 	margin: 3em 0;
 	width: calc( 100% - 6em );
