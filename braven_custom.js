@@ -2011,9 +2011,12 @@ document.body.addEventListener("click", function(event) {
     displayModal(targetModal);
     return; 
   }
+  debugger;
 
-  // Assume we're clicking out of the modal and hide it
+  // Clicked in area outside of the resume snippet itself, 
+  // assume user wants out of the modal and hide it
   if (event.target.classList.contains("modal")) {
+    debugger;
     deactivateModal();
   }
 
