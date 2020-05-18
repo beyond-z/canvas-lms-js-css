@@ -2486,7 +2486,6 @@ table.sort-to-match tr {
 
 .resume-left {
 	float: left;
-	clear: both;
 }
 
 .resume-right {
@@ -2495,7 +2494,6 @@ table.sort-to-match tr {
 }
 
 .resume-right + * {
-	clear: both;
 	margin-bottom: 1.5em;
 	display: block;
 }
@@ -2554,6 +2552,26 @@ table.sort-to-match tr {
 	border-right: solid 1px #000;
 	border-top: dashed 1px #ccc;
 	border-bottom: dashed 1px #ccc;
+}
+
+/* These are clearfix: https://css-tricks.com/all-about-floats/#article-header-id-3 */
+
+/* Clearfix after every inline resume snippet */
+.partial-html-document:after { 
+	content: "."; 
+	visibility: hidden; 
+	display: block; 
+	height: 0; 
+	clear: both;
+}
+
+/* Clearfix before each div in the resume snippet */
+.partial-html-document > div:before {
+	content: "."; 
+	visibility: hidden; 
+	display: block; 
+	height: 0; 
+	clear: both;
 }
 
 .modal {
