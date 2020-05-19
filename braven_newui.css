@@ -2752,17 +2752,28 @@ table.sort-to-match tr {
   display: none;
 }
 
+h2 > a,
+h3 > a,
+h4 > a,
+h5 > a,
+h6 > a,
 .stealth-link {
 	text-decoration: inherit !important;
 	color: inherit !important;
 	cursor: inherit !important;
 }
 
+h2 > a::hover,
+h3 > a::hover,
+h4 > a::hover,
+h5 > a::hover,
+h6 > a::hover,
 .stealth-link::hover {
 	text-decoration: inherit !important;
 	color: inherit !important;
 	cursor: inherit !important;
 }
+
 
 /* transfer from old ui { */
 
