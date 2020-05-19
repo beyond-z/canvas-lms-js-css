@@ -615,8 +615,13 @@ function bzInitializeNewUi() {
   });
   */
 
-  // Mix up checklists:
-  jQuery('fieldset').not('.dont-mix').each(function(){
+  // Mix up radio and checklists unless marked dont-mix
+  jQuery('fieldset').not('.dont-mix').each(function() {
+    var fieldset = jQuery(this);
+    var validChildren = fieldset.children('.module-checkbox-div, .module-radio-div');
+    if (validChildren.length != fieldset.children().length) {
+      return; // there's a non-checkbox or non-radio in the fieldset, don't shuffle
+    }
     shuffleChildren(this);
   });
 
@@ -1123,6 +1128,12 @@ function bzAjaxLoad() {
       }
       jQuery(this).addClass('bz-ajax-loaded-linkedin bz-ajax-loaded');
     }
+  });
+  // Fill out the text input below the button with the user's LinkedIn URL.
+  jQuery.get('/bz/user_linkedin_url?' + Math.random()).success(function(ajaxResponse) {
+    var evt = document.createEvent('HTMLEvents');
+    evt.initEvent('change', true, true);
+    jQuery('.bz-user-linkedin-profile').val(ajaxResponse.linkedin_url)[0].dispatchEvent(evt);
   });
 
   // If there are clickable rubrics, go load their clicked values.
@@ -1990,23 +2001,59 @@ for (var key in ENV) {
 var activeModal = null;
 
 document.body.addEventListener("click", function(event) {
-	var ele = event.target;
-	if(ele.getAttribute("data-toggle") == "modal" && ele.hasAttribute("data-target")) {
-		if(activeModal) {
-			activeModal.style.display = "none";
-			activeModal = null;
-		}
 
-		var thing = document.querySelector(ele.getAttribute("data-target"));
-		if(thing) {
-			thing.style.display = "";
-			activeModal = thing;
-		}
-	} else if(ele.classList.contains("modal")) {
-		if(activeModal) {
-			activeModal.style.display = "none";
-			activeModal = null;
-		}
-	}
+  // Returns true iff the element has the attributes we need to launch a modal
+  function hasModalAttributes(element) {
+    return (element
+      && element.getAttribute("data-toggle") == "modal"
+      && element.hasAttribute("data-target")
+    );
+  }
+
+  // Returns the ID of the modal associated with the element
+  function getTargetModal(element) {
+    if (hasModalAttributes(element)) {
+      return element.getAttribute("data-target");
+    }
+
+    if (hasModalAttributes(element.parentElement)) {
+      return element.parentElement.getAttribute("data-target");
+    }
+
+    return null;
+  }
+
+  // Hides the current modal
+  function deactivateModal() {
+    if (activeModal) {
+      activeModal.style.display = "none";
+      activeModal = null;
+    }
+  }
+
+  // Shows the specified modal
+  function displayModal(modalId) {
+    var modal = document.querySelector(modalId);
+    if (!modal) {
+      return;
+    }
+    modal.style.display = "";
+    activeModal = modal;
+  }
+
+  // Clicked on something that launches a modal
+  var targetModal = getTargetModal(event.target);
+  if (targetModal) {
+    deactivateModal();
+    displayModal(targetModal);
+    return; 
+  }
+
+  // Clicked in area outside of the resume snippet itself, 
+  // assume user wants out of the modal and hide it
+  if (event.target.classList.contains("modal")) {
+    deactivateModal();
+  }
+
 });
 })();
