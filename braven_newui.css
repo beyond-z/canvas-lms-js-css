@@ -2575,6 +2575,19 @@ table.sort-to-match tr {
 	clear: both;
 }
 
+/* Clearfix for resume modals */
+.compare-and-rank-modal > div > div:before {
+	content: "."; 
+	visibility: hidden; 
+	display: block; 
+	height: 0; 
+	clear: both;
+}
+
+.compare-and-rank-modal > div > div.resume-left {
+	clear: both;
+}
+
 .modal {
 	position: fixed;
 	left: 0px;
