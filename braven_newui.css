@@ -2049,7 +2049,7 @@ table [type="range"] {
 .bz-magic-field-assignment .timeline li:after,
 .bz-magic-field-submission .timeline li:after {
 	/* clearfix for floats */
-  content: "";
+  	content: "";
 	display: block;
 	height: 0;
 	clear: both;
@@ -2557,37 +2557,24 @@ table.sort-to-match tr {
 
 /* These are clearfix: https://css-tricks.com/all-about-floats/#article-header-id-3 */
 
-/* Clearfix after every inline resume snippet */
-.partial-html-document:after { 
-	content: "."; 
+/* Clearfix after inline resume snippets */
+.partial-html-document:after {
+	content: ""; 
 	visibility: hidden; 
 	display: block; 
 	height: 0; 
 	clear: both;
 }
 
-/* Clearfix before each div in the resume snippet */
-.partial-html-document > div:before {
-	content: "."; 
-	visibility: hidden; 
-	display: block; 
-	height: 0; 
+/* Clearfix resume items not floated to right */
+/* For inline resume snippets */
+.partial-html-document > div:not(.resume-right),
+/* For resume modals */
+.compare-and-rank-modal > div > div:not(.resume-right) {
 	clear: both;
 }
 
-/* Clearfix for resume modals */
-.compare-and-rank-modal > div > div:before {
-	content: "."; 
-	visibility: hidden; 
-	display: block; 
-	height: 0; 
-	clear: both;
-}
-
-.compare-and-rank-modal > div > div.resume-left {
-	clear: both;
-}
-
+/* Resume modals */
 .modal {
 	position: fixed;
 	left: 0px;
