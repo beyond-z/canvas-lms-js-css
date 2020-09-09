@@ -920,7 +920,7 @@ html {
 
 .bz-module,
 .bz-view-box {
-	width: 672px;
+	width: 45rem;
 	position: relative;
 }
 
@@ -954,6 +954,28 @@ html {
 .bz-module  .bz-box h3 {
 	margin-top:0;
 }
+
+@media screen and (max-width: 700px) {
+	.bz-module {
+		   width: 100%;
+		   padding: 5px;
+	   }
+	   .bz-box.video iframe {
+		   width: 100%;
+	   }
+	   .to-columns {
+		   -webkit-column-count: 1;
+		   -moz-column-count: 1;
+		   -ms-column-count: 1;
+		   column-count: 1;
+	   }
+   }
+   
+   @media only screen and (min-width: 701px) {
+	   .bz-module {
+		   width: 60%;
+	   }
+   }	
 
 figcaption {
 	margin: 15px auto;
@@ -2324,22 +2346,6 @@ table.sort-to-match tr {
   transform: rotateX(90deg);
 }
 
-@media screen and (max-width: 700px) {
- .bz-module {
-		width: 100%;
-		padding: 5px;
-	}
-	.bz-box.video iframe {
-		width: 100%;
-	}
-	.to-columns {
-		-webkit-column-count: 1;
-		-moz-column-count: 1;
-		-ms-column-count: 1;
-		column-count: 1;
-	}
-}
-
 .bz-in-iframe #bz-module-sequence-progress-container,
 .bz-in-iframe #breadcrumbs,
 .bz-in-iframe .header-bar-outer-container,
@@ -2779,14 +2785,25 @@ body.pages #content {
 	overflow-x: visible !important; /* otherwise canvas breaks our sidebar */
 }
 
-#bz-progress-bar {
-	position: sticky;
-	float: right;
-	right: 1em;
-	top: 1em;
-	width: 260px;
-	z-index: 10;
+@media only screen and (min-width: 721px) {
+	#bz-progress-bar {
+		position: sticky;
+		float: right;
+		right: 1em;
+		top: 1em;
+		width: 220px !important;
+		z-index: 10;
+	}
+}	
+
+@media only screen and (max-width: 720px) {
+	#bz-progress-bar {
+		position: static;
+		float: none;
+		width: 100% !important;
+	}
 }
+
 
 #bz-progress-bar > div {
 	padding: 0.5em;
