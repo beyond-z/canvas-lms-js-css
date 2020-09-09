@@ -42,7 +42,7 @@
 	color:#2E6D99;
 }
 a:hover {
-	color:#eb3b46;	
+	color:#DB2B36;	
 }
 a:visited {
 	color:#235877;
@@ -95,7 +95,7 @@ h2.page-title,
 }
 .show-content h3 {
 	font-size: 28px;
-	color: #eb3b46;
+	color: #DB2B36;
 	line-height: normal;
 	padding-top: 10px;
 	margin-bottom: 0.25em;
@@ -115,7 +115,7 @@ h2.page-title,
 	font-size: 1.5em;
 	line-height: 1.5;
 	margin: 30px 15%;
-	border-left: 5px solid #eb3b46;
+	border-left: 5px solid #DB2B36;
 }
 .show-content p,
 .show-content li,
@@ -143,7 +143,7 @@ ul,
 	/*border-radius: 0;*/
 }
 .btn-primary, .Button--primary {	
-	background: #eb3b46;
+	background: #DB2B36;
 }
 .btn-primary:hover, .Button--primary:hover {
 	background: #c8141f; 	
@@ -197,7 +197,7 @@ ul,
 /* Create visual separation in modules view after learning lab: */
 .bz-mid-module-break {
     padding-top: 10px !important;
-    background-color: #eb3b46;
+    background-color: #DB2B36;
 }
 .bz-mid-module-break.context_module_item.context_module_item_hover, .bz-mid-module-break.context_module_item:hover {
 	background-color: #C8141F !important;
@@ -247,7 +247,7 @@ ul,
 	position: absolute;
 	font-family: "TradeGothicNo.20-CondBold", "Oswald", "Open Sans", sans-serif;
 	font-size: 1em;
-	color: #eb3b46;
+	color: #DB2B36;
 	padding-left: 0.33em;
 	font-weight: bold;
 	text-transform: uppercase;
@@ -405,11 +405,11 @@ table.bz-red-heading th,
 table.bz-red-heading thead tr,
 table.bz-red-heading thead td,
 table.bz-red-heading thead th {
-	background: #eb3b46;
+	background: #DB2B36;
 	color: #fff;		
 }
 #wiki_page_show thead tr {
-	background: #eb3b46;
+	background: #DB2B36;
 	color: #fff;
 }
 .zebra tr:nth-child(even),
@@ -424,7 +424,7 @@ table.bz-red-heading thead th {
 .bz-red,
 .bz-red-md,
 .bz-md-red {
-	background: #eb3b46;
+	background: #DB2B36;
 	color:#fff;
 }
 .bz-zlt-red,
@@ -491,7 +491,7 @@ table.bz-red-heading thead th {
 	border: none;	
 }
 .module-sequence-footer a.pull-right {
-	background: #eb3b46;
+	background: #DB2B36;
 	color: white;
 }
 .module-sequence-footer a.pull-right:hover {
@@ -692,12 +692,12 @@ td .bz-practice-box {
 .case-study-box:before,
 .bz-case-study-box:before {
 	color: #fff;
-	background: #eb3b46;
+	background: #DB2B36;
 	content:"Case Study";
 }
 .bz-watch-out-box:before {
 	content:"Watch Out!";
-	background-color: #eb3b46;
+	background-color: #DB2B36;
 	color: #fff;
 }
 .bz-helpful-tip-box:before {
@@ -711,7 +711,7 @@ td .bz-practice-box {
 }
 .bz-practice-box:before {
 	content:"Quick Practice";
-	background: #eb3b46;
+	background: #DB2B36;
 }
 /* quote source */
 .bz-quote-source {
@@ -787,7 +787,7 @@ td .bz-practice-box {
 	background: transparent !important;	
 }
 .bz-toc-current {
-    color: #eb3b46 !important;
+    color: #DB2B36 !important;
 }
 
 #bz-auto-toc {
@@ -803,7 +803,7 @@ td .bz-practice-box {
 }
 #bz-auto-toc li.bz-toc-current,
 #bz-auto-toc .bz-toc-current-wrapper .ig-row {
-    border-left: 12px solid #eb3b46 !important;
+    border-left: 12px solid #DB2B36 !important;
 }
 #bz-auto-toc a {
    text-decoration: none !important;
@@ -988,7 +988,7 @@ textarea[data-bz-retained] {
 	margin: 0px;
 	
 	padding: 0.5em 0.8em;
-	background-color: #EB3B46;
+	background-color: #DB2B36;
 	/*border-radius: 6px 6px 0px 0px;*/
 	border: none;
 	border-bottom: none;
@@ -1140,7 +1140,7 @@ textarea[data-bz-retained] {
     color: #0087c2;
 }
 #bz-module-nav .active > a {
-	color: #EB3B46;
+	color: #DB2B36;
 }
 #bz-module-nav .active {
 	position: relative;
@@ -1214,7 +1214,7 @@ cursor: pointer;
 }
 #bz-accessibility-mapper li > p {
 	font-weight: bold;
-	color: #EB3B46;	
+	color: #DB2B36;	
 }
 
 iframe.bz-self-reference {
@@ -1550,7 +1550,7 @@ iframe.bz-self-reference {
 
 .bz-expand-collapse-button {
 	border: none;
-	background: #EB3B46;
+	background: #DB2B36;
 	color: #FFF;
 	padding: 6px 10px;
 }
@@ -1655,7 +1655,7 @@ table.bz-guideposts span.station {
 }
 
 .bz-special-event span {
-    color: #eb3b46;
+    color: #DB2B36;
 }
 
 .bz-course-overview {
@@ -1764,7 +1764,7 @@ table.bz-guideposts span.station {
 .bz-magic-field-assignment h3,
 .bz-magic-field-submission h3 {
 	font-size: 30px;
-	color: #EB3B46;
+	color: #DB2B36;
 	margin-top: 30px;
 	padding-top: 10px;
 	border-top: 1px solid #999;
@@ -1927,7 +1927,7 @@ table.bz-guideposts span.station {
   margin-top: -10px;
   background: #fff;
   border-radius: 10px;
-  border: 4px solid #EB3B46;
+  border: 4px solid #DB2B36;
   z-index: 10;
 }
 
@@ -1951,7 +1951,7 @@ table.bz-guideposts span.station {
 .bz-magic-field-submission .timeline .milestone.final textarea,
 .bz-magic-field-assignment .timeline .milestone.final input,
 .bz-magic-field-submission .timeline .milestone.final input  {
-	border: 2px solid #EB3B46;
+	border: 2px solid #DB2B36;
 }
 .bz-magic-field-assignment .timeline input,
 .bz-magic-field-submission .timeline input {
