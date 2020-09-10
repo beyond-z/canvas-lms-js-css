@@ -973,7 +973,7 @@ html {
    
    @media only screen and (min-width: 701px) {
 	   .bz-module {
-		   width: 60%;
+		   width: 55%;
 	   }
    }	
 
@@ -2791,7 +2791,7 @@ body.pages #content {
 		float: right;
 		right: 1em;
 		top: 1em;
-		width: 220px !important;
+		width: 210px !important;
 		z-index: 10;
 	}
 }	
