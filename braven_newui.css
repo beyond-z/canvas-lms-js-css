@@ -932,7 +932,7 @@ html {
 
 .bz-module,
 .bz-view-box {
-	width: 672px;
+	width: 45rem;
 	position: relative;
 }
 
@@ -949,6 +949,28 @@ html {
 
 .bz-view-box {
 	overflow-x: auto;
+}
+
+@media screen and (max-width: 700px) {
+	.bz-module {
+		width: 100%;
+		padding: 5px;
+	}
+	.bz-box.video iframe {
+		width: 100%;
+	}
+	.to-columns {
+		-webkit-column-count: 1;
+		-moz-column-count: 1;
+		-ms-column-count: 1;
+		column-count: 1;
+	}
+}
+
+@media only screen and (min-width: 701px) {
+	.bz-module {
+		width: 55%;
+	}
 }
 
 .module-block .bz-view-box {
@@ -2886,13 +2908,23 @@ body.pages #content {
 	overflow-x: visible !important; /* otherwise canvas breaks our sidebar */
 }
 
-#bz-progress-bar {
-	position: sticky;
-	float: right;
-	right: 1em;
-	top: 1em;
-	width: 260px;
-	z-index: 10;
+@media only screen and (min-width: 721px) {
+	#bz-progress-bar {
+		position: sticky;
+		float: right;
+		right: 1em;
+		top: 1em;
+		width: 210px !important;
+		z-index: 10;
+	}
+}
+
+@media only screen and (max-width: 720px) {
+	#bz-progress-bar {
+		position: static;
+		float: none;
+		width: 100% !important;
+	}
 }
 
 #bz-progress-bar > div {
