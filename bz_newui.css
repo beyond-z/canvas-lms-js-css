@@ -2789,24 +2789,24 @@ body.pages #content {
 	z-index: 10;
 } */
 
-@media only screen and (min-width: 1200px) {
-    #bz-progress-bar {
-        position: sticky;
-        float: right;
-        right: 1em;
-        top: 1em;
-        width: 13.75rem !important;
-        z-index: 10;
-    }
-}   
+/*@media only screen and (min-width: 1200px) {*/
+/*    #bz-progress-bar {*/
+/*        position: sticky;*/
+/*        float: right;*/
+/*        right: 1em;*/
+/*        top: 1em;*/
+/*        width: 13.75rem !important;*/
+/*        z-index: 10;*/
+/*    }*/
+/*}   */
 
-@media only screen and (max-width: 720px) {
-    #bz-progress-bar {
-        position: static;
-        float: none;
-        width: 100% !important;
-    }
-}
+/*@media only screen and (max-width: 720px) {*/
+/*    #bz-progress-bar {*/
+/*        position: static;*/
+/*        float: none;*/
+/*        width: 100% !important;*/
+/*    }*/
+/*}*/
 
 #bz-progress-bar > div {
 	padding: 0.5em;
