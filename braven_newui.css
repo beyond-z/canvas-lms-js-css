@@ -1626,6 +1626,7 @@ table [type="range"] {
     text-align: center;
     margin: 0 auto;
     font-size: 0.875rem;
+	border: none;
     color: #666;
     bottom: 0;
     right: 0;
