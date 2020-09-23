@@ -1603,8 +1603,9 @@ table [type="range"] {
     position: fixed;
     text-align: center;
     margin: 0 auto;
-    font-size: 14px;
-    color: #666;
+    font-size: 0.875rem;
+	color: #666666;
+	border: none;
     bottom: 0;
     right: 0;
     cursor: pointer;

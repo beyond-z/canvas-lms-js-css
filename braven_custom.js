@@ -768,12 +768,13 @@ runOnUserContent(function() {
 	// Add "back to top" widget:
 	setupBTT();
 	function setupBTT() {
-		// Create a button to allow scrolling up in one click:
-		var btt= jQuery('<div id="bz-back-to-top" class="match-heading-style">Back to top</div>').click(function(){
+    // Create a button to allow scrolling up in one click:
+    // A button element was used instead of a div for accessibility without a tabindex
+		var btt= jQuery('<button id="bz-back-to-top" class="match-heading-style">Back to top</button>').click(function() {
 			jQuery(window).scrollTop(0);
 		});
 		jQuery('.bz-module').append(btt);
-
+ 
 		// Hide the button until you've scrolled down a bit:
 		$(window).scroll( function(){
 			if ( $(this).scrollTop() > 1080 ) {
