@@ -1622,6 +1622,10 @@ table [type="range"] {
 
 }
 
+#bz-back-to-top:focus {
+	outline: none;
+}
+
 .bz-resume-box * {
     font-family: "Times New Roman", Times, serif;
     letter-spacing: -0.2px;
