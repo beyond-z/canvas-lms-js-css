@@ -90,9 +90,12 @@ th,
 	text-align: center;
 }
 
-
-
-
+/* Customize the home page */
+/* --------------------------------- */
+#course_home_content .ic-Action-header__Primary h2 {
+    color: #DB2B36;
+    font-size: 2em;
+}
 
 
 /* Customizing the modules list view */
