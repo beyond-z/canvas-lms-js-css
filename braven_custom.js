@@ -735,7 +735,7 @@ runOnUserContent(function() {
   // Create a button to toggle transcripts for videos
   jQuery('.transcript').hide().before(function(){
     var transcript = jQuery(this);
-    var btn = '<span class="toggle-transcript">Transcript<span>';
+    var btn = '<button class="toggle-transcript">Transcript</button>';
     return jQuery(btn).click(function(){
       transcript.slideToggle();
     });

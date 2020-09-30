@@ -191,7 +191,9 @@ figcaption {
 
 .toggle-transcript {
 	color: #2E6D99;
-	cursor: pointer;
+    cursor: pointer;
+    border: none;
+    background: transparent
 }
 
 .transcript {
@@ -3436,4 +3438,40 @@ blockquote small {
 
 .show-answers input[data-correctness="incorrect"] + label {
     color: #DB2B36;
+}
+
+.sr-only {
+	border: 0;
+	clip: rect(0, 0, 0, 0);
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	position: absolute;
+	width: 1px; }
+  
+.sr-only-focusable:active, .sr-only-focusable:focus {
+	clip: auto;
+	height: auto;
+	margin: 0;
+	overflow: visible;
+	position: static;
+	width: auto; }
+
+/* sr-only class is used to hide an element from platform users 
+and made visible to screen reader users only  */
+.sr-only {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap; /* added line */
+	border: 0; }
+
+
+.text-area-label{
+	font-weight: bolder;
 }
