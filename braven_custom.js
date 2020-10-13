@@ -735,7 +735,7 @@ runOnUserContent(function() {
   // Create a button to toggle transcripts for videos
   jQuery('.transcript').hide().before(function(){
     var transcript = jQuery(this);
-    var btn = '<span class="toggle-transcript">Transcript<span>';
+    var btn = '<button class="toggle-transcript">Transcript</button>';
     return jQuery(btn).click(function(){
       transcript.slideToggle();
     });
@@ -768,12 +768,13 @@ runOnUserContent(function() {
 	// Add "back to top" widget:
 	setupBTT();
 	function setupBTT() {
-		// Create a button to allow scrolling up in one click:
-		var btt= jQuery('<div id="bz-back-to-top" class="match-heading-style">Back to top</div>').click(function(){
+    // Create a button to allow scrolling up in one click:
+    // A button element was used instead of a div for accessibility without a tabindex
+		var btt= jQuery('<button id="bz-back-to-top" class="match-heading-style">Back to top</button>').click(function() {
 			jQuery(window).scrollTop(0);
 		});
 		jQuery('.bz-module').append(btt);
-
+ 
 		// Hide the button until you've scrolled down a bit:
 		$(window).scroll( function(){
 			if ( $(this).scrollTop() > 1080 ) {
@@ -1251,6 +1252,7 @@ function collectBoxesBeforeBox(button) {
 function createBzProgressBar() {
   var div = document.createElement("div");
   div.setAttribute("id", "bz-progress-bar");
+  div.setAttribute("aria-live", "polite");
 
   // progress
   var allContentSavedDiv = document.createElement("div");

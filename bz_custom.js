@@ -1186,6 +1186,7 @@ function collectBoxesBeforeBox(button) {
 function createBzProgressBar() {
   var div = document.createElement("div");
   div.setAttribute("id", "bz-progress-bar");
+  div.setAttribute("aria-live", "polite");
 
   // progress
   var allContentSavedDiv = document.createElement("div");
