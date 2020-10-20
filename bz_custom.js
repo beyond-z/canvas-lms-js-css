@@ -221,14 +221,50 @@ jQuery( document ).ready(function() {
     jQuery(".bz-app-ritual-score").after('<span class="bz-app-ritual-score-text">40</span>')
 
     // Displays scorecard modal
+    var lastFocus;
     jQuery('.bz-app-ritual-calculate-link').on('click', function() {
-      jQuery(".bz-app-ritual .modal").show()
-    })
+      lastFocus = document.activeElement;
+      jQuery(".bz-app-ritual .modal").show();
+      jQuery("#career-accelerating-opportunity-scorecard").attr("tabindex","0");
+      jQuery('#career-accelerating-opportunity-scorecard').focus();
+    });
 
     // Closes scorecard modal
     jQuery('.bz-app-ritual span.close').on('click', function() {
-        jQuery(".bz-app-ritual .modal").hide()
-    })
+        lastFocus.focus(); // place focus on the saved element
+        jQuery(".bz-app-ritual .modal").hide();
+    });
+
+    // add all the elements inside modal which you want to make focusable
+    const focusableElements = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+    const modal = document.querySelector(".bz-app-ritual .modal"); // select the modal
+
+    const firstFocusableElement = modal.querySelectorAll(focusableElements)[0]; // get first element to be focused inside modal
+    const focusableContent = modal.querySelectorAll(focusableElements);
+    const lastFocusableElement = focusableContent[focusableContent.length - 1]; // get last element to be focused inside modal
+
+    document.addEventListener('keydown', function(e) {
+      let isTabPressed = e.key === 'Tab' || e.keyCode === 9;
+    
+      if (!isTabPressed) {
+        return;
+      }
+    
+      if (e.shiftKey) { // if shift key pressed for shift + tab combination
+        if (document.activeElement === firstFocusableElement) {
+          lastFocusableElement.focus(); // add focus for the last focusable element
+          e.preventDefault();
+        }
+      } else { // if tab key is pressed
+        if (document.activeElement === lastFocusableElement) { // if focused has reached to last focusable element then focus first focusable element after pressing tab
+          firstFocusableElement.focus(); // add focus for the first focusable element
+          e.preventDefault();
+        }
+      }
+    });
+    
+    firstFocusableElement.focus();
+
 
     // Update total when slider value is updated
     jQuery('.modal').on('change', '.slider', function(e) {
