@@ -2013,7 +2013,7 @@ table [type="range"] {
 .bz-toggle-collapse {
     cursor: pointer;
     text-decoration: underline;
-    color: #0081bd;
+    color: #0071AD;
 }
 
 /* Timline */
@@ -3352,7 +3352,7 @@ form.bz-app-ritual-opportunity a.bz-app-ritual-calculate-link {
 
 .bz-app-ritual-opportunity .bz-app-ritual-confirm p:first-child{
 	text-transform: uppercase;
-	color: #30b56c;
+	color: #00752C;
 	font-family: "TradeGothicNo.20-CondBold", "Oswald", sans-serif;
 	font-size: 1.3em;
 	margin-top: 10px;
@@ -3398,7 +3398,7 @@ blockquote small {
 }
 
 .show-answers input[data-correctness="correct"]:checked + label {
-    color: #22B573;
+    color: #008543;
 }
 
 .show-answers input[data-correctness="correct"]:not(:checked) + label {
