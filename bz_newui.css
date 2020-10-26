@@ -655,7 +655,7 @@ progress[value]::-webkit-progress-bar {
 .bz-course-part-task-box {
   padding: 0px;
   margin: 0.625rem 0;
-  background-color: #EEE;
+  background-color: #F9F9F9;
   overflow-y: auto;
   height: 12.5rem;
 	font-family: Oswald, "Arial Narrow", sans-serif;
@@ -774,7 +774,7 @@ progress[value]::-webkit-progress-bar {
   top: 0px;
   bottom: 0px;
   display: block;
-  background-color: #eee;
+  /* background-color: #eee; */
   /* background-color: rgba(250, 250, 250, 0.8); */
 }
 
@@ -2984,7 +2984,7 @@ body.pages #content {
 	width: 1.5rem;
 	height: 1.5rem;
 	color: white;
-	background: #30b56c;
+	background: #00752C;
 	text-align: center;
 	border-radius: 0.75rem;
 	text-shadow: 1px 2px #1e905a;
@@ -3265,7 +3265,7 @@ form.bz-app-ritual-opportunity a.bz-app-ritual-calculate-link {
 
 .bz-app-ritual-opportunity .bz-app-ritual-confirm p:first-child{
 	text-transform: uppercase;
-	color: #30b56c;
+	color: #00752C;
 	font-family: "TradeGothicNo.20-CondBold", "Oswald", sans-serif;
 	font-size: 1.3em;
 	margin-top: 0.625rem;
