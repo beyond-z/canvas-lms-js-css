@@ -775,7 +775,7 @@ progress[value]::-webkit-progress-bar {
   bottom: 0px;
   display: block;
   background-color: #eee;
-  background-color: rgba(250, 250, 250, 0.8);
+  /* background-color: rgba(250, 250, 250, 0.8); */
 }
 
 .bz-course-part-module-box.completed::after {
@@ -1946,7 +1946,7 @@ table [type="range"] {
 .bz-toggle-collapse {
     cursor: pointer;
     text-decoration: underline;
-    color: #0081bd;
+    color: #0071AD;
 }
 
 /* Timline */
@@ -3113,7 +3113,7 @@ input.bz-app-ritual-my-semester{
 .bz-app-ritual-goal,
 .bz-app-ritual input.bz-app-ritual-my-semester[type='number']{
 	font-style: italic;
-	color: #999999;
+	color: #696969;
 }
 
 table.bz-app-ritual-applications th{
