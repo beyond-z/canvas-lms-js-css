@@ -174,6 +174,7 @@ jQuery( document ).ready(function() {
 
     /* Application Ritual functionality: */
     // Update table when new value is added
+    let isRitualGoalRendered = false;
     jQuery('.bz-app-ritual tbody').on('change', '.bz-app-ritual-my-week-value', function (e) {
       if (!e.currentTarget.value) {
         e.currentTarget.value = 0
@@ -186,8 +187,13 @@ jQuery( document ).ready(function() {
         let $weekValue = $week.find('.bz-app-ritual-my-week-value')
         let $semesterInput = $week.find('.bz-app-ritual-my-semester')
         let $goalInput = $week.find('.bz-app-ritual-check')
+        let $ritualGoal = $week.find('.bz-app-ritual-goal')
         sum += parseInt($weekValue.val() || 0)
         $semesterInput.val(sum)
+        if(!isRitualGoalRendered){
+          $ritualGoal.append(`<div id="ritual-report-progress-${i}" aria-live="polite" class="sr-only"></div>`);
+        }
+        var ritualReportProgress = jQuery(`#ritual-report-progress-${i}`);
         BZ_SaveMagicField($semesterInput.attr('data-bz-retained'), $semesterInput.val());
         if ($weekValue.val() == "") {
           $goalInput.val('')
@@ -195,13 +201,16 @@ jQuery( document ).ready(function() {
           $goalInput.val('✓')
           $goalInput.removeClass('bz-app-ritual-check-unmet')
           $goalInput.addClass('bz-app-ritual-check-validated')
+          ritualReportProgress.text('goal met');
         } else {
           $goalInput.val('X')
           $goalInput.addClass('bz-app-ritual-check-unmet')
           $goalInput.addClass('bz-app-ritual-check-validated')
+          ritualReportProgress.text('goal not met');
         }
         BZ_SaveMagicField($goalInput.attr('data-bz-retained'), $goalInput.val());
       })
+      isRitualGoalRendered = true;
     })
 
     // Toggles display of opportunities
