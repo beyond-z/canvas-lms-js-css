@@ -786,7 +786,7 @@ runOnUserContent(function() {
 	setupBTT();
 	function setupBTT() {
 		// Create a button to allow scrolling up in one click:
-		var btt= jQuery('<div id="bz-back-to-top" class="match-heading-style">Back to top</div>').click(function(){
+		var btt= jQuery('<button id="bz-back-to-top" class="match-heading-style">Back to top</button>').click(function(){
 			jQuery(window).scrollTop(0);
 		});
 		jQuery('.bz-module').append(btt);
