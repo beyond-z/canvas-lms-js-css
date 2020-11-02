@@ -241,9 +241,23 @@ jQuery( document ).ready(function() {
 
     // Closes scorecard modal
     jQuery('.bz-app-ritual span.close').on('click', function() {
+      closeModal();
+    });
+
+    jQuery('.bz-app-ritual span.close').keyup((e) => {
+      switch (event.keyCode) {
+        // enter or spacebar
+        case 13:
+        case 32:
+          closeModal();
+        break;
+      }
+    });
+
+    function closeModal(){
         lastFocus.focus(); // place focus on the saved element
         jQuery(".bz-app-ritual .modal").hide();
-    });
+    }
 
     // add all the elements inside modal which you want to make focusable
     const focusableElements = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
