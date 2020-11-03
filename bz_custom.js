@@ -259,6 +259,25 @@ jQuery( document ).ready(function() {
         jQuery(".bz-app-ritual .modal").hide();
     }
 
+    // Add "back to top" braven resources:
+	setupBTT();
+	function setupBTT() {
+		// Create a button to allow scrolling up in one click:
+		var btt= jQuery('<span role="button" tabindex="0" id="bz-back-to-top" class="match-heading-style">Back to top</span>').click(function(){
+			jQuery(window).scrollTop(0);
+		});
+		jQuery('.bz-module').append(btt);
+
+		// Hide the button until you've scrolled down a bit:
+		$(window).scroll( function(){
+			if ( $(this).scrollTop() > 1080 ) {
+				$('#bz-back-to-top').fadeIn();
+			} else {
+				$('#bz-back-to-top').fadeOut();
+			}
+		});
+	}
+
     // add all the elements inside modal which you want to make focusable
     const focusableElements = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
     const modal = document.querySelector(".bz-app-ritual .modal"); // select the modal
@@ -795,12 +814,11 @@ runOnUserContent(function() {
     });
   }
 
-
 	// Add "back to top" widget:
 	setupBTT();
 	function setupBTT() {
 		// Create a button to allow scrolling up in one click:
-		var btt= jQuery('<button id="bz-back-to-top" class="match-heading-style">Back to top</button>').click(function(){
+		var btt= jQuery('<span role="button" tabindex="0" id="bz-back-to-top" class="match-heading-style">Back to top</span>').click(function(){
 			jQuery(window).scrollTop(0);
 		});
 		jQuery('.bz-module').append(btt);
@@ -813,8 +831,6 @@ runOnUserContent(function() {
 				$('#bz-back-to-top').fadeOut();
 			}
 		});
-
-
 	}
 
 
