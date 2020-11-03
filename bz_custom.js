@@ -271,7 +271,6 @@ jQuery( document ).ready(function() {
 		// Hide the button until you've scrolled down a bit:
 		$(window).scroll( function(){
 			if ( $(this).scrollTop() > 1080 ) {
-        console.log($(this).scrollTop())
 				$('#bz-back-to-top').fadeIn();
 			} else {
 				$('#bz-back-to-top').fadeOut();
@@ -827,7 +826,6 @@ runOnUserContent(function() {
 		// Hide the button until you've scrolled down a bit:
 		$(window).scroll( function(){
 			if ( $(this).scrollTop() > 1080 ) {
-        console.log($(this).scrollTop())
 				$('#bz-back-to-top').fadeIn();
 			} else {
 				$('#bz-back-to-top').fadeOut();
