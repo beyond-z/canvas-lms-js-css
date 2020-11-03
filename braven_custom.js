@@ -770,7 +770,7 @@ runOnUserContent(function() {
 	function setupBTT() {
     // Create a button to allow scrolling up in one click:
     // A button element was used instead of a div for accessibility without a tabindex
-		var btt= jQuery('<button id="bz-back-to-top" class="match-heading-style">Back to top</button>').click(function() {
+		var btt= jQuery('<span role="button" tabindex="0" id="bz-back-to-top" class="match-heading-style">Back to top</span>').click(function() {
 			jQuery(window).scrollTop(0);
 		});
 		jQuery('.bz-module').append(btt);
@@ -778,13 +778,12 @@ runOnUserContent(function() {
 		// Hide the button until you've scrolled down a bit:
 		$(window).scroll( function(){
 			if ( $(this).scrollTop() > 1080 ) {
+        console.log($(this).scrollTop())
 				$('#bz-back-to-top').fadeIn();
 			} else {
 				$('#bz-back-to-top').fadeOut();
 			}
 		});
-
-
 	}
 
 
