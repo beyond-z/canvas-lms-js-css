@@ -1830,8 +1830,14 @@ table [type="range"] {
 
 .bz-magic-field-assignment textarea[data-bz-retained],
 .bz-magic-field-submission textarea[data-bz-retained] {
-	width: calc(100% - 1.25rem);
 	height: 3em;
+}
+
+@media only screen and (min-width: 721px){
+	.bz-magic-field-assignment textarea[data-bz-retained],
+	.bz-magic-field-submission textarea[data-bz-retained] {
+		width: calc(100% - 1.25rem);
+	}
 }
 
 
@@ -1922,7 +1928,7 @@ table [type="range"] {
 
 .bz-assignment {
   margin: 2em auto;
-  width: 42rem;
+  /* width: 42rem; */
 }
 
 .bz-assignment-intro {
