@@ -1,7 +1,9 @@
-/* 
- * This Javascript is uploaded to our Braven Theme on Canvas cloud. E.g.
- * https://braven.instructure.com/accounts/1/theme_editor
- */
+/* braven_theme.js
+ * New Braven Canvas cloud custom JS, as of Highlander 2020.
+ * Add it here: https://braven.instructure.com/accounts/1/theme_editor
+ * and be sure to keep the git version https://github.com/beyond-z/canvas-lms-js-css
+ * in sync until we find an actual deploy method.
+ **/
 
 jQuery(document).ready(function($) {
 
