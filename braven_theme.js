@@ -10,11 +10,11 @@ jQuery(document).ready(function($) {
   // Adds styling to the 'View Feedback' link on an uploaded file submission that has
   // been annotated by the grader. Allows the student to more easily find it.
   function styleFileUploadViewAnnotationsLink() {
-    feedback_link = document.querySelector('.file-upload-submission-attachment .modal_preview_link');
-    if (feedback_link) {
-      feedback_link.classList.remove('Button--link');
-      feedback_link.classList.add('Button', 'Button--secondary');
-    }
+    feedback_links = document.querySelectorAll('.file-upload-submission-attachment .modal_preview_link');
+    feedback_links.forEach(function(link) {
+      link.classList.remove('Button--link');
+      link.classList.add('Button', 'Button--secondary');
+    });
   }
 
   styleFileUploadViewAnnotationsLink();
