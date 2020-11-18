@@ -1943,10 +1943,11 @@ runOnUserContent(function () {
         event.preventDefault();
         // keyCode is deprecated and currently replaced with code but still dosent Work
         // so I implementend KeyCode and which for a worse case scenerio
+        //https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/keyCode
         switch (event.keyCode || event.which) {
+          case 13:
           case 32: // space
             event.preventDefault();
-            console.log('***', event.keyCode);
             if (event.target.getAttribute("aria-grabbed") == "true") {
               // drop it
               event.target.setAttribute("aria-grabbed", "false");
