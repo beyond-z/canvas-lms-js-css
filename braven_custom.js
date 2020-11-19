@@ -1512,6 +1512,7 @@ function createBzProgressBar() {
   if (doneButtonCount == 0) return; // no progress to report!
 
   var progress = document.createElement("progress");
+  progress.setAttribute('aria-label', 'course completion');
   progress.value = window.openBzBoxPosition;
   progress.max = doneButtonCount;
   allContentSavedDiv.appendChild(progress);
