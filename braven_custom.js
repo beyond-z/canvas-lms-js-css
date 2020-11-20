@@ -71,7 +71,10 @@ jQuery(document).ready(function () {
 
   runOnUserContent(function () {
     /* Improve navigability of assignment content by collapsing/expanding parts: */
-    jQuery(".bz-toggle-collapse").parent().addClass("collapsed"); //.append('<span class="bz-toggle-collapse icon">&#10005;</span>');
+    jQuery(".bz-toggle-collapse")
+      .parent()
+      .attr('aria-expanded', 'false')
+      .addClass("collapsed"); //.append('<span class="bz-toggle-collapse icon">&#10005;</span>');
     jQuery(".bz-toggle-collapse")
       .parent()
       .children()
@@ -81,6 +84,9 @@ jQuery(document).ready(function () {
       e.preventDefault();
       jQuery(this)
         .parent()
+        .attr('aria-expanded', function (i, attr) {
+          return attr == 'true' ? 'false' : 'true'
+        })
         .toggleClass("collapsed")
         .children()
         .not(".bz-toggle-collapse")
@@ -1512,6 +1518,7 @@ function createBzProgressBar() {
   if (doneButtonCount == 0) return; // no progress to report!
 
   var progress = document.createElement("progress");
+  progress.setAttribute('aria-label', 'course completion');
   progress.value = window.openBzBoxPosition;
   progress.max = doneButtonCount;
   allContentSavedDiv.appendChild(progress);
