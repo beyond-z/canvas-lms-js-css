@@ -70,13 +70,28 @@ jQuery( document ).ready(function() {
     }
   });
 
-  runOnUserContent(function() {
+  runOnUserContent(function () {
     /* Improve navigability of assignment content by collapsing/expanding parts: */
-    jQuery('.bz-toggle-collapse').parent().addClass('collapsed'); //.append('<span class="bz-toggle-collapse icon">&#10005;</span>');
-    jQuery('.bz-toggle-collapse').parent().children().not('.bz-toggle-collapse').hide();
-    jQuery('.bz-toggle-collapse').click(function(e){
+    jQuery(".bz-toggle-collapse")
+      .parent()
+      .attr('aria-expanded', 'false')
+      .addClass("collapsed"); //.append('<span class="bz-toggle-collapse icon">&#10005;</span>');
+    jQuery(".bz-toggle-collapse")
+      .parent()
+      .children()
+      .not(".bz-toggle-collapse")
+      .hide();
+    jQuery(".bz-toggle-collapse").click(function (e) {
       e.preventDefault();
-      jQuery(this).parent().toggleClass('collapsed').children().not('.bz-toggle-collapse').slideToggle();
+      jQuery(this)
+        .parent()
+        .attr('aria-expanded', function (i, attr) {
+          return attr == 'true' ? 'false' : 'true'
+        })
+        .toggleClass("collapsed")
+        .children()
+        .not(".bz-toggle-collapse")
+        .slideToggle();
     });
 
     /* Improve Priorities Quiz */
