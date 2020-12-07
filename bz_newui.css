@@ -1762,6 +1762,11 @@ table [type="range"] {
     background-position: 0 -137.5rem;
 }
 
+.bz-icon-briefcase::before,
+[href~='pages/micro-internships'] {
+    background-position: 0 -2200px;
+}
+
 /* Styling for quizzes/assignments that use magic fields to layout complex content */
 
 .btn, .Button--primary {
