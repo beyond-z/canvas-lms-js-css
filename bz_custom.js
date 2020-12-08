@@ -290,7 +290,14 @@ jQuery( document ).ready(function() {
 			} else {
 				$('#bz-back-to-top').fadeOut();
 			}
-		});
+    });
+    
+    $("#bz-back-to-top").keydown(function(event) {
+      // Number 13 is the "Enter" key on the keyboard
+      if (event.keyCode === 13 || event.keyCode === 32) {
+       this.click();
+      }
+    });
 	}
 
     // add all the elements inside modal which you want to make focusable
@@ -994,7 +1001,7 @@ function bzReplaceInlineRubrics(queuedInlineRubricsToReplace, loadedFullRubricTa
       continue;
     }
 
-    let tableEl = jQuery('<table class="bz-ajax-loaded-rubric bz-ajax-loaded" />').html(fullRubricTable.find(criterion_selector));
+    let tableEl = jQuery('<table role="presentation" class="bz-ajax-loaded-rubric bz-ajax-loaded" />').html(fullRubricTable.find(criterion_selector));
     //console.log('pulled the following rubric row out of the full table: ' + tableEl.html());
 
     // If the inline rubric looks something like the following, set it up as a magic field backed table where the selected
