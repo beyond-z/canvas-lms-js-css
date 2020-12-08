@@ -932,6 +932,13 @@ runOnUserContent(function () {
         $("#bz-back-to-top").fadeOut();
       }
     });
+
+    $("#bz-back-to-top").keydown(function(event) {
+      // Number 13 is the "Enter" key on the keyboard
+      if (event.keyCode === 13 || event.keyCode === 32) {
+       this.click();
+      }
+    });
   }
   /* END NEW UI STUFF */
 });
