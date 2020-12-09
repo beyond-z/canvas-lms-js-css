@@ -202,6 +202,7 @@ jQuery( document ).ready(function() {
         let $weekValue = $week.find('.bz-app-ritual-my-week-value')
         let $semesterInput = $week.find('.bz-app-ritual-my-semester')
         let $goalInput = $week.find('.bz-app-ritual-check')
+        let $goalLabel = $goalInput.attr('data-label')
         let $ritualGoal = $week.find('.bz-app-ritual-goal')
         sum += parseInt($weekValue.val() || 0)
         $semesterInput.val(sum)
@@ -217,11 +218,13 @@ jQuery( document ).ready(function() {
           $goalInput.removeClass('bz-app-ritual-check-unmet')
           $goalInput.addClass('bz-app-ritual-check-validated')
           ritualReportProgress.text('goal met');
+          $goalInput.attr('aria-label', `My ${$goalLabel} Goals are met`);
         } else {
           $goalInput.val('X')
           $goalInput.addClass('bz-app-ritual-check-unmet')
           $goalInput.addClass('bz-app-ritual-check-validated')
           ritualReportProgress.text('goal not met');
+          $goalInput.attr('aria-label', `My ${$goalLabel} Goals are not met`);
         }
         BZ_SaveMagicField($goalInput.attr('data-bz-retained'), $goalInput.val());
       })
