@@ -70,6 +70,9 @@ jQuery(document).ready(function () {
   });
 
   runOnUserContent(function () {
+    // remove unsupported role="tabpanel" attribute from form
+    $(".submit_assignment_form").removeAttr('role');
+
     /* Improve navigability of assignment content by collapsing/expanding parts: */
     jQuery(".bz-toggle-collapse")
       .parent()
@@ -1421,6 +1424,11 @@ runOnUserContent(function () {
   $(
     "#assignment_show:has(input[data-bz-retained]) .submit_assignment_link"
   ).hide();
+});
+
+ // remove unsupported role="tabpanel" attribute from form
+runOnUserContent(function () {
+  $(".submit_assignment_form").removeAttr('role');
 });
 
 // just leaving the comment to remember we have this for later if needed
