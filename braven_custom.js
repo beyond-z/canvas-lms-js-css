@@ -691,8 +691,10 @@ function bzInitializeNewUi() {
             answerParent.addClass("show-answers");
             if (answerCorrectness == "correct") {
               answerParent.addClass("correct");
+              answerParent.append( "<span aria-live='polite' class='sr-only answer-status'>correct</span>" );
             } else if (answerCorrectness == "incorrect") {
               answerParent.addClass("incorrect");
+              answerParent.append( "<span aria-live='polite' class='sr-only answer-status'>incorrect</span>" );
             }
             if (jQuery(this).is('[type="radio"]')) {
               answerParent.siblings().removeClass("incorrect correct");
@@ -714,6 +716,8 @@ function bzInitializeNewUi() {
           }
         } else {
           answerParent.removeClass("show-answers incorrect correct");
+          answerParent.remove('.answer-status');
+          answerParent.find("span.answer-status").remove(); 
         }
       } else {
         answerParent.addClass("show-answers");
