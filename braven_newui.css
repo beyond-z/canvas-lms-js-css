@@ -2252,6 +2252,14 @@ table.sort-to-match tr {
 	padding: 0!important;
 }
 
+@media only screen and (max-width: 720px) {
+	#wiki_page_show table.bz-ajax-loaded-rubric .criterion table.ratings tr,
+	.bz-ajax-loaded-rubric .criterion table.ratings tr {
+		display: flex;
+		flex-direction: column;
+	}
+}
+
 .bz-ajax-loaded-rubric .learning_outcome_flag,
 .bz-ajax-loaded-rubric .links,
 .bz-ajax-loaded-rubric .points_form,
