@@ -720,6 +720,8 @@ function bzInitializeNewUi() {
           }
         } else {
           answerParent.removeClass("show-answers incorrect correct");
+          answerParent.remove('.answer-status');
+          answerParent.find("span.answer-status").remove(); 
         }
       } else {
         answerParent.addClass("show-answers");
