@@ -74,28 +74,17 @@ jQuery(document).ready(function () {
     $(".submit_assignment_form").removeAttr('role');
 
     /* Improve navigability of assignment content by collapsing/expanding parts: */
-    jQuery(".bz-toggle-collapse")
-      .parent()
-      .attr('aria-expanded', 'false')
-      .addClass("collapsed"); //.append('<span class="bz-toggle-collapse icon">&#10005;</span>');
-    jQuery(".bz-toggle-collapse")
-      .parent()
-      .children()
-      .not(".bz-toggle-collapse")
-      .hide();
-    jQuery(".bz-toggle-collapse").click(function (e) {
+    jQuery('.bz-toggle-collapse').parent().addClass('collapsed'); //.append('<span class="bz-toggle-collapse icon">&#10005;</span>');
+    jQuery('.bz-toggle-collapse').find('a.stealth-link').attr('aria-expanded', 'false');
+    jQuery('.bz-toggle-collapse').parent().children().not('.bz-toggle-collapse').hide();
+    jQuery('.bz-toggle-collapse').click(function(e){
       e.preventDefault();
-      jQuery(this)
-        .parent()
-        .attr('aria-expanded', function (i, attr) {
-          return attr == 'true' ? 'false' : 'true'
-        })
-        .toggleClass("collapsed")
-        .children()
-        .not(".bz-toggle-collapse")
-        .slideToggle();
+      jQuery(this).parent().toggleClass('collapsed').children().not('.bz-toggle-collapse').slideToggle();
+      jQuery(this).find('a.stealth-link').attr('aria-expanded', function (i, attr) {
+        return attr == 'true' ? 'false' : 'true'
+      });
     });
-
+    
     /* Improve Priorities Quiz */
     jQuery(
       ".context-course_11 #question_482_question_text ol li, .context-course_15 #question_619_question_text ol li, .context-course_23 #question_1918_question_text ol li, .context-course_25 #question_2260_question_text ol li"
