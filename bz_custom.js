@@ -71,7 +71,7 @@ jQuery( document ).ready(function() {
   });
 
   runOnUserContent(function () {
-  // remove unsupported role="tabpanel" attribute from form
+// remove unsupported role="tabpanel" attribute from form
   $(".submit_assignment_form").removeAttr('role');
 
   /* Improve navigability of assignment content by collapsing/expanding parts: */

@@ -210,6 +210,8 @@ jQuery(document).ready(function () {
           let $weekValue = $week.find(".bz-app-ritual-my-week-value");
           let $semesterInput = $week.find(".bz-app-ritual-my-semester");
           let $goalInput = $week.find(".bz-app-ritual-check");
+          let $goalLabel = $goalInput.attr('data-label')
+          let $ritualGoal = $week.find('.bz-app-ritual-goal')
           sum += parseInt($weekValue.val() || 0);
           $semesterInput.val(sum);
           BZ_SaveMagicField(
@@ -221,13 +223,17 @@ jQuery(document).ready(function () {
           } else if (
             sum >= parseInt($week.find(".bz-app-ritual-goal").text())
           ) {
-            $goalInput.val("✓");
-            $goalInput.removeClass("bz-app-ritual-check-unmet");
-            $goalInput.addClass("bz-app-ritual-check-validated");
+            $goalInput.val('✓')
+            $goalInput.removeClass('bz-app-ritual-check-unmet')
+            $goalInput.addClass('bz-app-ritual-check-validated')
+            ritualReportProgress.text('goal met');
+            $goalInput.attr('aria-label', `My ${$goalLabel} Goals are met`);
           } else {
-            $goalInput.val("X");
-            $goalInput.addClass("bz-app-ritual-check-unmet");
-            $goalInput.addClass("bz-app-ritual-check-validated");
+            $goalInput.val('X')
+            $goalInput.addClass('bz-app-ritual-check-unmet')
+            $goalInput.addClass('bz-app-ritual-check-validated')
+            ritualReportProgress.text('goal not met');
+            $goalInput.attr('aria-label', `My ${$goalLabel} Goals are not met`);
           }
           BZ_SaveMagicField(
             $goalInput.attr("data-bz-retained"),
@@ -429,7 +435,7 @@ var bzNewUiHandlers = {
   },
 
   // Score a radio-list question and return feedback:
-  '[data-grade-as="radio"] .done-button': function () {
+  '[data-grade-as="radio"] .done-button': function () { 
     var radiolist = jQuery(this).parents(".question").find("fieldset");
     var feedback = "";
     var feedbackClass = "";
@@ -445,9 +451,13 @@ var bzNewUiHandlers = {
         ) {
           feedback = "Good job!";
           feedbackClass = "correct";
+          //console.log(jQuery(this).find('span.radio-status').length);
+          
+          jQuery(this).append("<span aria-live='assertive' class='sr-only radio-status'>correct</span>");
         } else {
           feedback = "Oops!";
           feedbackClass = "incorrect";
+          jQuery(this).append("<span aria-live='assertive' class='sr-only radio-status'>incorrect</span>");
         }
       }
     });
@@ -674,8 +684,10 @@ function bzInitializeNewUi() {
             answerParent.addClass("show-answers");
             if (answerCorrectness == "correct") {
               answerParent.addClass("correct");
+              answerParent.append( "<span aria-live='assertive' class='sr-only answer-status'>correct</span>" );
             } else if (answerCorrectness == "incorrect") {
               answerParent.addClass("incorrect");
+              answerParent.append( "<span aria-live='assertive' class='sr-only answer-status'>incorrect</span>" );
             }
             if (jQuery(this).is('[type="radio"]')) {
               answerParent.siblings().removeClass("incorrect correct");
@@ -687,7 +699,7 @@ function bzInitializeNewUi() {
             } else if (answerCorrectness == "incorrect") {
               answerLabel.addClass("incorrect");
             }
-            if (jQuery(this).is('[type="radio"]')) {
+            if (jQuery(this).is('[type="radio"]')) {  
               answerLabel
                 .parents(".module-radio-div")
                 .siblings()
@@ -697,6 +709,8 @@ function bzInitializeNewUi() {
           }
         } else {
           answerParent.removeClass("show-answers incorrect correct");
+          answerParent.remove('.answer-status');
+          answerParent.find("span.answer-status").remove(); 
         }
       } else {
         answerParent.addClass("show-answers");
@@ -922,6 +936,13 @@ runOnUserContent(function () {
         $("#bz-back-to-top").fadeIn();
       } else {
         $("#bz-back-to-top").fadeOut();
+      }
+    });
+
+    $("#bz-back-to-top").keydown(function(event) {
+      // Number 13 is the "Enter" key on the keyboard
+      if (event.keyCode === 13 || event.keyCode === 32) {
+       this.click();
       }
     });
   }
@@ -1400,6 +1421,11 @@ runOnUserContent(function () {
   $(
     "#assignment_show:has(input[data-bz-retained]) .submit_assignment_link"
   ).hide();
+});
+
+ // remove unsupported role="tabpanel" attribute from form
+runOnUserContent(function () {
+  $(".submit_assignment_form").removeAttr('role');
 });
 
 // just leaving the comment to remember we have this for later if needed
