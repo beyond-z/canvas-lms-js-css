@@ -71,27 +71,19 @@ jQuery( document ).ready(function() {
   });
 
   runOnUserContent(function () {
-    /* Improve navigability of assignment content by collapsing/expanding parts: */
-    jQuery(".bz-toggle-collapse")
-      .parent()
-      .attr('aria-expanded', 'false')
-      .addClass("collapsed"); //.append('<span class="bz-toggle-collapse icon">&#10005;</span>');
-    jQuery(".bz-toggle-collapse")
-      .parent()
-      .children()
-      .not(".bz-toggle-collapse")
-      .hide();
-    jQuery(".bz-toggle-collapse").click(function (e) {
+  // remove unsupported role="tabpanel" attribute from form
+  $(".submit_assignment_form").removeAttr('role');
+
+  /* Improve navigability of assignment content by collapsing/expanding parts: */
+    jQuery('.bz-toggle-collapse').parent().addClass('collapsed'); //.append('<span class="bz-toggle-collapse icon">&#10005;</span>');
+    jQuery('.bz-toggle-collapse').find('a.stealth-link').attr('aria-expanded', 'false');
+    jQuery('.bz-toggle-collapse').parent().children().not('.bz-toggle-collapse').hide();
+    jQuery('.bz-toggle-collapse').click(function(e){
       e.preventDefault();
-      jQuery(this)
-        .parent()
-        .attr('aria-expanded', function (i, attr) {
-          return attr == 'true' ? 'false' : 'true'
-        })
-        .toggleClass("collapsed")
-        .children()
-        .not(".bz-toggle-collapse")
-        .slideToggle();
+      jQuery(this).parent().toggleClass('collapsed').children().not('.bz-toggle-collapse').slideToggle();
+      jQuery(this).find('a.stealth-link').attr('aria-expanded', function (i, attr) {
+        return attr == 'true' ? 'false' : 'true'
+      });
     });
 
     /* Improve Priorities Quiz */
@@ -202,6 +194,7 @@ jQuery( document ).ready(function() {
         let $weekValue = $week.find('.bz-app-ritual-my-week-value')
         let $semesterInput = $week.find('.bz-app-ritual-my-semester')
         let $goalInput = $week.find('.bz-app-ritual-check')
+        let $goalLabel = $goalInput.attr('data-label')
         let $ritualGoal = $week.find('.bz-app-ritual-goal')
         sum += parseInt($weekValue.val() || 0)
         $semesterInput.val(sum)
@@ -217,11 +210,13 @@ jQuery( document ).ready(function() {
           $goalInput.removeClass('bz-app-ritual-check-unmet')
           $goalInput.addClass('bz-app-ritual-check-validated')
           ritualReportProgress.text('goal met');
+          $goalInput.attr('aria-label', `My ${$goalLabel} Goals are met`);
         } else {
           $goalInput.val('X')
           $goalInput.addClass('bz-app-ritual-check-unmet')
           $goalInput.addClass('bz-app-ritual-check-validated')
           ritualReportProgress.text('goal not met');
+          $goalInput.attr('aria-label', `My ${$goalLabel} Goals are not met`);
         }
         BZ_SaveMagicField($goalInput.attr('data-bz-retained'), $goalInput.val());
       })
@@ -290,7 +285,14 @@ jQuery( document ).ready(function() {
 			} else {
 				$('#bz-back-to-top').fadeOut();
 			}
-		});
+    });
+    
+    $("#bz-back-to-top").keydown(function(event) {
+      // Number 13 is the "Enter" key on the keyboard
+      if (event.keyCode === 13 || event.keyCode === 32) {
+       this.click();
+      }
+    });
 	}
 
     // add all the elements inside modal which you want to make focusable
@@ -994,7 +996,7 @@ function bzReplaceInlineRubrics(queuedInlineRubricsToReplace, loadedFullRubricTa
       continue;
     }
 
-    let tableEl = jQuery('<table class="bz-ajax-loaded-rubric bz-ajax-loaded" />').html(fullRubricTable.find(criterion_selector));
+    let tableEl = jQuery('<table role="presentation" class="bz-ajax-loaded-rubric bz-ajax-loaded" />').html(fullRubricTable.find(criterion_selector));
     //console.log('pulled the following rubric row out of the full table: ' + tableEl.html());
 
     // If the inline rubric looks something like the following, set it up as a magic field backed table where the selected
