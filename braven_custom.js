@@ -446,7 +446,7 @@ var bzNewUiHandlers = {
   },
 
   // Score a radio-list question and return feedback:
-  '[data-grade-as="radio"] .done-button': function () {
+  '[data-grade-as="radio"] .done-button': function () { 
     var radiolist = jQuery(this).parents(".question").find("fieldset");
     var feedback = "";
     var feedbackClass = "";
@@ -462,9 +462,13 @@ var bzNewUiHandlers = {
         ) {
           feedback = "Good job!";
           feedbackClass = "correct";
+          //console.log(jQuery(this).find('span.radio-status').length);
+          
+          jQuery(this).append("<span aria-live='assertive' class='sr-only radio-status'>correct</span>");
         } else {
           feedback = "Oops!";
           feedbackClass = "incorrect";
+          jQuery(this).append("<span aria-live='assertive' class='sr-only radio-status'>incorrect</span>");
         }
       }
     });
@@ -691,10 +695,10 @@ function bzInitializeNewUi() {
             answerParent.addClass("show-answers");
             if (answerCorrectness == "correct") {
               answerParent.addClass("correct");
-              answerParent.append( "<span aria-live='polite' class='sr-only answer-status'>correct</span>" );
+              answerParent.append( "<span aria-live='assertive' class='sr-only answer-status'>correct</span>" );
             } else if (answerCorrectness == "incorrect") {
               answerParent.addClass("incorrect");
-              answerParent.append( "<span aria-live='polite' class='sr-only answer-status'>incorrect</span>" );
+              answerParent.append( "<span aria-live='assertive' class='sr-only answer-status'>incorrect</span>" );
             }
             if (jQuery(this).is('[type="radio"]')) {
               answerParent.siblings().removeClass("incorrect correct");
@@ -706,7 +710,7 @@ function bzInitializeNewUi() {
             } else if (answerCorrectness == "incorrect") {
               answerLabel.addClass("incorrect");
             }
-            if (jQuery(this).is('[type="radio"]')) {
+            if (jQuery(this).is('[type="radio"]')) {  
               answerLabel
                 .parents(".module-radio-div")
                 .siblings()
