@@ -2191,8 +2191,14 @@ table.sort-to-match tr {
 }
 
 @media only screen and (max-width: 720px) {
+	#wiki_page_show table.bz-ajax-loaded-rubric .criterion,
+	table.bz-ajax-loaded-rubric .criterion {
+		display: flex;
+		flex-direction: column;
+	}
+	
 	#wiki_page_show table.bz-ajax-loaded-rubric .criterion table.ratings tr,
-	.bz-ajax-loaded-rubric .criterion  table.ratings tr {
+	table.bz-ajax-loaded-rubric .criterion  table.ratings tr {
 		display: flex;
 		flex-direction: column;
 	}
