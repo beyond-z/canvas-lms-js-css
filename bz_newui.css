@@ -106,9 +106,13 @@ a:visited {
 	color: #DB2B36;
 }
 
+h1.title {
+	font-size: 2.5rem;
+}
+
 .bz-module h2,
 .bz-assignment h3 {
-	font-size: 2.5rem;
+	font-size: 2.2rem;
 }
 
 .bz-assignment h3 {
@@ -2202,6 +2206,14 @@ table.sort-to-match tr {
 		display: flex;
 		flex-direction: column;
 	}
+}
+
+.title-heading{ 
+	font-family: "TradeGothicNo.20-CondBold", "Oswald", sans-serif;
+    text-transform: uppercase;
+    line-height: normal;
+    font-weight: normal;
+    font-size: 1.2em;
 }
 
 #content table.bz-ajax-loaded-rubric td.criterion_description {
