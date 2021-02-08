@@ -39,6 +39,15 @@ function runOnUserContent(func) {
 jQuery(document).ready(function () {
   console.log("jQ working!");
 
+  /* improve Ritual Report */
+  $('.bz-expand-collapse-button').each(function(){
+    const ele = $(this.parentNode).find('h2');
+    const btn = $(this.parentNode).find('.bz-expand-collapse-button');
+    const eleId = ele[0].outerText.toLowerCase().split(' ').join('_');
+    ele.attr('id', eleId);
+    btn.attr('aria-describedby', eleId);
+  });
+
   runOnUserContent(function () {
     // add script and style from magic divs
     var i;
@@ -84,7 +93,8 @@ jQuery(document).ready(function () {
         return attr == 'true' ? 'false' : 'true'
       });
     });
-    
+
+ 
     /* Improve Priorities Quiz */
     jQuery(
       ".context-course_11 #question_482_question_text ol li, .context-course_15 #question_619_question_text ol li, .context-course_23 #question_1918_question_text ol li, .context-course_25 #question_2260_question_text ol li"
