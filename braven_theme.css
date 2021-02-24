@@ -129,11 +129,6 @@ th,
 	font-size: 1.2em;
 }
 
-.assignment .description {
-	font-size: 18px;
-	line-height: 1.25;
-}
-
 .pages.show .show-content {
 	padding: 15px;
 }
@@ -144,6 +139,45 @@ th,
 	background: #DB2B36;
 	padding: 3em;
 	text-align: center;
+}
+
+/* Customize out-of-the-box Assignments (non LTI extensions) */
+/* --------------------------------- */
+.assignment .description {
+    font-size: 1rem;
+    line-height: 1.7;
+    border: 0;
+    max-width: 45rem;
+    padding: 0.75rem;
+    margin: 0.75rem auto;
+}
+
+.assignment .description h2,
+.assignment .description h3,
+.assignment .description h4,
+.assignment .description h5,
+.assignment .description h6 {
+    line-height: 1.7;
+    margin-bottom: 1rem;
+}
+
+.assignment .description p {
+  margin-bottom: 0.75rem;
+}
+
+.assignment .description a {
+  color: #2E6D99; // $bv-blue
+}
+
+.assignment .description ul, 
+.assignment .description ol {
+  padding-left: 1rem;
+  margin-bottom: 1rem;
+}
+
+.assignment .description li {
+    line-height: 1.6;
+    margin-bottom: 0.5rem
 }
 
 /* Customize the home page */
