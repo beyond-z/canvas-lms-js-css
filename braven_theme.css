@@ -141,6 +141,19 @@ th,
 	text-align: center;
 }
 
+/* Customize the page to launch the LTI Extension assignments into a new browser window.
+ * This is shown when the "Open in new tab" setting is on for an LTI assignment. */
+/* --------------------------------- */
+.tool_content_wrapper div.load_tab,
+.tool_content_wrapper div.tab_loaded {
+  max-width: 42rem;
+}
+
+.tool_content_wrapper div.load_tab button[type=submit] {
+  margin-top: 1rem;
+}
+
+
 /* Customize out-of-the-box Assignments (non LTI extensions) */
 /* --------------------------------- */
 .assignment .description {

@@ -18,7 +18,32 @@ jQuery(document).ready(function($) {
   }
 
   styleFileUploadViewAnnotationsLink();
-  
+
+  function customizeLTIAssignmentLaunchPage() {
+    let tabLoaded = document.querySelector('.tool_content_wrapper div.tab_loaded');
+    if (tabLoaded) {
+      tabLoaded.firstChild.textContent = 'This assignment was successfully loaded in a new browser window. Reload the page to access the assignment again.';
+    }
+
+    let loadTab = document.querySelector('.tool_content_wrapper div.load_tab');
+    if (loadTab) {
+      loadTab.firstChild.textContent = 'Click the button below to open this assignment in a new window. You can exit the assignment window at any time and your progress will be automatically saved.';
+
+      let submitButton = loadTab.querySelector('button[type=submit]');
+      if (submitButton) {
+        // Note that after a couple minutes, the text of the button changes to show what's in
+        // this 'data-expired_message' attribute.
+        if (submitButton.dataset.expired_message) {
+          const bravenExpiredMessage = 'The session for this assignment has expired. Please reload the page';
+          submitButton.dataset.expired_message = bravenExpiredMessage;
+        }
+      }
+    }
+
+  }
+
+  customizeLTIAssignmentLaunchPage();
+
 });
 
 ///// Canvas Google Analytics
@@ -102,7 +127,7 @@ function setStorage(key, value, expires) {
 }
 
 async function coursesRequest(courseId) {
-    // 
+    //
     let response = await fetch('/api/v1/users/self/courses?per_page=100');
     let data = await response.text();
     data = data.substr(9);
