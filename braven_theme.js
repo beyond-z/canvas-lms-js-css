@@ -150,7 +150,7 @@ async function coursesRequest(courseId) {
     //
     let response = await fetch('/api/v1/users/self/courses?per_page=100');
     let data = await response.text();
-    data = data.substr(9);
+    data = data.replace(/^while\(1\);/, '');
     data = JSON.parse(data)
     var stringData = JSON.stringify(data)
     setStorage('ga_enrollments', stringData, null)
