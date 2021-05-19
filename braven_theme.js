@@ -60,6 +60,7 @@ jQuery(document).ready(function($) {
     // https://braven.instructure.com/courses/{id}/users
     document.querySelectorAll(
         'a[data-event=editSections],a[data-event=editRoles],a[data-event=removeFromCourse]').forEach(e => {
+      console.log('Hiding user enrollment controls');
       e.parentElement.remove();
     });
     document.querySelector('a#addUsers').remove();
@@ -67,12 +68,14 @@ jQuery(document).ready(function($) {
     // https://braven.instructure.com/courses/{id}/sections/{id}
     document.querySelectorAll(
         '#current-enrollment-list > ul.user_list > li > span.links').forEach(e => {
+      console.log('Hiding user enrollment controls');
       e.remove();
     });
 
     // https://braven.instructure.com/users/{id}
     document.querySelectorAll(
         '#courses_list > div.courses > ul.context_list > li > span').forEach(e => {
+      console.log('Hiding user enrollment controls');
       e.remove();
     });
   };
