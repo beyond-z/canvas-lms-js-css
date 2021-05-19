@@ -44,6 +44,26 @@ jQuery(document).ready(function($) {
 
   customizeLTIAssignmentLaunchPage();
 
+  // Remove access to user-enrollment controls.
+  // These settings should be edited on Platform instead.
+
+  // https://braven.instructure.com/courses/{id}/users
+  document.querySelectorAll(
+      'a[data-event=editSections],a[data-event=editRoles],a[data-event=removeFromCourse]').forEach(e => {
+    e.parentElement.remove();
+  });
+
+  // https://braven.instructure.com/courses/{id}/sections/{id}
+  document.querySelectorAll(
+      '#current-enrollment-list > ul.user_list > li > span.links').forEach(e => {
+    e.remove();
+  });
+
+  // https://braven.instructure.com/users/{id}
+  document.querySelectorAll(
+      '#courses_list > div.courses > ul.context_list > li > span').forEach(e => {
+    e.remove();
+  });
 });
 
 ///// Canvas Google Analytics
