@@ -62,10 +62,7 @@ jQuery(document).ready(function($) {
         'a[data-event=editSections],a[data-event=editRoles],a[data-event=removeFromCourse]').forEach(e => {
       e.parentElement.remove();
     });
-    document.querySelector(
-        'a#addUsers').forEach(e => {
-      e.remove();
-    });
+    document.querySelector('a#addUsers').remove();
 
     // https://braven.instructure.com/courses/{id}/sections/{id}
     document.querySelectorAll(
