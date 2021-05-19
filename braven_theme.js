@@ -46,24 +46,41 @@ jQuery(document).ready(function($) {
 
   // Remove access to user-enrollment controls.
   // These settings should be edited on Platform instead.
+  // Have to use MutationObserver to watch for changes in the DOM, because
+  // half these things are loaded in dynamically via AJAX calls.
+  // See https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver.
+  // Select the node that will be observed for mutations:
+  const targetNode = document.body;
 
-  // https://braven.instructure.com/courses/{id}/users
-  document.querySelectorAll(
-      'a[data-event=editSections],a[data-event=editRoles],a[data-event=removeFromCourse]').forEach(e => {
-    e.parentElement.remove();
-  });
+  // Options for the observer (which mutations to observe).
+  const config = { attributes: false, childList: true, subtree: true };
 
-  // https://braven.instructure.com/courses/{id}/sections/{id}
-  document.querySelectorAll(
-      '#current-enrollment-list > ul.user_list > li > span.links').forEach(e => {
-    e.remove();
-  });
+  // Callback function to execute when mutations are observed.
+  const callback = function(mutationsList, observer) {
+    // https://braven.instructure.com/courses/{id}/users
+    document.querySelectorAll(
+        'a[data-event=editSections],a[data-event=editRoles],a[data-event=removeFromCourse]').forEach(e => {
+      e.parentElement.remove();
+    });
 
-  // https://braven.instructure.com/users/{id}
-  document.querySelectorAll(
-      '#courses_list > div.courses > ul.context_list > li > span').forEach(e => {
-    e.remove();
-  });
+    // https://braven.instructure.com/courses/{id}/sections/{id}
+    document.querySelectorAll(
+        '#current-enrollment-list > ul.user_list > li > span.links').forEach(e => {
+      e.remove();
+    });
+
+    // https://braven.instructure.com/users/{id}
+    document.querySelectorAll(
+        '#courses_list > div.courses > ul.context_list > li > span').forEach(e => {
+      e.remove();
+    });
+  };
+
+  // Create an observer instance linked to the callback function
+  const observer = new MutationObserver(callback);
+
+  // Start observing the target node for configured mutations
+  observer.observe(targetNode, config);
 });
 
 ///// Canvas Google Analytics
