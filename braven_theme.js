@@ -44,6 +44,47 @@ jQuery(document).ready(function($) {
 
   customizeLTIAssignmentLaunchPage();
 
+  // Remove access to user-enrollment controls.
+  // These settings should be edited on Platform instead.
+  // Have to use MutationObserver to watch for changes in the DOM, because
+  // half these things are loaded in dynamically via AJAX calls.
+  // See https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver.
+  // Select the node that will be observed for mutations:
+  const targetNode = document.body;
+
+  // Options for the observer (which mutations to observe).
+  const config = { attributes: false, childList: true, subtree: true };
+
+  // Callback function to execute when mutations are observed.
+  const callback = function(mutationsList, observer) {
+    // https://braven.instructure.com/courses/{id}/users
+    document.querySelectorAll(
+        'a[data-event=editSections],a[data-event=editRoles],a[data-event=removeFromCourse]').forEach(e => {
+      console.log('Hiding user enrollment controls');
+      e.parentElement.remove();
+    });
+    document.querySelector('a#addUsers').remove();
+
+    // https://braven.instructure.com/courses/{id}/sections/{id}
+    document.querySelectorAll(
+        '#current-enrollment-list > ul.user_list > li > span.links').forEach(e => {
+      console.log('Hiding user enrollment controls');
+      e.remove();
+    });
+
+    // https://braven.instructure.com/users/{id}
+    document.querySelectorAll(
+        '#courses_list > div.courses > ul.context_list > li > span').forEach(e => {
+      console.log('Hiding user enrollment controls');
+      e.remove();
+    });
+  };
+
+  // Create an observer instance linked to the callback function
+  const observer = new MutationObserver(callback);
+
+  // Start observing the target node for configured mutations
+  observer.observe(targetNode, config);
 });
 
 ///// Canvas Google Analytics
@@ -130,7 +171,7 @@ async function coursesRequest(courseId) {
     //
     let response = await fetch('/api/v1/users/self/courses?per_page=100');
     let data = await response.text();
-    data = data.substr(9);
+    data = data.replace(/^while\(1\);/, '');
     data = JSON.parse(data)
     var stringData = JSON.stringify(data)
     setStorage('ga_enrollments', stringData, null)
