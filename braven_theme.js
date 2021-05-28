@@ -63,7 +63,10 @@ jQuery(document).ready(function($) {
       console.log('Hiding user enrollment controls');
       e.parentElement.remove();
     });
-    document.querySelector('a#addUsers').remove();
+    document.querySelectorAll('a#addUsers').forEach(e => {
+      console.log('Hiding add user button');
+      e.remove();
+    });
 
     // https://braven.instructure.com/courses/{id}/sections/{id}
     document.querySelectorAll(
