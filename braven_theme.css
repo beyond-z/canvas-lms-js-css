@@ -238,11 +238,17 @@ th,
   display: none !important;
 }
 
-/* Customize global nav menu */
+/* Customize nav */
 /* ---------------------------- */
 
-/* Hide "Commons" */
+/* Hide "Commons" in global nav menu */
 li#context_external_tool_42_menu_item {
+    display: none;
+}
+
+/* Hide "Student View" button. It doesn't work for us with our LTI Extension stuff.
+   Make folks masquerade or create test accounts. */
+a#easy_student_view {
     display: none;
 }
 

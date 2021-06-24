@@ -44,8 +44,10 @@ jQuery(document).ready(function($) {
 
   customizeLTIAssignmentLaunchPage();
 
-  // Remove access to user-enrollment controls.
-  // These settings should be edited on Platform instead.
+  // Remove access to user-enrollment and other controls that should be edited
+  // on Platform instead.
+  // Note that we hide the elements instead of remove them so that if engineers
+  // need to still get in there and use them they can using dev tools.
   // Have to use MutationObserver to watch for changes in the DOM, because
   // half these things are loaded in dynamically via AJAX calls.
   // See https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver.
@@ -61,26 +63,38 @@ jQuery(document).ready(function($) {
     document.querySelectorAll(
         'a[data-event=editSections],a[data-event=editRoles],a[data-event=removeFromCourse]').forEach(e => {
       console.log('Hiding user enrollment controls');
-      e.parentElement.remove();
+      e.parentElement.style.display = "none";
     });
     document.querySelectorAll('a#addUsers').forEach(e => {
       console.log('Hiding add user button');
-      e.remove();
+      e.style.display = "none";
     });
 
     // https://braven.instructure.com/courses/{id}/sections/{id}
     document.querySelectorAll(
         '#current-enrollment-list > ul.user_list > li > span.links').forEach(e => {
       console.log('Hiding user enrollment controls');
-      e.remove();
+      e.style.display = "none";
     });
 
     // https://braven.instructure.com/users/{id}
     document.querySelectorAll(
         '#courses_list > div.courses > ul.context_list > li > span').forEach(e => {
       console.log('Hiding user enrollment controls');
-      e.remove();
+      e.style.display = "none";
     });
+
+    // https://braven.instructure.com/courses/{id}/assignments
+    let assignmentsPageDeleteAssignmentLink = document.querySelector('.assignments ul.al-options a.delete_assignment');
+    if (assignmentsPageDeleteAssignmentLink) {
+      assignmentsPageDeleteAssignmentLink.parentElement.style.display = "none";
+    }
+
+    // https://braven.instructure.com/courses/{id}/assignments/{id}/edit
+    let editPageDeleteAssignmentLink = document.querySelector('.assignment-edit-header a.delete_assignment_link');
+    if (editPageDeleteAssignmentLink) {
+      editPageDeleteAssignmentLink.parentElement.style.display = "none";
+    }
   };
 
   // Create an observer instance linked to the callback function
