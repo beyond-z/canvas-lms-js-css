@@ -238,6 +238,15 @@ th,
   display: none !important;
 }
 
+/* Customize global nav menu */
+/* ---------------------------- */
+
+/* Hide "Commons" */
+li#context_external_tool_42_menu_item {
+    display: none;
+}
+
+
 /* Customize Help tray */
 /* ---------------------------- */
 #help_tray a {
