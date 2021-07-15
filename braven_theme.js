@@ -85,10 +85,10 @@ jQuery(document).ready(function($) {
     });
 
     // https://braven.instructure.com/courses/{id}/assignments
-    let assignmentsPageDeleteAssignmentLink = document.querySelector('.assignments ul.al-options a.delete_assignment');
-    if (assignmentsPageDeleteAssignmentLink) {
-      assignmentsPageDeleteAssignmentLink.parentElement.style.display = "none";
-    }
+    document.querySelectorAll('.assignments ul.al-options a.delete_assignment').forEach(e => {
+      console.log('Hiding delete assignment button for ' + e.id);
+      e.parentElement.style.display = "none";
+    });
 
     // https://braven.instructure.com/courses/{id}/assignments/{id}/edit
     let editPageDeleteAssignmentLink = document.querySelector('.assignment-edit-header a.delete_assignment_link');
