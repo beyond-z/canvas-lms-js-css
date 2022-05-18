@@ -129,6 +129,16 @@ th,
 	font-size: 1.2em;
 }
 
+/* Accessibility */
+h1.screenreader-only {
+	/* Don't hide h1 headings.
+	 * https://app.asana.com/0/1201131148207877/1202211677971956/f
+	 */
+	height: auto;
+	width: auto;
+	position: inherit;
+}
+
 .pages.show .show-content {
 	padding: 15px;
 }
